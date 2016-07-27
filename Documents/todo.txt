@@ -1,0 +1,138 @@
+todo: 
+
+?done? showchar: smart mouse hide/show
+
+x change the sanity erosion system
+
+x make research a toggle that doesn't switch off when busy. 
+x time spent researching increases sanity erosion
+
+ - add/increase skill use for all sections
+skill usage in sections:
+x? psy - keeping crew sanity up. communicating with aliens
+x eng - repair, construction, and deconstruction times
+x sci - planet scan speed
+x? sec - attack and evasion
+ast - in system and inter system travel times
+x med - speed and success at changing current skill, sanity settings to new settings
+
+x message about sighted ships should be given
+
+x minebots should produce something every n days or months
+
+x Synthesis complete should give the name.
+
+x remove deubg message from completion times
+
+x add thrust displayed ship stats
+
+time burst mode: time burst, hibernate, rest
+
+x short cuts for travel to the next and previous planet
+
+x way to navigate back up the build chain
+x clicking on sub-component parts should also work
+
+scanning:
+	extra probes should not deploy if there is less than 10% remaining
+	probes return faster upon completion
+	probes being deployed while scanning should not pause things.
+	warn about stars and advanced life.
+	ability to scan stars
+	notify when a planet has changed state.
+	increase size of anomaly dots
+	anomaly dots are missing from gas clouds and asteroid fields
+	investigate: When you start scanning a planet and then hit the return button to go back to the main screen, the scan that is currently active instantly completes while no time has passed (When you go back to the planet scanning screen it shows the scan as completed). While this is good for Land, Sea, Air and Life (thus an exploit) it is a bug for Anomalies, as the scan instantly completes but then there are no anomalies on the planet. (I guess that is the price you have to pay for bug-using :P)
+	investigate: anomaly dot persists after pickup. Possible cause: probe occupying the same spot the instant it was picked up
+
+engineering:
+	fix shield install to use skill
+
+hardware:
+	power generators
+	
+combat:
+	controls:
+		match thrust.
+		close to distance x
+		thrust level
+		nearest target
+		farthest target
+	check rules for salvage
+	check rules for damage
+	fix shield behaviour with armour.
+
+planets:
+	improve shading in view
+	x (failed) do proper 3d in view
+
+ability to choose who gets mind drugs
+
+mining:
+	stop deployment on stars until heat shield technology
+	stop deployment on shielded planets
+	x add depletion stat to planets
+	x - resets on state/mode changes
+	x - be smart about handling full and partial caches
+	adjust mining yield chances
+
+sector:
+	bugfix: clicking on empty sectors causes cursor to go to 0,0,0
+
+power:
+	add power generation items
+
+random enocunters:
+	smarter random encounter of aliens
+	possibility of encountering aliens when sitting around or travelling
+
+travel:
+	more realistic travel times between planets
+	more realistic travel time and fuel use between stars
+
+conversation:
+	x giving items to races
+	suggestions from the crew
+	investigate: Ermigen repairs: no dialog and automatically done on first meeting
+	x investigate: mouse not seen in yes/no dialogs
+	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same responce for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
+	investigate: When viewing information on a race you're communicating with, it sometimes says "The Guild" as the race name, when it's not. Example: I noticed this with the Quai Pa'loi and D'pahk, but it only happens sometimes, not always. 
+
+logs:
+	x keyword highlighting
+	x extra log entries
+	investigate: After communicating with the Sengzhac for the first time, the log book opens, but doesn't automatically load the Sengzhac log. 
+events:
+	icon: hallifax
+aliens:
+	Fix aliens so they don't chase between planets and systems.
+	investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
+
+combat:
+	x make drones so that they don't kill the player on them losing
+	x (aborted, very hard) use real acceleration
+
+creation:
+	Check strange progress meter behaviour when researching the "glyptic scythe".
+	"upgrades" should create an items which are then installed/applied
+	investigate: building multiple upgrades causes loss in parts?
+	investigate: when i build thrust enhancer, my engineer reports the increased thrust BEFORE the report of finishing creation of this module... not important but strange.
+cargo:
+	
+	investigate: more than 255 items causes problems with identifying unknown componets, and construction of pulse loom
+
+misc:
+	x faster fade transitions
+	x fix "lock-up" caused by message boxes while fading in
+	mouse at border causing crashes
+
+trade:
+	20 individual trade items to 20 different items with quantities
+
+psychometry:
+	fix colours of biorhythm chart
+
+410,045
+409,949
+407,063
+

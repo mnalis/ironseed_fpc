@@ -1,0 +1,175 @@
+v1.20.0002:
+	bugfix: Fixed problems with end sequence crashing. Mod routines weren't compiled with EMS support
+v1.20.0003:
+	bugfix: Conversation wasn't filtering answers based on completed events.
+	feature: Repair crews will move onto repairing another section if repairs are complete.
+v1.20.0004:
+	internal: Refactoring out duplicated code for handling passage of time.
+	game: Add new skill system. Chance of success is the ratio between crew member's skill and the task difficulty.
+	game: Skill usage has a chance of increasing XP.
+	feature: Changed the way planet scans are handled.
+	removed: The screen saver has been completely removed.
+v1.20.0005:
+	Planet scans:
+		feature: Scan buttons are colour coded by status: red-not done, yellow-currently scanning, green-complete
+		game: Skill tests are used for by the science officer when perform skill tests
+		fix: Anomalies found in a planer scan will now always be the same for that planet. Reloading and rescanning to get a better yield won't work.
+		feature: Clicking on anomalies in the anomaly list the zoom window on it.
+		bugfix: Anomalies were only put in the cache if you looked at the anamoly list in the same scan session.
+		bugfix: It was possible to place the zoom box just over the top edge of the planet view.
+	Psy Eval:
+		game: No longer lose stat points when moving attributes around.
+		game: Added a second bar to each of Skill, Performance and Sanity stat bars. The new bars reflect the real stat values.
+		game: Medical now performs skill checks to adjust crew to new stats.
+	Combat:
+		game: Now uses the new skill system.
+	Resarch:
+		feature: Research is now a toggle that does not turn off when a crew member is busy.
+		game: XP gain from research is affected the Performance stat.
+		game: Not researching will help recover stress and sanity.
+	Sanity:
+		game: New stat 'stress' which affects sanity loss.
+		game: Psychometry is responsible for reducing stress.
+		game: When sanity drops to zero skill and preformance start to drop. When either of those reach zero primary stats start to drop and insanity messages start.
+	Misc:
+		feature: Disassembly will no longer produce "worthless junk"
+		game: Repairs, assembly and disassembly now use the new skill system.
+		game: Old skill system no longer used.
+		bugfix: Oban will now have one dying/dead world and one stable world. This prevents strangeness like have the starting planet a gas nebula or game stoppers like an advance civilisation with planetary shields. It also lines up better with what is seen in the intro.
+		bugfix: Manufactory produce random things that had nothing to do with what planet they were put on. It was not checking the sub part list properly.
+		other: Date and time is now formated: YYYYY/MM/DD HH:SS
+v1.20.0006:
+	Planets:
+		Graphics: Planets with intelligent life now have city lights.
+		Graphics: Gas nebula/clouds look more cloud like.
+		Graphics: Gas giants now look like gas giants and not giant lollies.
+	Engineering:	
+		bugfix: Installing weapons was taking too long.
+	Misc:
+		game: Alien vessels are reported when sighted.
+v1.20.0007:
+	Creation:
+		feature: When looking at possible construction items, parts that are not in stock but can be built from sub parts in stock will come up as yellow instead of red.
+		feature: Construction can be started on items with all available sub parts. Parts will be reserved until needed.
+		text: Completion of items will say what has just been finished.
+v1.20.0008:
+	Mining:
+		bugfix: Manufactories were producing only worthless junk.
+		feature: Each day you are in a system each mine bot/manufactory has a 20% chance to produce something.
+v1.20.0009:
+	Conversation:
+		feature: Keywords in convesations are now highlighted.
+		Crew conversations have been revised and touched up.
+v1.20.0010:
+	Converstaion:
+		Alien conversation have been touched up to better use keyword highlighting.
+		Aard: You can now repair their vessel.
+		Ermigen: Saying "bye" will now actually end talks with them.
+		bugfix: Multi-page answers while talking to the crew should no longer draw garbage on the screen.
+	Engineering:
+		gameplay: Changed the skill testing for doing repairs. Repairs should no longer be insanely stressful.
+		bugfix: Shunt drive research would never finish.
+		feature: shortcut key: alt-b for bot control
+	Science:
+		feature: shortcut key: alt-s for planet scan
+	Planet travel:
+		feature: shortcut keys
+			alt-n and alt-p for next and previous orbit
+			alt-0 to alt-4 to go to the star or corresponding planet
+v1.20.0011:
+	Creation:
+		feature: You can click on the sub-part name display to see what a sub-part is composed of.
+		feature: You can click on the current project name display to go to the parent part.
+		gameplay: Add cargo space now increased by 50%.
+		gameplay: Full cargo will not lock you out of the creation screen. However you will not be able to build devices except upgrades and fuel.
+	Mining:
+		feature: New bot type, the fabricator. It will create components. however is more finicky than the manufactory about what worlds it should be put on to get good results.
+		feature: The format of dropping bots has been changed. The list of seen products is longer. You can now also see the percentage chance of getting certain products.
+		text: Minebots and Manufactories have had their description modified to better line up with game's terminology.
+	Cargo:
+		bugfix: Trying to pick up bots or cache items while full will no longer create a duplicate.
+	Misc:
+		Acceleration is now display in the ship status.
+v1.20.0012:
+	Misc:
+		Capitalisation fix of "White Dwarf" text in system info.
+		The Borlad Pascal runtime library that Ironseed is linked with has been patched so it should no longer crash on very fast machines.
+	Conversation:
+		Crew conversations have been converted to mixed case.
+		Expanded crew conversations so as to help give better direction.
+		Asking "help" or "advice" will give hints from that crew member as to what needs to be done. Presently only covers the very early part of the game.
+	Logs:
+		Added keyword highlighting.
+		Expanded some log entries to help give better direction.
+	Sound:
+		Added a sound setup program. Run 'config' to use it. Hopefully it will work with compatible hardware that aren't autodetected.
+		Added a sound card auto detector program. Run 'detsound' to use it. 
+v1.20.0013:
+	creation:
+		bugfix: If you were to start building an item and also had another one on stock it would reserve the one you have in stock instead of its sub-parts.
+	misc:
+		Fixed some typos "plenets"->"planets".
+		Transitions between most major screens has been sped up.
+
+	conversation:
+		Alien race conversations converted to mix case.
+		Titerian: Keyword "Malzatoir" now properly acts on events.
+		You can now repair the Phaedor Moch ship by giving radioactives and coolants.
+		You can now repair the Aard ship by giving a Stratamount.
+
+	Logs:
+		Changed how logs are handle and stored internally.
+		New log: "FAREWELL TO MARS" this log is given after the second buoy or immediately if the current game is beyond that.
+		New log: "REPAIR TO THE AARD SHIP"
+		New log: "REPAIR TO THE PHAEDOR MOCH SHIP"
+		Existing Phadeor Moch log renamed to "FIRST ENCOUNTER WITH THE PHAEDOR MOCH" and reference to repairs removed.
+v1.20.0014:
+	New Game:
+		bugfix: Would occasionally create too many planets and write outside the allocated storage.
+	Combat:
+		bugfix: If you had shields at zero enemies would do full damage regarless of their weapon system damage.
+		Releasing combat drones will check the following:
+			- you have at least one weapon installed
+			- there are no aliens in the area
+		bugfix: Dying against combat drones is no longer game over.
+		bugfix: Damage taken while fighting combat drones is erased.
+		Enemeies with engines reduced to below 10% will now coast to a stop.
+		Quitting from the game during combat is now possible.
+	Mining:
+		bugfix:	Every time a minebot or similar created material it leaked 208 bytes of memory.
+	Misc:
+		Added debug message for checking the heap size to most screen. Press ctrl-J to display this.
+v1.20.0015:
+	Misc:
+		Fixed typo "ENGINEERING" was mis-spelt as "ENGINERING" in character text box displays.
+		Plot related research completion message are now reported from the engineer.
+		bugfix: If a message box appears while a screen fading in it would freeze at that brightness until it was dismissed. This gave the impression it was locked up if the brightness was near black.
+		bugfix: If you load a game with the same type of alien floating around as your current game has it would not report the sighting.
+	Creation:
+		bugfix: Clicking on thermoplast before you have researched the technology would exit the game with a 'creation array overflow' error.
+		bugfix: Turning off all item filters then exiting the creation screen and then returning would exit the game with a 'creation array overflow' error.
+		bugfix: It was possible to indirectly build thermoplast before it's discovery.
+	Psy Eval:
+		bugfix: Clicking the decrease button on "emotional" would lose a point from the crew member's emo stat.
+v1.20.0016:
+	Misc:
+		bugfix: Fixed another case of a message box appearing while fading in and giving an impression of a lock up if the screen is dark.
+	Conversation:
+		bugfix: Generic aliens now have music playing again. This bug was a byproduct of adding volume fading to screen transitions.
+		bugfix: Void Dwellers now have music playing. It was running out of memory while loading.
+		bugfix: It would leak 768 bytes of memory every time conversation was initiated with aliens that did not have a foreground image (Void Dwellers and generic aliens).
+		bugfix: Mouse cursor would disappear if a yes/no dialog pops up during conversation.
+		fixed typo:  'statamounts' -> 'stratamounts'
+	Music:
+		Changed the MOD loading code to load samples directly to EMS. Previous code loaded to conventional RAM before transferring to EMS. This sometimes prevented music with large samples from loading.
+	Scanning:
+		There is a new probot the "Stardiver" this can be used to scan stars. Building this requires the thermoplast discovery.
+		Scanning of stars will not be allowed if no "Stardivers" are in stock.
+		bugfix: Stars no longer have planetary shields. This occured in the home systems of the major races.
+	Mining:
+		Planets now have a depletion stat. Each time something is mined from a planet this will increase. This will gradually decrease each day nothing was mined. Travelling between stars will reset this to 0.
+		bugfix: Normal minebots are no longer allowed on stars.
+		New minebot type, the "Starminer". This minebot can only be placed on stars and will synthesise exotic materials. Building this requires the thermoplast discovery and at least level 10 in all crew members.
+
+
+	
