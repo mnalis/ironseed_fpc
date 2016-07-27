@@ -1,0 +1,1822 @@
+								Ironseed
+
+                                      Techbook and Trials Guide
+                                          Quick Start Manual
+
+
+             Part I. Features
+
+
+             Grafix
+
+             2.5 Meg of compressed video data conveys a universe that is both rich and
+             vibrant having believability and depth unparalleled by any other science
+             fiction world.  From the glint in the Sengzhac's eye to the grotesque squirming
+             of the worm-like D'Pahk each alien race is unique in its movement and alive
+             with animation.
+
+             Music
+
+             We present to you a sound track that is as dark and seductive as the world of
+             Ironseed.  Using one of the most advanced realtime digital mixers available for
+             the PC we bring you a soundtrack unmatched by any non-CD game title.  After
+             nearly eight months of work on the sound alone we present a combination of
+             modern dance, classical, and eastern elements in Dolby Surround that form a
+             powerful musical score.  The Dual Module Player mixes digital samples in
+             realtime allowing for smaller sound files.  The sound stays under 10 Meg while
+             supporting over an hour of playback at up to 44 kilobytes per sec.  That's an
+             effective data compression ratio of over 16 to one!  DMP also supports a wide
+             range of audio cards... Sound Blaster compatibles as well as the complete Sound
+             Blaster family, the Aria, and the Gravis Ultra Sound.
+
+             Story
+
+             With a backdrop 4 years in the making and a story line equivalent to a 250 page
+             novel, the universe of Ironseed is a dynamic one.  There are 10 established
+             empires and the possibility for a thousand others that evolve as the game is
+             played.  Your struggle to unite the free worlds will take you from the trade
+             circles of the Guild to the mystic home of the Quai Tetrad. You will be deigned
+             the voice of the Icon and as their liaison will be the only defense against the
+             scavenger armada.  Ironseed... the ship... the movement... and now, the last
+             hope for mankind.
+
+             Part II. System and Environment
+
+
+              A. Minimal System Requirements
+
+                  Basic Program:
+                   - 80386 processor
+                   - 25 MHz clock speed
+                   - VGA card and monitor
+                   - 530,000 bytes of low memory
+                   - MSDOS 4.0
+                   - MS compatible mouse
+
+
+                  Sound Setup:
+                   - Aria, ProAudio Spectrum family, Sound Blaster family,
+                     Gravis UltraSound or a compatible of one of these sound
+                     cards
+                   - 1 Mb of EMS memory
+                   - 600,000 bytes of low memory
+
+
+              B. System Recommendations
+
+                   - 80486 processor
+                   - math co-processor
+                   - 33 MHz, 50 MHz for best performance
+                   - accelerated video board
+                   - disk cache TSR program
+                   - ram disk TSR program
+                   - 615,000 bytes of low memory
+
+             Part III. Installation
+
+             To install the program, follow these steps:
+
+              A.  Boot the computer.
+
+              B.  Insert the first disk into the floppy drive.
+
+              C.  Type A: (or the appropriate floppy drive) followed by a
+                  carriage return.
+
+              D.  Type ISDEMO also followed by a carriage return.  The installer will run.
+
+              E.  Follow the prompts for the installation.
+
+
+             Part IV. Optimizing Your System
+
+
+              A.  Try running a disk cache program such as Smartdrive.  This
+                  will allow frequently accessed data to remain in memory
+                  longer rather than in the slower access disk drive.  Optimal
+                  size is about 1 Mb for 4 Mb of RAM or 2 Mb for 8 Mb of RAM.
+
+
+              B.  Set an environment variable 'TEMP' to a ram disk such as
+                  Ramdrive.  This is simply a 'SET TEMP=' and the drive letter
+                  of the ram disk in the autoexec.bat file.  Make sure that
+                  the ramdisk has at least 128 kb.
+
+
+              C.  Disable any TSR's that require large amounts of the
+                  processor's time.  Even a simple keyboard enhancer can steal
+                  valuable time from the CPU.
+
+
+
+             Part V. Trouble Shooting
+
+              A. Sound Failure:
+
+                 Make sure that the sound card is installed correct, volume
+                 turned up sufficiently and there is at least 1 Mb of EMS
+                 available.
+
+
+              B. Open File or Fatal File Error:
+
+                 Make sure that your current directory contains the Ironseed
+                 executable and all the subdirectories such as data, sound,
+                 and saved games.  Test your hard drive for failures in case a
+                 file has been corrupted.
+
+
+              C. Out of memory Error:
+
+                 The program itself, Is.exe,  requires about 600k of low
+                 memory.  If sound is used this may increase.  It is important
+                 to note that the main program will not run with less memory.
+
+
+             Part VI. The Story So Far...
+
+             It is the thirty-eighth century.  The fall of Earth is but a legend and
+             humanity has migrated to a terraformed Mars.  The Pentateuch, a group of five
+             preists, rules the newly risen technocracy with an iron fist.
+
+             In a bold attempt to eliminate the last of their political opponents, the five
+             began the purgation trials.  With guerilla tactics their followers went about
+             convicting those who would oppose them.
+
+             To counter them an underground movement was initiated and an elaborate plan was
+             conceived.  A virus was spread throughout the circuit matrix.  A thousand days
+             from inception, the virus was scheduled to delete all personality files.  The
+             Ironseed movement as it was called, hoped that by stealing a ship they could
+             escape... leaving behind Mars... and the Pentateuch.  Their intent was to
+             return after the fall of the technocracy. ...but a computer malfunction turned
+             a thousand days into a thousand years...
+
+             As the captain, you are awakened along with the crew by an alien horde.   After
+             a brief dialogue, communication is cut off and they attack. The game begins as
+             the attack ends.
+
+
+             Part VII. In The Beginning...
+
+             After the introduction you should see the Ironseed logo floating above a
+             starfield.  At the bottom of this screen four options will be listed:
+
+             A. Ordering Info
+                  How to get the full game.
+
+             B. Continue Game
+
+             Choosing this option will bring up a listing of save game slots for previous
+             games you have saved along with the game-date. If no games have been saved or
+             if you have not selected your crew to begin your quest these slots should read
+             "Quick Start 2/3784." If this is the case you may either select one of these
+             and use the default crew and ship or you may choose cancel.  Cancelling will
+             bring you back to the Ironseed logo. (Use the Quick Start for Slow is you have
+             less then a 486/33.)
+
+
+             C. Introduction
+
+                  Choosing this option will run the introduction again.
+
+             D. Quit to Dos
+
+                  Choosing this option will exit the program to the dos
+                  prompt.
+
+
+             Part VIII. Main Screen
+
+             The Main Screen is the screen to which you are born and it is the screen to
+             which you must always return.  It is divided up into three main sections: The
+             Primary Display, the InfoBox and the Command Cube.
+
+             The Primary Display is the upper half of the Main Screen.  This is the area
+             through which the world outside your ship can be seen.  You should be able to
+             see the planet or star you are orbiting on the left hand side of this display.
+
+             The InfoBox occupies the lower left hand side of the Main Screen. When the
+             ship's computer or the crew have an important message for you it will be appear
+             there.  The InfoBox will store the last 24 messages. You may scroll up and down
+             through these messages by using the scroll bar and arrows to the right of the
+             InfoBox.
+
+             Your ship has three different modes of operation: Rest mode, Alert mode, and
+             Combat mode.  Depending on which of these modes your ship is in your weapon
+             power and shield level will vary.  For quick switch to a different mode select
+             the Panic button from the bottom left of the main screen, doing so will toggle
+             your ship mode (Rest, Alert, and Combat modes turn the Panic Button green,
+             yellow, and red respectively.)  If you are in Rest mode the Panic Button will
+             raise your shields and arm your weapons taking you into Combat mode.  If you
+             are in Combat mode the Panic Button will lower your shields and power down your
+             weapons. If you have no damage you will return to Rest mode.  If you have taken
+             damage you will instead power down to Alert mode.
+
+             As captain of the Ironseed, you directly control the actions of your six
+             primary officers.  These crew members can be accessed through the six faces of
+             the Command Cube found in the lower right corner of the main screen.
+
+             The cube is laid out as follows:
+             (Psy) Psychometry             (Sec) Security
+
+             (Eng) Engineering             (Ast) Astrogation
+
+             (Sci) Science                 (Med) Medical
+
+
+             Keyboard Substitutes:
+
+               Command Cube Manipulation    Other Keys
+               _________________________    __________
+
+             Q or F1        W E R              T or F4
+             A or F2        S D F              G or F5
+             Z or F3        X C V              B or F6
+
+
+             Alt-Q,Alt-X    Quit
+             Spacebar       Clear Right Display
+             ESC            Clear All Displays
+             Esc=Curved Arrow button=Universal Exit
+
+
+             Part IX. Secondary Controls
+
+             Some displays will open an icon bar at the top of the main screen.  For these
+             displays, the keyboard equivalents are as follows:
+
+
+              Position  Key
+              ________  __________
+                1..4    Arrow Keys
+                   5    Space Bar
+                   6    1
+                   7    2
+                   8    3
+
+             For most other screens, Arrows Keys, +, -, 1, 2, 3, Q, W, E, and ? have some
+             effect depending on the operation of the screen.  ESC is the universal
+             cancel/exit key.Part X. Start Hints
+
+             Probes:
+
+             While a complete scan of every planet is not necessary, it is recommended.  It
+             is always better to be thorough to avoid missing anything. In order to speed
+             this process it is best to focus on building a full troupe of probots.  Once
+             you have four the scans can be done two at a time.
+
+             In general it is better to scan for anomalies first.  This way you can retrieve
+             them while the other scans are being completed.  Retrieve all anomalies you
+             find; many of them are useful.  Those that have no immediate use can be traded
+             away.
+
+             When sending down probes to a visibly viable world (i.e. lush green, life
+             bearing) you should beware of the inhabitants. Because of the heat and light
+             generated during atmospheric entry, the probes are particularly visible,
+             vulnerable to being scanned. From time to time if the populace of a world is
+             technologically advanced they will capture or destroy probes sent to study
+             them.
+
+             Because of the intense surface heat suns are not hospitable to probes.  When
+             cooler suns actually have temperatures that fall within the tolerance range for
+             the probe thermashielding, the occasional flare or solar prominence will finish
+             the device. Until advancements can be made in the design of the device,
+             scanning a solar body is not recommended.
+
+             Fuel Economy:
+
+             Conserving fuel in the beginning is crucial.  In order to continue your travels
+             you will need to build more fuel nodules. To avoid scavenging your probots and
+             manufactories for fuel it is essential that you collect as many anomalies as
+             possible before your initial fuel allowance is exhausted.  Previous deep ship
+             captains suggest the closest body travel algorithm.  This exploration method
+             involves travelling to whatever happens to be the nearest system to you in the
+             local star map.  As trite and simplistic as this may seem it tends to keep fuel
+             use low while maximizing the systems visited.
+
+
+             Research and Design:
+
+             In order for your crew to advance in ability they must expand their knowledge
+             base through research.  Unfortunately, this requires their time and often, a
+             great deal of their resources.  Yet the benefit of knowledge is great.  By
+             increasing the knowledge base of each crew member you increase the number and
+             variety of items that can be designed and built by the engineer.   A small
+             green light will appear next to the crew member, in the main screen, by the
+             cube whenever he or she is researching.  Because of the enormous amount of time
+             and resource it takes to research, some activities may not be performed at the
+             same time research is conducted.  When such a time arrives the crew member will
+             end his research and continue with the task assigned to them.  It is important
+             to keep those research lights green.  When at all possible your crew should be
+             researching.
+
+             Manufacture:
+
+             Upgrading your ship and building new items is the best strategy to surviving a
+             hostile environment.  Spending time to build better offensive, defensive, and
+             other devices is well worth it.  Even Leopold Demasque, military genius of the
+             Final War agreed: Bigger ships and bigger guns = A better chance.  The only
+             draw back of continually upgrading your ship is the amount of time it takes.
+             Some devices, especially the most powerful weapons and shields, are very
+             complex and require crew members to have a great deal of knowledge.  Vast
+             amounts of components and materials may also be required to construct these
+             vicious devices. We've come along way since caves and kill sticks, eh?
+
+
+             Gathering:
+
+             Minebots and manufactories can be left on planets to collect and process the
+             indigenous ores and gases.  After returning to the system, these devices will
+             have filled the planetary cache.  This is a cheap way to gather much needed
+             materials and components.  Scanning the planet beforehand will tell the type of
+             items that can be gathered or created by the bots.
+
+             Trade:
+
+             Trading with other lifeforms is another way to help create that massive weapon
+             or device.  Depending on how you barter you can affect the congeniality of the
+             aliens you encounter.  Because of the size of these empires it may take a long
+             time for news to travel. However, everyone likes a good deal, but continue to
+             cheat in your trades and they will become angered.
+
+             Crew:
+
+             Talking to the crew can help you, the captain, remember your objective as well
+             as helping you to understand your ship and the universe around you.  The crew
+             are privy to a wealth of information and to access that knowledge you have but
+             to ask. Depending on the races you have encountered and the number of times of
+             you have encountered them the crew will have different things to say about
+             each.  Race names are a good starting keyword for questioning.  Most other
+             subjects will arise from those topics.
+
+
+             Detailed Command Guide
+
+             Psychometry
+
+             1 Psych. Evaluation
+             2 Ship Hail
+             3 Planetary Communication
+             4 Crew Status
+             5 Psychometric Research
+             6 Crew Communication
+
+             1. Psychological Evaluation
+
+             Moving between stars requires your vessel to travel at speeds near the speed of
+             light.  Unfortunately, the amount of force necessary to drive a ship at those
+             speeds grows exponentially the closer one gets to light speed.  In order to cut
+             down on fuel consumption any unnecessary mass was left behind.  This
+             'unnecessary' mass included the quarter of a million bodies that made up the
+             rebellion.
+
+             Not to worry.  The marvels of modern science have made a fine art of
+             personality containment.  Before the bodies of your crew were disposed of, the
+             magnetic signature of their brains were copied, or encoded, into the ship's
+             computer. This has several interesting side effects.  First of all, it is
+             possible to make adjustments to a person's psychological attributes.  Multiple
+             copies of an 'encode' may also be made.
+
+             The transparent container on the left side of the screen contains the physical
+             manifest of an encode.  When psychological containment was in its infancy it
+             was discovered that for a soul to have permanence it had to have a physical
+             focus.  After hundreds of years of trial and error it a very specific chemical
+             bath was found to contain the proper staying materials to keep a soul viable.
+             The material itself is called Ego Synth, while the chamber into which it is
+             placed is termed the Psychotropic Enhancement Chamber.
+
+             A personality is defined by its biorhythms, the three primary attributes by
+             which any personality encode may be described.  These are mental prowess,
+             physical viability, and emotional strength.  Selecting evaluate will allow you
+             to see an encode's biorhythmic graph.  The tick marks to the right of the graph
+             show the mental, physical, and emotional ratings for that encode.  The higher
+             the mental rating, the greater that person's Skill; The higher the physical
+             rating, the quicker that person's Performance; The higher the emotional rating,
+             the greater that person's sanity.  While these aren't equal, they are directly
+             related.  The combination of these values determine the resulting color of the
+             egosynth.
+
+             Accessing the Encode function near the top left of this screen will bring up
+             the menu for encoding a crew member.  For each crew member there exists a
+             backup chip to which that crew member may be saved.  At times it may be
+             necessary to restore an encode.  The continual psychological drain of having no
+             physical body combined with the rigors of ship duties will erode an encode.  In
+             order to restore a person's sanity it may become necessary to restore that
+             person's encode (hopefully you will have saved the encode at a point at which
+             they were sane.)  The draw back of re-encoding a personality is that you will
+             lose any experience they may have gained between saves.  The other option is to
+             have engineering continually manufacture Mind Enhancers.  While Mind Enhancers
+             will raise their lowest attribute they are expensive to manufacture and will
+             eventually run your cargo dry.  Obviously there is quick solution.  You must
+             maintain a balance between these two.  Encode when the crew is doing well and
+             be sure to manufacture Mind Enhancers when you have spare components.
+
+             2. Ship Hail
+
+             Ship Hail will allow you to communicate with any nearby ships.  If no ship is
+             present the Com-Screen will be full of static.  All you can do at this point is
+             exit the screen.
+
+             Since the only lifeforms that speak your language are onboard your ship it is
+             essential that you establish some basis of communication.  If there is a ship
+             nearby your psychometrist will attempt to establish a cypher key.  If the
+             aliens cooperate some form of lingual key will transmitted to your ship and
+             talks may begin.  Occasionally a race may have a language so different from our
+             own that an adequate translation matrix is difficult if not impossible.  If
+             this is the case, the ship's computer will do the best it can with what it has
+             to work with.  To communicate with a race with which you have established
+             contact you simply enter keywords of interest.  The computer will construct an
+             appropriate translation using the cypher key.  Any responses from the other
+             ship will be appropriately translated.
+
+             Another useful function of the Com-Screen is the info bar.  By selecting this
+             button the ship's computer will scan the alien vessel and will tell you all it
+             can about it.
+
+             Let's talk trade
+
+             Nearly every sapient race founded itself on commerce.  Trade between nearby
+             communities harbored a sense of unity and eventually brought whole nations
+             together.  The importance of trade can not be overstated.  Even now as ships
+             pass between stars trade is essential.
+
+             As captain of your ship you will be responsible for conducting commercial
+             negotiations.  Be wary of who you deal with.  Bad deals abound.  On the other
+             hand, be sure not to cheat your friends; they'll remember.
+
+             Steps to completing a barter:
+
+             You've just transmitted your intent to trade to the other ship.  The alien
+             craft is silent for a moment and then the message is received, "Yes... we agree
+             to trade with you, filthy human."  What can you expect? You're new here.
+             You're lucky they haven't already destroyed you.
+
+             What type of money will we be buying our exotic wares with?  None. With empires
+             rising and falling like waves on a Thydizian beachfront there's no reason to
+             believe anybody's currency is worth anything at all. We'll be trading strictly
+             in hardware.  What do you have that I want? That'll be the question of the day.
+             Bartering, my friend.  That's how things are done in space.
+
+             1st: Select an item to Buy.
+
+             Scroll through the list on the left of the Message Area until you have
+             highlighted an item of interest.  To select this item for barter choose the
+             Barter For button (who'd a thought).  This will effectively say to your alien
+             friend, "I want this item."  Selecting Reject will remove or touching the Exit
+             Arrow will deselect the item
+
+             2nd: Choose what you are willing to give in exchange.
+
+             The left hand side of the Message Area should now be the list of items in your
+             cargo hold.  You'll want to choose an item or set of items that have a net
+             worth equivalent to or slightly less than what you are bartering for.  This
+             isn't as complicated as it sounds.  Put simply, if you're asking for 5 apples
+             you don't offer a truck load of oranges in return.  You'll want to offer
+             something worth the same as 5 apples (that is unless you really don't like
+             oranges.)
+
+             To add an item to the list, select the Add button from the center of the
+             Message Area.  As you add things to the list you'll notice the space between
+             the Accept and Reject buttons changing colors.  This space is called the Barter
+             Gauge.  This is a simple computerized evaluation of the deal your about to
+             make.  If only part of the bar is full, the aliens want more.  If the bar is
+             green and fully lit, the aliens accept the offer and are willing to commit to
+             the trade.  If the bar is red and fully lit, the aliens are ecstatic and you
+             have offered them entirely too much.
+
+             In the event that your Barter Gauge goes red you'll probably be wanting to
+             subtract a few items from the list.  To do this you should highlight the item
+             you wish removed from the list.  Once you've done that select the Remove button
+             and the item will be returned to your cargo list.
+
+             It is important to note that the more difficult something is to manufacture the
+             more it is worth.  Complex devices like shields and weapons are worth
+             substantially more than the basic elements that comprise them.
+
+             3rd:  Accepting an offer.
+
+             Once you've completed the bartering process you'll be wanting to complete the
+             deal by swapping the materials you selected.  To do this you should select the
+             Accept button from the right side of the Message Area.  If the deal is
+             acceptable to your alien friends they will send a cargo pod to your vessel and
+             the trade will be complete.  If they don't like the deal you're making they
+             will simply do nothing.  In theory they are waiting for you to regain your
+             sanity... thinking that your poor decision making skills are the result of
+             short term brain damage.
+
+             4th: Ok. Ok.  How do you exit a sale before it's too late?!
+
+             If you want to deselect an item before a sale is made choose the Reject button.
+             If you're paranoid and you want to exit Trade completely, select the Exit Arrow
+             from the right side of the screen.
+
+             5th: I've made a sale but I changed my mind.
+
+             Indian giver!  You gave your word.  You made the sale... Now you want your
+             stuff back?!  If you're peaceful you'll just get over it.  If you're a
+             warmonger you'll fight them and hopefully recover the stuff from their burnt
+             out hulls.  In either case you screwed up.  Making a deal is concrete.  You
+             need to be sure you want to sell something before you say accept.
+
+             6th: I'm done trading
+
+             If you're done trading select the Exit Arrow.  This will return you to the
+             conversion.  From this point you may continue to converse with your alien
+             friends.
+
+             One man's junk is another man's treasure
+
+             Despite public opinion Worthless Junk actually has a value, however minute.
+             Since technologies from race to race vary widely it is often possible to get
+             away with giving garbage in exchange for valuable material.  While no race will
+             immediately refuse a wad of slag (hey, they don't know what it is) they will
+             eventually catch on to what is and isn't junk.  Continued use of Worthless Junk
+             as a bartering tool is not suggested.
+
+             3. Planetary Communication
+
+             This function is identical to Ship Hail function expect it deals with lifeforms
+             on the planet you are orbiting.
+
+             4. Crew Status
+
+             Crew descriptions, experience levels, and experience points may be viewed in
+             this area.  You can scroll through the crew by using the arrow keys.
+
+             5. Psychometric Research
+
+             This toggles your Psychometry officer's research status. Researching will
+             increase their knowledge base, or experience points. Do this whenever possible.
+
+             6. Crew Communication
+
+             Talking to the crew can help you, the captain, remember your objective as well
+             as helping you to understand your ship and the universe around you.  The crew
+             are privy to a wealth of information and to access that knowledge you have but
+             to ask. Depending on the races you have encountered and the number of times of
+             you have encountered them the crew will have different things to say about
+             each.  Race names are a good starting keyword for questioning.  Most other
+             subjects will arise from those topics.
+
+             Once you are in this area you have but to select the crew member you want to
+             talk to.  Their storage light will turn red and their image will appear in the
+             center of the screen.  You may then enter keywords of interest.  To speak to
+             another crew member just select the one you wish to address.
+
+             Engineering
+
+             1 Damage Control
+             2 Shield Status
+             3 Weapon Status
+             4 Weapon Config.
+             5 Computer Logs
+             6 Engineering Rsrch.
+             7 Bot Control
+             8 Component Creation
+             9 Cargo Inventory
+
+             1. Damage Control
+
+             No system is infallible.  Things wear out; they break down.  If you're
+             particularly agressive things may even get blown up.  In any case, you're going
+             to want to repair the damage.  Dealing with damage is done through this cube
+             function.
+
+             When accessed, the engineering team listing should appear on the right side of
+             the Primary Display.  Above this you should also appear a control bar with 8
+             buttons.  Of these pay attention to the three labeled Team 1, Team 2, and Team
+             3.  These three will take you to the list of ship systems.  To the right of
+             this list are the respective damage values for each system.  If all values are
+             zero everything is fine, throw yourself a party.  More often than not these
+             won't be zero. In that event you'll want to set your engineering teams to work.
+
+             To begin repair on a damaged system it's a simple matter of selecting the team
+             from the menu at the top and then choosing a damaged system from the list.  If
+             a team is occupied with another task (constructing a device, researching an
+             artifact) that team number will be to the left of OTHER. This is at the bottom
+             of the list.  Once you have given your orders you can clear this menu by
+             selecting CLS from the button bar at the top of the screen.
+
+             2. Shield Status
+
+             Since the time of the first war man has had to fashion tools of death.  Against
+             these tools man has had to defend himself with shields, however crude.  While
+             shields are no longer fashioned from bone and skins they still exist in one
+             form or another.
+
+             This function allows you to install a shield or to adjust the power levels of 
+             your current shield.  When activated a shield menu should appear on the 
+             right side of the Primary Display. At the top of this display should be the
+             name of the active shield and immediately below that should be the percentage
+             of shield damage.
+
+             You should also see three gauges showing the power levels for the different
+             alert modes.  The first of these is the REST mode, the second is the ALERT mode
+             and the third is COMBAT mode (for more info on ship modes see Main Screen
+             controls.)  Clicking on the gauge will set the power level for that particular
+             ship mode.
+
+             Clicking on the shield icon in the button bar above the shield menu will change
+             the shield menu to the shield description and installation menu.  Below the
+             active shield name you should see a list of four attributes: Sys. Damage, Max.
+             Energy, Protection, and Cargo Size.
+
+             System Damage is a redundant.  It has the same meaning as in the main shield
+             menu display.
+
+             Maximum Energy is the amount of Energy the shield will require when at maximum
+             power.  With the most powerful shields it is a good idea not to leave the
+             shield very high as it will tend to drain large amount of power from the
+             auxiliary power supply.
+
+             Protection is the total number of damage points a shield can deflect before
+             damage is taken by the ship itself.  The bigger the better.  It is important to
+             note that the total number of shield points will be split among the different
+             damage types.  The damage types and how the percentages affect the damage
+             absorption can be seen below.
+
+             Cargo Size is, as it suggests, the number of cubic meters the shield occupies
+             when uninstalled.
+
+             Below all this on the shield menu you should see the picture of the shielding
+             device next two four bar graphs.  These graphs represent the percentage
+             breakdowns for each damage type.  The damage types are as follows:
+
+             (P) Psionic Damage affects the viability of the personality containment
+             matrices.  Life support will be the first thing to go if the ship takes a major
+             hit from a psionic weapon.  The same can be said for your opponents.
+
+             (P) Particle Damage is taken from cannons which fire particle streams, whether
+             it be electron, proton, or neutron based.  Particle Damage can also be the
+             result of some device which corrupts the make up of matter itself.  While the
+             latter is often more destructive a good shield can still take the brunt of the
+             attack.
+
+             (I) Inertial Damage is the result of an explosive weapon.  Missles or weapons
+             of an explosive nature will result in Inertial Damage. Retroexplosive hull
+             coatings and advanced kinetodispersive barriers render such technology
+             harmless.
+
+             (E) Energy Damage is taken from energy bolt weapons such as the whip. Weapons
+             such as these seek to fry the components of enemy computer systems.  While this
+             is all fine and good if it is the other guy you won't want it happening to you.
+             If at all possible have a shield with at least a nominal amount of Energy
+             Damage protection.
+
+
+             From this area you may also install another shield.  If a shield other than the
+             reflective hull is installed you will have to uninstall the current shield
+             before installing a new one.
+
+             Uninstalling Shields
+
+             When in the secondary shield menu you should see a plug-and-outlet icon in the
+             button bar.  Clicking on the plug in the out position will allow you to
+             'unplug' your current shield.
+
+             Installing Shields
+
+             Once you have no active shield you can continue by clicking on the
+             plug-in-the-socket in the button bar. This will allow you to pick the shield
+             from those in your cargo that you wish to install.
+
+             3. Weapon Status
+
+             When this function is first activated a list will appear on the right hand side
+             of the Primary Display.  This list will contain all of the weapons that are
+             currently installed on your ship.  Clicking the right arrow will show you a
+             breakdown of the weapon selected and, to scroll through the list while in this
+             mode, click up or down.  The values given for each weapon are identical in
+             meaning to those given for shields except for Damage.  It is obvious that this
+             value represents the amount of damage inflicted to the enemy instead of the
+             damage shielded.
+
+             4. Weapon Configuration
+
+             Selecting this function will bring up a layout of your ship's gun nodes.  This
+             is the Weapon Configuration menu and should fill the majority of the Primary
+             Display.  From this area you may install or remove weapons from your ship's
+             hull.
+
+             Installing a weapon
+
+             Start by selecting a gun node without a weapon already installed in it. (Gun
+             nodes are the locations along your ship hull at which a weapon may be placed.)
+             An empty node will appear as an black grey square on the Weapon Configuration
+             menu.  Select one of these nodes.  A selected node will have a red border along
+             its edge.
+
+             After you have an empty node selected you should select the plug- in-socket
+             icon from the button bar above the Weapon Configuration menu.  This will take
+             you to a list of weapons available in your cargo hold.  You will begin the game
+             with no weapons installed.  Fortunately you have a Dirk in your cargo hold.  It
+             would be a good idea to install it as soon as possible.
+
+             Later in the game (hopefully) you will have constructed other weapons.  These
+             will appear in the list at the left.  The right side of the display will
+             provide you with a breakdown of the highlighted weapon (see Weapon Status).
+
+             Once the item you want installed is highlighted, you may proceed with the
+             installation by again selecting the plug-in-socket icon from the button bar.
+
+             Removing a weapon
+
+             Perhaps you want to remove a weapon from your hull so that you can put another
+             in its place, perhaps keeping the engineering teams busy amuses you, or perhaps
+             your encode has lost integrity and you've gone mad... regardless of your
+             reasoning you've decided that you want to remove a weapon.
+
+             Select the weapon you want to remove from those shown in the Weapon
+             Configuration menu.  To remove the selected weapon choose the
+             plug-out-of-socket icon from the button bar.  You will be asked if you want to
+             proceed with the removal.  Better have a good reason to be removing that
+             weapon.  If it's your only one you'll have a lot of explaining to do to the
+             crew.  You never know when you'll be attacked, or by whom.  (For mindless
+             violence see Battle)
+
+             5. Computer Logs
+
+             As the captain, you make a note to enter into this virtual logbook all the
+             events of potential interest.  This command will take you to a list of these
+             entries.  Clicking on an entry title will begin Query Mode which allows you to
+             read the associated file.  To get back to the log entry list when in this mode
+             simply toggle Query Mode off by selecting the question mark near the top right
+             of the screen.  To scroll through the list of entries while in Query Mode use
+             the arrow keys on the screen.
+
+             6. Engineering Research
+
+             This toggles your Engineering officer's research status. Researching will
+             increase their knowledge base, or experience points. Do this whenever possible.
+
+             7. Bot Control
+
+             Any items in the planetary cache may be retrieved through this function.  By
+             choosing the out-of-the-box-arrow in the button bar above this menu, any
+             highlighted items will be retrieved by a probot.  You may also send items to
+             the planet's surface by clicking on the into-the-box- arrow in the button bar.
+             This will bring up your cargo list.  Highlight the item you want to send down
+             and choose the into-the-box-arrow a second time.  This will send a probot down
+             with the item.
+
+             Placing Bots
+
+             To send down a minebot or manufactory to process materials for later retrieval,
+             merely click on the Bot icon at the far right of the button bar.  Due to the
+             difficulty of processing foreign ores and working in hostile alien environments
+             it will take a minimum of one full cycle before any ores or materials can be
+             processed.  In general you will have to leave a system and return to it before
+             your bot will show progress.  Once the planetary cache is full the bots on that
+             planet will produce no more materials.  It will be necessary to remove those
+             items before production can continue.
+
+             Retrieving Bots
+
+             When you first enter the Bot Menu click on the bot icon on the far right of the
+             button bar.  This will allow you to retrieve any bots that you have placed on
+             the surface below.
+
+             8. Component Creation (Big guns... BIG guns... BIG &#@ GUNS!!!)
+
+             "Screw diplomacy! I wanna kill something!"
+
+             While this is a common saying it is a hollow statement unless you've got the
+             guns to back your agression obsession.  In order to build that awesome arsenal
+             you'll have to start here, in the Component Creation screen.
+
+             The best way to learn how to use this interface is to actually use it.
+
+             A Brief Walk Through
+
+             Let's say you've just begun your mission.  For some strange reason you think it
+             is vital that engineering analyze the components of a weapon in your cargo
+             hold.  In fact, it's the only weapon in your cargo hold (perhaps that's why you
+             think it vital to analyze it.)
+
+             Regardless of your reasoning, the first step in decomposing a device is
+             selecting the Decomposing button from the top left of the interface. The light
+             next to that button should change to green, indicating that you are now in
+             Decompose Mode.  Below that button you should now see a list of items colored
+             bright white.  These are the items in your cargo hold that you can disassemble.
+             The weapon that we are looking for is the Dirk.  Select it from the list using
+             your pointer.
+
+             Once it has been highlighted you should see it listed under Current Project on
+             the far right of the screen.  At the top of this screen you should see the Item
+             Status area.  This area provides you with a readout of any shield or weapon
+             selected (for more info on this function see Weapon Status and Shield Status.)
+
+             We wanted to analyze the Dirk.  A brief description of its function is given at
+             the bottom left of the screen.  The description of any item selected can be
+             found in this area.  If you want to disable this feature you can toggle Query
+             Mode off by selecting the question mark button at the top left.  If the light
+             is red Query Mode is off.  Go ahead and click it again.  We'll want that light
+             green so we'll know the descriptions of what we are selecting.
+
+             Now we have a description of the Dirk, but we don't know what it's made of.
+             When an item is selected the three parts which comprise it are given to the
+             immediate left of Current Project.  If Dirk is still selected we should see the
+             three parts: StrataMount, Ion Cache, and Flux Lens. If we wanted to, we could
+             proceed with disassembling the Dirk.
+
+             Disassembling/Decomposing Items
+
+             Under Assign/Inspect Teams we can choose an engineering team to do the work.
+             If a team has a red light next to them they are busy.  You can Inspect the work
+             of a busy team by selecting that team with the pointer. Their task should
+             appear beneath Current Project.  Make sure you are in Decompose mode by
+             checking the light next to that button; it should be green.  Next, select a
+             free engineering team.  The item will vanish from your cargo as your
+             engineering teams pull it out to take it apart. To check the progress of your
+             team you can click on them again (make sure they are busy before you select
+             them; selecting a free team will put that team to work decomposing whatever
+             else you highlighted!)  As a team progresses you will see the green bar grow
+             beneath the item in Current Project.  When this bar reaches the full length of
+             the box the task will be completed.  Rejoice! You've just decomposed you're
+             only weapon.
+
+             The crew is beginning to think you've gone quite mad.  You've just taken apart
+             the only weapon you had on board.  It would be a good idea to put that weapon
+             back together before they erase you (see Assembling/Integrating Items.)  It's a
+             pity that when you first start the mission your crew lacks the ability to build
+             Dirks (i.e. You can't put it back together again once it's disassembled.  If
+             you were foolish enough to actually take it apart and you really can't put it
+             back together just restore the game.)
+
+             Once the item is completely decomposed you'll want to go back into Integration
+             Mode.  Check the light next to the Integrate button.  Is it green? Make it so.
+             A list of items you can manufacture will appear below.  As your crew's
+             knowledge base increases so will your ability to create bigger and better
+             armaments.  In the beginning that list is fairly small but each time a crew
+             member increases his or her knowledge base it is a good idea to check the list
+             again... you never know what the crew will design next.
+
+             I don't know nuffin' bout' no devices... what's what?
+
+             Regardless of the creation mode you are in you can color code the cargo list in
+             the Component Creation screen by selecting the Clr Code button beneath the
+             cargo list.  All items fall into three classes: Materials, Components, and
+             Devices.  When the Clr Code status light is green the items in the list above
+             it will be color coded as follows:
+
+             Materials: Brown
+             Components: Light Blue
+             Devices: Blue
+
+             -Materials are processed from raw ores and minerals from a planets surface.
+             This can be done by dropping a minebot.
+
+             -Components are processed from materials.  They are more complex than materials
+             but still serve no direct purpose.  These can be created by dropping a
+             manufactory to a planet's surface.
+
+             -Devices are made up of components and, sometimes, other devices. Devices
+             include shields, weapons and ship upgrades.
+
+             For every item that exists it requires three primary components to manufacture
+             it.  Here is a brief list of devices and components that you can eventually
+             construct as well as the complete list of materials.
+
+             Weapons   PART #1        PART #2        PART#3       Relative Worth     LEVELS
+             -------------------------------------------------------------------------------
+             Dirk      StrataMount    Ion Cache      Flux Lens      58   1  2  2  3  2  1
+             Scimitar  Dirk           Solonoid       Ion Cache      98   1  2  3  4  3  2
+             Broadswor Scimitar       Scimitar       StrataMount    218  2  2  4  4  4  2
+             Claymore  Broadsword     Steoplast      Plasm Inverter 271  3  2  4  5  4  3
+             Blackjack Solonoid       Flux Lens      Pulse Loom     58   2  2  4  3  3  2
+             Whip      Blackjack      Ion Cache      Flux Lens      98   2  3  4  4  4  3
+             Short Bow Solonoid       Solonoid       Vac-Feeder     71   2  2  3  5  4  1
+             Long Bow  Short Bow      Guidance Strut Duct Battery   111  3  2  4  5  5  2
+             Light Rai Disei Conduit  Steoplast      Vac-Feeder     97   4  3  4  4  5  3
+
+             Shields
+             -------------------------------------------------------------------------------
+             ReflectHu Steoplast      Steoplast      Polymers       73   1  1  3  3  3  1
+             Quart. Sh Solonoid       Solonoid       Plasm Inverter 60   2  1  5  5  5  1
+
+             Misc. Devices
+             -------------------------------------------------------------------------------
+             Probot    Data Board     Duct Battery    StrataMount   58   1  1  1  1  1  1
+             Minebot   Probot         Cyberplasm      Masking Pod   111  3  1  2  3  2  3
+             Manufacto Minebot        Disei Conduit   Mulroid       164  1  2  1  2  3  1
+             Fuel Nodu Radioactives   Strange Particl Heavy Element 15   1  1  1  1  1  1
+             Reinforce Torque Stanchi Metal Weave     Guidance Stru 84   2  2  2  2  2  2
+             Inc. Thru Dirk           Dirk            Pulse Loom    138  2  2  2  2  2  2
+             Add Cargo Guidance Strut StrataMount     Torque Stanch 84   2  2  2  2  2  2
+             Ins. Gun  Stasis Generat Stasis Generato Thynne Vortex 563  4  4  4  4  4  4
+             Mind Enha Proto-Nutrient Cyberplasm      Biosynth      71   1  1  1  1  1  1
+
+             Components
+             -------------------------------------------------------------------------------
+             Solonoid  Magnetics      Coolants        Heavy Ions    18   1  1  1  1  1  1
+             Data Boar Ceramics       Liquid Gases    Coolants      18   1  1  1  1  1  1
+             CyberPlas Organics       Medicants       Electrolytes  18   3  1  2  3  2  3
+             Disei Con Flux Lens      Solvents        Electrolytes  31   3  1  2  3  3  3
+             SteoPlast Metal Weave    Heavy Ions      Polymers      31   2  1  2  2  2  2
+             Flux Lens Crystals       Magnetics       Polymers      18   2  1  3  2  2  2
+             Metal Wea Conductants    Radioactives    Ceramics      18   2  1  2  2  3  2
+             Pulse Loo Polymers       Alien Compounds Radioactives  18   2  1  2  3  2  4
+             Biosynth  Organics       Proto-Nutrient  Protoplasm    31   4  1  2  4  4  2
+             Plasm Inv Crystals       Electrolytes    Alien Isotope 18   3  1  3  2  1  2
+             Grav-Coup Pulse Loom     Radioactives    Strange Parti 31   2  2  3  3  2  2
+             Torque St StrataMount    Guidance Strut  Ceramics      44   2  2  2  3  2  2
+             Vac-Feede Heavy Ions     Oxidants        Solonoid      31   2  2  3  2  3  2
+             Mulroid   Esper Seeds    Coolants        Alien Isotope 18   4  1  1  3  1  4
+             Proto-Nut Protoplasm     Organics        Medicants     18   4  1  2  4  4  2
+             Duct Batt Conductants    Magnetics       Ceramics      18   2  1  3  2  2  1
+             Masking P Flux Lens      Crystals        Polymers      31   3  3  5  3  2  1
+             Guidance  Heavy Ions     Conductants     Magnetics     18   1  2  2  2  3  1
+             StrataMou Heavy Ions     Solvents        Magnetics     18   1  3  2  2  2  1
+             Ion Cache Polymers       Magnetics       Liquid Gases  18   3  2  3  3  3  2
+
+             Materials
+             -------------------------------------------------------------------------------
+             Protoplas Amino Acid     Carboxylic acid Amine         5    1  1  1  1  1  1
+             Polymers  Alkene         Alkene          Industrial Ch 5    1  1  1  1  1  1
+             Crystals  Lensing Solid  Lensing Solid   Strong Acid   5    1  1  1  1  1  1
+             Oxidants  Base           Transition Meta Protic liquid 5    1  1  1  1  1  1
+             Esper See Lensing Solid  Heavy Element   Industrial Ch 5    1  1  1  1  1  1
+             Heavy Ion Transition Met Transition Meta Strong Acid   5    1  1  1  1  1  1
+             Coolants  Halogens/Noble Ether           Aldehydes/Ket 5    1  1  1  1  1  1
+             Solvents  Strong Acid    Strong Acid     Strong Acid   5    1  1  1  1  1  1
+             Electroly Base           Base            Strong Acid   5    1  1  1  1  1  1
+             Organics  Amino Acid     Amino Acid      Amine         5    1  1  1  1  1  1
+             Alien Iso Heavy Element  Transition Meta Lensing Solid 5    1  1  1  1  1  1
+             Conductan Halogens/Noble Transition Meta Alkyne        5    1  1  1  1  1  1
+             Magnetics Industrial Che Transition Meta Heavy Element 5    1  1  1  1  1  1
+             Radioacti Heavy Element  Heavy Element   Industrial Ch 5    1  1  1  1  1  1
+             Liquid Ga Halogens/Noble Halogens/Noble  Aldehydes/Ket 5    1  1  1  1  1  1
+             Medicants Amino Acid     Volatile compou Alkyne        5    1  1  1  1  1  1
+             Ceramics  Industrial Che Transition Meta Lensing Solid 5    1  1  1  1  1  1
+             Alien Com Heavy Element  Heavy Element   Amino Acid    5    1  1  1  1  1  1
+             Strange P Heavy Element  Heavy Element   Transition Me 5    1  1  1  1  1  1
+             Worthless Worthless Junk Worthless Junk  Worthless Jun 1    1  1  1  1  1  1
+
+             Assembling/Integrating Items
+
+             Once you are in Integrate Mode you can choose from the item list something that
+             you would like to create.  While you may highlight anything you like from the
+             list, you may only manufacture those items which are bright white.  When you
+             have highlighted an item it will appear beneath Current Project.  The three
+             parts that comprise that item are to the left of that.  If an item is listed as
+             red you do not have it.  If it is green you do have it.  If all three items
+             that comprise it are green, rejoice!  You can create that item if you wish!  To
+             create an item that is selected (and for which you have the parts) select a
+             free engineering team and go to work.
+
+             9. Cargo Inventory
+
+             In the center of this screen is the Cargo Door which opens immediately after
+             this function is accessed.  To view only certain cargo types you may filter out
+             those you don't wish to see by clicking on the box of the appropriate cargo
+             type.  To bring those items back into the viewed list just click that same
+             cargo type name.
+
+             Jettisoning Cargo.
+
+             Choosing the arrow-and-box icon will allow you jettison any unwanted cargo.
+             This may become necessary from time to time if you have accumulated a large
+             number of bulky items.  An alternative this may be decomposing that bulky item.
+             Unfortunately, if the cargo hold is full of these items it may be impossible to
+             decompose that item without losing some of the components.  In general it is a
+             good idea to keep a close track on your space used and your cargo size
+             allowance.  No one wants throw anything away, especially if it's a valuable
+             device.
+
+             Printouts of the Cargo Manifest
+
+             The chief function of this screen is the control pad to the right of the Cargo
+             Door.  If a printer is connected to your computer you may print out a complete
+             breakdown of your cargo manifest.  This list includes material, component, and
+             device categorizations as well as space allowance in cubic meters.
+
+             Science
+
+             1 Short Range Scans
+             2 Long Range Scans
+             3 System Layout
+             4 Planetary Scans
+             5 Science Research
+             6 Star Log
+
+             1. Short Range Scans
+
+             Short Range Scans provide you with a scan of all space within 8M km.  Incoming
+             ships will set the scanners red when they come within 3M km.  This scan should
+             appear in the left side of the Primary Display with a scanning circle radius
+             growing and shrinking as cyclic scans are completed.
+
+             2. Long Range Scans
+
+             Long Range Scans appear on the left side of the Primary Display. These scans
+             are much less intensive but cover a much greater area. Ambient signals appear
+             in the upper rectangle.  When a salient signal appears as the result of an
+             alien ship you will see an unmoving blip. Proximity to solar bodies may obscure
+             this blip with static.  If you are near to a sun it is better to rely on short
+             range scans as they are much more reliable.  The maximum scan distance for the
+             long range scanner sweeps is 20M km.
+
+             3. System Layout
+
+             This function causes the active system map to fill the Primary Display.  It is
+             from the system map that you may choose the other planets in the system you
+             wish to travel to.  Basic information such as the number of visits, and the
+             number of bots on the surface of a world can be displayed by selecting the Star
+             Log icon from the button bar above the System Layout map (the second from the
+             right.)  To stop the System Layout rotation select the Halt button to the right
+             of the Star Log icon.
+
+             4. Planetary Scans
+
+             In the center of this screen a flat map of the planet should appear. To the
+             left of the planet layout should be five buttons, each labeled with the
+             different types of scans your probots may perform.
+
+             (Land) Lithospheric Scans
+             (Sea) Hydrospheric Scans
+             (Air) Atmospheric Scans
+
+             These scans are particularly useful when determining what materials could be
+             processed from a planet.  You'll want to perform these scans if you are looking
+             to drop a minebot or manufactory.
+
+             (Life) Biospheric Scans
+
+             This type of scan is useful when you want to know the specifics of the
+             lifeforms on a planet.  This is the only way to determine the type and
+             TechLevel of intelligent lifeforms when they are encountered planet side.
+
+             Tech Levels:
+             0.1-1.0        Developing Primitive Social Schemas
+             1.1-2.0        Early Imperialism
+             2.1-3.0        Industrialization
+             3.1-4.0        Global Networking
+             4.1-5.0        Extraplanetary Imperialism
+             5.1-6.0        Intersteller Imperialism
+             6.1-7.0        Multidimensional Travel
+             7.1-8.0        Psychoportation and Mass/Energy Matriculation
+
+             (Anom) Anomaly Scans
+
+             If you have only time for one scan this would be the one to perform. This scan
+             will search for any materials, components, or artifacts immediately available
+             on the planet's surface.  Points of green light will appear on the surface
+             where anomalies occur (if they occur.)  To retrieve these items you will have
+             to tell the probots where to return to.  You will have to zoom into the area
+             using the sky-cam.  Select '+' twice for a full zoom, then select the area on
+             the map where the anomaly occurred.  If red messages appear in the zoom screen
+             you are properly centered on the item.  If the red dot is on the zoom screen
+             but red messages don't appear, you aren't properly centered.  Fine tune your
+             position by using the arrow keys.  Once you are centered on the item and the
+             red messages appear, select the retrieve button from the bottom right of the
+             screen.  In an instant the item will have been acquired.
+
+             General Scan Info
+
+             It requires only two probes to perform any complete scan.  To initiate another
+             scan just select the scan you want to perform.
+
+             As each scan is completed relevant information will appear in the Info Box at
+             the bottom left.  To scan through these lists choose the Prv or Nxt buttons to
+             the right of the Info Box.  To get back to the scan status list select the
+             button between Prv and Nxt.
+
+             When all five scans are completed a full planetary description will appear
+             where the planet layout was.  This description will tell you all there is to
+             know about that planet.
+
+             Planetary Evolution
+
+               State                       Time Frame (yrs)    Tech Level
+             -------------------------------------------------------------
+             0 Gaseous
+               a. Nebula                    1 Billion           No Life
+               b. Gas Giant                 1 Billion           No Life
+               c. Heavy Atmosphere         500 M                No Life
+             1 Active
+               a. Volcanic                 500 M            Simple Proteins
+               b. Semi-Vol.                400 M          Single Celled Plants
+               c. Land Formation           300 M         Single Celled Animals
+             2 Stable
+               a. Land & Water             200 M             Vascular Plants
+               b. Slight Veg.              150 M          Multicelled Animals
+               c. Med. Veg.                150 M                  0
+             3 Ea. Life
+               a. Heavy Veg.                15 M                  0
+               b. Med. Veg.                10000                  1
+               c. Med. Veg.                 8000                  2
+             4 Adv. Life
+               a. Med. Veg.                 4000                  3
+               b. Slight Veg.               2000                  4
+               c. No vegetation             4000                  5
+             5 Dying
+               a. Ruins                     3000               No Life
+               b. Med. Veg.                 8000               No Life
+               c. Dead Rock                  ?                 No Life
+             6 Dead
+               a. Radiation               200000               No Life
+               b. Astoroid                   ?                 No Life
+               c. Null                       ?                 No Life
+             7 Star
+               a. Yellow                     X                 No Life
+               b. Red                        X                 No Life
+               c. White                      X                 No Life
+
+             In addition several other changes may take place:
+                                           5b to 2c
+                                           2c to 5c
+                                           3a to 5b
+
+             All planets have the potential to change state or mode to the next one in the
+             list.  Years over a certain amount are broken down into smaller time frames
+             with a random chance of occuring.  Ie. 100 M into 1000 x 100000 with a 1 in
+             1000 chance every 100000 yrs.  Game time is actually accelerated to induce more
+             changes to the system.  A planet changing state or mode destroys
+             probots/minebots, cache, and info collected on the planet.
+
+             You can get back to the planet view by selecting Anom from the buttons on the
+             left.
+
+             5. Science Research
+
+             This toggles your Science officer's research status.  Researching will increase
+             their knowledge base, or experience points.  Do this whenever possible.
+
+             6. Star Logs
+
+             Selecting the Star Log icon will activate the Star Logs info menu. This menu
+             should appear in the right side of the Primary Display.  The highest level of
+             the menu is the star system names list.  Moving to the right through this
+             display will take you to the more specific levels of data Those levels are as
+             follows
+
+             System Names
+              System Info
+               Planet Orbit
+                Planet Info
+
+             Scrolling up and down in any of these modes will take you to the different
+             stars or planets in that particular list.  To return in the list to the system
+             you are currently in select the Home icon from the button bar above the Star
+             Log info menu.  Selecting the System Layout icon from the button bar will take
+             you immediately to the Planet Info level of the Star Log info menu.
+
+             Security
+
+             1 Raise Shields
+             2 Arm Weapons
+             3 Evade Enemy
+             4 Mask Ship
+             5 Security Research
+             6 Attack Enemy
+
+             1. Raise Shields
+
+             Raising Shields will take the ship into Combat Mode and will power your shield
+             to the Combat shield level.  As with weapons powering your shields may
+             initially use a great deal of auxiliary power but if your enemy is quick it may
+             be necessary to go in protected from the beginning.
+
+             Selecting Raise Shields again will lower the shields.  This will drop you into
+             Alert Mode if the weapons are not armed or you will stay in Combat mode if the
+             weapons are still armed.
+
+             2. Arm Weapons
+
+             Arm Weapons will take the ship into Combat Mode and will fully power all
+             installed weapons.  While this may drain a significant portion of your
+             auxiliary power it may be good idea to have weapons powered before you begin an
+             important battle.  Waiting for your weapons to power while the enemy draws near
+             is not fun.
+
+             3. Evade Enemy
+
+             Evade Enemy will have your flight engineers attempt to do just that. If it is
+             possible to escape an alien ship this command will allow you to get out of
+             their scan range.
+
+             4. Mask Ship
+
+             The Mask Ship command will order engineering to mask all emissions from the
+             ship in an attempt to make the ship 'invisible'  While the ship is not truly
+             cloaked it is certainly difficult to scan and almost impossible to track when
+             in this mode.  Enemies will usually drift away when you are in this mode.
+
+             5. Security Research
+
+             This toggles your Security officer's research status.  Researching will
+             increase their knowledge base, or experience points.  Do this whenever
+             possible.
+
+             6. Attack Enemy
+
+             Attack Enemy will order the ship toward whatever enemy vessels are nearest you
+             and will proceed to engage them in battle.
+
+             BATTLE!!!
+
+             There are a lot of buttons. Complex commands scare me.  Not to worry. As
+             always, the commands for your ship are easier than they appear.
+
+             We've got Battle Display, TargetBox, Weapon Configuration, and Status Bars.
+
+             Battle Display
+
+             The Battle Display is filled with a dark starfield.  You are at the center of
+             it and are surrounded by the scan perimeter which appears as a pulsing blue
+             circle.
+
+             The Battle Plane
+
+             The Battle Plane is the plane that your ship flies in.  The Battle Plane is
+             always stationary relative to you.  The movements and positions of other
+             vessels will be tracked in relation to this Battle Plane.  Ships will appear as
+             white points while their projections on the plane will appear as dark red dots.
+             For clarity a shadow line is drawn between the ship and its projection.  In
+             other words, the longer the shadow line the higher/lower that ship is from your
+             plane of flight.
+
+             ThrustPad
+
+             The ThrustPad controls your movement through the BattlePlane.  The
+             controls are straight forward (up arrow=forward, down
+             arrow=backward, etc.)
+
+             TargetBox
+
+             The TargetBox is in the lower left quarter of the battle screen. This display
+             will tell you all you need to know about alien ships.  When you enter battle
+             the TargetBox will be in Data Mode.
+
+             Alt
+
+             The Alt button at the bottom of the battle screen will toggle the TargetBox
+             between Data Mode and Visual Mode.
+
+             Data Mode:
+
+             What this means is that when ships are targeted on the Battle Display bar
+             graphs of that ship's power levels and system damages will appear here.  These
+             graphs appear in the following order (from left to right).
+
+             Levels
+             (DMG) Hull Damage
+             (LIF) Life
+             (PWR) Power
+             (SHD) Shield
+
+             Damages
+             (P) Power
+             (S) Shield
+             (W) Weapons
+             (E) Engines
+             (L) Life Support
+             (C) Communications
+             (C) CPU
+
+             These values are the same as those on your own ship all are explained in
+             greater detail below (see Primary and Auxiliary Status Bars).
+
+             Visual Mode:
+
+             When the TargetBox is in Visual Mode you will see a vid clip of the target
+             vessel at the left of the TargetBox.  Above that should be other information
+             about the ship.  From top to bottom that list is as follows:
+
+             Race
+
+             The race indicator will tell you which alien empire you're clashing horns with.
+
+             Ship Type (and ship index)
+
+             Depending on the estimated weaponry and hull strength the ship's computer will
+             attempt to classify alien vessels in one of 15 categories (in order of least to
+             greatest).
+
+                  Shuttle
+                  Scout
+                  Fighter
+                  Assault Scout
+                  Patrol Craft
+                  Corvette
+                  Frigate
+                  Lt. Destroyer
+                  Hv. Destroyer
+                  Lt. Cruiser
+                  Hv. Cruiser
+                  Battle Cruiser
+                  Flagship
+                  Battleship
+                  Dreadnaught
+
+             The ship index (the letter that follows a ship's type) distinguishes between
+             the different ships as they approach you.  Each ship has a different index
+             letter.  The index for a ship will stay constant throughout a battle.
+
+             Range
+
+             This is the targeted ship's distance from your ship in thousands of Kilometers
+             (k km).
+
+             Tech Level
+
+             This is the estimated Tech Level of the targeted ship (see Science Planet Scan
+             for list of Tech Levels).
+
+             (Accel) Acceleration
+
+             This is a rating of how many units of velocity may be accumulated per second by
+             the targeted vessel.
+
+             (Prev) Previous/Next
+
+             Selecting Next will move the TargetBox through the index list of ships.
+             Previous will move you in the opposite direction through the list.  These may
+             become useful when the enemy is tightly clumped making directly selecting them
+             from the Battle Display difficult.
+
+             Weapon Configuration
+
+             This is the bottom middle of the battle screen.  In this Area you should see
+             your gun nodes and the weapons installed in them.  Next to each weapon should
+             be a green light.  This light is the Power Light for that weapon.
+
+             PowerUp Sequence
+
+             Each time a weapon is fired the system checks to see if the Power Light is
+             active for that weapon.  If the light is green and sufficient power is
+             available in the battery that weapon will begin powering.  If the light is red
+             after the weapon is fired that weapon will not begin to power until the light
+             is again green.
+
+             After long battles when your batteries are low it may become necessary to
+             remove power hungry weapons from the PowerUp Sequence.  This leaves your
+             batteries free to power less powerful weapons which can fire more frequently.
+             Ultimately, what weapons are left in the PowerUp Sequence is up to you.  Too
+             many weapon configurations exist to explain the best technique for each.  The
+             best suggestion is to experiment with the Power Lights until you are familiar
+             with the best setup for your ship.
+
+             Firing a weapon
+
+             Once power from the battery is allocated to a weapon it will begin to power.
+             This will turn the border of the weapon icon from dark red to bright read then
+             into dark green and eventually to bright green.  If the targeted vessel located
+             in the TargetBox is also within range of a fully powered weapon the border for
+             that weapon will turn blue.  If Active Fire is disabled you must click on the
+             weapon before it will fire. Active Fire is explained below.
+
+             Active Fire
+
+             The cross-hair icon is responsible for toggling Active Fire and is located to
+             the right of the Weapon Configuration Area beneath the word "Active."  The
+             Active Fire status bar is above the Weapon Configuration Area.   When Active
+             Fire is enabled the Active Fire status bar should be red.  While this function
+             is active all powered weapons within range of a targeted enemy will fire.  For
+             ease of play this feature is often enabled and left on for the rest of the
+             battle.
+
+             Active Scanner
+
+             In order to increase the accuracy of the weapons when engaging an enemy it is
+             possible to initiate an active scan of the ships you target.  The Active
+             Scanner toggle button is immediately to the right of  the Active Fire toggle
+             button.  When enabled the Active Scanner status bar beneath the Weapon
+             Configuration Area should be red.  This function will increase your hit
+             accuracy by 20%.  Unfortunately, all those high energy ship scans have a cost.
+             In order to pinpoint a ship you have to reveal your own position.  This
+             subsequently increases the enemy's hit accuracy by 20%.  This is most useful
+             when you've armed yourself with long range weapons or when the enemy is weakly
+             armed.
+
+             Primary Status Bars
+
+             The three red bars on the right hand side of the battle screen are the Primary
+             Status Bars.  These keep you aware of your ship's most crucial system levels
+             and damages.  Those three, from right to left, are as follows.
+
+             Shield Control
+
+             Clicking on this bar will adjust the shield level of your ship.  The higher you
+             go on the bar the greater the allotted shield power will be. Notice the tick
+             marker that appears near the top and to the right of the Shield Control bar.
+             The height of this marker is the maximum power value the shield may assume.  As
+             your shield system takes more damage this marker will move down.  A powered
+             shield will continue to draw energy from your battery.  For this reason, it is
+             a good idea to keep the shield on zero power unless you are in immediate
+             danger.
+
+             Ground State Pulse Effect
+
+             When your batteries have been exhausted and your shields are still powered you
+             may experience a Ground State Pulse (GSP).  Your shield power will fluctuate
+             madly as a result.  The reason for this lies behind the physics which drive
+             your ship.  The matter converters in the ship's drive core are step generators.
+             They produce discrete packets of energy that the power buffers to the auxiliary
+             storage batteries convert to continuous power.  This is analogous to the
+             difference between digital power and analog power.  When the battery is
+             exhausted the shield begins effectively feeding from the step generators.  The
+             resulting field instability can cause damage to the shield generator itself.
+             The chance is small but leaving a shield in a GSP is not recommended.
+
+             Auxiliary Power
+
+             The second red status bar is the Auxiliary Power level.  This represents the
+             amount of power available in your batteries.  For this gauge the height of the
+             tick marker to the right of it is the maximum power the battery may store.  As
+             you take damage to this system the marker will move down reducing the amount of
+             storable power.  Keep an eye on this gauge.  When it starts getting low you'll
+             want adjust your shield level to avoid a GSP (see Ground State Pulse Effect).
+
+             Hull Damage
+
+             The Hull Damage is self explanatory.  When this gauge reaches zero game over,
+             adios, ciao, do not pass go, do not collect $200.
+
+             Auxiliary Status Bars
+
+             The Auxiliary Status Bars are located at the bottom right side of the battle
+             screen.  These status bars give you a read out of your ship systems and their
+             associated damage levels.  A list of these and the effects of damage are given
+             below.  From top to bottom they are as follows:
+
+             Power
+
+             Power system damage will reduce the recharge rate of your battery (i.e.
+             auxiliary power)
+
+             Shield
+
+             Shield damage will reduce the maximum power that your shield may assume.
+
+             Weapons
+
+             Damage to the weapon systems will reduce your hit accuracy.
+
+             Engines
+
+             Significant engine system damage will render the engines inoperable. This is
+             decidedly bad in combat as you will be a sitting duck.  That's not bad as
+             sitting ducks lie... but then again, I never believed a liar... it's like they
+             always say...
+
+             Life Support
+
+             Significant damage to life support systems will erase backup encodes. This also
+             very bad.  Restoring your security officer after battle to regain his sanity
+             will be impossible at that point.  Obviously restoring or re-encoding your crew
+             would be penultimately stupid following encode loss.  It would be the same as
+             saving a blank file over a good file. Dumb.  Yes, very dumb.
+
+             Communication
+
+             Damage to communication systems will make talking with aliens impossible.
+
+             CPU
+
+             If the (CPU) Central Processing Unit onboard your ship is damaged many of the
+             displays will not function correctly.  Damage to the ship's computer will not
+             kill the crew but will make most of the displays and menus difficult if not
+             impossible to use.
+
+             Zoom (+-)
+
+             Above the Active Fire and Scanner buttons you will see the Zoom In/Out buttons.
+             Zooming in and out will change the maximum scan range for the Battle Display.
+             When enemies are very near it is useful to Zoom in, while distant enemies will
+             only be visible from several Zooms out. Play around with these until you are
+             familiar with their function. TimeSlice (+-)
+
+             The TimeSlice control for battle is at the top right of the battle screen.  The
+             effect and control of the TimeSlice value is the same as it is for the Main
+             Screen (see Medical, Options, TimeSlice)
+
+             I've read all of this and I'm still lost.
+
+             For the simplest battle control you need to remember FIVE
+             controls:
+             1. Scanners and Fire Control must be active.
+             2. TimeSlice must be large (20 - 30)
+             3. Head away from everything close to you in the Battle Plane by using
+                the ThrustPad (Run away! Run away!).
+             4. Set your Shield Level to one quarter of its total power.
+             5. Keep selecting all the vessels closest to you on the Battle Display
+                until they are all destroyed.
+
+             Beginners should use these five rules only for as long as they have to. These
+             controls are effective against simpler enemies, but it is important to remember
+             complex situations require complex strategies.  Use these tips only as a
+             foundation for your own schemes.
+
+
+             7. Release Drones
+
+             This function creates a dummy enemy in the computer for you to fight in mock
+             combat.  Originally the battles from this simulation were harmless practice
+             encounters.  However, damage taken before your encodes were revived has made
+             drone combat potentially dangerous. While the damage taken by your ship in
+             these simulations is not physcially real the computer is unable to tell the
+             difference.  When encode containment reaches zero during mock combat the
+             computer was to exit the combat environment.  Now, the computer believes the
+             damage it has taken has actually erased the crew.  In the event of an encode
+             breach the computer was also programmed to reload the crew from cold storage.
+             Unfortunately only six hot slots remain for the thousands of crew back ups that
+             exist.  Confused, the computer will compress the data and stuff it into those
+             slots anyway.  This spells death for you.
+
+             Take this as a warning.  While drone battle is relatively inane it can be
+             fatal.  Do not attempt drone warfare unless you are armed with at least two
+             Dirks.  It is also suggested that you play in Easy mode (see Medical, Options,
+             Difficulty) before you get yourself killed.
+
+
+             Astrogation
+
+             1 Star Map
+             2 Sector Codex
+             3 Local Travel Hist.
+             4 Quick Ship Status
+             5 Target a System
+             6 Astrogation Rsrch.
+             7 Full Ship Status
+             8 Local System Info.
+
+             1. Local Area Star Map
+
+             This star map will appear in the left side of the Primary Display.  It will
+             reveal all stars within a 40 light year radius.
+
+             2. Sector Codex
+
+             Within the Sector Codex any star that is selected is automatically targeted.
+             Due to the number of stars per sector the rotating sector map on the left is
+             too dense for you to make accurate selections.  You may only select a star from
+             the x-y and y-z plane views.  Selecting the engage engines icon will take you
+             to whatever location you have selected without the targeting procedure. Origin:
+             This button will return you to your present location within the Sector Codex.
+
+             X-Loc, Y-Loc, and Z-Loc: These are your X, Y, and Z coordinates (respectively).
+             You can enter coordinates into these by selecting the number area with your
+             pointer.  When inputting coordinates from log entries the Sector Codex will
+             take you as close to that system as possible.  The targeting computer is
+             fallible, however. It may be necessary to select the system from the x-y and
+             y-z plane views once you know a star's approximate position.
+
+             Sectors (1-8): These buttons allow you to view the areas you have explored in
+             the eight sectors that make up the local star cluster.
+
+             Arrow Keys: These keys will allow you to change the perspective of the rotating
+             sector map.
+
+             Travel Log: This button will provide you with a history of the sector you have
+             selected.  White stars in the sector map are those you have been to.  Red stars
+             in the sector map are those you have seen in the Local Area Star Map but have
+             not travelled to.  The Scans Completed gauge in this area is not entirely
+             accurate.  As planets age and fall into new stages of development so do their
+             scans become out of date.  This percentage may be smaller than you thought it
+             should be.  The percent difference is a result of these changes.
+
+             Sector Map: Selecting this button will take you out of the Travel Log Mode.  If
+             you aren't in this mode when you select this button nothing will happen.
+
+             3. Local Travel History
+
+             Local Travel History is not a true path of travel.  What it will tell you is
+             the order in which you have visited the stars in the Local Area Star Map.
+
+             4. Quick Ship Status
+
+             Quick Ship Status will give you the info associated with the Alert Bulbs on the
+             right of the main screen.  This is a list of hull integrity, primary power,
+             auxiliary power, and shield power levels.  You may also access this screen by
+             selecting the Alert Bulbs themselves in the Main Screen.
+
+             5. Target a System
+
+             To target a system you must have selected a system from either the Local Area
+             Star Map or the Local System Info menu.  When a system from either of these is
+             selected you may then enter that system into the targeting computer by
+             selecting this function.  Once a location is targeted you may travel to it by
+             engaging the engines from the button bar at the top of the Primary Display.
+
+             6. Astrogation Research
+
+             This toggles your Astrogation officer's research status. Researching will
+             increase their knowledge base, or experience points. Do this whenever possible.
+
+             7. Full Ship Status
+
+             Full Ship Status will give you a breakdown of damages to the primary systems on
+             board, the hull, fuel, and cargo statuses as well as the ship coordinates.
+
+             8. Local System Information
+
+             This is the sister display to Local Area Star Map.  When both displays are
+             active they affect each other.  Scrolling through the list of stars in the
+             Local System Information menu will cause the target circle on the Local Area
+             Star Map to move from star to star depending on the one selected.  This menu
+             has two primary functions which are as follows:
+
+             Printouts of all visited systems
+
+             Selecting the Printer icon from the far right of the button bar will provide
+             you with a complete printout of all stars you have visited.  As with the Cargo
+             printer function you must have a printer on-line and connected to your computer
+             for this to work.
+
+             Targeting stars and engaging engines
+
+             To move to another star you must first target the system you wish to travel to.
+             Each star in the list has a distance in light years to the right of it.  Stars
+             whose distance value is white are within travelling distance (i.e. you have the
+             fuel to get there).  Select a star from this list that is within your reach.
+             To target that system select the arrow-and-x icon from the button bar.  To
+             travel to a targeted system select the engage engines icon from the button bar.
+
+             Medical
+
+             1 Game Options
+             2 Begin Time Burst
+             3 Clear All Displays
+             4 Save Game
+             5 Load Game
+             6 Medical Research
+             7 Encode Crew Member
+             8 Decode Crew Member
+             9 Quit to Dos
+
+             1. Game Options
+
+             The Notepad icon will bring up a list of features that you can change about the
+             interface.
+
+             Screen Saver (On/Off)
+
+             When this function is on and the system is idle for 750 loops through the main
+             routine (750 loops is officially defined to be "a little while" in Channel7-
+             ese)
+
+             Time Slice (1-250)
+
+             The Time Slice is the delay in milliseconds that is inserted into each scan
+             cycle.  Suffice it to say that increasing the Time Slice slows the program
+             down.  Depending on the speed of your machine you'll need to change the value
+             of the Time Slice accordingly (66Mhz = 35, 50Mhz = 20, MHz = 10, MHz = 0).
+
+             Sound (On/Off)
+
+             This turns the sound for music and sound effects on or off depending on the
+             setting.  If you're machine is particularly slow you may want to turn the sound
+             off to get better performance.
+
+             Difficulty (Min/Avg/Max)
+
+             Difficulty effectively changes your ability in battle.
+
+             General Messages (None/Some/All)
+
+             This function controls the crew alert messages (i.e. when a device is complete,
+             when artifact research is completed, etc.)
+
+             None: When you are not in the Main Screen your crew will not report to you.
+
+             Some: When you are not in the Main Screen your crew will not directly report to
+             you, but will instead put there messages into the Info Box at the bottom left
+             of the Main Screen.
+
+             All: The crew will report to you all the time regardless of where you are in
+             the interface.  Messages will also be sent to the Main Screen Info Box.
+
+             Animation (On/Off)
+
+             This function turns Animation off and on depending on the setting (this
+             includes cube and planet rotation.)  As with Sound, Animation may need to be
+             disabled if you are running a slow machine.  Every effort was made to make the
+             game playable on a machine as slow as a 386 running at 25 MHz. In most cases
+             either Animation or Sound will function on a slow machine but not both at the
+             same time.  Sorry.
+
+             Font Style (Iron/Clean/Block)
+
+             This feature will allow you to choose between three font styles.  Play around
+             and see which ones you like.
+
+             Auto-Save (On/Off)
+
+             When the Auto-Save feature is active you will be prompted to save your game
+             each time you travel to a new system.  If you like to save frequently this is a
+             nice feature.  If a save prompt constantly appearing annoys you, we suggest you
+             turn Auto-Save off.
+
+             Volume (0-64)
+
+             This adjust the volume level of sound effects and music.  (0 = no sound, 64 =
+             max. volume)
+
+             2. Begin Time Burst
+
+             This command will cause 1/2 days to pass.  This is often useful if you have a
+             large device that you need completed.  Devices of this nature often take
+             several days to complete.
+
+             3. Clear All Displays
+
+             This command will clear any active displays from the Primary Display.
+
+             4. Save Game
+
+             Used to store your progress.
+
+             5. Load Game
+
+             Used to restore past games that you have saved.
+
+             6. Medical Research
+
+             This toggles your Medical officer's research status.  Researching will increase
+             their knowledge base, or experience points.  Do this whenever possible.
+
+             7,8 Encode/Decode Crew Member
+
+             (see Psychometry, Psychological Evaluation)
+
+             9. Quit to Dos
+
+             This command will exit the game and take you directly to a DOS prompt. If
+             you've made important changes to your mission be sure you've saved the game
+             before you make this selection.
+
+             Saving your artifacts until the end is a better idea... the experience you gain
+             as a result of researching an artifact is a percentage of your total knowledge
+             base!!
+
+             Da' Credits
+
+                                            The Core Team
+
+             Code Master: Robert W.Morgan III
+             World Design: Jeremy Holt
+
+             Sound Team
+
+             Soundtrak: Andrew G. Sega
+             a.k.a. Necros of the Psychic Monks
+             Sound Code: Otto Chrons
+             Sound Effects: Robert W.Morgan III
+
+             Grafix Art Team
+
+             The Interface: Jeremy Holt
+             Aliens: PJ Beachem
+             The Scavengers: Chris Tallent
+
+             Design Assistants
+
+             Babble: Chris P. Cash
+             Rocks and Minerals: Scott Davis
+             Planetologist: Jeff Smith
+             Jeff's Sidekick: Alex Boster
+
+             Writing Team
+
+             Conversations: Jeremy Holt
+             Maniacal Plotting: Jeff Smith
+
+             Documentation Team
+
+             Words: Webster
+             Punctuation: Alfredo Withemstoe
+             Dangling Participle: Mike Botts
+
+             Quality Assurance Team
+
+             Fanatic Devotees: Mike Matheny,
+             P.J. Beachem, Jeff Smith, Alex Boster,
+             Amy Butler, Ben Vandergrift,
+             Those other weird guys.
+
+
+             Disclaimer
+
+             All rights reserved.  No modifications, disassembly, and reverse engineering of
+             this program and/or documentation is allowed. This package is copyright March
+             13, 1994 by Channel 7.  The authors make no representations, express or
+             implied, with to respect to this documentation or the software it describes,
+             including without limitations, any implied warranties of merchantability or
+             fitness for a particular purpose, all of which are expressly disclaimed.  Users
+             should be aware that included in the terms and conditions under which Channel 7
+             is willing to license Ironseed is a provision that the author and their
+             distribution licensees, distributors, and dealers shall in no event be liable
+             for any indirect, incidental, or coincidental damages and that liability for
+             direct damages shall be limited to the amount of the purchase price paid for
+             Ironseed.
+
+             In addition to the foregoing, users should recognize that all complex software
+             systems and their documentation contain errors and omissions.  The author shall
+             not be responsible under any circumstance for providing information on or
+             correction to errors and omissions discovered at any time in this documentation
+             or the software it describes, whether or not they are aware of the errors or
+             omissions.  The authors do not recommend the use of the software described in
+             this documentation for applications in which errors or omissions could threaten
+             life, injury, or significant loss.
+
