@@ -121,15 +121,15 @@ var planfile: file of planarray;
     err: boolean;
     temp: alientype;
 begin
- assign(planfile,'save'+chr(curfilenum+48)+'/planets.dta');
+ assign(planfile,'save'+chr(curfilenum+48)+'/PLANETS.DTA');
  rewrite(planfile);
  write(planfile,tempplan^);
- if ioresult<>0 then errorhandler('planets.dta',5);
+ if ioresult<>0 then errorhandler('PLANETS.DTA',5);
  close(planfile);
- assign(tarfile,'save'+chr(curfilenum+48)+'/contacts.dta');
+ assign(tarfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler('save'+chr(curfilenum+48)+'/contacts.dta',1);
- assign(srcfile,tempdir+'/contacts.dta');
+ if ioresult<>0 then errorhandler('save'+chr(curfilenum+48)+'/CONTACTS.DTA',1);
+ assign(srcfile,tempdir+'/CONTACTS.DTA');
  reset(srcfile);
  err:=false;
  repeat
@@ -138,7 +138,7 @@ begin
   if not err then
    begin
     write(tarfile,temp);
-    if ioresult<>0 then errorhandler('contacts.dta',5);
+    if ioresult<>0 then errorhandler('CONTACTS.DTA',5);
    end;
  until err;
  close(tarfile);
@@ -152,39 +152,39 @@ var shipfile : file of shiptype;
    logsfile : file of logarray;
    logpendingfile : file of logpendingarray;
 begin
-   assign(shipfile,'save'+chr(num+48)+'/ship.dta');
+   assign(shipfile,'save'+chr(num+48)+'/SHIP.DTA');
    rewrite(shipfile);
-   if ioresult<>0 then errorhandler('ship.dta',1);
+   if ioresult<>0 then errorhandler('SHIP.DTA',1);
    write(shipfile,ship);
-   if ioresult<>0 then errorhandler('ship.dta',5);
+   if ioresult<>0 then errorhandler('SHIP.DTA',5);
    close(shipfile);
 
-   assign(systfile,'save'+chr(num+48)+'/systems.dta');
+   assign(systfile,'save'+chr(num+48)+'/SYSTEMS.DTA');
    rewrite(systfile);
-   if ioresult<>0 then errorhandler('systems.dta',1);
+   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
    write(systfile,systems);
-   if ioresult<>0 then errorhandler('systems.dta',5);
+   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
    close(systfile);
    
-   assign(eventfile,'save'+chr(num+48)+'/events.dta');
+   assign(eventfile,'save'+chr(num+48)+'/EVENTS.DTA');
    rewrite(eventfile);
-   if ioresult<>0 then errorhandler('events.dta',1);
+   if ioresult<>0 then errorhandler('EVENTS.DTA',1);
    write(eventfile,events);
-   if ioresult<>0 then errorhandler('events.dta',5);
+   if ioresult<>0 then errorhandler('EVENTS.DTA',5);
    close(eventfile);
 
-   assign(logsfile,'save'+chr(num+48)+'/logs.dta');
+   assign(logsfile,'save'+chr(num+48)+'/LOGS.DTA');
    rewrite(logsfile);
-   if ioresult<>0 then errorhandler('logs.dta',1);
+   if ioresult<>0 then errorhandler('LOGS.DTA',1);
    write(logsfile,logs);
-   if ioresult<>0 then errorhandler('logs.dta',5);
+   if ioresult<>0 then errorhandler('LOGS.DTA',5);
    close(logsfile);
 
-   assign(logpendingfile,'save'+chr(num+48)+'/pending.dta');
+   assign(logpendingfile,'save'+chr(num+48)+'/PENDING.DTA');
    rewrite(logpendingfile);
-   if ioresult<>0 then errorhandler('pending.dta',1);
+   if ioresult<>0 then errorhandler('PENDING.DTA',1);
    write(logpendingfile,logpending);
-   if ioresult<>0 then errorhandler('pending.dta',5);
+   if ioresult<>0 then errorhandler('PENDING.DTA',5);
    close(logpendingfile);
    
    curfilenum:=num;
@@ -197,18 +197,18 @@ var planfile: file of planarray;
     err: boolean;
     temp: alientype;
 begin
- assign(planfile,'save'+chr(curfilenum+48)+'/planets.dta');
+ assign(planfile,'save'+chr(curfilenum+48)+'/PLANETS.DTA');
  reset(planfile);
- if ioresult<>0 then errorhandler('planets.dta',1);
+ if ioresult<>0 then errorhandler('PLANETS.DTA',1);
  read(planfile,tempplan^);
- if ioresult<>0 then errorhandler('planets.dta',5);
+ if ioresult<>0 then errorhandler('PLANETS.DTA',5);
  close(planfile);
- assign(tarfile,tempdir+'/contacts.dta');
+ assign(tarfile,tempdir+'/CONTACTS.DTA');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
- assign(srcfile,'save'+chr(curfilenum+48)+'/contacts.dta');
+ if ioresult<>0 then errorhandler(tempdir+'/CONTACTS.DTA',1);
+ assign(srcfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
  reset(srcfile);
- if ioresult<>0 then errorhandler('contacts.dta',1);
+ if ioresult<>0 then errorhandler('CONTACTS.DTA',1);
  err:=false;
  repeat
   read(srcfile,temp);
@@ -216,7 +216,7 @@ begin
   if (not err) and ((temp.id>1000) or (tempplan^[temp.id].notes and 2>0)) then
    begin
     write(tarfile,temp);
-    if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',5);
+    if ioresult<>0 then errorhandler(tempdir+'/CONTACTS.DTA',5);
    end;
  until err;
  close(tarfile);
@@ -259,41 +259,41 @@ var shipfile: file of shiptype;
    logsfile : file of logarray;
    logpendingfile : file of logpendingarray;
 begin
-   assign(shipfile,'save'+chr(num+48)+'/ship.dta');
+   assign(shipfile,'save'+chr(num+48)+'/SHIP.DTA');
    reset(shipfile);
-   if ioresult<>0 then errorhandler('ship.dta',1);
+   if ioresult<>0 then errorhandler('SHIP.DTA',1);
    read(shipfile,ship);
-   if ioresult<>0 then errorhandler('ship.dta',5);
+   if ioresult<>0 then errorhandler('SHIP.DTA',5);
    close(shipfile);
    
-   assign(systfile,'save'+chr(num+48)+'/systems.dta');
+   assign(systfile,'save'+chr(num+48)+'/SYSTEMS.DTA');
    reset(systfile);
-   if ioresult<>0 then errorhandler('systems.dta',1);
+   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
    read(systfile,systems);
-   if ioresult<>0 then errorhandler('systems.dta',5);
+   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
    close(systfile);
 
-   assign(eventfile,'save'+chr(num+48)+'/events.dta');
+   assign(eventfile,'save'+chr(num+48)+'/EVENTS.DTA');
    reset(eventfile);
    if ioresult<>0 then
       convertevents
    else begin
       read(eventfile,events);
-      if ioresult<>0 then errorhandler('events.dta',5);
+      if ioresult<>0 then errorhandler('EVENTS.DTA',5);
       close(eventfile);
       
-      assign(logsfile,'save'+chr(num+48)+'/logs.dta');
+      assign(logsfile,'save'+chr(num+48)+'/LOGS.DTA');
       reset(logsfile);
-      if ioresult<>0 then errorhandler('logs.dta',1);
+      if ioresult<>0 then errorhandler('LOGS.DTA',1);
       read(logsfile,logs);
-      if ioresult<>0 then errorhandler('logs.dta',5);
+      if ioresult<>0 then errorhandler('LOGS.DTA',5);
       close(logsfile);
 
-      assign(logpendingfile,'save'+chr(num+48)+'/pending.dta');
+      assign(logpendingfile,'save'+chr(num+48)+'/PENDING.DTA');
       reset(logpendingfile);
-      if ioresult<>0 then errorhandler('pending.dta',1);
+      if ioresult<>0 then errorhandler('PENDING.DTA',1);
       read(logpendingfile,logpending);
-      if ioresult<>0 then errorhandler('pending.dta',5);
+      if ioresult<>0 then errorhandler('PENDING.DTA',5);
       close(logpendingfile);
    end;
    
