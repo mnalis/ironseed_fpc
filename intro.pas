@@ -1484,11 +1484,14 @@ begin
  bkcolor:=0;
  tcolor:=22;
  printxy(5,5,#1#2'1994 Channel 7, Destiny: Virtual');
- printxy(5,15,'All rights reserved.');
+ printxy(5,15,'Released Under GPL V3.0 in 2013 by Jeremy D Stanton of IronSeed.net');
+ printxy(5,25,#1#2'2013 y-salnikov - Converted IronSeed to FreePascal and GNU/Linux');
+ printxy(5,35,#1#2'2016 Nuke Bloodaxe');
+ printxy(5,45,'All rights reserved.');
 {$IFDEF DEMO}
- printxy(5,25,'IronSeed ' + versionstring + ' Demo');
+ printxy(5,55,'IronSeed ' + versionstring + ' Demo');
 {$ELSE}
- printxy(5,25,'IronSeed ' + versionstring);
+ printxy(5,55,'IronSeed ' + versionstring);
 {$ENDIF}
  wait(1);
  new(planet);
@@ -1700,7 +1703,7 @@ begin
    closegraph;
      for i := 1 to paramcount do
 	writeln(paramstr(i));
-   writeln('Do not run this program separately.  Please run IS.EXE.');
+   writeln('Do not run this program separately.  Please run is.');
    halt(4);
   end;
  if (paramstr(2)='/done') then
