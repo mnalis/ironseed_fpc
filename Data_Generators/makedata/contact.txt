@@ -1,0 +1,12 @@
+Name:           techmin         techmax         anger(0-100)    congeniality(0-100)     victory         defeat          war(0-1)
+Sengzhac        4 0             5 0             25              0                       10              15              0
+D'phak          4 0             5 0             40              15                      10              10              0
+Aard            5 0             6 0             0               5                       25              50              0
+Ermigen         4 0             5 0             5               15                      5               10              0
+Titarian        4 4             5 4             15              20                      10              25              0
+Quai Pa'loi     4 0             5 0             0               20                      1               15              0
+Scavengers      4 2             5 2             11              10                      20              18              0
+Icon            4 0             5 0             5               20                      10              35              0
+The Guild       4 0             5 0             5               10                      5               5               0
+Phaedor Moch    5 0             6 0             5               80                      5               5               0
+Void Dwellers   6 0             8 0             0               70                      1               0               0

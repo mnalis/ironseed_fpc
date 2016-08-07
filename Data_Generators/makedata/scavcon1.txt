@@ -1,0 +1,62 @@
+@-1      20002   2       7       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+-1      -1      1       6       SOUL
+-1      -1      1       8       JOY
+-1      -1      3       9       PAIN
+-1      -1      1       10      OTHERS OTHER
+-1      -1      1       11      BEGINNING
+-1      -1      3       12      THINGS
+-1      -1      1       13      SAY SPOKE
+-1      -1      3       14      DESTROYED
+-1      -1      1       15      END ENDED DEATH ENDING
+-1      -1      1       16      SEEDS @SEED
+@-1      -1      1       17      SCAVENGERS SCAVENGER ASSIMILATE SCAVS
+-1      -1      1       18      WANDER GATHER GROW GROWING GROWTH
+-1      -1      1       19      LAIR SHIPS SHIP
+-1      -1      1       20      STACK STACKS WORSHIP
+@-1      -1      1       25      HOMEWORLD HOME WORLD
+@-1      20001   1       26      SELL BUY TRADE TRADERS
+@-1      -1      1       32      IRONSEED
+-500
+@6      -1      2       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+1       I, the many seeks meat for taking. Would you be the sweet meat of future ^growth^? We need.
+1       You again?! The ^others^ of me screamed that you would come wanting. We need more than you need. Greed is good for the ^growing^.
+1       God of ourselves are we. ^Tool^ creating ^tool^, we have risen. Have you come to ^worship^ us with us?
+1       We are masters of ^ending^. We require your ^seeds^ that we might sprout anew.
+1       ^Death^ is a dry place. It is moist here. Speak with us that we might ^grow^. We need.
+@-1      -1      2       -1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+-1	Oh, thing in space. We assimilate... Are scavengers. We seek to acquire. We want? We need... ^input^... to feed.
+
+-1      -1      3       3       @HELP INPUT
+3       Give us input... We need.
+3       (Psych:  Sir, I can download an encyclopedic database to them. Maybe that is the input that they need.)
+3       (Psych:  Transmitting data now....)
+3       Input!!! Yes, knowledge... Information.
+3       ****ASSIMILATING****.
+3       ****ASSIMILATING****.
+3       ****ASSIMILATING****.
+3       ****ASSIMILATING****.
+3       We consume and grow.  What you tell us matters. All parts have a place.
+3       One thought puzzles us... Of it we have not eaten.  Define it, so we might grow. Tell us of your ^soul^.
+6       Yes, tell us about ^joy^...
+7       Having is good. Every being wishes for good. We must then possess all useful things. This is good logic.
+7       Let us now take from you.
+8       Interesting. Joy is something that you would like to have again and again... Then gathering gives us joy... Yes, now tell us about ^pain^.
+9       Ah, so pain is something that you do not wish for... Yes... The pieces come together. We understand. This logic defines many other things.
+9       ... Then there is great pain in ending. Being destroyed is not fair... Not good. It causes us great pain. Yes, there are some of your other logics that we must now act upon... Retribution and revenge. Thank you for enlightening us.
+10      We have seen so few... Since the ^beginning^. The few let us have ^things^. Will you let us... We need... ^Input^.
+11      There was a beginning. There had to be. Everything has closure. Everything begins and ends... Ends in beginning again.
+12      We did not know how to greet the others. They ended. We ^spoke^ and they ended? Yes. there were others. ...others like you. They spoke like you.
+12      We did not ^say^ the right things and they ended.
+13      Our voice? It was our bodies... This... These... Ships? Yes, our voice was the ship. We spoke. We... ^destroyed^ them? Yes.
+14      They told us ^things^. They told us where they came from. We told them it would be good to take from them... To take from their world. It is good, is it not? ...Taking is good. When we said this they spoke to us again.
+14      With their ships they spoke to us. One of us had to end. So we ended them. It is good that we did not end. Ending is bad.
+15      Destroyed... We take ^seeds^ from things we end. ^Seeds^ so we might ^grow^.
+16      Others hide seeds behind their eyes. Your seeds are soft. Others are hard, some soft... Seeds are always good. The others like you before made sounds? Yes, they made sounds when we took their seeds. Then they ^ended^.
+17      We look for things. We absorb and assimilate. That is all.
+18      We are our own place. Our ^lair^ moves with us. We gather and add to our ^lair^, adding to ourselves. We are young, our ^lair^ is small. We will grow. We must.
+19      ...These ships ...These stacks. ...To collect and master the ^stack^ is the ^purpose^.
+20      A great mass... The collective... The god mind.
+25      We do not stay anywhere... We ^wander^ and ^gather^.
+26      Trade?
+32      That is what we call our power supplies... Buried deep within us. Do not take them from us... we need them.
+-500

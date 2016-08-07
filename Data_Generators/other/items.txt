@@ -1,0 +1,146 @@
+filename: items.txt
+
+Item Information
+
+name (30 chrs)    cargo size
+Dirk                         400
+Scimitar                     700
+Broadsword                   1200
+Claymore                     2000
+Blackjack                    1000
+Whip                         1800
+Flail                        3000
+Short Bow                    800
+Long Bow                     1500
+Ballista                     2700
+Hvy. Ballista                3000
+Arquebus                     2300
+Tnglor Eggs                  1500
+Needlers                     1800
+Caltrops                     2000
+Gyroid Cannons               1000
+Hive                         2500
+Dopplegangers                700
+Grav-Pulse Launcher          5000
+Ochre Embryons               450
+Ego Neurosynth               200
+Id Psychosynth               500
+Syntax Immobilizers          1100
+Cyrexin Psychotrope          2500
+Foom Cannon                  2000
+Light Raizor                 500
+Dual Raizor                  900
+Gatling Raizor               1500
+Electron Guerrloid           1000
+Neutron Guerrloid            1300
+Positron Guerrloid           1700
+Heavy Ion Guerrloid          2200
+Hydra Pulse Array            2800
+Null Pulse Cannon            3500
+Thynne Vortex                3200
+Sling of David               2700
+Death Weave                  4200
+Dogath Buoy                  600
+Disruptor Cannon             1800
+Imbreth Leech                300
+Guerrloid Grapple            2700
+Kyn-pox Ichor                900
+Corse Grenades               200
+Heavy Corse Grenade          800
+Doom Gate                    5700
+PyroSnare                    2400
+Thaumaturge                  4800
+Shade Ward                   3200
+Catapulse Battery            1200
+Shadow Kiss                  100
+Chain Flail                  2100
+Philosopher's Stone          3600
+Wolf Wand                    3000
+Purgature                    2000
+Bolt Glyph                   900
+Wrath of Shiva               4000
+Mobius Device                5500
+Unknown Shield               0
+Reflective Hull              5000
+Quarter Shields              700
+Binary Shield                1100
+Torus Shield                 1600
+Helical Field                2100
+Stasis Generator             2500
+Null Stasis Array            2800
+NeuroNull Array              3000
+Terminex Projection          3100
+Shift Distortion             3500
+Inertial Barrier             3500
+MultiPhase Inverter          2000
+Temporal Anchor              1500
+Nothing                      0
+Probot                       470
+Minebot                      1250
+Manufactory                  3430
+Fuel Nodules                 6
+Reinforce Hull               750
+Increase Thrust              20
+Add Cargo Space              15
+Install Gun Node             5000
+Mind Enhancers               10
+Unknown Component            0
+Solonoid                     3
+Data Board                   4
+Cyberplasm                   4
+Disei Conduit                5
+Steoplast                    3
+Flux Lens                    2
+Metal Weave                  5
+Pulse Loom                   5
+Biosynth                     3
+Plasm Inverter               2
+Grav-Coupler                 4
+Torque Stanchion             2
+Vac-Feeder                   2
+Mulroid                      1
+Proto-Nutrient               1
+Duct Battery                 3
+Masking Pod                  4
+Guidance Strut               3
+StrataMount                  5
+Ion Cache                    3
+ThermoPlast                  3
+Unknown Material             1
+Protoplasm                   1
+Polymers                     1
+Crystals                     1
+Oxidants                     1
+Esper Seeds                  1
+Heavy Ions                   1
+Coolants                     1
+Solvents                     1
+Electrolytes                 1
+Organics                     1
+Alien Isotopes               1
+Conductants                  1
+Magnetics                    1
+Radioactives                 1
+Liquid Gases                 1
+Medicants                    1
+Ceramics                     1
+Alien Compounds              1
+Strange Particles            1
+Worthless Junk               1
+Protic liquids               1
+Alkene                       1
+Alkyne                       1
+Volitile compounds           1
+Ether                        1
+Aldehydes/Ketone             1
+Carboxylic acid              1
+Amine                        1
+Strong Acid                  1
+Base                         1
+Salts                        1
+Lensing Solid                1
+Heavy Element                1
+Transition Metal             1
+Halogens/Noble Gas           1
+Amino Acid                   1
+Industrial Chemical          1

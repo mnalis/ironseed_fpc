@@ -1,0 +1,62 @@
+    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS
+------------------ ------------------- ------------------- ------------------- ----- ------------------
+Dirk                StrataMount         Ion Cache           Flux Lens             58   1  2  2  3  2  1
+Scimitar            Dirk                Solonoid            Ion Cache             98   1  2  3  4  3  2
+Broadsword          Scimitar            Scimitar            StrataMount          218   2  2  4  4  4  2
+Claymore            Broadsword          Steoplast           Plasm Inverter       271   3  2  4  5  4  3
+Blackjack           Solonoid            Flux Lens           Pulse Loom            58   2  2  4  3  3  2
+Whip                Blackjack           Ion Cache           Flux Lens             98   2  3  4  4  4  3
+Short Bow           Solonoid            Solonoid            Vac-Feeder            71   2  2  3  5  4  1
+Long Bow            Short Bow           Guidance Strut      Duct Battery         111   3  2  4  5  5  2
+Light Raizor        Disei Conduit       Steoplast           Vac-Feeder            97   4  3  4  4  5  3
+Reflective Hull     Steoplast           Steoplast           Polymers              73   1  1  3  3  3  1
+Quarter Shields     Solonoid            Solonoid            Plasm Inverter        60   2  1  5  5  5  1
+Probot              Data Board          Duct Battery        StrataMount           58   1  1  1  1  1  1
+Minebot             Probot              Cyberplasm          Masking Pod          111   3  1  2  3  2  3
+Manufactory         Minebot             Disei Conduit       Mulroid              164   1  2  1  2  3  1
+Fuel Nodules        Radioactives        Strange Particles   Heavy Element         15   1  1  1  1  1  1
+Reinforce Hull      Torque Stanchion    Metal Weave         Guidance Strut        84   2  2  2  2  2  2
+Increase Thrust     Dirk                Dirk                Pulse Loom           138   2  2  2  2  2  2
+Add Cargo Space     Guidance Strut      StrataMount         Torque Stanchion      84   2  2  2  2  2  2
+Install Gun Node    Stasis Generator    Stasis Generator    Thynne Vortex        563   4  4  4  4  4  4
+Mind Enhancers      Proto-Nutrient      Cyberplasm          Biosynth              71   1  1  1  1  1  1
+Solonoid            Magnetics           Coolants            Heavy Ions            18   1  1  1  1  1  1
+Data Board          Ceramics            Liquid Gases        Coolants              18   1  1  1  1  1  1
+CyberPlasm          Organics            Medicants           Electrolytes          18   3  1  2  3  2  3
+Disei Conduit       Flux Lens           Solvents            Electrolytes          31   3  1  2  3  3  3
+SteoPlast           Metal Weave         Heavy Ions          Polymers              31   2  1  2  2  2  2
+Flux Lens           Crystals            Magnetics           Polymers              18   2  1  3  2  2  2
+Metal Weave         Conductants         Radioactives        Ceramics              18   2  1  2  2  3  2
+Pulse Loom          Polymers            Alien Compounds     Radioactives          18   2  1  2  3  2  4
+Biosynth            Organics            Proto-Nutrient      Protoplasm            31   4  1  2  4  4  2
+Plasm Inverter      Crystals            Electrolytes        Alien Isotopes        18   3  1  3  2  1  2
+Grav-Coupler        Pulse Loom          Radioactives        Strange Particles     31   2  2  3  3  2  2
+Torque Stanchion    StrataMount         Guidance Strut      Ceramics              44   2  2  2  3  2  2
+Vac-Feeder          Heavy Ions          Oxidants            Solonoid              31   2  2  3  2  3  2
+Mulroid             Esper Seeds         Coolants            Alien Isotopes        18   4  1  1  3  1  4
+Proto-Nutrient      Protoplasm          Organics            Medicants             18   4  1  2  4  4  2
+Duct Battery        Conductants         Magnetics           Ceramics              18   2  1  3  2  2  1
+Masking Pod         Flux Lens           Crystals            Polymers              31   3  3  5  3  2  1
+Guidance Strut      Heavy Ions          Conductants         Magnetics             18   1  2  2  2  3  1
+StrataMount         Heavy Ions          Solvents            Magnetics             18   1  3  2  2  2  1
+Ion Cache           Polymers            Magnetics           Liquid Gases          18   3  2  3  3  3  2
+Protoplasm          Amino Acid          Carboxylic acid     Amine                  5   1  1  1  1  1  1
+Polymers            Alkene              Alkene              Industrial Chemical    5   1  1  1  1  1  1
+Crystals            Lensing Solid       Lensing Solid       Strong Acid            5   1  1  1  1  1  1
+Oxidants            Base                Transition Metal    Protic liquids         5   1  1  1  1  1  1
+Esper Seeds         Lensing Solid       Heavy Element       Industrial Chemical    5   1  1  1  1  1  1
+Heavy Ions          Transition Metal    Transition Metal    Strong Acid            5   1  1  1  1  1  1
+Coolants            Halogens/Noble Gas  Ether               Aldehydes/Ketone       5   1  1  1  1  1  1
+Solvents            Strong Acid         Strong Acid         Strong Acid            5   1  1  1  1  1  1
+Electrolytes        Base                Base                Strong Acid            5   1  1  1  1  1  1
+Organics            Amino Acid          Amino Acid          Amine                  5   1  1  1  1  1  1
+Alien Isotopes      Heavy Element       Transition Metal    Lensing Solid          5   1  1  1  1  1  1
+Conductants         Transition Metal    Alkyne              Halogens/Noble Gas     5   1  1  1  1  1  1
+Magnetics           Industrial Chemical Transition Metal    Heavy Element          5   1  1  1  1  1  1
+Radioactives        Heavy Element       Heavy Element       Industrial Chemical    5   1  1  1  1  1  1
+Liquid Gases        Halogens/Noble Gas  Halogens/Noble Gas  Aldehydes/Ketone       5   1  1  1  1  1  1
+Medicants           Amino Acid          Volatile compounds  Alkyne                 5   1  1  1  1  1  1
+Ceramics            Industrial Chemical Transition Metal    Lensing Solid          5   1  1  1  1  1  1
+Alien Compounds     Heavy Element       Heavy Element       Amino Acid             5   1  1  1  1  1  1
+Strange Particles   Heavy Element       Heavy Element       Transition Metal       5   1  1  1  1  1  1
+Worthless Junk      Worthless Junk      Worthless Junk      Worthless Junk         1   1  1  1  1  1  1

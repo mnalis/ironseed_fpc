@@ -1,0 +1,20 @@
+@-1      -1      2       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      -1      2       2       HELP
+@-1      -1      2       3       STATUS
+@-1      -1      2       4       HOMEWORLD HOME WORLD
+@-1   20001      1       5       SELL BUY TRADE
+@-1      -1      1       8       IRONSEED
+@-1   20000      1       10      BYE GOODBYE GOOD BYE LATER
+-500
+1       You have awakened us. Present your subject, and we will discuss it.
+1       What matter has brought you to us?
+2       We have matters of our own to attend to.
+2       We will discuss your difficulties after we have absterged our own.
+3       There is no need for us to discuss our internal affairs. We are well.
+3       Things here are well enough. The details are unimportant.
+4       You came to us. Your prying has revealed all that you need know.
+4       Our world spins before you. What your eyes do not reveal, you do not need to know.
+5       We will consider your cargo...
+8       What is this? We know not of what you speak.
+10      Fare well.
+-500

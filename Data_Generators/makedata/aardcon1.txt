@@ -1,0 +1,76 @@
+@1102       -1      1       58      HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@500     -1      1       58      HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      -1      1       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20000   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@1102    -1      1       59      HELP ASSIST INSTABILITY
+@500     -1      1       59      HELP ASSIST INSTABILITY
+@-1      -1      1       54      HELP ASSIST INSTABILITY
+@-1      -1      1       5       VOID DWELLERS
+@-1      -1      1       6       D'PAHK WORMS
+@-1      -1      1       7       SENGZHAC BUGS BUGGERS
+@-1      -1      1       8       GUILD
+@-1      -1      1       9       PHAEDOR MOCH PUPPET
+@-1      -1      1       10      ERMIGEN
+@-1      -1      1       11      QUAI PA'LOI PAI ALOI Q'OOUL
+@-1      -1      1       14      ICON
+@-1      -1      1       15      TITARIAN
+@-1      -1      1       16      YLINTHLIXYMN YILLER YLINTH
+@-1      -1      1       17      SCAVENGERS SCAVS
+@-1      -1      1       18      AARD
+@-1      -1      1       19      MALZATOIR
+@-1      -1      1       20      DARK KIND GODS EYE GOD'S EYE
+@-1      -1      1       22      DERRAAK
+@-1      -1      1       24      PAPESIAN MONKS OF PAPESIA MONK HALLIFAX MANEUVER
+@-1      -1      1       25      HOMEWORLD HOME WORLD
+@1102       -1      1       61      SELL BUY TRADE TRADERS
+@500     -1      1       61      SELL BUY TRADE TRADERS
+@-1      -1      1       26      SELL BUY TRADE TRADERS
+@-1      -1      1       34      CARGAN
+@1102       -1      1       60      DIFFICULTIES DIFFICULTY DAMAGES
+@500     -1      1       60      DIFFICULTIES DIFFICULTY DAMAGES
+@-1      -1      1       53      DIFFICULTIES DIFFICULTY DAMAGES
+-1      -1      3       57      KENDAR
+@1102       -1      1       62      REPAIRS REPAIR
+@500     -1      1       62      REPAIRS REPAIR
+@-1      21002   3       63      REPAIRS REPAIR
+-500
+1       You do not know us. We are the ^Aard^. We have taken ^damages^ and cannot continue. Such ^difficulties^ require that you ^assist^ us.
+2       ...
+5       We have heard them. They dwell between worlds, in the void... With the dust and gas. We have heard them speak. Yes, we have heard them.
+6       Worms interest us slightly. They have an air about them that leads us to a measure _of distrust.
+7       They who are one. We do not know them... Only _of them.
+8       We have no quarrel with them. However, we do not deal with them... Their tongues too often taint their trade.
+9       The moch are mindless fools.
+10      The fist that hides. They paid the price for pride. Did you not know they were cast from their homestar? The ^dark kind^ saw to that.
+11      They are caught in petty civil affairs. The Tetrad _of theirs is crumbling and their _world with it. There is no honor in genocide.
+14      Their glyptic tapestries cover our temple walls. We value the icon seers for their ability to weave our thoughts into cloth. It is an amazing thing to witness.
+15      They have many talents. Ages from now, when they have solved themselves, we will be able to put them to better use... Other than serving as mystics, they have yet to fill a niche.
+16      We have not tasted their presence.
+17      We pay little attention to them... They fashion themselves from the others, and none _of the others are a threat. Even their ^Kendar^ was without strength.
+18      We are from a stone orbiting Craetona. It seems that our evolutionary sequence has followed yours very closely.
+19      They are powerful, yet subtle... We like that combination.
+20      Er... I should not speak _of this further.
+22      We do not know _of this individual.
+24      The Papesian heirarchs are no concern _of ours. The followers _of Hallifax are fanatics.
+25      We have no home. It was destroyed. Our peoples have since been wandering... In search _of a fabled place. _Of course, it has been forty thousand years now... Paradise is long in coming.
+26      We need only a stratamount.
+34      That is a ship to be reckoned with. Be careful when dealing with it.
+53      Our ^engine^ is experiencing an ^instability^ in the plasma containment structures. If we ^engage^ them while they are in this state, the ^vibrations^ will tear the ship apart. That is why you will ^help^ us.
+54      We require a stratamount to stabilize our power core. You must spare one so ^repairs^ can be enacted.
+57      Long ago, ages past a great plague fell upon the others. This plague was the ^dark kind^. With their trojan gates they spread like a disease. Sweeping out from their homestar they devoured and absorbed a thousand cultures and countless lives.
+57      In a desperate attempt to defend themselves, the sentients resolved their differences and banded together, forming the ^Kendar^.
+57      Unfortunately, the treaty came too late. The ^Dark Kind^ moved their dreadnoughts and genesis tanks to surround the few remaining free worlds.
+57      Strangely, as each race was preparing for its own destruction the dark ships halted their approach.
+57      As quickly as they had come, the ^Dark Kind^ recalled their ships and fell back upon their homestar.
+57      The ^Kendar^ followed them inward, reclaiming the ravaged worlds left behind. They also claimed responsibility for the disappearance _of the dark ones.
+57      Too proud to say they had won by default, each race claimed responsibility. The dissent that resulted caused the dissolution _of the ^Kendar^.
+58      Greetings. Our time is valuable. State your business quickly.
+59      We have no need for help.
+60      We are not experiencing any damage or difficulty.
+61      You have no items _of trade that interest us.
+62      We are in no need for repairs or assistance.
+63	(Eng: Shipping _over stratamount now.)
+63	Ah... Excellent. Our engineers are installing the stratamount now.
+63	Take this device as payment.
+63	(Eng: Received cargo, Ballista.)
+-500

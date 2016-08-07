@@ -1,0 +1,67 @@
+filename: evolve.txt
+
+Planetary Evolution
+
+  State               Time Frame (yrs)   Life
+  ------------------- ----------------   -------
+0 Gaseous
+  a. Nebula           1 Billion
+  b. Gas Giant        1 Billion
+  c. Heavy Atmosphere 500 Million
+1 Active
+  a. Volcanic         500 M
+  b. Semi-Vol.        400 M
+  c. Land Formation   300 M
+2 Stable
+  a. Land & Water     200 M
+  b. Slight Veg.      150 M
+  c. Med. Veg.        150 M              IL 0
+3 Ea. Life
+  a. Heavy Veg.       15 M               IL 0
+  b. Med. Veg.        10000              IL 1
+  c. Med. Veg.        8000               IL 2
+4 Adv. Life
+  a. Med. Veg.        4000               IL 3
+  b. Slight Veg.      2000               IL 4
+  c. No vegetation    4000               IL 5
+5 Dying
+  a. Ruins            3000
+  b. Med. Veg.        8000
+  c. Dead Rock        ?
+6 Dead
+  a. Radiation        200000
+  b. Astoroid         ?
+  c. Null             ?
+7 Star
+  a. Yellow           X
+  b. Red              X
+  c. White            X
+
+
+ All planets have the potential to change state or mode to the next one in
+the list.  Years over a certain amount are broken down into smaller time
+frames with a random chance of occuring.  Ie. 100 M into 1000 x 100000 with
+a 1 in 1000 chance every 100000 yrs.  Game time is actually accelerated to
+induce more changes to the system.
+ A planet changing state or mode destroys probots/minebots, cache, and info
+collected on the planet.
+
+ In addition several other changes may take place:
+
+  5b to 2c
+  2c to 5c
+  3a to 5b
+
+
+
+Industrial Levels
+-----------------
+ 0  Animal only
+ 1  Stone Age
+ 2  Bronze/Iron Age
+ 3  Industrial Age
+ 4  Space
+ 5  Highly Advanced
+
+ current level about 3.9
+ game level about 4.5

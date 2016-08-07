@@ -1,0 +1,34 @@
+@-1      -1      1       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20002   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@-1      -1      1       3       HELP
+@-1      20002   3       7       SENGZHAC BUGS BUGGERS GUARDIAN
+@-1      20002   1       25      HOMEWORLD HOME WORLD
+@-1      -1      1       26      SELL BUY TRADE PHAEDOR MOCH
+@-1      -1      1       26      TITARIAN SCAVENGERS AARD QUAI PA'LOI Q'OOUL
+@-1      -1      1       26      PAI ALOI TETRAD ERMIGEN THE GUILD ICON VOID
+@-1      -1      1       26      VOID DWELLERS YLINTH YLINTHLYXYMN
+@-1      20002   3       31      GOD'S EYE GODS EYE
+@-1      -1      1       32      IRONSEED IRON SEED
+@-1      20002   1       33      DESTROYED RETURNED
+-1      20002   3       34      DRINKING FLUIDS @FLUID
+-1      20002   1       35      RUN CANNOT FIND WILL ESCAPE
+-1      20002   1       36      @GRAVER @GRAVE @PERILS PERIL
+@-1      20002   1       37      TENTACLES TENTACLE
+-500
+1       My ^limbs^ flex in anticipation of crushing you and drinking your ^fluids^. You cannot ^escape^.
+2       Yes, it is time to finish this. My limbs swell in anticipation. Preform your death rituals. It is time to die.
+3       Nothing can protect you from me...I am ^Sengzhac^.
+7       That is who I am...the Guardian, the Collective, the Old One, the Keeper of Tales, the Drinker of Flesh, the Master of Harrag, the Eye Watcher, the Great U'gloit, and the Protector of the ^Peril^.
+7       I have told you who I am, That you might know your devourer. Now, my spine is florid.. I grow impatient. You must die.
+25      To know where I am... That would be a powerful weapon. But i fear no weapon possessed by the dead. (51.4,9.9,174.3). Let your spirit find Xamiu. now we fight.
+26      Your fluids are all that interest me.
+31      You should not have ventured there. All who approach God's Eye receive death. That is my way, and that is the way it must be.
+31      I tire of your chirping. You have violated my space and for this there is no recompense. Prepare to die.
+32      The Ironseed will never sprout... of that I am certain.
+33      When you approached God's Eye, I confronted you. You escaped and I found you... Now I have found you again. You cannot run from me. I am ^Sengzhac^, the Guardian.
+34      My limbs shall feast upon the vile compounds of your body. I will enjoy your fluids. I am sure that I will. Your fleshly appearance betrays the moisture within you.
+34      There would be great ^peril^ were I to let you live. It is the ^peril^ which justifies my consumption.
+35      There is no logic in running. My limbs are everywhere. You cannot escape me... I will find you. I am ^Sengzhac^.
+36      The perils are ancient, but the risk is ever present. As the guardian, I must eliminate the risk for the rest.
+37      My tentacles are everywhere...Spread throughout the quadrant. You will not escape me. I am ^Sengzhac^.
+-500

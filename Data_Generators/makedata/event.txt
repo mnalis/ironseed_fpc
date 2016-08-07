@@ -1,0 +1,121 @@
+Sengzhac
+20045     0  Why do you return? I sent you from me that you might destroy the Scavengers. When again you go do not return until this is done.
+20024 20045  A great wake was felt. It was then that I knew you had unearthed the temple. You have done what I myself could not do, I who am the watcher. I will rejoin the Kendar. Peace is made. We give to you the Doom Gate. May it spill their fluid.
+20034     0  Your flesh betrays you. Am I to trust you? I am the watcher. Still I do not trust you. Many things you have done...but gain my trust you have not.
+20000     0  Such arrogant flesh! You return?! Ah, well...speak if you wish. I will destroy you when you are done. No one may approach God's eye and live.
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+D'phak
+20046     0  Why are you here? The precious Sun is in danger! You should be finishing the scourge even as we speak. Go and do not return to the light until the dark within the dark is quelled.
+20018 20046  The light is not lost! You have brought us the path. Your device will take us into the light! The light of the sun is ours at last. We must reward you. Take the Thaumaturge... bring cleansing fire to the night, sear the darkness with Sun's light.
+20043     0  The little messenger has returned from the shadows.
+20030     0  We have learned that the Guild have thrown a friend into darkness. In the shadows they search in vein. We have their friend... in Eta sector the sun shines on the Sigonib system. Their you will find what they seek.
+20034     0  You have no merit. Your name is in shadows. We do not know you. Come first to us in the light. Then... then, we will join your Kendar.
+20001     0  Ah... you have returned. Speak to us.
+    0     0
+    0     0
+    0     0
+    0     0
+Aard
+20045 20031  It is imperitive that the free worlds form a cooperative alliance against the Scavengers. You and your allies will join us in the new Kendar. <You think about explaining the situation then reconsider. Does it matter as long as they've joined?>
+20027     0  It will be a pity to see the free worlds crumble under the heel of the Scavenger horde. We are unable to intervene. The importance of our own affairs make it impossible for us to intervene.
+20002     0  Greetings. Our time is valuable. State your business quickly.
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+Ermigen
+20034     0  Greetings fellow member. Go quickly and gather together the Kendar. Time is short. Even now our borders fill with the scourge.
+20032 20034  The Icon have spoken...? ...to an outlander? Then it IS true. Yes, we will join the Kendar. Make it known. The others will listen to you now that we have joined.
+20033     0  Have you returned to beg for mercy? Have we destroyed your homeworld. It would be unfortunate.
+ 3012 20033  Your aid was expected. We thank you because you would have us do so.
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+Titarian
+20047     0  The present-future path twists and winds. We see ourselves swept away on dark paths... paths of destruction. Save us. Lead us. The Kendar is the last hope.
+20036 20047  Any direction of doubt that we could have traveled ceases to be. The knowledge you have gained from the shunt drive is sufficient and appreciated. We will join your Kendar.
+20035     0  We see a floating hulk. It is the derelict. You discovered it in the Suenyo system. Interesting path indeed.
+20004 20035  You enter into the light. It is so bright we are blinded. In a star's heat, light's destruction is heavy. You are tossed about but not destroyed.
+20025     0  The pirate is dead. A path of trade resumes. We welcome you. What do you wish to discuss?
+20037     0  The thief hides himself. With stealth and cunning you approach him. He is taken and much is gained.
+    0     0
+    0     0
+    0     0
+    0     0
+Quai Pa'loi
+ 3003  3002  Exchange and rechange. Take then this Data Board.
+ 3009  3007  Collect and transfer. You now have that which we once possessed. A Metal Weave is yours for a Biosynth.
+ 3015  3001  You bring us and in return you receive. Take our Solonoid. We need the Proto-Nutrient that you bring us.
+20048 10001  The threat still exists. Scourge to be burned in the soul forge. Destruction and decay. Taxes and dismay. What are we to do but await the end of them or us.
+ 6910 20048  We are grateful indeed for the power wealth that given us you have. Our division has ended. We Q'ooul restore the Tetrad. The four that was no more is yet again. For this we join you. Of the Kendar now we are part.
+20038     0  Our own disturbs us... we cannot to you speak. Handshakes of death pervade our soil. W're having a war already!
+20013 20038  Great tragedies! The four is no more... The Tetrad is broken. Indecision! We quake.
+20030     0  Tension mounts. Another dies and we sit passively by?! Something must to these evils be done.
+20021     0  Strange things are afoot. Stranger things are a hand. A race falls and empty halls on their planet lands.
+20005     0  The creature nears the Four to speak. The feature bears the door the tweak. What is it saying.
+Scavengers
+20030     0  Our power grows. It is now only a matter of time before all things are apart of us. Everything must go.
+20021     0  Come, join us at the right hand of the master of tools. We are Scavengers. You must join us.
+20006     0  Is it not the right thing? Let us assimilate you.
+    0 30000  (PSYCH:  SIR, THEIR LANGUAGE IS PRIMITIVE AND ONLY INCLUDES BASIC DESCRIPTIVE. IT WAS NOT EASY, BUT I HAVE CONSTRUCTED WHAT SHOULD BE AN ADEQUATE TRANSLATION MATRIX.)
+    0 30000  OH, THING IN SPACE. WE ASSIMILATE... ARE SCAVENGERS. WE SEEK TO ACQUIRE. WE WANT? WE NEED... ^INPUT^... TO FEED.
+    0 30000  WE HAVE SEEN OURSELVES FOR SO LONG ONLY... NO ^OTHERS^ TO SEE. GIVE TO US, WILL YOU NOT?
+    0     0
+    0     0
+    0     0
+    0     0
+Icon
+ 6907     0  Speaking may now begin.  With your Glyptic Scythe we may carve our words in the air before us.  Now... what is it you have come for?
+20021     0  Go forth and speak for us. Collect them that the Kendar might be again.
+20027 20030  Injury is added to our urgency. The Ermigen have been destroyed. The dark hand of the Scavenger blight has struck again.
+    0 20032  Long ago the varied lives which populate our stars joined to defend against a common enemy. We emplore you to bring together the others that the Kendar might be again.
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+The Guild
+20038 20039  When our communique is complete we have urgent information to send to you.
+20044     0  We have important information for you. We believe we have discovered a way to destroy the scourge. We will transmit the relevant data at the end of this communique.
+20025 20023  Ah... all is well. You have completed all that we have asked. It must be true. You are the one. We will join your Kendar.
+20037 20041  Rejoice! We know where the pirate lives! We have sent your Astrogator the numbers he needs.  Go quickly and take him.
+20043 20037  We have another thing that we would have you do before we join this Kendar of yours. The relevent data will be sent upon termination of this dialogue.
+20049 20043  Rejoice! You have brought us the Ylinth Genome! We had thought the information lost to us. We are eternally grateful. Yet, it does not seem like a fair trade. We will not yet join your Kendar. Something else must be done. Let us think.
+20008     0  Yes, we have your records. Care to buy sell or trade? We are the Guild. We are born to barter. Discuss with us what you will.
+    0     0
+    0     0
+    0     0
+Phaedor Moch
+20048     0  The game is almost over. The Scavengers are almost done playing with you. How do you like it so far, Bob?
+20039  6910  We have the Goolas! We have the Goolas! Who said anything about them being holy relics? Did you Bob? I think the Quai Pa'loi did.
+20040     0  Hey everybody... it's Bob!
+    0 20040  Hey Bob! Happy? I thought so.
+    0 30000  In out. In out. iN out. iN oUt. in Out. in ouT.
+    0     0
+    0     0
+    0     0
+    0     0
+    0     0
+Void Dwellers
+20044     0  The solid travellers return to us. Speak to us material thing.
+20019 20044  God's eye, which you have shown so much interest in, has been revealed to us. You will find the coordinates you need in the data burst sent at the end of this initial message <transmitting>.
+20009     0  The solid travellers return to us. Speak to us material thing.
+    0 30000  Enter into the iron. As a star novas so must you detonate this place to enter in.
+    0 30000  The Temple of Iron awaits you.
+    0 30000  To enter into the Temple of Iron you must use the Detonator.
+    0 30000  Of so much solidness is your ship built. If you worship this great beast in which you fly perhaps you would have interest in the Temple of Iron.
+    0     0
+    0     0
+    0     0

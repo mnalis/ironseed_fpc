@@ -1,0 +1,166 @@
+@-1      -1      2       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1   20000      2       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4
+@-1      -1      1       3       HELP
+@9       -1      1       5       VOID DWELLERS
+@1       -1      1       6       D'PAHK WORMS
+@0       -1      1       7       SENGZHAC BUGS BUGGERS
+@8       -1      1       8       GUILD TRADERS
+@40      -1      1       9       PHAEDOR MOCH PUPPET MASTERS
+@3       -1      3       10      ERMIGEN
+@5       -1      3       11      QUAI PA'LOI PAI ALOI Q'OOUL
+@7       502     1       14      ICON
+@4       -1      1       15      TITARIAN
+@15      -1      2       16      YLINTHLIXYMN YLINTH
+@6       -1      1       17      SCAVENGERS SCAVENGER ASSEMBLER ASSEMBLERS SCAVS
+@2       -1      1       18      AARD
+@-1      -1      3       23      TROJAN GATE GATES
+@-1      -1      3       24      MONKS MONK
+-1      -1      1       25      HOMEWORLD FLESH
+@-1      -1      1       26      SELL BUY TRADE
+@-1      -1      1       27      HALLIFAX MANEUVER
+@-1      -1      3       28      NOVA
+@-1      -1      3       29      SHUNT
+@-1      -1      1       30      PHASE
+@-1      -1      1       31      GOD'S EYE GODS EYE
+-1      -1      1       32      IRONSEED
+@18      -1      1       33      THERMOPLAST
+@-1      -1      1       36      LAIRD LEIGE LORD
+-1      -1      1       37      ALBATROSS @BIRD
+-1      -1      3       38      PURGATION @TRIAL TRIALS
+-1      -1      1       39      MARTYRS @MARTYR
+-1      -1      1       40      SYMBOL BIRTH
+-1      -1      3       41      SYNTHS @SYNTH @CONSTRUCT CONSTRUCTS 
+-1      -1      1       42      DROP COLONY LEGEND
+-1      -1      3       43      EXODUS OLD WORLD @THIRD @PLANET THIRD WORLD @HOMEWORLD
+@-1      -1      1       44      EARTH
+1       -1      1       45      @JAMMING SHIELD @READING
+@-1      -1      1       46      JOB SECURITY PURPOSE
+-1      -1      3       47      IRON SHIP TRAVEL
+-1      -1      1       48      SEED
+-1      -1      1       49      TITLE
+-1      -1      1       50      WRATH
+-1      -1      3       51      ALMIGHTY
+@-1      -1      1       52      MARS
+@-1      -1      1       53      ALIEN
+-1      -1      1       54      MOVEMENT
+-1      -1      1       55      PERSONALITY ENCODE @ENCODES STORAGE PRIME ENCODE
+-1      -1      1       55      @STORAGE @STORED JAILED CODE FLESH
+-1      -1      1       56      @SOUL SOULS
+-1      -1      1       57      INCIDENT INCIDENTS
+-1      -1      2       58      SYMPATHIZERS @SYMPATHIZER TRIED @CONVICTED JAILED
+-1      -1      1       59      TTEK PRIESTS @CLERGY @PRIEST
+-1      -1      1       60      RELIGION
+-1      -1      1       61      BLASPHEMY
+-1      -1      1       62      PRAYER PRAY
+-1      -1      1       63      IGNORANCE
+-1      -1      1       64      HOME
+-500
+1       What do you want?
+1       More questions?
+1       You'll have more luck asking your questions to someone else. I'm busy.
+1       My ^Leige^?
+2       Later on.
+2       Ciao.
+2       It's about time...
+2       Peace.
+3       Feeling helpless?
+5       I don't understand the childlike fascination the rest of the crew has for these creatures. Clouds of gas... Simple and uninteresting. Hmrph.
+6       They certainly aren't pretty. I do, however, find them amusing and from their transmissions I think they are agreeable enough. I don't think we have a reason to doubt them.
+7       Wretched creatures. Conjure visions of demons... At least that's what I see when I see them. Vile!
+8       I have to wonder how a race could evolve as arbiters on a stellar level. They must have achieved space travel relatively early by galactic standards. It would be interesting to see what the void dwellers have to say about them.
+9       I won't begin to pretend that I understand them. It's my opinion that the cypher key that they sent us was scrambled. How else could the computer translate their message into such meaningless rambling?
+10      Despite the shielding array that they had I was able to make some sense of their hardware and ship configurations. They possess shield technology on a level i've never seen. They seem to be utilizing masking pods to generate some kind of
+10      wave cascade that renders their flagships almost invulnerable to any of our weaponry. I will have to study them in depth.
+11      @3 seems to think there is some divine reason that we have encountered a race that gives the number four significance as opposed to the human trinity. The science officer seems has reason to suspect that it may have to do with
+11      the carbon links in organic chemistry. As you well know, carbon has four electron bond sights. @3 says they spoke with their science officer during our first encounter. I've read the log of their conversation. What I've read
+11      of it suggests that some ancient link, be it social or genetic, exists between the guild and the Quai Pa'loi. I may be jumping to conclusions, but it's my guess that the Guild shaped the religions of infant races to suit its own ends.
+11      of which the Quai Pa'loi was one.
+14      A very advanced race to have never developed a spoken language.
+15      As you may already know psychometry has discovered startling things about the Titerian.
+16      What did you call me?
+16      Bless you.
+16      Huh?
+16      Oh, them. It must pain the guild greatly to know that they were responsible for the total destruction of a race.
+17      Their make up is a great deal like the Titerians. However, they lack the Titerian temporal shift ability. They seem to be motivated to assimilate foreign organic and synthetic matter into their collective.
+18      I would like to get my hands on the genome data from their makeup. Oh, the things i could do with that kind of information. The tech that i could design, the... Well, Laird, you get the picture. See what you can do about getting me a better scan.
+23      @3 briefed me on the topic. Intriguing. I'm doing research when I can during down time. I still don't know enough about the subject to be of help... I would appreciate it if you would tell me if we make any related discoveries.
+24      Reminiscent of the greek gods. From what i can gather they have a cult-like following which is not exclusive to any particular race. Small sects from nearly every race we have encountered ^seem^ to have some knowledge of this peculiar group. The
+24      most startling thing about them is that they may be humanoids.
+25      I, for one, do not miss the confining ^flesh^ of our home. I find the immortality of the ^encode^ a liberating concept.
+26      Anything that I have is yours, Laird. we have nothing to exchange of worth except ideas and those I give to you freely.
+27      What kind of sociopolitical evolution would the Hallifaxine have to undergo to be motivated to destroy each other for purely religious reasons? Reminds me of... the legends. Of the time before the flight of the ^albatross^.
+28      A super nova is the final explosive stage in a star's evolution. The stellar furnace that fuses nucleic material begins in the heart of an infant sun by melding hydrogen into helium. This process continues to create heavier elements until,
+28      At last, ^iron^ begins to form at the heart of the star. ^Iron^ is so stable that no amount of compression or nuclear heat is sufficient to fuse it. When enough iron has been formed the sheer weight of it is enough to cause it to fall toward
+28      the star's core. Because the iron will not fuse the collapse results in an inevitable breakpoint at which it can no longer collapse. The shock wave that results is enough to blow off nearly all of the star's surface material. Enough energy
+28      is given off to provide the luminescence of an entire galaxy. A rather spectacular but destructive display.
+29      More, better, and faster... The shunt drive is all of these.
+30      This is an alternative view of instantaneous travel which utilizes psychic technologies rather than conventional physics. The basic concept involves nullifying the space the target mass
+30      to the target location.
+31      They say that our paradise is on the other side of God's Eye. How can the D'pahk be so sure? I wish it might be true.
+32      That is the name of this ^vessel^ as well as the name of the ^movement^ which allowed us to escape the Sol system.
+33      Useful stuff. I've kept @2 busy with questions on the subject. I hope to use the material on the hull of the ship to increase shielding values.
+36      That is your title, my Lord.
+37      The blue ^albatross^ is the ^symbol^ of ^birth^. the ^martyrs^ of the Purgation ^Trials^ took on the symbol as their own. As a result the members of the ironseed movement continued and uplifted its use. It is now a holy symbol.
+38      During the previous century ^synths^ and ^constructs^ finally replaced humans beings as the work force. The ruling class treated the synths like slaves and rationalized such cruel behavior by saying that the synths had no souls.
+38      In order to eliminate opposition to this obviously despotic view the ruling class staged a series of "incidents" which ruined the position of the synth-sympathizers. They were branded as dangerous and subsequently tried and jailed en mass.
+39      These were the brave souls who had all of their ^personality^ code erased scrambled or recompiled.
+40      ^Legend^ has it that the first ^drop colony^ ship was called the albatross. Life, the spirit, it comes from water. Since both the albatross and water were life bringers the two were eventually made synonymous in theological terms.
+41      Synth is a contraction of the term synthetic, more appropriately, synthetic organism. Constructs, as they are also called, were originally created by the ttek priests for mindless tasks.
+41      Gradually as they were used for more complex tasks they were designed with more and more sophisticated personalities. Eventually they were capable of self awareness and the inevitable question was asked, "Are they alive?"
+41      The ruling class suppressed such politically damaging questions with their answer, on the basis that nothing man-made can be infused with life. Constructs had no souls.
+42      Drop ships were the colony ships used during the ^exodus^. When the ^old world^ passed away, they took us from its rotting bosom and we flew to the red world, Mars.
+43      Almost two thousand years ago humankind was judged. The righteous were taken on the wings of the albatross to the red world. The third world is now a dead stone in space, lifeless. We speak of it only in hushed tones.
+43      Its name is the name of iniquity, to speak it is to speak blasphemy.
+44      Hold your tongue! Such things are forbidden. That is the name of iniquity. Do not speak it again unless you wish to incur the ^wrath^ of the ^almighty^.
+45      Have you been speaking with @1. Unfounded ranting is what i say. Psychic shielding... Hrmph!
+46      As if you have forgotten... I am chief security officer, @4, for the ironseed, and it is my job to protect this vessel and its crew from all threats, external or internal.
+47      We are currently aboard and apart of an exploration vessel.
+47      As chief officers of this ship it was made our duty to safely deliver those of the ironseed ^movement^ safely to a habitable world... That we might ^seed^ it with liberal minds.
+48      We had no choice but to flee Mars and the Sol system. We could not allow ourselves and our thoughts to be controlled. Such a puppet existence would be intolerable.
+49      As Laird, Lord and Archon of this ship you are the prime encode.
+50      Gods tend to be a wrathful lot...
+51      Do you mean @1?
+51      'tis a fanatic...
+52      A red world a great distance away... To which we will never return.
+53      Foreign contrasts are the essence of the alien... Do not be intimidated or frightened by that which is different...
+54      Yes... the ironseed movement.
+55      That is a subject best addressed by psychometry.
+56      Souls... ephemeral concept. perhaps they do exist... But what will that change if they do?
+57      Many terrible things were done to give cause for imprisoning ^sympathizers^.
+58      We were the ones who were believed to wish that constructs were free...
+58      It is ironic that many of those imprisoned weren't part of the ironseed movement. The ^Purgation Trials^ were a convenient way for many to rid themselves of political enemies...
+59      Tools... They were tools of god. At least that is what they told themselves. @1 can tell you all about it.
+60      Religion is an opiate. It only serves to pacify the ignorant.
+61      Blasphemy? Surely you jest.
+62      I pray...
+62      I pray that one day i will understand my ^ignorance^.
+63      The first thing to being wise is to know you know nothing. Godliness is to know why you know nothing.
+64      We have no home.
+-500
+
+@-1	-1	1	100	ANOMALIES ANOMALY
+100	That which is a deviation from the normal. You are better off talking to @3 about such things.
+
+@-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
+@-1	-1	1	-1	MANUFACTORY MANUFACTORIES
+-1	It's a usful bit of equipment but I think you want to ask @2 about it.
+
+@12	-1	1	-1	SENGZHAC
+-1	My reading from the second buoy is that they were being chased quite doggedly by these Sengzhac.
+
+@12      -1      1       -1      HELP ADVICE
+-1	We need to spend time building weapons and shielding. That wreck is ample evidence that hostile beings exist in this region of the galaxy.
+@12	 -1	 1	 -1	 WRECK WRECKAGE WRECKED
+-1	It was attacked, my speculation is that it was by the Sengzhac.
+@11      -1      1       92      HELP ADVICE
+92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+@11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
+91	It was attacked, that much is evident.
+@10	 -1	 3	 90	 WRECK WRECKAGE WRECKED
+@10      -1      1       90      HELP ADVICE
+90	We need to send probes to investigate the wreckage. Talk to @3 for more details.
+@-1      -1      1       3       HELP ADVICE
+3       We all feel helpless at times.
+
+@-1	-1	1	-1	RESEARCH RESEARCHING
+-1	Research is vital for learning how to build equipment for our ship and our would be colony.

@@ -1,0 +1,146 @@
+id #     name (30 chrs)    cargo size
+1000     Dirk                         400
+1001     Scimitar                     700
+1002     Broadsword                   1200
+1003     Claymore                     2000
+1004     Blackjack                    1000
+1005     Whip                         1800
+1006     Flail                        3000
+1007     Short Bow                    800
+1008     Long Bow                     1500
+1009     Ballista                     2700
+1010     Hvy. Ballista                3000
+1011     Arquebus                     2300
+1012     Tnglor Eggs                  1500
+1013     Needlers                     1800
+1014     Caltrops                     2000
+1015     Gyroid Cannons               1000
+1016     Hive                         2500
+1017     Dopplegangers                700
+1018     Grav-Pulse Launcher          5000
+1019     Ochre Embryons               450
+1020     Ego Neurosynth               200
+1021     Id Psychosynth               500
+1022     Syntax Immobilizers          1100
+1023     Cyrexin Psychotrope          2500
+1024     Foom Cannon                  2000
+1025     Light Raizor                 500
+1026     Dual Raizor                  900
+1027     Gatling Raizor               1500
+1028     Electron Guerrloid           1000
+1029     Neutron Guerrloid            1300
+1030     Positron Guerrloid           1700
+1031     Heavy Ion Guerrloid          2200
+1032     Hydra Pulse Array            2800
+1033     Null Pulse Cannon            3500
+1034     Thynne Vortex                3200
+1035     Sling of David               2700
+1036     Death Weave                  4200
+1037     Dogath Buoy                  600
+1038     Disruptor Cannon             1800
+1039     Imbreth Leech                300
+1040     Guerrloid Grapple            2700
+1041     Kyn-pox Ichor                900
+1042     Corse Grenades               200
+1043     Heavy Corse Grenade          800
+1044     Doom Gate                    5700
+1045     PyroSnare                    2400
+1046     Thaumaturge                  4800
+1047     Shade Ward                   3200
+1048     Catapulse Battery            1200
+1049     Shadow Kiss                  100
+1050     Chain Flail                  2100
+1051     Philosopher's Stone          3600
+1052     Wolf Wand                    3000
+1053     Purgature                    2000
+1054     Bolt Glyph                   900
+1055     Wrath of Shiva               4000
+1056     Mobius Device                5500
+1500     Unknown Shield               0
+1501     Reflective Hull              5000
+1502     Quarter Shields              700
+1503     Binary Shield                1100
+1504     Torus Shield                 1600
+1505     Helical Field                2100
+1506     Stasis Generator             2500
+1507     Null Stasis Array            2800
+1508     NeuroNull Array              3000
+1509     Terminex Projection          3100
+1510     Shift Distortion             3500
+1511     Inertial Barrier             3500
+1512     MultiPhase Inverter          2000
+1513     Temporal Anchor              1500
+2000     Nothing                      0
+2001     Probot                       470
+2002     Minebot                      1250
+2003     Manufactory                  3430
+2005     Fabricator                   5120
+2006     Starminer                    1750
+2004     Fuel Nodules                 6
+2009     Stardiver                    680
+2015     Reinforce Hull               750
+2016     Increase Thrust              20
+2017     Add Cargo Space              15
+2018     Install Gun Node             5000
+2019     Mind Enhancers               10
+3000     Unknown Component            0
+3001     Solonoid                     3
+3002     Data Board                   4
+3003     Cyberplasm                   4
+3004     Disei Conduit                5
+3005     Steoplast                    3
+3006     Flux Lens                    2
+3007     Metal Weave                  5
+3008     Pulse Loom                   5
+3009     Biosynth                     3
+3010     Plasm Inverter               2
+3011     Grav-Coupler                 4
+3012     Torque Stanchion             2
+3013     Vac-Feeder                   2
+3014     Mulroid                      1
+3015     Proto-Nutrient               1
+3016     Duct Battery                 3
+3017     Masking Pod                  4
+3018     Guidance Strut               3
+3019     StrataMount                  5
+3020     Ion Cache                    3
+3021     ThermoPlast                  3
+4000     Unknown Material             1
+4001     Protoplasm                   1
+4002     Polymers                     1
+4003     Crystals                     1
+4004     Oxidants                     1
+4005     Esper Seeds                  1
+4006     Heavy Ions                   1
+4007     Coolants                     1
+4008     Solvents                     1
+4009     Electrolytes                 1
+4010     Organics                     1
+4011     Alien Isotopes               1
+4012     Conductants                  1
+4013     Magnetics                    1
+4014     Radioactives                 1
+4015     Liquid Gases                 1
+4016     Medicants                    1
+4017     Ceramics                     1
+4018     Alien Compounds              1
+4019     Strange Particles            1
+4020     Worthless Junk               1
+5000     Protic liquids               1
+5010     Alkene                       1
+5020     Alkyne                       1
+5030     Volatile compounds           1
+5040     Ether                        1
+5050     Aldehydes/Ketone             1
+5060     Carboxylic acid              1
+5070     Amine                        1
+5080     Strong Acid                  1
+5090     Base                         1
+5100     Salts                        1
+5110     Lensing Solid                1
+5120     Heavy Element                1
+5130     Transition Metal             1
+5140     Halogens/Noble Gas           1
+5150     Amino Acid                   1
+5160     Industrial Chemical          1
+0001     DEBUG !!!!!!!!!!!!           1
