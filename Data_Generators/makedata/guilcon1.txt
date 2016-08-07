@@ -1,0 +1,83 @@
+@-1      20007   1       53      HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20000   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@-1      -1      3       3       HELP
+@-1      -1      1       5       VOID DWELLERS
+@-1      -1      1       6       D'PAHK WORMS
+@-1      -1      1       7       SENGZHAC BUGS BUGGERS
+@-1      -1      1       8       GUILD
+@-1      -1      1       9       PHAEDOR MOCH PUPPET
+@-1      -1      1       10      ERMIGEN
+@-1      -1      1       11      QUAI PA'LOI
+@-1      -1      1       12      PAI ALOI
+@-1      -1      1       13      Q'OOUL
+@-1      -1      3       14      ICON
+@-1      -1      1       15      TITARIAN
+@-1      -1      1       16      YLINTHLIXYMN YILLER YLINTH
+@-1      -1      1       17      SCAVENGERS SCAVS
+@-1      -1      1       18      AARD
+@-1      -1      1       19      MALZATOIR
+@-1      -1      1       20      DARK KIND DARK WAR
+@-1      -1      1       22      DERRAAK
+@-1      -1      3       23      TROJAN GATE GATES
+@-1      -1      1       24      MONKS MONK
+@-1      -1      1       25      HOMEWORLD HOME WORLD
+@-1      20001   1       26      SELL BUY TRADE TRADERS
+@-1      -1      1       27      HALLIFAX MANEUVER
+@253     254     3       29      SHUNT
+@-1      -1      1       30      PHASE
+@-1      -1      1       31      GOD'S EYE GODS EYE
+@-1      -1      1       32      IRONSEED
+@-1      -1      1       33      THERMOPLAST
+-1      -1      1       34      CARGAN
+-1      -1      1       35      MOBIUS DEVICE
+-1      -1      1       36      KENDAR
+@-1      215     1       58      GOOLAS
+@-1      -1      1       60      GENETIC MATERIAL GENES
+-1      -1      1       61      ZTAARE
+-1      -1      1       62      CONTROL CODES
+-500
+2       Return soon.
+3       We require help that you cannot provide. We took from ourselves something that we cannot replace. No other may do this thing for us. Only we may fix that which we have broken.
+5       They have nothing to trade. Their possessions are immaterial. We know little of them because they have little to trade. Those who are not potential clients have little reason to interest us.
+6       The D'pahk prefer not to be spoken of. Out of respect for our contract I can say little else.
+7       The Sengzhac has been a continual source of confusion. Its actions are often erratic and unexplainable. In the many cycles that we have known the sengzhac we have been at war with them 2,372 times, not counting non-military acts...
+7       ... embargoes, cruel taxation, and... hrm... covert operations. We have also held times of lucrative trade, but those were always scattered. Very strange race.
+8       We are the guild. We create nothing, yet deal in all things. If you can wish for it we can provide it... for a price. Everything can be exchanged. Everything.
+9       They had nothing of interest. Their wares were perverse. They gave us things we could not exchange.
+10      The ermigen are excellent clients. Fledgling sapients are notorious for warfare... Trade of low grade Ermigen armaments is a lucrative business. Yes... the Ermigen are excellent clients.
+11      Ah, yes... The Quai. We enjoy their company and their deals. Surely, I must ^Ztaare^.
+12      Pathetic. They have nothing. They barter with items that are not their own. Pathetic.
+13      It makes our spines tingle... Knowing that the Q'ooul dominate the Tetrad. Yes.. This is a good thing.
+14      We have attempted them. They have many things with which to trade. They would not trade with us! We have seen their wares. From orbit, we have seen them. They would not share themselves with us.
+14      They disappoint. All was disappointment with them. Ah, well... Such is trade.
+15      They look into our affairs as if we were drinking vessels. They know us before we know ourselves... It is very complex. Even we do not understand them. They give us wares; we repay them in kind. That is all we really need know.
+16      We tried to reason with them... hrm... it saddens us.
+17      We avoid them whenever possible. They disturb us greatly with their mad rambling.
+18      Shrewd. Very shrewd. We respect them. They trade with us devices from the Dark Kind! We do not ask them from where these things come.
+19      Quiet and collected... Most of the time.
+20      Speaking of them disturbs us. Our spines quiver... Do not ask us to speak of them.
+22      He costs us much. We will destroy the worm if we find him... No offense to the D'pahk, of course.
+23      The gates were a convenient left-over from the ^Kendar^ ^Dark^ War. In fact, the ^Dark Kind^ created and placed the gates. The trojan gates were bridgeheads for their invasions. The free worlds fell quickly to this silent armada.
+23      As head of the kendar we claimed the gates following the Kendar Dark War. In order to understand the gates it was necessary to disassemble many of them. Fortunately, a few still remain.
+23      If one possesses the ^control codes^ one may travel to the destination of one's choice... Provided there is another gate at the other end.
+24      Generous creatures. They have always given to us freely.
+25      Our world is a world of plenty. Anything can be had here. All things can be purchased. Everything has a price.
+26      Yes!!
+27      Such foolish waste of goods. It is a shame.
+29      Yes, we have heard of such a device. It was also called Starhammer. The ^Dark Kind^ used them to eliminate their enemies. The shunt takes whatever energy you feed into it and converts it to translational energy. (i.e. teleportation)
+29      The Dark Kind would lure entire fleets near a star and drop a shunt into it.
+29      The drive would take all of the star's ambient entropy and translate an area, three parsecs in diameter, to another place... Often hundreds of thousands of light years away.
+29      The strategy was obviously suicide. The Dark Kind had little concern for its people.
+30      Interesting. If we had those, we could decrease our delivery times. We would be very interested in buying such a device.
+31      Sure... you want to buy it from us? I am sure it can be arranged.
+32      What money grows out of.
+33      Yes we have it... The technology for the _material is not new. Hrm... no you may not have it.
+34      We helped fund its creation. We feel a special attachment to the ship. The ermigen are very proud of her... As are we.
+35      The mobius device is powerfully awesome. It is the most destructive device ever conceived.
+36      When the ^Dark Kind^ fell upon the free worlds we were there to organize their defense. We discovered the secret of the ^trojan gates^. It was this discovery that allowed us to push the dark kind back... back to their world... to be destroyed.
+53      We require a complete evaluation of new clients. Pause while we complete a scan and verify your cypher key.
+58      We used to get them from the phaedor moch, but they haven't been around for quite a while.  We just stopped hearing from them.  The _icon_ might know how to find them or you might try going to their home system at *******************.
+60      Do you have some genetic material from the Ylinthlixymn?!?!  _No_!  Please don't tease us like that.  We really could use some.
+61      Incompatible media: Glyptic mistranslation.
+62      We possess them yes. Unfortunately, we are still in the process of declassifying them for sale.
+-500

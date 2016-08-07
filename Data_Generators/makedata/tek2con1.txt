@@ -1,0 +1,45 @@
+@-1      -1      2       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      -1      2       2       HELP
+@-1      -1      2       3       STATUS
+@-1      -1      2       4       HOMEWORLD HOME WORLD
+@-1      -1      20001   5       SELL BUY TRADE
+-1      -1      1       6       UNBELIEVERS
+-1      -1      2       7       LEGENDS STARS PROPHETS ORACLE
+@-1      -1      2       8       IRONSEED
+-1      -1      2       9       COME COMING EXPECTED
+@-1   20000      2       10      BYE GOODBYE GOOD BYE LATER
+-500
+1       Welcome to our world. We rejoice that you have chosen to speak with us. We always believed that you would ^come^ to us.
+1       Greetings, we knew that you would ^come^. We have been waiting for such a long time.
+1       News of your ^coming^ has awakened us from a deep sleep, and now we ready to greet you.
+1       Hello, we have ^expected^ you. We are ready now to welcome you among us.
+2       The only help we ask of you is forgiveness for our unfaithfulness.
+2       We know that you have always helped us and we are thankful for your blessings.
+2       You bless us so much already... How could you help us more than you already have?
+2       We are undeserving of your help and your mercy.
+3       We are well, and have prepared to serve you.
+3       In the midst of our famines and plagues, we have still kept your faith.
+3       Can we ever be in a better state than we are now here with you in our midst?
+3       Our purpose is to serve you.
+4       Our world is fertile and pleasant.
+4       This world you have given us meets all of our needs and wants.
+4       Our world is barren and it is hard for us to meet our needs, but we still keep your faith.
+4       We know that this world is merely a test for us, and that we will be allowed to enter your world after your coming.
+5       Yes, we have an offering for you.
+6       They were burned. Our faith and actions are now justified.
+7       They have never lied to us before.
+7       We trust in them as we trust in you.
+7       They are old and wise. We have listened long and expected long.
+7       Our faith in them has finally been justified. We are finally triumphant over the ^unbelievers^.
+8       We do not understand your reference.
+8       Yes, we will continue to plant the seeds of your faith.
+8       The seeds of knowledge will be planted here for many eons to come.
+8       We have not yet found it, but we will continue our search until we do.
+9       Yes, in our ^legends^, you were ^predestined^ to walk among us... Finally here in your physical form.
+9       Yes, the ^stars^ ^predicted^ your coming. We saw your appearance there many ages ago.
+9       Your ^prophets^ have been announcing your appearance for many chrons.
+9       The ^oracle^ foretold your arrival. Of course, we believed and waited for you.
+10      We will be waiting for your return, oh fair one.
+10      Please, do not part from us yet! We still have more to learn from you.
+10      Depart if you must. We will be patient for your return.
+-500

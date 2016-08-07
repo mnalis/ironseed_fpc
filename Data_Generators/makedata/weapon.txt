@@ -1,0 +1,73 @@
+ReferenceID#    Name(char20)                    Energy  Damage Psi     Prtcl   Inrtl   Nrgy    Rng
+0001            Dirk                            50      5       0      0       0       100     250000
+0002            Scimitar                        75      8       0      0       0       100     275000
+0003            Broadsword                      80      16      0      0       0       100     285000
+0004            Claymore                        100     24      0      0       0       100     300000
+0005            Blackjack                       60      5       0      7       0       93      200000
+0006            Whip                            70      11      0      6       0       94      250000
+0007            Flail                           80      24      0      4       7       89      300000
+0008            Short Bow                       60      6       0      0       100     0       100000
+0009            Long Bow                        75      12      0      0       100     0       200000
+0010            Ballista                        120     18      0      0       100     0       220000
+0011            Hvy. Ballista                   150     26      0      0       100     0       275000
+0012            Arquebus                        175     35      0      0       100     0       325000
+0013            Tnglor Eggs                     500     50     30      20      23      27      300000
+0014            Needlers                        550     35      0      50      50      0       150000
+0015            Caltrops                        575     50      0      0       100     0       175000
+0016            Gyroid Cannons                  100     38      0      0       50      50      350000
+0017            Hive                            500     14      2      48      5       45      375000
+0018            Dopplegangers                   900     23     96      0       0       4       300000
+0019            Grav-Pulse Launcher             500     50      0      0       76      24      275000
+0020            Ochre Embryons                  50      15     54      41      0       0       400000
+0021            Ego Neurosynth                  806     10     100     0       0       0       200000
+0022            Id Psychosynth                  1100    20     100     0       0       0       300000
+0023            Syntax Immobilizers             2000    30     100     0       0       0       300000
+0024            Cyrexin Psychotrope             3500    40     100     0       0       0       350000
+0025            Foom Cannon                     1350    75     31      0       5       64      75000
+0026            Light Raizor                    200     75      0      0       63      37      30000
+0027            Dual Raizor                     334     150     0      0       60      40      50000
+0028            Gatling Raizor                  400     200     0      0       63      37      45000
+0029            Electron Guerrloid              50      70      0      98      0       2       25000
+0030            Neutron Guerrloid               262     80      0      94      0       6       50000
+0031            Positron Guerrloid              300     100     0      96      0       4       60000
+0032            Heavy Ion Guerrloid             502     120     0      97      0       3       75000
+0033            Hydra Pulse Array               800     150     7      5       0       88      85000
+0034            Null Pulse Cannon               900     200     0      14      0       86      125000
+0035            Thynne Vortex                   450     160    32      0       0       68      200000
+0036            Sling of David                  2000    600    46      0       54      0       15000
+0037            Death Weave                     5000    240    77      0       0       23      200000
+0038            Dogath Buoy                     500     285    78      22      0       0       20000
+0039            Disruptor Cannon                800     280    23      0       0       77      80000
+0040            Imbreth Leech                   200     50     75      0       25      0       100000
+0041            Guerrloid Grapple               487     150     0      78      4       18      150000
+0042            Kyn-pox Ichor                   400     55     95      0       2       3       350000
+0043            Corse Grenades                  1000    500     0      56      44      0       10000
+0044            Heavy Corse Grenade             2200    1000    0      54      46      0       10000
+0045            Doom Gate                       630     400    76      7       8       9       75000
+0046            PyroSnare                       700     280     0      3       2       95      100000
+0047            Thaumaturge                     700     360     0      6       4       90      80000
+0048            Shade Ward                      450     160    78      3       3       16      200000
+0049            Catapulse Battery               300     95      5      4       6       85      220000
+0050            Shadow Kiss                     300     280    74      6       4       16      150000
+0051            Chain Flail                     200     64      0      26      64      10      175000
+0052            Philosopher's Stone             6000    320    46      0       0       54      100000
+0053            Wolf Wand                       250     100    65      5       6       24      120000
+0054            Purgature                       510     168    67      27      0       6       200000
+0055            Bolt Glyph                      1550    300    34      0       31      25      200000
+0056            Wrath of Shiva                  3000    1280   26      0       36      38      230000
+0057            Mobius Device                   6450    6400   25      25      25      25      250000
+0058            Nothing                         0       0       0      0       0       0       0
+0059            Reflective Hull                 0       50      0      33      33      34      0
+0060            Quarter Shields                 100     100     0      26      34      40      0
+0061            Binary Shield                   175     225     0      25      39      36      0
+0062            Torus Shield                    250     350    16      37      25      22      0
+0063            Helical Field                   500     650    26      27      35      22      0
+0064            Stasis Generator                750     1000   28      34      26      22      0
+0065            Null Stasis Array               900     2000   32      26      26      26      0
+0066            NeuroNull Array                 1000    4500   40      26      22      22      0
+0067            Terminex Projection             1100    7500   37      25      11      27      0
+0068            Shift Distortion                1500    9000   29      26      20      25      0
+0069            Inertial Barrier                2000    12000  25      20      37      18      0
+0070            MultiPhase Inverter             3000    18000  24      26      27      23      0
+0071            Temporal Anchor                 5000    20000  25      25      25      25      0
+0072            Alien Weapon-debug              50      5      10      20      40      30      0

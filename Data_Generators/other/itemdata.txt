@@ -1,0 +1,125 @@
+    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS            
+------------------ ------------------- ------------------- ------------------- ----- ------------------
+Dirk                	StrataMount         	Ion Cache           	Flux Lens           	58	1	2	2	3	2	1	
+Scimitar            	Dirk                	Solonoid            	Ion Cache           	98	1	2	3	4	3	2	
+Broadsword          	Scimitar            	Scimitar            	StrataMount         	218	2	2	4	4	4	2	
+Claymore            	Broadsword          	Steoplast           	Plasm Inverter      	271	3	2	4	5	4	3	
+Blackjack           	Solonoid            	Flux Lens           	Pulse Loom          	58	2	2	4	3	3	2	
+Whip                	Blackjack           	Ion Cache           	Flux Lens           	98	2	3	4	4	4	3	
+Flail               	Duct Battery        	Duct Battery        	Whip                	138	3	4	5	7	5	3	
+Short Bow           	Solonoid            	Solonoid            	Vac-Feeder          	71	2	2	3	5	4	1	
+Long Bow            	Short Bow           	Guidance Strut      	Duct Battery        	111	3	2	4	5	5	2	
+Ballista            	Long Bow            	Heavy Ions          	Magnetics           	125	3	3	5	6	6	3	
+Hvy. Ballista       	Ballista            	Liquid Gases        	Polymers            	139	4	4	6	7	7	3	
+Arquebus            	Hvy. Ballista       	Esper Seeds         	Torque Stanchion    	192	5	4	7	8	8	4	
+Tnglor Eggs         	Biosynth            	Steoplast           	Cyberplasm          	84	6	2	5	4	4	3	
+Needlers            	Pulse Loom          	Magnetics           	Short Bow           	98	3	2	3	4	6	3	
+Caltrops            	Oxidants            	Crystals            	Masking Pod         	45	2	3	5	5	6	3	
+Gyroid Cannons      	Solonoid            	Ion Cache           	Vac-Feeder          	71	5	3	6	6	7	3	
+Hive                	Caltrops            	Data Board          	Magnetics           	72	4	3	6	7	7	3	
+Dopplegangers       	Masking Pod         	Masking Pod         	Data Board          	84	7	3	5	8	7	8	
+Grav-Pulse Launcher 	Grav-Coupler        	Flux Lens           	Guidance Strut      	71	7	6	6	10	9	7	
+Ochre Embryons      	Alien Compounds     	Radioactives        	Mulroid             	32	6	3	5	5	6	6	
+Ego Neurosynth      	Polymers            	Duct Battery        	Esper Seeds         	32	5	3	4	3	6	8	
+Id Psychosynth      	Ego Neurosynth      	Esper Seeds         	Duct Battery        	59	7	4	4	5	7	9	
+Syntax Immobilizers 	Id Psychosynth      	Grav-Coupler        	Esper Seeds         	99	10	5	6	7	9	10	
+Cyrexin Psychotrope 	Syntax Immobilizers 	Mulroid             	Ceramics            	126	13	6	9	10	11	11	
+Foom Cannon         	Radioactives        	Radioactives        	Grav-Coupler        	45	4	6	7	7	9	4	
+Light Raizor        	Disei Conduit       	Steoplast           	Vac-Feeder          	97	4	3	4	4	5	3	
+Dual Raizor         	Light Raizor        	Light Raizor        	Guidance Strut      	216	5	5	5	5	6	4	
+Gatling Raizor      	Dual Raizor         	Torque Stanchion    	Data Board          	282	3	9	6	6	10	4	
+Electron Guerrloid  	Magnetics           	Masking Pod         	Flux Lens           	58	5	10	7	7	6	4	
+Neutron Guerrloid   	Magnetics           	Magnetics           	Electron Guerrloid  	72	8	10	8	8	8	4	
+Positron Guerrloid  	Neutron Guerrloid   	Coolants            	Duct Battery        	99	11	11	10	9	10	4	
+Heavy Ion Guerrloid 	Positron Guerrloid  	Guidance Strut      	Ion Cache           	139	13	11	13	11	12	5	
+Hydra Pulse Array   	Heavy Ion Guerrloid 	StrataMount         	Disei Conduit       	192	15	12	14	13	14	8	
+Null Pulse Cannon   	Masking Pod         	Grav-Coupler        	Dopplegangers       	150	17	13	15	15	16	11	
+Thynne Vortex       	Cyrexin Psychotrope 	Dopplegangers       	Disei Conduit       	245	19	15	17	18	19	19	
+Sling of David      	Grav-Pulse Launcher 	Masking Pod         	Torque Stanchion    	150	10	15	8	12	11	12	
+Death Weave         	Thynne Vortex       	ThermoPlast         	Grav-Coupler        	324	20	17	18	19	19	19	
+Dogath Buoy         	Esper Seeds         	Esper Seeds         	Caltrops            	59	8	2	6	7	8	12	
+Disruptor Cannon    	Hydra Pulse Array   	Dopplegangers       	Liquid Gases        	285	8	3	15	10	8	9	
+Imbreth Leech       	Mulroid             	Protoplasm          	Cyberplasm          	45	10	4	7	9	6	12	
+Guerrloid Grapple   	Grav-Coupler        	Ion Cache           	Whip                	151	13	12	5	9	14	5	
+Kyn-pox Ichor       	Ochre Embryons      	Proto-Nutrient      	Medicants           	59	7	4	6	7	8	8	
+Corse Grenades      	Oxidants            	Oxidants            	Caltrops            	59	5	4	7	8	7	6	
+Heavy Corse Grenade 	Caltrops            	Conductants         	Oxidants            	59	6	4	10	9	8	8	
+Doom Gate           	Death Weave         	Death Weave         	Duct Battery        	670	20	18	19	20	20	19	
+PyroSnare           	Dirk                	Blackjack           	ThermoPlast         	164	18	16	14	17	18	19	
+Thaumaturge         	PyroSnare           	Tnglor Eggs         	Quarter Shields     	312	20	17	19	18	19	19	
+Shade Ward          	Catapulse Battery   	Dopplegangers       	Pulse Loom          	378	8	10	12	12	10	11	
+Catapulse Battery   	Arquebus            	Electron Guerrloid  	Plasm Inverter      	272	6	9	9	10	9	6	
+Shadow Kiss         	Shade Ward          	Kyn-pox Ichor       	ThermoPlast         	485	9	11	15	14	12	16	
+Chain Flail         	Whip                	Plasm Inverter      	Pulse Loom          	138	4	5	6	8	10	6	
+Philosopher's Stone 	Torus Shield        	Masking Pod         	Flux Lens           	210	10	12	10	16	11	13	
+Wolf Wand           	Dopplegangers       	Worthless Junk      	Vac-Feeder          	120	8	6	9	9	10	12	
+Purgature           	Bolt Glyph          	Helical Field       	Esper Seeds         	209	8	12	12	13	14	15	
+Bolt Glyph          	Foom Cannon         	StrataMount         	Duct Battery        	85	5	10	10	10	11	15	
+Wrath of Shiva      	Claymore            	Torque Stanchion    	Ion Cache           	337	14	15	13	16	14	16	
+Mobius Device       	Temporal Anchor     	Doom Gate           	Thaumaturge         	1830	20	20	20	20	20	20	
+Reflective Hull     	Steoplast           	Steoplast           	Polymers            	73	1	1	3	3	3	1	
+Quarter Shields     	Solonoid            	Solonoid            	Plasm Inverter      	60	2	1	5	5	5	1	
+Binary Shield       	Cyberplasm          	Quarter Shields     	Disei Conduit       	115	2	2	7	7	7	2	
+Torus Shield        	Binary Shield       	Duct Battery        	Pulse Loom          	157	2	3	9	9	10	2	
+Helical Field       	Quarter Shields     	Flux Lens           	Grav-Coupler        	115	2	4	9	11	13	2	
+Stasis Generator    	Duct Battery        	Duct Battery        	Helical Field       	157	3	4	10	13	16	3	
+Null Stasis Array   	Stasis Generator    	Ego Neurosynth      	Esper Seeds         	200	3	5	11	15	19	3	
+NeuroNull Array     	Null Stasis Array   	Ego Neurosynth      	Disei Conduit       	269	4	5	12	17	20	10	
+Terminex Projection 	NeuroNull Array     	Ion Cache           	Mulroid             	311	5	7	14	19	20	13	
+Shift Distortion    	Terminex Projection 	Esper Seeds         	Dopplegangers       	406	7	9	15	20	20	16	
+Inertial Barrier    	Shift Distortion    	Stasis Generator    	Metal Weave         	587	11	13	17	20	20	19	
+MultiPhase Inverter 	Inertial Barrier    	Grav-Coupler        	ThermoPlast         	668	16	16	19	20	20	20	
+Temporal Anchor     	MultiPhase Inverter 	ThermoPlast         	Cyrexin Psychotrope 	844	20	20	20	20	20	20	
+Probot              	Data Board          	Duct Battery        	StrataMount         	58	1	1	1	1	1	1	
+Stardiver           	Probot              	ThermoPlast         	Short Bow           	177	3	5	5	5	5	3	
+Minebot             	Probot              	Cyberplasm          	Masking Pod         	111	3	1	2	3	2	3	
+Manufactory         	Minebot             	Disei Conduit       	Mulroid             	164	1	2	1	2	3	1	
+Fabricator          	Manufactory         	Minebot             	Quarter Shields     	339	5	7	7	7	7	5	
+Starminer           	Stardiver           	ThermoPlast         	Grav-Coupler        	256	10	10	10	10	10	10	
+Fuel Nodules        	Radioactives        	Strange Particles   	Heavy Element       	15	1	1	1	1	1	1	
+Reinforce Hull      	Torque Stanchion    	Metal Weave         	Guidance Strut      	84	2	2	2	2	2	2	
+Increase Thrust     	Dirk                	Dirk                	Pulse Loom          	138	2	2	2	2	2	2	
+Add Cargo Space     	Guidance Strut      	StrataMount         	Torque Stanchion    	84	2	2	2	2	2	2	
+Install Gun Node    	Stasis Generator    	Stasis Generator    	Thynne Vortex       	563	4	4	4	4	4	4	
+Mind Enhancers      	Proto-Nutrient      	Cyberplasm          	Biosynth            	71	1	1	1	1	1	1	
+Solonoid            	Magnetics           	Coolants            	Heavy Ions          	18	1	1	1	1	1	1	
+Data Board          	Ceramics            	Liquid Gases        	Coolants            	18	1	1	1	1	1	1	
+CyberPlasm          	Organics            	Medicants           	Electrolytes        	18	3	1	2	3	2	3	
+Disei Conduit       	Flux Lens           	Solvents            	Electrolytes        	31	3	1	2	3	3	3	
+SteoPlast           	Metal Weave         	Heavy Ions          	Polymers            	31	2	1	2	2	2	2	
+Flux Lens           	Crystals            	Magnetics           	Polymers            	18	2	1	3	2	2	2	
+Metal Weave         	Conductants         	Radioactives        	Ceramics            	18	2	1	2	2	3	2	
+Pulse Loom          	Polymers            	Alien Compounds     	Radioactives        	18	2	1	2	3	2	4	
+Biosynth            	Organics            	Proto-Nutrient      	Protoplasm          	31	4	1	2	4	4	2	
+Plasm Inverter      	Crystals            	Electrolytes        	Alien Isotopes      	18	3	1	3	2	1	2	
+Grav-Coupler        	Pulse Loom          	Radioactives        	Strange Particles   	31	2	2	3	3	2	2	
+Torque Stanchion    	StrataMount         	Guidance Strut      	Ceramics            	44	2	2	2	3	2	2	
+Vac-Feeder          	Heavy Ions          	Oxidants            	Solonoid            	31	2	2	3	2	3	2	
+Mulroid             	Esper Seeds         	Coolants            	Alien Isotopes      	18	4	1	1	3	1	4	
+Proto-Nutrient      	Protoplasm          	Organics            	Medicants           	18	4	1	2	4	4	2	
+Duct Battery        	Conductants         	Magnetics           	Ceramics            	18	2	1	3	2	2	1	
+Masking Pod         	Flux Lens           	Crystals            	Polymers            	31	3	3	5	3	2	1	
+Guidance Strut      	Heavy Ions          	Conductants         	Magnetics           	18	1	2	2	2	3	1	
+StrataMount         	Heavy Ions          	Solvents            	Magnetics           	18	1	3	2	2	2	1	
+Ion Cache           	Polymers            	Magnetics           	Liquid Gases        	18	3	2	3	3	3	2	
+Protoplasm          	Amino Acid          	Carboxylic acid     	Amine               	5	1	1	1	1	1	1	
+Polymers            	Alkene              	Alkene              	Industrial Chemical 	5	1	1	1	1	1	1	
+Crystals            	Lensing Solid       	Lensing Solid       	Strong Acid         	5	1	1	1	1	1	1	
+Oxidants            	Base                	Transition Metal    	Protic liquids      	5	1	1	1	1	1	1	
+Esper Seeds         	Lensing Solid       	Heavy Element       	Industrial Chemical 	5	1	1	1	1	1	1	
+Heavy Ions          	Transition Metal    	Transition Metal    	Strong Acid         	5	1	1	1	1	1	1	
+Coolants            	Halogens/Noble Gas  	Ether               	Aldehydes/Ketone    	5	1	1	1	1	1	1	
+Solvents            	Strong Acid         	Strong Acid         	Strong Acid         	5	1	1	1	1	1	1	
+Electrolytes        	Base                	Base                	Strong Acid         	5	1	1	1	1	1	1	
+Organics            	Amino Acid          	Amino Acid          	Amine               	5	1	1	1	1	1	1	
+Alien Isotopes      	Heavy Element       	Transition Metal    	Lensing Solid       	5	1	1	1	1	1	1	
+Conductants         	Transition Metal    	Alkyne              	Halogens/Noble Gas  	5	1	1	1	1	1	1	
+Magnetics           	Industrial Chemical 	Transition Metal    	Heavy Element       	5	1	1	1	1	1	1	
+Radioactives        	Heavy Element       	Heavy Element       	Industrial Chemical 	5	1	1	1	1	1	1	
+Liquid Gases        	Halogens/Noble Gas  	Halogens/Noble Gas  	Aldehydes/Ketone    	5	1	1	1	1	1	1	
+Medicants           	Amino Acid          	Volatile compounds  	Alkyne              	5	1	1	1	1	1	1	
+Ceramics            	Industrial Chemical 	Transition Metal    	Lensing Solid       	5	1	1	1	1	1	1	
+Alien Compounds     	Heavy Element       	Heavy Element       	Amino Acid          	5	1	1	1	1	1	1	
+Strange Particles   	Heavy Element       	Heavy Element       	Transition Metal    	5	1	1	1	1	1	1	
+Worthless Junk      	Worthless Junk      	Worthless Junk      	Worthless Junk      	1	1	1	1	1	1	1	
+ThermoPlast         	Heavy Ions          	Coolants            	Steoplast           	44	1	1	1	1	1	1	

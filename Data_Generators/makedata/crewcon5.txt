@@ -1,0 +1,164 @@
+@-1      -1      2        1      HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1   20000      2        2      BYE GOOD-BYE GOODBYE OVER OUT 10-4
+@9       -1      2        5      VOID DWELLERS
+@1      500      1        6      D'PAHK WORMS
+@0       -1      3        7      SENGZHAC BUGS BUGGERS
+@8       -1      3        8      GUILD TRADERS
+@40      -1      3        9      PHAEDOR MOCH PUPPET MASTERS
+@3       -1      3       10      ERMIGEN
+@5       -1      1       11      QUAI PA'LOI PAI ALOI Q'OOUL
+@7       -1      1       14      ICON
+@4       -1      1       15      TITARIAN
+@15      -1      1       16      YLINTHLIXYMN YLINTH
+@6       -1      1       17      SCAVENGERS SCAVENGER ASSEMBLER ASSEMBLERS SCAVS
+@2       -1      1       18      AARD
+@-1      -1      3       23      TROJAN GATE GATES
+@-1      -1      1       24      MONKS MONK
+-1      -1      1       25      HOMEWORLD
+@-1      -1      1       26      SELL BUY TRADE
+@-1      -1      1       27      HALLIFAX MANEUVER
+@-1      -1      3       28      NOVA
+@-1      -1      1       29      SHUNT
+@-1      -1      1       30      PHASE
+@-1      -1      1       31      GOD'S EYE GODS EYE
+-1      -1      1       32      IRONSEED
+@18      -1      1       33      THERMOPLAST
+@-1      -1      1       36      LAIRD LEIGE
+-1      -1      1       37      ALBATROSS @BIRD
+-1      -1      3       38      PURGATION @TRIAL TRIALS
+-1      -1      1       39      MARTYRS @MARTYR
+-1      -1      1       40      SYMBOL BIRTH
+-1      -1      3       41      SYNTHS @SYNTH @CONSTRUCT CONSTRUCTS 
+-1      -1      1       42      DROP COLONY LEGEND
+-1      -1      3       43      EXODUS THIRD WORLD PLANET THIRD PLANET
+@-1      -1      1       44      EARTH
+@-1      -1      1       45      JOB PURPOSE ASTROGATION NAVIGATION
+-1      -1      1       46      NAME
+-1      -1      1       47      IRON SHIP @TRAVEL
+-1      -1      1       48      SEED
+-1      -1      1       49      TITLE
+-1      -1      1       50      WRATH
+-1      -1      1       51      ALMIGHTY GOD
+-1      -1      1       52      MARS
+@-1      -1      1       53      ALIEN
+-1      -1      1       54      MOVEMENT
+-1      -1      1       55      PERSONALITY ENCODE @ENCODES @STORAGE FLESH
+-1      -1      1       56      SOUL
+@-1      -1      1       57      PRIME
+-1      -1      1       58      INCIDENT INCIDENTS
+-1      -1      1       59      SYMPATHIZERS SYMPATHIZER
+-1      -1      1       60      TRIED JAILED
+-1      -1      1       61      TTEK PRIESTS @CLERGY PRIEST
+-1      -1      1       62      RELIGION
+-1      -1      1       63      BLASPHEMY @HOME @HOMEWORLD @PRAYER
+-500
+1       What subject brings you to me?
+1       Hello, ^Laird^. What is your concern?
+1       Knowledge is power. How might I empower you?
+1       My ^Leige^?
+2       I'll contact you if I learn anything of portence.
+2       Peace go with you.
+2       ...My Leige.
+2       Until we speak again.
+2       May you go with the ^albatross^.
+5       There certainly aren't any evolutionary laws which say noncellular gaseous entities couldn't exist... but the fact that they do is amazing.
+5       I wonder what the ambient magnetic and gravitic attraction values are among their component particles. I want more data on them.
+6       Worms. They were certainly more than willing to help us. What could they hope to gain? Puzzles me the most...
+7       With the infinity of universes that exist, is it possible that another us encountered the sengzhac and were then destroyed? That would certainly explain that wreck we discovered when we were revived. I wonder...
+8       A true convenience... I am glad that we encountered these industrious creatures. It puts me at ease to know we can buy our source nodules. I was worried that we would quickly exhaust the necessary components from the systems we visited.
+8       It is indeed a good thing.
+9       I haven't read their cypher key. @1 tells me they had bizarre esper readings... said that at certain points they had no esper level reading at all, but @2 said they weren't using any known psych shield or distortion field.
+9       This is very odd. I'll make sure I check into that... Read the cypher key... Hmmm...
+10      Paranoia is a powerful socioevolutionary tool. The ermigen are certainly proof of that. I need to remember to do more scans the next time we meet them.
+10      If i could figure out how they are projecting their shields i could learn a wealth in wave and field theory.
+11      I read the cypher key... and I did about 6 months of realtime research during stasis and i still don't understand them. The number four? What could it mean?
+14      I wonder what these creatures are like... What form they take... If they are as strange as some suggest, they could be a treasure trove of information.
+15      Have you read their cypher key? It seems they have been actively pursuing self-affective evolution for thousands of years.
+16      I've skipped over those sections in the guild lingual key. I do want to follow up on those entries but i haven't had the time.
+17      I wouldn't mind incorporating some of their tech into our hull and chip tech. My only worry would be the havoc that kind of hardware would wreak if we brought it inside the ship.
+18      We will be lucky to survive an encounter with them. Definitely the most formidable fighting force we have ever encountered.
+23      I have a theory as to the function of these devices. Each is located at the gravitational null points, or trojan points, in the system they are located in. A kind of shunt technology is in place which transports matter entering them to
+23      the target location. It would appear that the target location differs depending on the setting of the gate. If the gate is not given a target destination then the target defaults to the nearest star or trojan point. We were fortunate to have
+23      entered a gate closer to a trojan point. The possibility that we could have been incinerated by the core of a sun does nothing to put me at ease. To avoid this in the future I am putting a team of psibots in charge of developing a way to stay
+23      clear of gates until we have a better understanding of how to control them.
+24      What? Oh, them. I haven't read the entries on them. I'll make a note of it.
+25      To be ^flesh^ again. To walk in the fragrance of morning flowers and feel the sun of sol upon my face. Ah, such is life. Excuse me... Talk of such things upset me.
+26      You would wish to trade? But I have nothing of interest to give you which you do not already have.
+27      Strange religious ritual, self defeat... It is very odd indeed.
+28      The final stage of a dying star. This is the explosive stage in which nearly all the mass of a star is blown off the surface by the backlash of fusive forces upon the ^iron^ core. Very spectacular display...
+28      And very beautiful... From across the galaxy. The idea of being anywhere near a super nova makes me nervous.
+29      Allows instantaneous linear particle translation. Very interesting concepts. Unlike ^phase^ theory, I understand it and have done a great deal of research on the subject.
+30      The phasing theories involve some very strange psionic hypothesis. Some of them I find mathematically disturbing. Thinking about such puzzling things give me a headache... In the proverbial sense of course.
+31      To see through God's Eye - poetic, don't you think? Well, regardless of the D'pahk motive for seeing it, I have interest. If it is truly made of iron... and to be as dense as was was told in their cypher key would give it very strange properties.
+32      The heart of a dying star. I know it also the name of our ship, but i like to think of the ship in that sense... To have come from Sol which, to us, had died.
+33      Fascinating material!  I could use it in a number of ways... The least of which is shielding the ship probes.
+36      That is your title, my Lord.
+37      The blue ^albatross^ is the ^symbol^ of ^birth^. The ^martyrs^ of the Purgation ^Trials^ took on the symbol as their own. As a result the members of the ironseed movement continued and uplifted its use. It is now a holy symbol.
+38      During the previous century ^synths^ and ^constructs^ finally replaced humans beings as the work force. The ruling class treated the synths like slaves and rationalized such cruel behavior by saying that the synths had no souls.
+38      In order to eliminate opposition to this obviously despotic view the ruling class staged a series of "incidents" which ruined the position of the synth-sympathizers. They were branded as dangerous and subsequently tried and jailed en mass. 
+39      These were the brave souls who had all of their ^personality encode^ erased scrambled or recompiled.
+40      ^Legend^ has it that the first ^drop colony^ ship was called the albatross. Life, the spirit, it comes from water. Since both the albatross and water were life bringers the two were eventually made synonymous in theological terms.
+41      Synth is a contraction of the term synthetic, more appropriately, synthetic organism. Constructs, as they are also called, were originally created by the ^Ttek^ priests for mindless tasks.
+41      Gradually as they were used for more complex tasks they were designed with more and more sophisticated personalities. Eventually they were capable of self awareness and the inevitable question was asked, "Are they alive?"
+41      The ruling class suppressed such politically damaging questions with their answer, on the basis that nothing man-made can be infused with life. Constructs had no souls.
+42      Drop ships were the colony ships that were used during the ^exodus^ when the ^old world^ passed away. They took us from the rotting bosom of the ^third planet^ and flew us on the wings of the albatross to the red world, Mars.   
+43      Almost two thousand years ago humankind was judged. the righteous were taken on the wings of the albatross to the red world. The third world is now a dead stone in space, lifeless. we speak of it only in hushed tones. 
+43      Its name is the name of iniquity, to speak it is to speak ^blasphemy^.
+44      Hold your tongue! Such things are forbidden. That is the name of iniquity. Do not speak it again unless you wish to incur the ^wrath^ of the ^almighty^.
+45      As head of astrogation I am responsible for providing you accurate information regarding all relevant stellar bodies and phenomena.
+46      You know my name... I don't think it's necessary to tell you again.
+47      We travel, like the leaves of an unborn tree, in the steel shell of the Ironseed.
+48      This ship is a seed... in more than name.
+49      Someone selected you to control... er... lead us. You are Laird, Archon and Master... You know what you are.
+50      Anger is a trait best given to a god. Bleed, brand and burn us... In whose will be done? Not mine.
+51      Almighty... all mighty. Omnipotence or impudence? All this talk of god heads disgusts me.
+52      I miss the ^flesh^...
+53      Even now, I find myself alien...
+54      Talk to the others if you wish to know more... I am tired of this prattle.
+55      In order to escape imprisonment we had our souls ripped from the flesh... We're like a genie in a bottle now.
+56      Our essence... What we are as human beings. It is indefinable.
+57      A simple title afforded to you by your position as laird... Nothing more.
+58      Ask another... I grow tired of this talk.
+59      @1 knows more about such things... Do not bother me.
+60      The guilty must be punished. We are no exception.
+61      The Ttek priests claim to speak the word of god. Cannot god speak well enough without them? Hrmph.
+62      There is little meat to such things. A weak topics for weak minds.
+63      I have better things to do than making idle conversation about a history we both share and which you should remember... If half a life time of ^Ttek^ priest programming wasn't enough to teach you our culture and history then why are you our Laird?
+-500
+
+@-1	-1	1	100	ANOMALIES ANOMALY
+100	That which is a deviation from the normal. You are better off talking to @3 about such things.
+
+@-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
+@-1	-1	1	-1	MANUFACTORY MANUFACTORIES
+-1	It's a usful bit of equipment but I think you want to ask @2 about it.
+
+@12      -1      1       93      HELP ADVICE
+93	We need to explore this region of the galaxy.
+@11      -1      1       92      HELP ADVICE
+92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+@11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
+91	All I know is that it was attacked. You are better off talking to @2, @3 or @4 about it.
+@10	 -1	 3	 90	 WRECK WRECKAGE WRECKED
+@10      -1      1       90      HELP ADVICE
+90	We need to send probes to investigate the wreckage. Talk to @3 for more details.
+@-1      -1      1       3       HELP ADVICE
+3       We all feel helpless at times.
+
+@-1	-1	1	-1	RESEARCH RESEARCHING
+-1	Research is vital for learning how to build equipment for our ship and our would be colony.
+
+
+@18	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
+-1	Heavily plating a convential probe in thermoplast opens up possibility to send probes to the surface _of a star for detailed analysis. It's even possible to send a probe beneath the surface for a limited time.
+@-1	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
+-1	Being able to probe the surface and depths _of star is interesting from a science point _of view, but it's not something feasible with the resources _of the Ironseed.
+
+@18	-1	3	-1	SUNMINER STARMINER
+-1	The discovery _of thermoplast has opened up this idea. _Of course were not literally mining a star, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	What a starminer would do is harness the intense pressures, heat and energy output _of a star to synthesize advance elements.
+@-1	-1	3	-1	SUNMINER STARMINER
+-1	Literally mining a star is a silly notion, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	However, there is some merit in the idea _of using the intense pressures, heat and energy output _of a star to synthesize advance elements.
+-1	Of course you need to be able to make a lab that can withstand the surface _of a star.
+

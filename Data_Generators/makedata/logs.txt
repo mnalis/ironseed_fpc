@@ -1,0 +1,287 @@
+@0 SENGZHAC
+ The references left to us in the first data buoy in no way exaggerated the ^Sengzhac^. We found them to be single mindedly cold and calculating just as the buoy described. A hive mentality pervades them. Because of this they claim a higher morality. They feel justified eliminating anything that might come between them and their precious "God's Eye".
+ Their fanaticism does, however, betray a note of fear. Whatever the God's Eye is, it must be enormously powerful to disturb such a stalwart race.
+##
+Home World = Zamiu (51.4,9.9,174.3)
+
+@1 D'PAHK
+ "The Children of the Sun", as they call themselves were strange, worm like creatures. Our first dialogue appears to have been a success, with stress on the word, "appears." Their odd appearance did little to make the talks go smoother. I'm sure the psychometrist did the best they could when transmitting the lingual key, but the tone in the ^D'pahk^ cypher-voice makes me suspicious. I worry that they were too anxious to befriend us so quickly.
+##
+Home World = Suenyo (134.6,122.2,131.2)
+
+@2 AARD
+ By the dust of the Earth! I would never have thought it possible. We have encountered a race that matches us genetically. The odds for such an encounter are beyond astronomical. Surely my eyes do not betray me. Even so, I question what I have seen. The blatant rudeness the ^Aard^ wield is a bit more than I could stomach. Unfortunately, the mighty ships they flew kept me from responding in kind. I would rather lose my pride than my life.
+##
+Home World = Unknown
+
+@3 ERMIGEN
+ This was the first race that we have encountered that did not make me uneasy. Even though the ^Ermigen^ were over zealous they were straight forward about it. I only hope they don't have us on their "list of celestial bodies which must be eliminated."
+##
+Home World = Mytuk (116.5,146.0,28.6)
+
+@4 TITARIAN
+ Interesting... We have encountered a race of clairvoyants. From analyzing the cypher key psychometry believes that the ^Titarian^ evolved the natural ability to see into 4-space. Such innate abilities were limited but with implants and genetic manipulation they were able to enhance their ability enormously. An alliance is in order... especially if we find it necessary to call upon their services.
+##
+Home World = Rehez (69.1,47.2,210.7)
+
+@5 QUAI PA'LOI
+ First contact with the ^Quai Pa'loi^ was truly a moment to be remembered. Only in holy books have I had to sort through such deep thoughts and circular speech. Their syntax must be a nightmare for the cypher key to have provided such a poor translation of their language.
+##
+Home World = Baal (32.1,148.3,138.4)
+
+@6 SCAVENGERS
+ What at first seemed to be a derelict was instead a manned vessel. A hodge-podge of burnt and broken panels covered the hull of the ship. Mangled fingers of steoplast jutted at odd angles and sections of the structure seemed to be missing. Others served no observable purpose.
+ We were attempting to salvage the craft when this transmission was received by psychometry, "We assimilate." Even after constructing a lingual key communication was difficult. These ^Scavengers^, as we have come to call them, are assimilators that live between stars. From what we were able to gather it seems they absorb anything of use with which they come in contact.
+ They were voracious for input, and in an attempt to greet them hospitably we sent them the general encyclopedium. I believe now this was a mistake. They took what we told them of our history and began making warped conclusions about morality. Immediately they applied these conclusions to themselves and attacked our ship. I have the feeling we haven't seen the last of them.
+
+@7 ICON
+ After what seemed like an eternity psychometry finally generated the cypher key. We can only call them the ^Icon^. They evolved completely without a spoken language and, as a result, communication with them was difficult.
+ After days of observation we discovered that they use an intricate system of body language to convey simple thoughts. Longer signals require that they "weave" their messages.
+ We were confused at first when they sent us cloths and fabrics in exchange for our cypher key. In a stroke of genius a loom was constructed to weave our messages and surprisingly, the translation was a success!
+ With this tool in hand we proceeded to discuss the matter that brought us to them, the Scavengers. The Icon told us of an ancient alliance called the Kendar. They told us that in order to defeat the scourge we would have to reunite the Kendar. If the empires continue to
+be as uncooperative as they are unfriendly all is lost.
+ We can only hope...
+##
+Home World = Hadekou (145.4,140.4,8.7)
+
+@8 GUILD
+ We have found a market in space! A race whose name roughly translates as "^The Guild^" approached and hailed us. They transmitted their cypher key along with a complete list of exchange rates for the last four hundred chrons. Bent on making material exchanges with us, their introductory speech sounded more like a sales pitch than a greeting. I am not, however, dissuaded by our new friend's motives. We may find our contact mutually beneficial.
+##
+Home World = Onan(219.3,27.5,203.2)
+
+@9 VOID DWELLERS
+ While flying through a dense cloud of dust and rock we happened upon beings composed of the very same stuff. They called themselves ^Void Dwellers^. Strangely, they required no cypher key. They transmitted their first message completely without the need for translation. The openness with which we were greeted put me at ease. I found myself to be very comfortable around our new discovery and soon we were talking as freely as if they were as human as ourselves. Their knowledge of our language confuses me, but psychometry insists that they can be trusted.
+ The universe never ceases to amaze me.
+##
+Home World = None
+
+@10 GREETINGS AND HALLUCINATIONS
+ At long last we have awakened. A mysterious distress call activated the encode power-up sequence. Once the personality matrix was fully powered we discovered that our ship was badly damaged, and the ship to which we had responded, was a scorched ^wreck^ on the surface of the planet below.
+ Strangely enough, during personality power-up there was a power surge in the memory core...
+...I experienced a hallucination, a vision of sorts. A shadowy form spoke to me of awakening the iron space between thoughts.
+ Psychometry assured me that the experience was only a malfunction and should be ignored.
+ I can't help but wonder...
+ Hallucination aside engineering has initiated repairs to the ship and has discovered that the chronometer failed shortly after leaving Mars. It's unknown how many years, decades, centuries or millenia we've been adrift for. Astrogation has been unable to map the stars we see now to what we could see from Mars... We are lost.
+ Science has recommend we send probes down to the planet surface to investigate the wreckage. I can't help but concur with this ^advice^.
+
+@11 SECTOR CODEX
+ We discovered a data buoy left by the other ship at (16.6,22.6,3.3). A great deal of the information stored was irretrievable.
+ Fortunately, the encryption codes were similar to our own... Most clusters were lost, but a few data chains yielded to our efforts.
+ After decoding the information contained within the buoy, we discovered the flight logs of the Scavenger ship. Interestingly enough we were able to use their crash sight as a reference point and have since added the stars from these logs to our own sector codex.
+ It would make sense to follow the trail they left us.
+ While I have some trepidation about travelling into deep space again engineering has assured me that the malfunction has been fixed and additional failsafes have been added. Regardless we have little to gain by remaining in this system.
+ Of real concern, however, is our low levels of fuel. We will need to scavange ^anomalies^ from planets and hope we can gather enough to make more fuel nodules. Alternatively I could talk to engineering about using ^minebots^.
+
+@12 SECOND BUOY LOCATED
+ So, it seems that our Scavenger predecessors left us a second buoy discovered at (22.0,47.0,34.0).
+ Many of the data clusters cross-checked with the other buoy suggest that the two contained identical information. We were delighted to
+find that the recoverable data chains were not all the same.
+ We assembled some of the system notes that were to accompany the sector codex we retrieved from the original buoy. There were several references to a race they encountered. The ^Sengzhac^...
+
+@13 HALLIFAX MANEUVER
+ While in the Igua system (108.5,110.1,245.6) we encountered a group of ships engaged in combat. At first we thought we were witnessing a battle between rival races; ships from many of the empires were mercilessly attacking one another. Then, close enough for a full scan, we saw that races we had believed to be at peace were slaughtering one another.
+ We hailed one of the ships and were surprised to find that this was not a military action at all. The ships were involved in a religious rite! Communiques with other ships provided the same response. This Hallifax Maneuver, as they called it, was to prepare the way for the inevitable coming of a group called the Papesian Monks.
+ While we don't yet know who these monks are or why they would encourage such a variety of races to exterminate one another we didn't want to interfere by interrupting the ritual.
+ Disturbed and confused, we finished our scans of the system and continued on our way.
+##
+Hallifax = Igua (108.5,110.1,245.6)
+
+@14 TROJAN GATE
+ Trojan points are points in space that have zero gravitational potential. It was theorized that because of this strange property Trojan gates could be used to facilitate a space jump. The invention of a "Trojan gate" was still far out of our reach, but, to our delight, we discovered just such a device. We managed a first sweep of it before it activated and were puzzled to find it covered with symbols similar to those referencing god's eye in cypher keys. Perhaps there is some deeply rooted connection. Who can tell?
+##
+Trojan Gate = Oetus (238.9,169.5,131.4)
+
+@15 A PLANET'S DESTRUCTION
+ While in the Oetus system we were surprised to learn that the Guild was responsible for the extermination of a native race. It seems the Ylinthylixymn as they called themselves had been working as indentured servants for the Guild in exchange for the terraformation of their world. They were hoping to turn their world into a paradise.
+ Sadly, the process went awry. Some of the biomaterials the Guild was using mutated. The viral bodies that resulted were similar enough to the Ylinth body chemistry to wipe every one of them it came into contact with.
+ The plague was so swift and unexpected it wiped out the entire population. Even those outside the system could not escape. Within less than a millennium the Ylinth were extinct.
+
+@16 MONKS OF PAPESIA
+ We discovered and were finally able to scan the Papesian system. Surprisingly we found no trace of the Monks responsible for the Hallifax Maneuver. What we did find was a giant hologram. Visible from orbit, this strange beacon informed would be pilgrims to seek them elsewhere. According to the message they had relocated and would shortly call forth the followers of Hallifax. The message was difficult to take seriously. Considering the magnitude of the Hallifax and the amount of life lost as a result we were appalled to think that these Monks could be so whimsical.
+ Sentients are strange.
+##
+Papesian Monks = Papesia (107.3,117.8,194.3)
+
+@17 DERELICT DISCOVERED
+ While entering the Suenyo system scanner sweeps detected the presence of a massive ship along the outer rim. A full scan revealed a gutted hulk the size of a moon. Violently mangled in some ancient war the ship was too heavily damaged for us to recover any of the data storage units. A few other items were recovered, however.
+ One in particular was a translucent sheet of metal that was unaffected by the inferno that burnt and blackened the rest of the ship.
+ I wonder why the attackers were so thorough in this ship's destruction. What reason could they have for such overt aggression?
+
+@18 DEVELOPMENT OF THERMOPLAST TECHNOLOGY
+ After much adieu it has been developed. A thermally dispersive material so effective that even high grade atomics cannot penetrate or melt it.
+ The tests run so far have shown a consistent kinetic dispersion rate of 5 kilojoules per square centimeter per second! We now have probot designs that incorporate it. Thermoplast will ensure that our scans of infernal planets will no longer damage our probes as they have in the past. The design for reflective hull has also been altered to include the material.
+ Despite my enthusiasm I am worried about the design. While science assures me that the chemical makeup will withstand the most torrid infernos I have my doubts about it staying power. The material may spontaneously decay leaving our probes vulnerable. This is only speculation. Perhaps, I should leave science to scientists.
+
+@19 ENCOUNTERED NOVA
+ While in the Tyr system the sun's core became violently unstable and the result was a nova. To the best of our knowledge the sun was innocuous when we entered the star. We still have no idea how or why the sun would go nova in such a short period of time. The chief of science is investigating the incident but no one is expecting any answers.
+##
+Nova = Tyr (247.4,123.3,163.5)
+
+@20 LOCATION OF SHUNT CAPABLE SHIP
+ A great deal of time has been spent by our science team developing shunt drive technology. Once again fate is with us. While scanning a planet in the Tetun system we unearthed a massive ship imbedded deep beneath the surface. Interestingly enough, the ship was designed much like the derelict we discovered and was similarly gutted. This time, however, the drive of the ship was intact. Fortune was ours! It was a shunt drive. Science is investigating the damaged drive and promises to have some answers for us soon.
+
+@21 DESTRUCTION OF THE MALZATOIR
+ Since we first encountered them the Scavengers have been a nuisance. Until this point that is all they have been, a nuisance. We were recently informed that a fledgling race, the Malzatoir, were consumed by the Scavengers. We also have reason to believe that the Scavengers now have every intention of assimilating every race with which it comes in contact. This makes them a major threat to us.
+ We had hoped to learn from them, but it seems there is no choice. If we hope to claim for ourselves a habitable world we must make sure Scavengers do not spread from here.
+ The scourge must be eliminated.
+
+@22 DISCOVERY OF ICON DATA BUOY
+ While performing routine scans of our system we encountered something very bizarre. A drone approached and hailed our ship. We were surprised to learn from the message it sent that the tiny craft was Iconic. We were being summoned by the speechless sages!
+ Other than wishing an audience with us the transmission was vague. They did not even bother relating their homestar coordinates.
+ Fortunately, we analyzed the flight path of the device and now have an idea where it could have originated from.
+ Realizing that the Icon would not contact the outside without good reason I have made travel to their system an immediate priority.
+##
+(Either Theta or Delta Sector)
+
+@23 THE GUILD JOIN THE KENDAR
+ The Guild showered us with appreciation for our efforts today. After retrieving the Ylinth genome and bringing in the pirate Derraak, their skepticism was washed away and we were treated as heroes. After a lengthy ceremony inducting us into Guild history we were sent an official writ proclaiming the Guild as members of the Kendar. I sent them a letter of thanks and forwarded their writ to the Icon homeworld.
+
+@24 TEMPLE OF IRON
+ We have strayed far from our search to find a habitable world. Caught up in what seems like a religious crusade we are instead in search of a holy relic. Hinted at in the first data buoy we recovered, God's eye was described as "a fist of black iron some fifty kilometers across orbiting the star of the Deol system."
+ We had planned to investigate this anomalous object after we had found a viable world but the events of the past few cycles have made it imperative that we study the object first.
+ Several cypher keys of races we had encountered contained references to a place called the temple of iron. As in many cypher keys religious references are arbitrary. We considered the temple to be ephemeral. Not so!
+ Using hints from the Void Dwellers and a large explosive device, we unearthed ancient ruins far beneath the surface of a planet in the Dubofang system. The excavation yielded more questions than answers. What is the function of the "channeling" device we found? What race was responsible for the creation of the temple? And why is our fate bound inextricably to this mysterious God's eye and its creators?
+
+@25 INSIDE THE PIRATE BASE
+ After tracking down the pirate Derraak and retrieving the shunt drive we took it upon ourselves to pick and choose from the hoard that this notorious figure had collected. 
+ Unqualified to be arbiters ourselves, we trusted the Guild to be impartial and notified them of the hoard, asking them to parse out these items to those to which they belonged. I do not envy the Guild. Judging from the number of items in the stash it will probably be a long and arduous process.
+
+@26 PIRACY!
+ It seems that a craft sped up alongside us during transit. The gaping hole in our midsection backs that theory. Of all the degrading deeds...
+ The shunt drive, for which we worked so hard to locate has been taken from us.  Derraak and his stealth ship are surely responsible for this outrage.
+
+@27 ICON TRANSMISSION
+ A second drone from the Icon has arrived and the message is simple.
+
+
+ "They have killed again. Come to us..."
+
+@28 ERMIGEN DATA TAPES
+ We returned to the Ermigen homestar to find its planets purged of life. I pity their dead. The Scavenger scourge left nothing living.
+ All hardware was stripped from the surface of their worlds, and the remaining organics were perverse mutations of the originals.
+ With the planetary shields down we completed our scans. While nothing of use was left on the surface we did, however, locate a data storage facility buried in the crust of the planet wherein their defeat was recounted.
+ We were interested to learn that during the final battle their flagship, the Cargan, fell into their sun trying to evade a wing of Scavenger incorporators. It seems the crash killed the crew but the ship was shielded by a temporal anchor and was unaffected. They gave orders to retrieve the ship, but the last of the space born fleet was destroyed before receiving the message. Shortly thereafter the planetary shields were penetrated. Screeches and laser fire fill the remainder of the audio data. The video... it was too horrific to describe.
+
+@29 I AM AN IDIOT
+This log exists because we couldn't find a better way to structure the plot-log system. You see, this log shouldn't exist at all... in fact I despise this log. I hate myself for knowing that I was somehow responsible for it's existence. I only hope that the person who is reading this can forgive me for allowing the bug to exist that let them see it in the first place.
+
+
+
+
+
+
+
+   PLEASE REPRT THIS ERRER 2 CHANNEL7
+
+   KEEP AN EYE OUT FOR OUR NEXT KILLER
+   GAME, FRINJ (IT MUST BURN)
+
+@30 THE ERMIGEN WERE DESTROYED
+ The mighty fist of the Ermigen empire has fallen. We received word from the Icon that another race had fallen victim to the Scavengers and we were frightened to learn that the proud shark's kin had fallen. This is indeed a sad day. According to the Icon not even a single ship remains. It causes me great pain to think that an entire race could be hunted down in cold blood... systematically destroyed. It is evident that no life is safe as long as the scourge lives. The Scavengers must be destroyed.
+
+@31 THE AARD JOIN THE KENDAR
+ Not even the most arrogantly powerful are free from concern. Having recruited the Sengzhac the Aard followed suite by joining as well. The Aard would have us believe that the time was preordained, that they had no reason to fear the scourge, and that now was simply the "right" time. We know better. All the arms and technology in the universe can buy you security, but it can't buy you peace of mind.
+
+@32 REFORMATION OF THE KENDAR ALLIANCE
+ The Icon have summoned us. Originally, our mission was to find and populate a habitable world... to have our own place in the stars. Now everything we have dreamed of is threatened. The Icon have summoned us and the news they have is grave. The Scavengers have assimilated an entire species, the Malzatoir. To make the crime more heinous, the Malzatoir weren't even space faring. They were fledgling sapients... peaceful.
+ According to the Icon, long ago beings of equal danger sought to dominate the free worlds... An alliance was created to defeat them. This alliance was called the Kendar. As the original organizers of the Kendar, the Icon have selected us to be their liaisons. We are to gather together as many of the empires as possible and with a united hand we are to crush the Scavenger horde.
+
+@33 REPAIR THE ERMIGEN SHIP
+ I'm not sure if I would say that the Ermigen were pleased because we helped them repair their ship. I'm not sure the Ermigen feel much of anything.
+
+@34 ERMIGEN JOIN THE KENDAR
+ Confused, we accepted the Ermigen Rod of Alliance. Their behavior in the past made it seem unlikely that they would, but the strange shark people were more than willing to join the Kendar. Considering the kind of fire power they control I was thrilled to have them join.
+ Perhaps now that we have one ally the other empires will be more apt to discuss a treaty.
+
+@35 TITARIANS MENTION BRIGHT SPOT?
+ I'm unsure what the Titarian seer meant when he said he saw a "bright spot" in our future. Perhaps our journey is nearly at an end. Could it be that our work is almost done?
+
+@36 SHUNT DRIVE RESEARCH COMPLETED
+ We recently completed research on the shunt-drive. Unfortunately, we will not be able to implement the device. The technology used to design and build it is still beyond us. Interestingly enough, it will be possible to use it one final time before its circuit integrity is compromised. When this journey is over we hope to resume our study of the artifact... but until that time the device is of no use.
+
+@37 GUILD WANTS DERRAAK ELIMINATED
+ We had hoped that returning the Ylinth genome to the Guild would sate them, that they would join us but they are not yet satisfied. They wish us to do one more thing before they join.
+ A pirate has been causing them a great deal of trouble. As a result, trade has all but ceased in Epsilon and Zeta sectors. They have made it our job to hunt him down and eliminate him. My patience grows thin.
+
+@38 QUAI GO TO WAR
+ Has the universe lost its mind? I can see no sense in the civil war which has erupted on the Quai Pa'loi homeworld... and in a time that requires total unity! The Quai had best come to terms with themselves. If our victory is in jeopardy because they weren't able to lend us their fleet I shall personally see to it that every last one of them is assimilated by the scourge.
+
+@39 THE MOCH HAVE THE GOOLAS
+ I believe we have something that will turn the tide in the Quai war. The Guild have informed us that the Phaedor Moch possess weapons the Quai consider holy. They are called the Goolas. If we are to quell the Tetrad to have them join it is imperitive that we acquire these Goolas and give them to the Quai.
+
+@40 FIRST ENCOUNTER WITH THE PHAEDOR MOCH
+ If I have ever said that this race was strange or that race was odd I take it back. Today we contacted what was by far the most outlandish organic species we have ever encountered. Each being seemed to radiate several different psychic patterns. Their mentations were so strange that a single low level scan nearly drove our psychometrist insane. We managed a cypher key, what little good that did, and opened dialogue. This race calls itself the ^Phaedor Moch^. Our dialogue was meaningless. Unless we show an expressed need we won't be speaking with them again.
+##
+Home World = Unknown
+
+@41 GUILD TELL YOU HOW AND WHERE TO DEFEAT DERRAAK
+ Since our last dialogue the Guild have located the pirate they wished us to rid them of. They have been gracious enough to transmit his coordinates along with a suggested means of capture. They cannot guarantee how long he will remain where he is so it is imperitive that we go as quickly as possible. The Guild also tell us that we will require a Homing Device to find and destroy his base.
+##
+Pirate Base = Fabexi (153.8,99.0,196.9)
+
+@42 FIND TEMPLE OF IRON
+ While scanning a planet in the Dubofang system we noticed a strange perturbation on the surface. An incredibly dense pocket of iron lies buried in the planet's crust. The globule is several hundred meters across and, according to our scans, is hollow. Our science officer considers this a considerable find and suggests that, given time, they would like to study it further. If only we had a way to unearth it...
+##
+Temple = Dubofang (4.3,227.8,240.6)
+
+@43 GUILD THANK YOU FOR YLINTH'S GENES
+ Had the Guild shoulders a great weight would have been lifted from them today. We returned the Ylinth genome to the them. They showed considerable thanks, but to our consternation they still refused to join the Kendar! They were indecisive about what else they would have us do. They asked us to be patient and wait. Be patient and wait?!
+
+@44 VOID DWELLERS TELL YOU ABOUT GOD'S EYE
+ We have finally been given the exact location of the God's eye! The secret which the Sengzhac have kept so long will finally be revealed. The journey through Sengzhac space will perilous at best but if luck is with us I feel we can make it.
+##
+God's Eye = Yned (1.9,127.1,88.1)
+
+@45 RECEIVE DOOM GATE
+ Our efforts have been rewarded. The Sengzhac have joined us in the Kendar. I had thought their animosity would be too much to overcome, but with the demise of the Malzatoir and then the Ermigen no intelligent being could refuse. In an attempt to heal old wounds the Sengzhac offered us a device called the Doom Gate. It is a weapon of awesome destruction as well as a piece of the Mobius device.
+
+@46 RECEIVE THAUMATURGE
+ The D'pahk were very helpful in joining the Kendar. Not only were they kind enough to lend us the better part of their fleet for the final assault but they gave us the Thaumaturge. It will be interesting to see how effective it is in battle.
+
+@47 TITARIAN JOIN THE KENDAR
+ We uploaded what we learned from our study of the shunt drive. The Titarians seemed pleased and moved to join the Kendar. To each his own, I suppose.
+
+@48 QUAI PA'LOI JOIN KENDAR
+ The bitter civil war between the Quai has ended. The Goolas given us by the Phaedor Moch were crucial in deciding the victor.
+ The Q'ooul who were open to free trade (which we later learned was the reason for the war) cleaned up after we gave them the weapons. I realize that doing so gave the Q'ooul an unfair advantage but the lives lost are nominal when compared to the life that could be lost if we do not successfully complete our mission. Destroying the scourge is of utmost importance.
+
+@49 DISCOVER YLINTH GENES
+ While in the Sigonib system we discovered the remains of a research facility. We scowered the structure for useful materials and found a transparent cylinder containing some foreign organic material. The canister was labeled "Ylinthilixymn Genome Project." How curious.
+
+@1001 FAREWELL TO MARS
+ After consulting the crew we have concluded returning to Mars is not an option. We have traveled so long, even if we could find our way back there is little guarantee we will find it as we remember it.
+ Our mission now is to find a world which we can claim as our own. To this end we will begin scanning and cataloging the neighboring stars and planets. There are complications, however.
+ First, we need to determine the nature and the potential threat of alien life in this cluster. If the indigens are hostile and we can't reason with or repel them we will need flee to this region.
+ Secondly we lack the know how to build many of the things needed for a colony, or new equipment for the ship. The crew will need to ^research^ how to utilize the ships pattern fabricators to build the many things we will need. Perhaps given time, we can progress beyond the known and devise new technologies. 
+ Thirdly, and most urgently, we need more fuel. Our mission will be cut short if we can not find the materials needed to synthesize fuel.
+
+@1002 FUEL
+ After a long anxious time we have finally synthesized more fuel nodules. Although we still have a long journey ahead I'm more confident in our ability to achieve it.
+
+@1003 TECHNOLOGY
+
+
+@1101 REPAIR TO THE PHAEDOR MOCH SHIP
+ In a gesture of good will and diplomacy we helped Phaedor Moch. Aside from repairing their ship we accomplished nothing constructive. They remain just as mad and rambling. Although they did give us a "glyptic scythe" in thanks. Engineering has determined it can trace and weave visible patterns in the air but no actual useful purpose has been found for it. I expect we will keep it for a while in case we do find a use for it or the Moch come wanting it back.
+
+@1102 REPAIR TO THE AARD SHIP
+ We aided the Aard in repairing their vessel. Although they appear grateful, the act did little to change their arrogant demeanor. In payement for our help they gave us a ballista. Whilst not a weak weapon it is obviously no where near as powerful as the weapons weilded on their ships.
+
+@1103 DISCOVERY OF THE CARGAN
+Using the Ermigen's data tapes for reference and our sundivers we were able find the crashed Ermigen flagship in their star Mytuk. Much to my surprise, scans through its shields show that the Cargan is unscathed by the intense heat of the star. The temporal anchor is truely a wonder of technology, however it didn't protect their ship from the suddent impact with a star and the hull shows a good deal of structural damage.
+
+@1201 WE HAVE MET THE SCAVENGER ARMADA
+ We have have arrived at Yned and the scavengers are about to swarm us.
+##
+Scavenger Armada=Yned (1.9,127.1,88.1)
+
+@1202 FINAL CONFRONTATION AGAINST THE SCAVENGERS
+ We don't have the full Kendar. Scavengers outnumber us. We might not make it.
+##
+Scavenger Armada=Yned (1.9,127.1,88.1)
+
+@1203 KENDAR ASSAULT ON THE SCAVENGER ARMADA
+ We have the full Kendar on our side, those Scavengers don't stand a chance.
+##
+Scavenger Armada=Yned (1.9,127.1,88.1)
+

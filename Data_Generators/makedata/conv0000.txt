@@ -1,0 +1,28 @@
+eventcode:
+ -1=no event necessary
+ other=event check
+code:
+ 1 = regular.
+ 2 = multiple random
+ 3 = multiple lines with more at each line
+        
+event# runevent# code   responsecode    keyword
+-1     -1        1      1               HI HELLO HIYA
+
+An '@' symbol at the beginning of a keyword line indicates that all the keywords for this line are "root" keywords. Root keywords are still automatically, but don't generate warnings if they're never found in any conversation. Similarly an '@' symbol infront of an individual keyword marks that keyword as a root keyword too.
+
+
+
+An '^' symbol was used to toggle brightness. This is now ignored due to the addition of automatic keyword highlighting.
+_  suppresses automatic highlighting of the next word
+@n crewname
+    psychometry
+    engineer
+    science
+    security
+    navigation/astro
+    medic/cyber
+responsecodes:
+1       hi ^human^.  
+2       crew 1's name.
+3       bye

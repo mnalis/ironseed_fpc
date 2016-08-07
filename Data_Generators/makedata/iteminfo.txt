@@ -1,0 +1,734 @@
+1000
+Single phase low level
+energy weapon.
+
+
+
+1001
+Dual phase intermediate
+level energy weapon.
+
+
+
+1002
+Improvements in plasma
+containment allow for this
+dual phase high energy
+weapon.
+
+1003
+Multiphase high energy
+laser weapon.
+
+
+
+1004
+Coupling charged trans-
+formers, we got this
+energy bolt weapon.
+
+
+1005
+Adding a third module to
+the original design, we
+arrived at this powerful
+energy bolt weapon.
+
+1006
+Connecting several energy
+bolts in sequence, this
+weapon lashes madly at
+nearby objects.
+
+1007
+A simple low impact missile
+delivery system.
+
+
+
+1008
+Self tracking delivery
+system with an extended
+range capable of greater 
+damages.
+
+1009 
+Heavy duty multiheaded
+self tracking missile
+delivery system.
+
+
+1010
+As powerful as the
+ballista this system has
+even greater range and
+delivers more damage.
+
+1011
+Capable of firing in
+salvos this monster of a
+missile battery is both
+fast and efficient.
+
+1012
+Smart bombs that are
+nearly undetectable
+because of their organic 
+nature.
+
+1013
+A unique missile delivery
+system which generates its
+own projectiles.
+
+
+1014
+Sacrificing power for
+stealth, caltrops are more
+powerful than but easier to 
+detect than tnglor eggs.
+
+1015
+An awesome array of missile
+delivery systems capable of
+ripping the life from most
+targets.
+
+1016
+Tnglor eggs given a limited
+intelligence that will track
+targets until one or the 
+other is destroyed.
+
+1017
+Utilizing id technology we
+created this mind warping
+nasty.
+
+
+1018
+A powerful missile
+launcher that arms its
+projectiles with variable
+mass singularities.
+
+1019
+Incorporating id technology
+and tnglor egg hardware
+we got these seething
+psychic nightmares.
+
+1020
+Using psychometric break-
+throughs we were able to
+create this psychic force
+weapon. 
+
+1021
+Using the "tuning fork"
+technique we were able to
+set up psychic resonance in
+the blast area.
+
+1022
+The blast from this psychic
+weapon is such that it
+renders all unshielded life
+forms insane.
+
+1023
+This weapon completely
+destroys the thoughts of all
+but the most heavily
+shielded minds.
+
+1024
+Named for the great noise it
+makes, this missile launcher
+is one of the most impress-
+ive in its class. 
+
+1025
+After an accident in the lab
+we came up with this strange
+device.  It corrupts nucleic
+stability in its target.
+
+1026
+Improving on the original
+device, this allows two of
+them to be mounted from the
+same power source.
+
+1027
+Packing both the flux
+conduit and the generator
+into the dual raizor we get
+this massive weapon.
+
+1028
+Converting one of the burnt
+coils from the engine we
+were able to create this
+particle sling.
+
+1029
+Revamping the old tech from
+the engine coils we improved
+both the engine and the 
+guerrloid design.
+
+1030
+Channeling surplus material
+from the engines to the
+guerrloid we doubled the
+power output in this design.
+
+1031
+A final tweaking of the
+guerrloid particle sling
+resulted in this beauty.
+Mean, mean, mean!!
+
+1032
+Capable of bidirectional
+fire and multiphase psycho-
+force bolts. 
+
+
+1033
+Pulling from shield tech-
+nology this impressive
+weapon sends out a moving
+null shield blast.
+
+1034
+An impressive mass driven
+weapon which warps the
+space time around its 
+target.
+
+1035
+A psychokinetic energy
+weapon which lobs wads of
+dense ego at its target
+annihilating affected minds.
+
+1036
+Combining all aspects of
+psychokinetics and wave 
+driven ballistics this 
+weapon is as yet, unmatched.
+
+1037
+Further improvements on mine
+technology have allowed us
+to create these vicious 
+psycho-smart bombs. 
+
+1038
+This device is proof that
+entropic resonance can,
+in fact, be set up in ship
+hulls; if they are hostile!
+
+1039
+After tampering with the
+biomechanics of a nasty
+bug one of the probes
+snatched we got this.
+
+1040
+This fine piece of
+machinery is the final
+word in guerrloid
+technology.
+
+1041
+And you thought mines could
+not possibly get more
+sinister.
+
+
+1042
+We stole a little Sengzhac
+technology to bring you this
+beautiful piece of work.
+
+
+1043
+We improved upon the
+previous design, adding
+even more damage to an
+already powerful weapon.
+
+1044
+The name says it all.
+Handle with care.
+
+
+
+1045
+The latest in psychothermic
+technology.  It cost us
+hours of lab repair but
+it's finally complete.
+
+1046
+If it has a mind or a body
+this device should dispose
+of both efficiently...
+
+
+1047
+All we know is that when we
+activate it massive objects
+disappear.
+
+
+1048
+By implementing a magnetic
+rifling affect we increased
+the power of preexisting 
+multiphase laser devices.
+
+1049
+Love thine enemy.  Kiss 'em
+with this.
+
+
+
+1050
+Battery firing salvo ready
+chained wave weapon.
+
+
+
+1051
+Named for their ancient
+counterpart, this device
+causes affected material
+to transmute.
+
+1052
+A direct conversion from
+an artifact we discovered,
+we thought you might find
+it interesting.
+
+1053
+Cast your enemy down.
+Exudate them with this
+delightfully destructive
+device.
+
+1054
+We've stopped trying to
+understand Titarian tech-
+nology, but here's a taste
+of it.
+
+1055
+Shafts of golden fury fly
+effortlessly from this
+fierce fighting machine.
+
+
+1056
+Mass in 3-space dislikes
+being crammed into 2-space.
+This does it anyway.
+
+
+1501
+Steoplast plating with a
+mirrored overlay combine to
+repel low level energy
+blasts.
+
+1502
+Four smaller shields which
+overlap to create a tight
+defense perimeter.
+
+
+1503
+Wave engines alternate,
+pulsing every femtosecond
+to provide maximum coverage
+for minimal power usage.
+
+1504
+By adding a third wave 
+engine to the binary design
+shielding is quadrupled.
+
+
+1505
+A dense flux projection
+created by multiple
+particle beams powered by
+a hybrid wave engine.
+
+1506
+Incorporating the wave
+engine and uncertainty
+field technology we got this
+powerful sphere of force.
+
+1507
+Coupling the stasis
+generator with force nodes
+shoves incoming fire
+into alternate space.
+
+1508
+By including id technology
+with existing stasis devices
+we were able to increase 
+defense to psychic attacks.
+
+1509
+We designed this using parts
+from an artifact we found.
+We don't know how it works,
+but it does the job.
+
+1510
+Learning more about the
+terminex projection device
+we improved its design.
+Very, very nice.
+
+1511
+We believe an artifact is
+using some sort of reality
+engine. We tapped into it
+and got this. Interesting.
+
+1512
+We understand the physics
+behind the artifact now.
+This device localizes and
+nullifies entropy. Amazing.
+
+1513
+This is the final product of
+artifact technology. It
+creates a virtually impreg-
+nable field of uncertainty.
+
+2001
+A mobile sensory array
+equipped to collect and
+analyze surface specimens.
+
+
+2002
+This bot is designed to
+locate and collect valuable
+elements and compounds for 
+later processing.
+
+2003
+When placed on a viable
+world this bot will convert
+elements and compounds into
+materials for later use.
+
+2004
+Fuel masses.
+
+
+
+
+2005
+When placed on a viable
+world this bot will convert
+processed materials into
+components for later use.
+
+2006
+This bot is able to with-
+stand the intense heat of a
+star and extract elements
+and compounds from it.
+
+2009
+A probot upgraded to with-
+stand the intense heat and
+forces of a star.
+
+
+2015
+Adds structural reinforce-
+ments to the outer layers
+of the ship, improving
+strength for battle.
+
+2016
+By adding to the strength
+and size of the plasma
+containment core the
+ship's thrust is increased.
+
+2017
+By widening the midship
+module the cargo bays are
+lengthened.
+
+
+2018
+By massively shielding a
+section of the ship's hull
+and rerouting power it is
+possible to add a gun node.
+
+2019
+Psychotropic drugs which
+keep the crew happy, 
+productive and obedient.
+
+
+3001
+Flux producing conductant
+coil.
+
+
+
+3002
+Complex ceramic circuit
+outlay.
+
+
+
+3003
+Living neural tissue fused
+with programmed electro-
+mechanics.
+
+
+3004
+Connective matrix for
+coupling spin adjucation.
+
+
+
+3005
+Mutable psuedosteel.
+
+
+
+
+3006
+A focus for magnetic
+containment systems.
+
+
+
+3007
+Energy grid for matter
+manipulation and nucleic
+conversion.
+
+
+3008
+Chief device used for wave
+driven ballistics.
+
+
+
+3009 
+Synthesis device used to
+generate complex carbon
+based molecules.
+
+
+3010
+Matter inversion actuator.
+
+
+
+
+3011
+Used to generate probability
+relations between
+nonadjacent points in space-
+time.
+
+3012
+A structural support.
+
+
+
+
+3013
+A simple device which is
+capable of routing objects
+of varying sizes in an 
+assembly system.
+
+3014
+Cyberplasm specially pro-
+grammed with higher level
+hueristics in order to per-
+form more complex tasks.
+
+3015
+A gelatinous suspension of
+proteins and amino acids
+which aid in preserving
+living tissues.
+
+3016
+A energy storage device.
+
+
+
+
+3017
+A unique device which alters
+targeted space so that
+the affected area may not be
+observed from the outside.
+
+3018
+A simple support structure.
+
+
+
+
+3019
+An expandable structural
+matrix onto which multiple
+devices may be placed and
+powered.
+
+3020
+A heavy compound contain-
+ment device.
+
+
+
+3021
+By decomposing the plating
+we found aboard the derelict
+the technique for creating
+this was developed.
+
+4001
+Amorphous solids with
+low refractive indices.
+Used in composites and
+simple lensing structures.
+
+4002
+Durable resinous substances
+useful in construction of
+light weight low grade
+mounting structures.
+
+4003
+A regular solid mineral
+body with smooth surfaces.
+Used in higher grade optics
+and lasing engines.
+
+4004
+Chemicals that provide
+the oxygen necessary for
+combustive processes.
+
+
+4005
+Mobile concentrations of
+psionic activity, processed
+from ambient psychic
+potential.
+
+4006
+Electrified particles formed
+by the transfer of electrons
+when molecules of gas are 
+broken up.
+
+4007
+Materials used for the 
+purpose of heat transfer 
+and abatement.
+
+
+4008
+Elementary substances 
+generally fusible by heat
+which can be molded by
+hammering.
+
+4009 
+A compound decomposable by 
+electricity.
+
+
+
+4010
+Materials derived from the
+animal and vegetable worlds.
+
+
+
+4011
+Element traces having an 
+abnormal or unusual neutron 
+count.
+ 
+
+4012
+Ductile metals which are 
+used in electrical wiring.
+
+
+
+4013
+Substances which have the
+ability to produce and 
+maintain a field of flux.
+
+
+4014
+Substances with unstable
+nuclei which experience
+a sizable amount of beta 
+decay.
+
+4015
+Gases subjected to super
+low temperatures which
+have congealed into liquid
+form.
+
+4016
+Chemicals useful in the
+care and maintenance of
+living tissues.
+
+
+4017
+A class of substances with 
+extremely high melting 
+points and hardness rating.
+
+
+4018
+Chemicals which have
+heretofore unknown makeup
+and which have unusual 
+properties.
+
+4019
+Particles not found in the 
+average low energy arena.
+Neutrinos, Tau Mesons, etc.
+
+
+4020
+Worthless Junk.

@@ -1,0 +1,107 @@
+@-1      -1      1       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20000   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@-1      -1      1       3       HELP
+@-1      -1      1       5       VOID DWELLERS
+@-1      -1      1       6       D'PAHK WORMS
+@-1      -1      1       7       SENGZHAC BUGS BUGGERS
+@-1      -1      1       8       GUILD
+@-1      -1      3       9       PHAEDOR MOCH PUPPET
+@-1      -1      1       10      ERMIGEN
+@-1      -1      1       11      QUAI PA'LOI
+@-1      -1      1       12      PAI ALOI
+@-1      -1      1       13      Q'OOUL
+@-1      -1      1       14      ICON
+@-1      -1      1       15      TITARIAN
+@-1      -1      1       16      YLINTHLIXYMN YILLER YLINTH
+@-1      -1      1       17      SCAVENGERS SCAVS SCAVENGER
+@-1      -1      1       17      AARD
+@-1      -1      1       19      MALZATOIR
+@-1      -1      1       20      DARK KIND
+@-1      -1      1       21      MURIEL
+@-1      -1      1       22      DERRAAK
+@-1      -1      1       23      TROJAN GATE GATES
+@-1      -1      1       24      MONKS MONK
+@-1      -1      1       25      HOMEWORLD HOME WORLD
+@-1      -1      3       26      SELL BUY TRADE TRADERS
+@-1      -1      1       27      HALLIFAX MANEUVER
+@-1      -1      1       28      NOVA
+@-1      -1      1       29      SHUNT
+@-1      -1      1       30      PHASE
+@-1      -1      1       31      GOD'S EYE GODS EYE
+@-1      -1      1       32      IRONSEED
+@-1      -1      1       33      THERMOPLAST
+-1      -1      1       34      CARGAN
+-1      -1      1       35      MOBIUS
+-1      -1      1       36      CONTINUUM DIMENSION @UNIVERSE
+-1      -1      1       41      @INFO INFORMATION
+-1      -1      1       42      RACES
+-1      -1      1       43      PLACES
+-1      -1      1       44      OTHERS
+-1      -1      1       45      EVENTS
+-1      -1      1       46      KENDAR
+-1      -1      1       47      IRON SEED
+-1      -1      1       48      @TEMPLE OF IRON
+-1      -1      1       49      TREASURES @TREASURE
+277     -1      1       51      DEVICE
+@263     -1      1       55      RUINED
+@263     -1      1       60      LEGACY
+@220     -1      1       63      JUSTICE
+@244     -1      1       68      PILE ROCKS
+-500
+1       Hello?  Hello?  Ah, this ^dimension^. There you are. You are a tricky one to find. We don't get a lot _of input from this ^continuum^. In case you haven't tasted us, we are ^Void^ Dwellers.
+1       This is the best place for us, considering what we ^trade^.
+2       It has been useful. Come again and trade with us. We always have information on interest, so come back often.
+3       I am afraid that we can't offer you anything more than information.
+5       That would be us. We exist in ways you are not familiar with and we cannot explain. We cannot tell you how we taste. We cannot tell you our texture.
+6       They are a temperamental bunch. If you don't insult them or their sun, then they will treat you well. They are old and know much.
+7       The Sengzhac are abrasive. Be careful not to irritate the spines. Doing so is unhealthy for the flesh. The Sengzhac are grudge fighters, and do not forget.
+8       They can be friendly enough, if you have something that they are interested in.  Be careful in your dealings with them... They can be tricky.
+9       Out anything useful from them now. They babble and foam about Bob.
+10      The fist. They knot themselves up in frustrated anger.
+11      They are foolish. They take interest in things that are _of little importance. They are headed nowhere and many _of them know it.
+12      They are the suppressed Quai Pa'loi. They are looking for power in a powerless society.
+13      They are the ruling class _of the Quai Pa'loi. They are very friendly and trusting... maybe too much so.  They will sometimes strike a deal just to make sure that you will stay friends with them.
+14      They are hard to find and harder to communicate with.
+15      They know much about the past and the future. Their advice is invaluable.
+16      The Ylinth are an interesting bunch. The Guild is trusted for their business sense, but I cannot believe that the Ylinth had enough faith in the guild to let them terraform their world.
+17      We have not tasted them.
+19      They are old and proud. There is little else to say about them.
+20      It has been long since they were mentioned... So long ago. The free worlds had no time to react. Without warning their black sinewy ships leapt from the deep. The predator never once spoke to the prey. No words were ever exchanged.
+20      The black fleet would appear silently in the sky, choking out the sun. For days, fiery death would rain down on the life below.
+20      When the planet had been cleansed, drop ships would lower terraformers to the surface. Whatever they wanted, they took. Like a diseased wind they passed over star after star, destroying or enslaving all life in their path.
+20      Ancient civilizations crumbled beneath the iron fist _of the dark kind. Stumbling numbly the few remaining free worlds struggled to defend themselves. In a last desperate attempt they formed an alliance... the ^Kendar^.
+20      Then the wind stopped. As if inspired by some divine power, the Kendar began to drive back the evil horde. In a wave _of monumental victory the Dark Kind were driven completely out! Under the heel _of the kendar they were crushed!
+20      You will notice an unusual number _of components on the planets scanned along this arm _of the galaxy. The dead worlds you find are the skeletons _of the once powerful free worlds. We were fortunate to have the Kendar.
+20      ...very fortunate.
+21      Treat her well.
+22      He is a pirate. Maybe that is his genius. He attacks ships in their slumber rather than in the face _of all their might. He has never hurt a living being on a ship.
+23      They are old and many malfunction. These were the chariots the dark kind used to crush the free worlds. Use extreme caution when traveling through a gate. They use technologies we do not understand.
+24      They journeyed openly and visited everyone... once. No one was a stranger to them. But now, they are reclusive. We have not heard from them in ages. They must be working on something important.
+25      We have none that you would comprehend.
+26      We trade in information... information on what you might ask... information on everything. What do we ask in return... only that you share a few _of your items with us. Usually a scan _of your ships logs will do.
+26      Since you seem to be new to this area, we will count our new knowledge _of your presence as payment enough. You may now ask us for ^information^.
+27      It is a weird way for them to spend their time, but if they must, they must.
+28      That was a nasty one wasn't it. You are lucky that your ship wasn't completely radiated or destroyed.
+29      That is a novel idea... Perhaps you are not as far from the gate as we thought.
+30      Interesting... We have not heard _of that one... Our mouths are open for more tastes _of that concept.
+31      It is a rock. A tasteless stone.
+32      Search for sight in the iron... It is a fundamental element. It is a common tie many dimensions share.
+33      Useful for exploring hot places.
+34      There isn't a ship better armed or shielded than the Cargan. The Ermigen take no chances guarding their homeworld.
+35      There are myths that speak _of such a device. Fortunately, they are forbidden flavors. We do not wish to loose our honored standing with certain others by telling you more than you need know.
+36      You occupy an odd space. Your senses _of perception only allow you three degrees _of freedom within that space. Our senses allow us many more.
+41      We have up to date information on all _of the major ^races^, ^places^ and ^events^.
+42      The inhabitants _of this region: the Titarian, Guild, Sengzhac, Quai Pa'loi, Ermigen, and others. Ask us about them.
+43      Well, to name one, there is a system near here that is abundant in raw materials. You should venture there to gather supplies.
+44      Which others?
+45      Name one and we will talk.
+46      It was an alliance _of the free worlds. They banded together temporarily in hopes _of destroying the ^Dark Kind^.
+47      The seed must be sowed in material _of like kind. As the dust returns to its own, so shall the iron do the same. 
+48      The temple is not a place _of worship. It is a holding device, a secret chest _of treasures.
+49      What you will find there is neither gem nor jewel but the source, the seed.
+51      I think perhaps I should speak no further on this subject.
+55      They burned most _of the planets resources in order to keep them from being traded off to other races. It must have been logical at the time.
+60      They burned and vaporized most _of the planet's resources. The planet is dying.
+63      Either the guild must be sanctioned, or held accountable in some way.
+68      It is the rock known to you as God's Eye.
+-500

@@ -1,0 +1,171 @@
+5000    Unknown Compound
+5001    Methane
+5002    Ethane
+5003    Tribromoethane 
+5004    Cyclopropane
+5005    Cyclohexane
+5006    Phenylpropane
+5007    Hexane
+5008    Octane
+5009    Dimethylpropane
+5010    Isobutane
+5011    Toluene
+5012    Napthalene
+5013    Benzene
+5014    Methylene Chloride
+5015    Propylene
+5016    Dichloroethylene
+5017    Dibromobenzene
+5018    Aniline
+5019    Nitrobenzene
+5020    Anthracene
+5021    Acetylene
+5022    Ethylene
+5023    Propyne
+5024    Trimethylpentyne
+5025    Trichloroethylyne
+5026    Hexyne
+5027    Dibromobenzyne
+5028    Dimethylpropyne
+5029    Cyclopropyne
+5030    Phenylpropyne
+5031    Ethyl Alcohol
+5032    Isopropyl Alcohol
+5033    Butyl Alcohol
+5034    Prim-iso-amyl Alcohol
+5035    Heptyl Alcohol
+5036    Allyl Alcohol
+5037    Octyl Alcohol
+5038    Hexyl Alcohol
+5039    Benzyl Alcohol
+5040    Furfuryl Alcohol
+5041    Phenetole
+5042    Anisole
+5043    Diphenyl Ether
+5044    Diethyl Ether
+5045    Di-iso-propyl Ether
+5046    Ethyl n-propyl Ether
+5047    Di-iso-butyl Ether
+5048    Ethyl Acetate
+5049    Ethyl Stearate
+5050    Resorcinol Diethyl Ether
+5051    Formaldehyde
+5052    Acetaldehyde
+5053    Acetone
+5054    Nitrobenzaldehyde
+5055    Mesityl Oxide
+5056    Diacetone Alcohol
+5057    Furfural 
+5058    Butyraldehyde
+5059    Methyl Ethyl Ketone
+5060    Methyl Iso-butyl Ketone
+5061    Formic Acid
+5062    Acetic Acid
+5063    Butyric Acid
+5064    Benzoic Acid
+5065    Glycine
+5066    Oxalic Acid
+5067    Citric Acid
+5068    Silicic Acid
+5069    Cinchomeronic Acid
+5070    Quinolinic Acid
+5071    Ethylamine
+5072    Aniline
+5073    Napthhylamine
+5074    Benzidine
+5075    Pyridine
+5076    Thymine
+5077    Cytosine
+5078    Uracil
+5079    Adenine
+5080    Guanine
+5081    Hydrochloric Acid
+5082    Acetic Acid
+5083    Sulfuric Acid
+5084    Phosphoric Acid
+5085    Flouric Acid
+5086    Hydrocyanic Acid
+5087    Carbonic Acid
+5088    Nitric Acid
+5089    Hydroiodic Acid
+5090    Chlorous Acid
+5091    Sodium Hydroxide
+5092    Barium Hydroxide
+5093    Ammonia
+5094    Cyanide
+5095    Calcium Carbonate
+5096    Nickel Oxide
+5097    Ammonium Chloride
+5098    Magnesium Hydroxide
+5099    Iron Hydroxide
+5100    Potassium Hydroxide
+5101    Earlandite
+5102    Humboldtine
+5103    Mellite
+5104    Oxammite
+5105    Whewellite
+5106    Sodium Chloride
+5107    Ammonium Nitrate
+5108    Sodium Flouride
+5109    Lithium Sulphate
+5110    Sellenium Chloride
+5111    Glass
+5112    Quartz
+5113    Diamonds
+5114    Rubies
+5115    Emeralds
+5116    Zircon
+5117    Zeunerite
+5118    Vanadinite
+5119    Tourmaline
+5120    Pyrargyrite
+5121    Uranium
+5122    Dysprosium
+5123    Erbium
+5124    Holmium
+5125    Lutetium
+5126    Neodymium
+5127    Ytterbium
+5128    Thorium
+5129    Terbium
+5130    Rhenium
+5131    Zinc
+5132    Copper
+5133    Nickel
+5134    Gold
+5135    Silver
+5136    Tin
+5137    Lead
+5138    Iron
+5139    Mercury
+5140    Tungsten
+5141    Flourine
+5142    Chlorine
+5143    Bromine
+5144    Iodine
+5145    Helium
+5146    Neon
+5147    Argon
+5148    Krypton
+5149    Xenon
+5150    Radon
+5151    Asparagine
+5152    Aspartic Acid
+5153    Cysteine
+5154    Glycine
+5155    Isoleucine
+5156    Phenylalanine
+5157    Proline
+5158    Tryptophan
+5159    Tyrosine
+5160    Valine
+5161    Sodium Carbonate
+5162    Urea
+5163    Styrene
+5164    Cumene
+5165    Potash
+5166    Butadiene
+5167    Titanium Dioxide
+5168    Caprolactam
+5169    Terepthalic Acid
+5170    Formaldehyde

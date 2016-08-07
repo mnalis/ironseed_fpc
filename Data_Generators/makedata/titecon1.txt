@@ -1,0 +1,91 @@
+@-1      -1      1       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20000   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@-1      -1      1       3       HELP
+@-1      -1      1       5       VOID DWELLERS
+@-1      -1      3       6       D'PAHK WORMS
+@-1      -1      1       7       SENGZHAC BUGS BUGGERS
+@-1      -1      1       8       GUILD
+@-1      -1      3       9       PHAEDOR MOCH PUPPET
+@-1      -1      1       10      ERMIGEN
+@-1      -1      1       11      QUAI PA'LOI PAI ALOI Q'OOUL
+@-1      -1      1       14      ICON
+@-1      -1      1       15      TITARIAN
+@-1      -1      3       16      YLINTHLIXYMN YILLER YLINTH
+@-1      -1      1       17      SCAVENGERS SCAVS
+@-1      -1      1       18      AARD
+@28      -1      1       62      MALZATOIR
+@-1      -1      1       19      MALZATOIR
+@-1      -1      3       20      DARK KIND
+@-1      -1      1       24      MONKS MONK
+@-1      -1      1       26      SELL BUY TRADE TRADERS
+@-1      -1      1       28      NOVA
+@-1      -1      1       31      GOD'S EYE GODS EYE
+@-1      -1      1       32      IRONSEED
+@-1      -1      1       35      MOBIUS
+-1      -1      3       46      KENDAR
+-1      -1      1       47      EXPECTING
+-1      -1      1       48      SAW SEE
+-1      -1      3       49      PATHS PATH
+-1      -1      3       50      MEASURED
+-1      232     1       52      TELL PATHWAYS @PATHWAY @PREDICT FUTURE
+-1      233     1       56      WORSHIP @WORSHIPS
+-1      -1      1       62      MURDER
+@-1      -1      1       63      DERRAAK
+-1      -1      1       64      ORDAK
+-500
+1       We have been ^expecting^ you for some time now. We ^saw^ you coming.
+2       Return soon, and walk only in favored paths.
+3       Look, and it will be revealed to you.
+5       They are worth trust.
+6       They are anxious and care little about the world beyond their star. We can see the path of you helping them.
+6       We see their gratuity. Yes, they are thankful.
+7       The Sengzhac are crass. They follow many paths.
+8       Their paths are clear. They continue to move along the same ones... driven by greed. Why, we are uncertain. They will talk to you if you have something to offer. That is their path.
+9       We spoke to them of the path they have taken. It was madness to phase an entire planet. A mad path taken by madmen. The idea is sound for small objects. A starship, perhaps, but not a world.
+9       A massive body has an enormous amount of ambient entropy, too much to contain with any device.
+10      Never confront an ermigen ship. Hostile paths are dead ends. You are not likely to survive.
+11      They follow interesting paths. Even now, they are at a crossroads. The paths narrow for them.
+14      Intriguing... We see you on many paths. Many paths see you following the icon... Following the icon and their path. Their is honor to be had in this.
+15      Our path is our own. We will share with you only what we feel is necessary.
+16      They have many shadows crossing their paths.
+16      Shriek! They cease to be?! It is so. The sum of paths is one, and their path is come undone.
+17      We sense confusion. We know them but have not seen them. Yes, there is a path. You will do many things with and for them... for them... for all of us.
+18      We have not seen them, or their paths. We do know the races who have met them. Their appearance cannot be agreed upon.
+19      Hrm... We can tell you nothing of their path.
+20      We prefer not to speak of them. They remind us of the kendar. How could we have not seen that path? Our paths were crossed and so were we. The others betrayed us and stole our honor.
+20      Listen to us... We ramble on about paths not taken. I apologize.
+24      Mad and roaming shadow paths... We know not where they lie.
+26      We have nothing that might interest you.
+28      Yes, we are sorry for sending you there, but we were certain that the ^future^ needed you. The nova kept you on the correct path.
+31      Sengzhac guard it well. You will not be able to approach it without permission from the bugs. I would suggest that you forget about it. Concern yourself with more important things.
+32      I know nothing about that.
+35      Device of termination, the path ender...  It is all paths of blood, a dark cloud.
+41      You will learn to deal with them.  They should not pose a problem to the strong.
+46      The name is familiar, we cannot remember. We force the forgetting upon ourselves... We lost so much honor. After the defeat of the dark kind how were we to know that the others would set upon us, dividing the kendar?
+46      Such a foolish path the others took.
+47      Of course, we were expecting you. We could ^see^ that it was a path you would come here soon.
+48      Well, for you to understand our sight, you must first comprehend the ^paths^.
+49      If you listen, you will understand. Realize that anything can happen. While something happens that many thought was impossible,  what they cannot realize is that the present is an eternal crossroads.
+49      At all times we are faced with the paths. Each moment is a feast of possibility. Unlike others we can see these paths as they approach. You... you do not. You along with the others perceive the paths as past.
+49      You live simply because you know only the past. What you see as the future is our rich crossroads. We are forever choosing paths, but do not worry yourself. Improbabilities have their own place. They do not run unchained.
+49      Universal gravitation and the gilda beast sandwiches of yarro will remain the same for all of ^measured^ time. Now what determines how probable an event is?  Why, the quantum spins of the particles around
+49      any given area of space. If you can look at the critical spins and interpret their paths, all is clear. That is how we see.
+49      We see down your ^pathways^.
+49      There are those who worship us as _Gods.
+50      In an interesting corollary, we can see that in a small amount of time, say 500 trillion cycles, a highly improbable event will not occur.
+50      As you extend the scope of your vision to include paths on an infinite scale, the impossible becomes necessary. Paths wind, turn and knot themselves. Things must happen. Even the improbable yearns to be experienced.
+50      Anything that you can imagine will happen at some time in the paths.
+52      Your paths are numbered. You will find it. That is all that we can tell.
+56      You can find them. They are naive.
+62      The scavengers walk a dark path. They took the lives of innocents. The malzatoir have perished.
+63      So, you have heard of our problem child. We could see his paths were quite twisted. His sight was minimal. He could rarely see past a few seconds, but his intuition was keen. He tricks and a manipulates.
+63      Eventually he broke off contact with us. We could always tell when he was stalking our paths. He headed up a number of shadows on several of the other races, but his reputation for backstabbing
+63      earned him fear even among his bretheren. Soon, no one would dare share his path. In response to this, he manufactured a very small, very fast ship. It was of ordak make and design.
+63      stripping out all shields and weapons (he intended to avoid combat... it's much easier to stay alive that way) and outfitted it solely for speed. He uses his ship to attack cargo ships when they are most vulnerable...
+63      When they have just powered down and engaged their engines for intersystem transit. Normally, the entire crew is in stasis. Since most are programmed to wake the crew only if a hostile ship approaches
+63      The crews sleep through his theft. He escapes with no resistance! His ship is too fast... If we did see him,
+63      he could easily outrun us. We have tried homing devices in our cargo, but he tracks our cargo manifests and knows which to take. We are sorry for any trouble that he has caused you. Looking down your paths,
+63      we can see that if you travel to the system (153.8,99.0,196.9), you will encounter him again. Our advice to you is to avoid him and this system. He is trouble, and i am sure that you need no more shadow than what already
+63      plagues you.
+64      They are couriers.
+-500

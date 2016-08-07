@@ -1,0 +1,88 @@
+@-1      -1      2       1       HI HELLO GREETINGS HYA HIYA SALUTATIONS WELCOME
+@-1      20000   1       2       BYE GOOD-BYE GOODBYE OVER OUT 10-4 QUIT
+@-1      -1      1       3       HELP
+@-1      -1      1       5       VOID DWELLERS
+@-1      -1      1       6       D'PAHK WORMS
+@-1      -1      1       7       SENGZHAC BUGS BUGGERS
+@-1      -1      1       8       GUILD
+@-1      -1      1       9       PHAEDOR MOCH PUPPET
+@-1      -1      1       10      ERMIGEN
+@-1      -1      3       11      QUAI PA'LOI
+@-1      -1      1       12      PAI ALOI
+@-1      -1      1       13      Q'OOUL
+@-1      -1      1       14      ICON
+@-1      -1      3       15      TITARIAN
+@-1      -1      1       16      YLINTHLIXYMN YILLER YLINTH
+@-1      -1      1       17      SCAVENGERS SCAVS
+@-1      -1      1       18      AARD
+@-1      -1      1       19      MALZATOIR
+@-1      -1      1       20      DARK ONES NAMELESS DARK KIND
+@-1      -1      1       22      DERRAAK
+@-1      -1      1       23      TROJAN GATE GATES
+@-1      -1      3       24      MONKS MONK
+@-1      -1      1       25      HOMEWORLD HOME WORLD
+@-1      -1      1       26      SELL BUY TRADE TRADERS
+@-1      259     1       27      HALLIFAX MANEUVER
+@-1      -1      1       29      SHUNT
+@-1      -1      1       31      GOD'S EYE GODS EYE
+@-1      -1      1       32      IRONSEED
+-1      -1      1       34      CARGAN
+-1      -1      3       35      MOBIUS
+-1      -1      1       36      KENDAR
+-1      -1      1       60      WATCHING
+-1      -1      3       62      TIMES
+-1      -1      3       63      DANGER THREAT
+-1      -1      1       67      SYMBOLS
+-1      -1      1       65      PASSAGE
+-1      -1      3       66      WYER
+-500
+1       Hello, Earth ship, we have been ^watching^ you for some time now. I am sure that you know by now that we are ^Icon^. You should feel honored. You are the first alien race we have contacted since shortly after the time of the ^Dark Ones^.
+1       We do keep up with the affairs of the other races, but we do not wish to interfere except in times of grave ^danger^. Unfortunately for us all, this is now one of those ^times^.
+2       We will be awaiting your return. May your journey be swift.
+3       We will help you in any way we can. You have but to ask.
+5       We have observed them for as long as they have shown themselves in this world. They always know more. Be careful in your dealings with them.
+6       They are very well meaning, even if they can only think of one thing at a time. The sun does hold power. They are among the few who realize it.
+7       Sengzhac is not exactly what it appears to be. It may seem cold and heartless, but it is only out of necessity. It is only fulfilling its purpose. You might be able to discuss your differences with it if you can find a way to
+7       present yourself more to its liking.
+8       You know most of what i have to say about them. I believe their motives slowly change... For the better, perhaps. Sometime soon they will develop.
+9       It has been a very long time since we encountered them. They were forced into hiding many cycles ago. We know where to find them, but how can we be sure that you will not attack them in their weakened mental state?
+10      You will not find in them what is widely reported. They are mild mannered and friendly among themselves. They are intimidated by the outsiders, the others.
+11      Their war is a misunderstanding. They have effectively lost the ability to communicate clearly with each other. Tied up in diplomacy, they are unable to convey truths. Remember this when you establish your own governments.
+11      Do not bind the tongue of truth with the black rope of beuracracy.
+12      They only wished to help... To better their world. They are not the selfish brats that the others would have them be.
+13      They are infants, too naive to maintain a government. They have much to learn.
+14      We are Icon, ^symbols^ for the ^passage^. We observe, but do not interfere. That is the ^Wyer^. We will only reveal to you what we feel is needed.
+15      They spend their time staring blindly into future paths trying to glimpse what is soon to come. It is sad that they waste themselves this way. What is meant to pass, will. They cannot change what will come. 
+16      It is a shame. Surely there is something to learn from this.
+17      They began evolution with good. Now they feed upon others hoping to fill themselves. They are strengthening. The Kendar must be reborn if we are to survive this danger.
+17      We must ensure that we are not destroyed in the interim.
+18      We have not had sufficient time to learn about them.
+19      We are troubled believing that they are gone. They were enlightened and will be sorely missed.
+20      They were vicious oppressors and masterful combateers. Their trojan gates allowed them to cut whole swaths of death through the sky. We are fortunate they are gone.
+22      He is a crafty one. The titarians can tell you more about him than we can.
+23      The gates were doorways... through space. The Dark Ones used them to travel between stars... In a breath their opponents fell. Many of the gates were destroyed after the war. A few, however, were overlooked and have survived.
+24      Ahhh. You wish to know about the monks. Many speculate that they are more than a group of holy men. Some say that they are powerful magicians from a parallel universe. Others believe that they created this entire universe. Still others
+24      think that they are simply a group of computer bums parading around under the name of Channel7 waiting to strike it rich in the retail market.  
+24      Whatever you choose to believe about them, you will need to ask for their help eventually. To contact them, you must first find the
+24      ^Hallifax^. Or, better yet, contact Softdisk.
+25      This is it.  That is all that you need to know about it.
+26      You would not comprehend the uses of our goods.
+27      You will find the Hallifax at (108.5,110.1,245.6). Go there and display the monk's symbol. They will understand and lead you to the monks.
+29      We have never heard of one of those before. Its technology sounds similar to the trojan gates, but a more advanced. I would be careful using it.
+31      It is located at the last location of the dark ones. It is both a memorial and a marker.
+32      The fruits of knowledge always contain seeds. Plant these seeds, and you will grow wondrous things.
+34      A truly marvelous ship.  Virtually indestructible.
+35      The dark ones were trying to develop some type of ultimate weapon that they planned to use against the other races. They called it the mobius device because it caused space to warp. 
+35      It is interesting that the dark kind vanished before they completed its development.
+36      Before the Dark Ones took complete control, the ancient races banded together. Interestingly enough, we were met with little resistance.
+36      We saw the last of them at what is now the location of god's eye.
+60      We watch all of the races. Even though we do not communicate openly, we do hold an interest in you and the others.
+62      The times that we choose to communicate with the others are only those of extreme need. The last time was during the reign of the ^Dark Ones^. It was during that time that we contacted all of the then starfaring races and motivated the
+62      formation of the ^Kendar^. Now there is a similar threat from the ^Scavengers^.
+63      The Scavengers are becoming a threat to all of us... Soon, to the entire galaxy. They are able to scavenge tech and regenerate themselves with it. They are fascinating creatures, but they are 
+63      quite deadly. With the recent destruction of the malzatoir, they have shown they have strength enough to disturb us all. They must be dealt with soon. 
+65      It is not yet time for you to enter into the kingdom.
+66      You cannot fully understand Wyer; your culture is not yet fully developed. We can only describe it to you as a state of higher knowing.
+66      Acheiving Wyer is the ultimate sign of a truly enlightened race. The D'pahk have made the first steps, but they let their singlemindedness get in the way.
+67      We are symbols of the Wyer.
+-500
