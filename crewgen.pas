@@ -297,16 +297,16 @@ begin
    quit:=true;
    code:=curfilenum+48;
    str(curfilenum,nums);
-   assign(planfile,'save'+nums+'/planets.dta');
+   assign(planfile,'save'+nums+'/PLANETS.DTA');
    rewrite(planfile);
-   if ioresult<>0 then errorhandler('planets.dta',1);
+   if ioresult<>0 then errorhandler('PLANETS.DTA',1);
    write(planfile,planets^);
-   if ioresult<>0 then errorhandler('planets.dta',5);
+   if ioresult<>0 then errorhandler('PLANETS.DTA',5);
    close(planfile);
    
-   assign(confile,'save'+nums+'/contacts.dta');
+   assign(confile,'save'+nums+'/CONTACTS.DTA');
    rewrite(confile);
-   if ioresult<>0 then errorhandler('save'+nums+'/contacts.dta',1);
+   if ioresult<>0 then errorhandler('save'+nums+'/CONTACTS.DTA',1);
    close(confile);
 
    for i := 0 to 1023 do
@@ -316,25 +316,25 @@ begin
    for i := 0 to 255 do
       logs[i] := -1;
 
-   assign(eventfile,'save'+nums+'/events.dta');
+   assign(eventfile,'save'+nums+'/EVENTS.DTA');
    rewrite(eventfile);
-   if ioresult<>0 then errorhandler('events.dta',1);
+   if ioresult<>0 then errorhandler('EVENTS.DTA',1);
    write(eventfile,events);
-   if ioresult<>0 then errorhandler('events.dta',5);
+   if ioresult<>0 then errorhandler('EVENTS.DTA',5);
    close(eventfile);
 
-   assign(logsfile,'save'+nums+'/logs.dta');
+   assign(logsfile,'save'+nums+'/LOGS.DTA');
    rewrite(logsfile);
-   if ioresult<>0 then errorhandler('logs.dta',1);
+   if ioresult<>0 then errorhandler('LOGS.DTA',1);
    write(logsfile,logs);
-   if ioresult<>0 then errorhandler('logs.dta',5);
+   if ioresult<>0 then errorhandler('LOGS.DTA',5);
    close(logsfile);
 
-   assign(logpendingfile,'save'+nums+'/pending.dta');
+   assign(logpendingfile,'save'+nums+'/PENDING.DTA');
    rewrite(logpendingfile);
-   if ioresult<>0 then errorhandler('pending.dta',1);
+   if ioresult<>0 then errorhandler('PENDING.DTA',1);
    write(logpendingfile,logpending);
-   if ioresult<>0 then errorhandler('pending.dta',5);
+   if ioresult<>0 then errorhandler('PENDING.DTA',5);
    close(logpendingfile);
    
 end;
