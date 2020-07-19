@@ -364,7 +364,6 @@ int video_output(void *notused)
 int  handle_keys(void *useless)
 {
 	SDL_Event event;
-   	fprintf (stderr, "/mn/ handle_keys started\n");
 	while(!video_stop)
 	{
     while ( SDL_PollEvent(&event) )
@@ -375,12 +374,10 @@ int  handle_keys(void *useless)
 			 normal_exit=0;
       		 all_done();
       		 SDL_Quit();
-      		 fprintf (stderr, "/mn/ SDL quit 4\n");
       		 exit(4);
      	} 
      	if ( event.type == SDL_KEYDOWN )
      	{
-			fprintf(stderr,"K");
 			if(event.key.keysym.sym==SDLK_SCROLLOCK)
 			{
 				turbo_mode=1;
@@ -392,7 +389,6 @@ int  handle_keys(void *useless)
      	}
 		if( event.type == SDL_KEYUP )
 		{
-			fprintf(stderr,"k");
 			if(event.key.keysym.sym==SDLK_SCROLLOCK)
 			{
 				turbo_mode=0;
@@ -425,8 +421,6 @@ int  handle_keys(void *useless)
 		
    	}
    	keys_done=1;
-   	fprintf (stderr, "/mn/ video_stop, keys_done=1\n");
-
 }
 
 
@@ -666,7 +660,6 @@ uint8_t key_pressed(void)
 	k=keypressed_;
 //	keypressed=0;
 	nanosleep(ts2);
-	fprintf(stderr, k?"+":"-");
 	return k;
 	
 	
@@ -707,7 +700,6 @@ uint8_t readkey(void)
 	ts2.tv_nsec=500000;
 	keypressed_=0;
 	nanosleep(ts2);
-	fprintf(stderr, "r");
 	return key;
 }
 
@@ -722,7 +714,6 @@ uint8_t readkey_raw(void)
 	ts2.tv_nsec=500000;
 	keypressed_=0;
 	nanosleep(ts2);
-	fprintf(stderr, "R");
 	return key_;
 	
 }
