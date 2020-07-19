@@ -553,6 +553,7 @@ begin
  curx:=1;
  tcolor:=31;
  temp:='   ';
+ writeln('/mn/ start editx');
  mousehide;
  repeat
   for j:=1 to 3 do
@@ -560,7 +561,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,172,temp[j]);
    end;
-  ans:=readkey;
+  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2); { /mn/ 20200719 kludge so we can set position manually as readkey returns immediately without waiting for new key! }
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;
@@ -599,6 +600,7 @@ begin
  for i:=24 to 30 do
   fillchar(screen[i,40],90,0);
  mouseshow;
+ writeln('/mn/ end editx ans=', ord(ans), ' temp=>', temp, '<, value=', value, ', error=', error);
 end;
 
 procedure edity;
@@ -609,6 +611,7 @@ begin
  curx:=1;
  tcolor:=31;
  temp:='   ';
+ writeln('/mn/ start edity');
  mousehide;
  repeat
   for j:=1 to 3 do
@@ -616,7 +619,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,180,temp[j]);
    end;
-  ans:=readkey;
+  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2); { /mn/ 20200719 kludge so we can set position manually as readkey returns immediately without waiting for new key! }
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;
@@ -655,6 +658,7 @@ begin
  for i:=24 to 30 do
   fillchar(screen[i,40],90,0);
  mouseshow;
+ writeln('/mn/ end edity ans=', ord(ans), ' temp=>', temp, '<, value=', value, ', error=', error);
 end;
 
 procedure editz;
@@ -665,6 +669,7 @@ begin
  curx:=1;
  tcolor:=31;
  temp:='   ';
+ writeln('/mn/ start editz');
  mousehide;
  repeat
   for j:=1 to 3 do
@@ -672,7 +677,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,188,temp[j]);
    end;
-  ans:=readkey;
+  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2); { /mn/ 20200719 kludge so we can set position manually as readkey returns immediately without waiting for new key! }
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;
@@ -711,6 +716,7 @@ begin
  for i:=24 to 30 do
   fillchar(screen[i,40],90,0);
  mouseshow;
+ writeln('/mn/ end editz ans=', ord(ans), ' temp=>', temp, '<, value=', value, ', error=', error);
 end;
 
 procedure newsec(n: integer);
