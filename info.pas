@@ -103,6 +103,7 @@ begin
  tarzr:=(tarz-cenz)/10;
 end;
 
+
 procedure displaysector;
 begin
  if ship.damages[7]>59 then
@@ -158,7 +159,7 @@ begin
     end
    else
     if systems[nearsec^[j].index].visits>0 then i:=31 else i:=95;
-   //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting starmapscreen^[',y,',',x,'] := ', i);
+   //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting1 starmapscreen^[',y,',',x,'] := ', i);
    { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
    if (x<30) or (x>170) then x:=85+j*2;
    if (y<30) or (y>170) then y:=70+j*2;
@@ -219,6 +220,10 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
+    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
+    { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
+    if (x<30) or (x>170) then x:=85+j*2;
+    if (y<30) or (y>170) then y:=70+j*2;
     screen[y,x]:=c1;
     x:=systems[nearsec^[j].index].x - cenx;
     y:=systems[nearsec^[j].index].z - cenz;
@@ -229,6 +234,10 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
+    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting3 screen^[',y,',',x,'] := ', c1);
+    { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
+    if (x<30) or (x>170) then x:=85+j*2;
+    if (y<30) or (y>170) then y:=70+j*2;
     screen[y,x]:=c1;
    end;
  tcolor:=31;
