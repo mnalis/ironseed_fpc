@@ -158,12 +158,11 @@ begin
     end
    else
     if systems[nearsec^[j].index].visits>0 then i:=31 else i:=95;
-   writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting starmapscreen^[',y,',',x,'] := ', i);
-   { do not crash if ephemeris is corrupted }
+   //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting starmapscreen^[',y,',',x,'] := ', i);
+   { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
    if (x<30) or (x>170) then x:=85+j*2;
    if (y<30) or (y>170) then y:=70+j*2;
    starmapscreen^[y,x]:=i;
-   //writeln (' done');
   end;
  mousehide;
  for i:=18 to 123 do
@@ -192,7 +191,6 @@ end;
 procedure displaysideview;
 var c1: integer;
 begin
- writeln (' begin displaysideview');
  mousehide;
  for i:=20 to 88 do
   fillchar(screen[i,160],141,5);
@@ -209,9 +207,7 @@ begin
    line(160,19+i*10,300,19+i*10);
    line(160,90+i*10,300,90+i*10);
   end;
- writeln ('  displaysideview 100');
  for j:=1 to 37 do
-  writeln ('  displaysideview 200 j=',j);
   if nearsec^[j].index<>0 then
    begin
     x:=systems[nearsec^[j].index].x - cenx;
@@ -235,12 +231,10 @@ begin
     end;
     screen[y,x]:=c1;
    end;
- writeln ('  displaysideview 900');
  tcolor:=31;
  bkcolor:=0;
  displaytargets;
  mouseshow;
- writeln (' end displaysideview');
 end;
 
 procedure readyhistoryview;
@@ -439,7 +433,6 @@ begin
              i:=ord(ans)-48;
              if i<>sector then
               begin
-               writeln('key astro OLD sector=', sector, ' tarx=', tarx, ' tary=', tary, ' tarz=', tarz, ' infoindex=', infoindex);
                undocursor;
                sector:=i;
                drawcursor;
@@ -450,9 +443,7 @@ begin
                tarx:=cenx;
                tary:=ceny;
                tarz:=cenz;
-               writeln('key astro NEW sector=', sector, ' tarx=', tarx, ' tary=', tary, ' tarz=', tarz, ' infoindex=', infoindex);
                if infoindex=0 then displaysideview else readyhistoryview;
-               writeln('view done');
               end;
             end;
   '+': if infoindex<>0 then
