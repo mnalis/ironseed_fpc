@@ -85,6 +85,24 @@ begin
    if systems[i].x>1250 then j:=2 else j:=1;
    if systems[i].y>1250 then j:=j+2;
    if systems[i].z>1250 then j:=j+4;
+
+   with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets); 
+   if (ord(systems[i].name[0]) < 11) or (ord(systems[i].name[0]) > 12) then	{ starting 'OBAN' system is 11 bytes instead of 12, all are space-padded on the right }
+   begin
+      { memory corruption bug - try autorepair workaround, so we do not crash later if ephemeris is corrupted }
+      systems[i].x := cenx+index*20;	{ fixme how it finds the name and changes 'UNKNOWN' to 'UVO' for example for #38? can we fix coords/mode/numplanets too? and notes? }
+      systems[i].y := ceny;
+      systems[i].z := cenz;
+      systems[i].name := format('BROKEN %.4d ',[i]);
+      systems[i].visits := 0;
+      systems[i].datey := 0;
+      systems[i].datem := 0;
+      systems[i].mode := 1; // ?
+      systems[i].numplanets := 3;
+      systems[i].notes := 1; // ?
+      with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+   end;
+   
 {$IFDEF DEMO}
    if j=sector then
 {$ELSE}
@@ -93,28 +111,17 @@ begin
     begin
      inc(index);
      if index=38 then errorhandler('Invalid NearSec value.',6);
-     with systems[i] do writeln (' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
-     if ord(systems[i].name[0]) <> 12 then	// fixme also check x/y/z > 250*10 or < 0, or excessive visits/dates etc. assert()? and also how to best fix?
-     begin
-        { do not crash later if ephemeris is corrupted -- should find the real culprit why this becomes broken instead of this workaround, really }
-        systems[i].x := cenx+index*100;
-        systems[i].y := ceny+index*10;
-        systems[i].z := cenz+index*10;
-        systems[i].name := format('BROKEN%.4d  ',[i]);
-        systems[i].visits := 0;
-        systems[i].datey := 0;
-        systems[i].datem := 0;
-        systems[i].mode := 1; // ?
-        systems[i].numplanets := 4; // ?
-        systems[i].notes := 1; // ?
-        with systems[i] do writeln ('  FIXUPP s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
-     end;
      nearsec^[index].index:=i;
      nearsec^[index].x:=(systems[i].x-cenx)/10;
      nearsec^[index].y:=(systems[i].y-ceny)/10;
      nearsec^[index].z:=(systems[i].z-cenz)/10;
-     writeln ('  sector=', sector, ' nearsec^[', index, '].index=', nearsec^[index].index, ' x=', formatfloat('#.###',nearsec^[index].x),  ' y=', formatfloat('#.###',nearsec^[index].y),  ' z=', formatfloat('#.###',nearsec^[index].z));
+     writeln ('  our sector=', sector, ' nearsec^[', index, '].index=', nearsec^[index].index, ' x=', formatfloat('#.###',nearsec^[index].x),  ' y=', formatfloat('#.###',nearsec^[index].y),  ' z=', formatfloat('#.###',nearsec^[index].z));
     end;
+    assert ((systems[i].x>=0) and (systems[i].y>=0) and (systems[i].z>=0), 'x/y/z are negative');
+    assert ((systems[i].x<=2500) and (systems[i].y<=2500) and (systems[i].z<=2500), 'x/y/z are too big');
+    assert ((ord(systems[i].name[0]) >= 11) and (ord(systems[i].name[0]) <= 12), 'system name size corrupted' );
+    assert (systems[i].numplanets < 7, 'too many planets' );
+    assert (systems[i].visits <= 255, 'too many visits' );
   end;
  tarxr:=(tarx-cenx)/10;
  taryr:=(tary-ceny)/10;
@@ -177,7 +184,7 @@ begin
     end
    else
     if systems[nearsec^[j].index].visits>0 then i:=31 else i:=95;
-   writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting1 starmapscreen^[', y, ',' , x, '] := ', i);
+   //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting1 starmapscreen^[', y, ',' , x, '] := ', i);
    starmapscreen^[y,x]:=i;
   end;
  mousehide;
@@ -237,7 +244,7 @@ begin
     end;
     writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
     { assert if ephemeris is corrupted even after fix in readysector() }
-    assert ((x>=0) and (x<=320) and (y>=0) and (y<=200), 'displaysideview1 coords out of range');	{ screen is array 0..199,0..319 eg. 320x200=64000 elements }
+    assert ((x>=0) and (x<320) and (y>=0) and (y<200), 'displaysideview1 coords out of range');	{ screen is array 0..199,0..319 eg. 320x200=64000 elements }
     screen[y,x]:=c1;
     x:=systems[nearsec^[j].index].x - cenx;
     y:=systems[nearsec^[j].index].z - cenz;
@@ -248,9 +255,9 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
-    writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting3 screen^[',y,',',x,'] := ', c1);
+    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting3 screen^[',y,',',x,'] := ', c1);
     { assert if ephemeris is corrupted even after fix in readysector() }
-    assert ((x>=0) and (x<=320) and (y>=0) and (y<=200), 'displaysideview2 coords out of range');
+    assert ((x>=0) and (x<320) and (y>=0) and (y<200), 'displaysideview2 coords out of range');
     screen[y,x]:=c1;
    end;
  tcolor:=31;
