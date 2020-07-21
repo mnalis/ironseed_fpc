@@ -940,7 +940,7 @@ planerror:
       until (curplan>400) and (curplan<1001);
    with systems[145] do
    begin
-      name:='OBAN       ';
+      name:='OBAN        ';
       datey:=3784;
       datem:=2;
       visits:=1;

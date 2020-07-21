@@ -87,7 +87,8 @@ begin
    if systems[i].z>1250 then j:=j+4;
 
    with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets); 
-   if (ord(systems[i].name[0]) < 11) or (ord(systems[i].name[0]) > 12) then	{ starting 'OBAN' system is 11 bytes instead of 12, all are space-padded on the right }
+   if systems[i].name='OBAN       ' then systems[i].name := 'OBAN        '; { fix legacy off-by-one padding }
+   if (ord(systems[i].name[0]) <> 12) then
    begin
       { memory corruption bug - try autorepair workaround, so we do not crash later if ephemeris is corrupted }
       systems[i].x := cenx+index*20;	{ fixme how it finds the name and changes 'UNKNOWN' to 'UVO' for example for #38? can we fix coords/mode/numplanets too? and notes? }
@@ -119,7 +120,7 @@ begin
     end;
     assert ((systems[i].x>=0) and (systems[i].y>=0) and (systems[i].z>=0), 'x/y/z are negative');
     assert ((systems[i].x<=2500) and (systems[i].y<=2500) and (systems[i].z<=2500), 'x/y/z are too big');
-    assert ((ord(systems[i].name[0]) >= 11) and (ord(systems[i].name[0]) <= 12), 'system name size corrupted' );
+    assert (ord(systems[i].name[0]) = 12, 'system name size corrupted' );
     assert (systems[i].numplanets < 7, 'too many planets' );
     assert (systems[i].visits <= 255, 'too many visits' );
   end;
