@@ -20,7 +20,7 @@ procedure sectorinfo;
 implementation
 
 uses crt, utils_, data, gmouse, utils, display, utils2, usecode, modplay,
- weird, journey, heapchk;
+ weird, journey, heapchk, sysutils;
 
 type
  nearsectype= array[1..37] of nearbytype;
@@ -79,6 +79,7 @@ begin
  if sec>1 then cenx:=1875 else cenx:=625;
  for j:=1 to 37 do nearsec^[j].index:=0;
  index:=0;
+ writeln ('start readysector ', sector, ' sec=',sec, ' cenx=', cenx, ' ceny=', ceny, ' cenz=', cenz);
  for i:=1 to 250 do
   begin
    if systems[i].x>1250 then j:=2 else j:=1;
@@ -92,10 +93,27 @@ begin
     begin
      inc(index);
      if index=38 then errorhandler('Invalid NearSec value.',6);
+     with systems[i] do writeln (' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+     if ord(systems[i].name[0]) <> 12 then	// fixme also check x/y/z > 250*10 or < 0, or excessive visits/dates etc. assert()? and also how to best fix?
+     begin
+        { do not crash later if ephemeris is corrupted -- should find the real culprit why this becomes broken instead of this workaround, really }
+        systems[i].x := cenx+index*100;
+        systems[i].y := ceny+index*10;
+        systems[i].z := cenz+index*10;
+        systems[i].name := format('BROKEN%.4d  ',[i]);
+        systems[i].visits := 0;
+        systems[i].datey := 0;
+        systems[i].datem := 0;
+        systems[i].mode := 1; // ?
+        systems[i].numplanets := 4; // ?
+        systems[i].notes := 1; // ?
+        with systems[i] do writeln ('  FIXUPP s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+     end;
      nearsec^[index].index:=i;
      nearsec^[index].x:=(systems[i].x-cenx)/10;
      nearsec^[index].y:=(systems[i].y-ceny)/10;
      nearsec^[index].z:=(systems[i].z-cenz)/10;
+     writeln ('  sector=', sector, ' nearsec^[', index, '].index=', nearsec^[index].index, ' x=', formatfloat('#.###',nearsec^[index].x),  ' y=', formatfloat('#.###',nearsec^[index].y),  ' z=', formatfloat('#.###',nearsec^[index].z));
     end;
   end;
  tarxr:=(tarx-cenx)/10;
@@ -159,10 +177,7 @@ begin
     end
    else
     if systems[nearsec^[j].index].visits>0 then i:=31 else i:=95;
-   //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting1 starmapscreen^[',y,',',x,'] := ', i);
-   { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
-   if (x<30) or (x>170) then x:=85+j*2;
-   if (y<30) or (y>170) then y:=70+j*2;
+   writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting1 starmapscreen^[', y, ',' , x, '] := ', i);
    starmapscreen^[y,x]:=i;
   end;
  mousehide;
@@ -220,10 +235,9 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
-    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
-    { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
-    if (x<30) or (x>170) then x:=85+j*2;
-    if (y<30) or (y>170) then y:=70+j*2;
+    writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
+    { assert if ephemeris is corrupted even after fix in readysector() }
+    assert ((x>=0) and (x<=320) and (y>=0) and (y<=200), 'displaysideview1 coords out of range');	{ screen is array 0..199,0..319 eg. 320x200=64000 elements }
     screen[y,x]:=c1;
     x:=systems[nearsec^[j].index].x - cenx;
     y:=systems[nearsec^[j].index].z - cenz;
@@ -234,10 +248,9 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
-    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting3 screen^[',y,',',x,'] := ', c1);
-    { do not crash if ephemeris is corrupted -- should find the real culprit instead of this workaround, really }
-    if (x<30) or (x>170) then x:=85+j*2;
-    if (y<30) or (y>170) then y:=70+j*2;
+    writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting3 screen^[',y,',',x,'] := ', c1);
+    { assert if ephemeris is corrupted even after fix in readysector() }
+    assert ((x>=0) and (x<=320) and (y>=0) and (y<=200), 'displaysideview2 coords out of range');
     screen[y,x]:=c1;
    end;
  tcolor:=31;
