@@ -160,7 +160,7 @@ begin
     assert ((systems[i].x>=0) and (systems[i].y>=0) and (systems[i].z>=0), 'x/y/z are negative');
     assert ((systems[i].x<=2500) and (systems[i].y<=2500) and (systems[i].z<=2500), 'x/y/z are too big');
     assert (ord(systems[i].name[0]) = 12, 'system name size corrupted' );
-    assert (systems[i].numplanets < 7, 'too many planets' );
+    assert (systems[i].numplanets <= 7, 'too many planets' );
     assert (systems[i].visits <= 255, 'too many visits' );
   end;
  tarxr:=(tarx-cenx)/10;
