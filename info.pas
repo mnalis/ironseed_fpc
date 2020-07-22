@@ -140,7 +140,7 @@ begin
       systems[i].mode := 1;
       systems[i].notes := 1;
       fixupcoord(i);
-      //with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+      with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    end;
    
 {$IFDEF DEMO}
