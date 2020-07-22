@@ -68,7 +68,7 @@ begin
     if tempplan^[j].system=sys then
     begin
       inc(count);
-      with tempplan^[j] do writeln ('   count of planet for system=', sys,' is now=', count, ' orbit=', orbit, ' psize=', psize, ' state=', state, ' mode=', mode, ' notes=', notes, ' bots=', bots, ' seed=', seed, ' age=', age, ' visits=', visits, ' water=', water, ' date=', datey,'/', datem );
+      //with tempplan^[j] do writeln ('   count of planet for system=', sys,' is now=', count, ' orbit=', orbit, ' psize=', psize, ' state=', state, ' mode=', mode, ' notes=', notes, ' bots=', bots, ' seed=', seed, ' age=', age, ' visits=', visits, ' water=', water, ' date=', datey,'/', datem );
     end;
  countplanets:=count;
 end;
@@ -120,14 +120,14 @@ begin
  if sec>1 then cenx:=1875 else cenx:=625;
  for j:=1 to 37 do nearsec^[j].index:=0;
  index:=0;
- writeln ('start readysector ', sector, ' sec=',sec, ' cenx=', cenx, ' ceny=', ceny, ' cenz=', cenz);
+ //writeln ('start readysector ', sector, ' sec=',sec, ' cenx=', cenx, ' ceny=', ceny, ' cenz=', cenz);
  for i:=1 to 250 do
   begin
    if systems[i].x>1250 then j:=2 else j:=1;
    if systems[i].y>1250 then j:=j+2;
    if systems[i].z>1250 then j:=j+4;
 
-   with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets); 
+   //with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets); 
    if systems[i].name='OBAN       ' then systems[i].name := 'OBAN        '; { fix legacy off-by-one padding }
    if (ord(systems[i].name[0]) <> 12) then
    begin
@@ -139,7 +139,7 @@ begin
       systems[i].mode := 1;
       systems[i].notes := 1;
       fixupcoord(i);
-      with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+      //with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    end;
    
 {$IFDEF DEMO}
@@ -154,7 +154,7 @@ begin
      nearsec^[index].x:=(systems[i].x-cenx)/10;
      nearsec^[index].y:=(systems[i].y-ceny)/10;
      nearsec^[index].z:=(systems[i].z-cenz)/10;
-     writeln ('  our sector=', sector, ' nearsec^[', index, '].index=', nearsec^[index].index, ' x=', formatfloat('#.###',nearsec^[index].x),  ' y=', formatfloat('#.###',nearsec^[index].y),  ' z=', formatfloat('#.###',nearsec^[index].z));
+     //writeln ('  our sector=', sector, ' nearsec^[', index, '].index=', nearsec^[index].index, ' x=', formatfloat('#.###',nearsec^[index].x),  ' y=', formatfloat('#.###',nearsec^[index].y),  ' z=', formatfloat('#.###',nearsec^[index].z));
     end;
     assert ((systems[i].x>=0) and (systems[i].y>=0) and (systems[i].z>=0), 'x/y/z are negative');
     assert ((systems[i].x<=2500) and (systems[i].y<=2500) and (systems[i].z<=2500), 'x/y/z are too big');
@@ -281,7 +281,7 @@ begin
      2: c1:=95;
      3: c1:=31;
     end;
-    writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
+    //writeln('nearsec^[', j, '].index=', nearsec^[j].index, ' setting2 screen^[',y,',',x,'] := ', c1);
     { assert if ephemeris is corrupted even after fix in readysector() }
     assert ((x>=0) and (x<320) and (y>=0) and (y<200), 'displaysideview1 coords out of range');	{ screen is array 0..199,0..319 eg. 320x200=64000 elements }
     screen[y,x]:=c1;
