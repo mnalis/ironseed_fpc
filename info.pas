@@ -60,6 +60,47 @@ begin
  mouseshow;
 end;
 
+function countplanets(sys: integer): integer;
+var j,count: integer;
+begin
+ count:=0;
+ for j:=1 to 1000 do
+    if tempplan^[j].system=sys then
+    begin
+      inc(count);
+      with tempplan^[j] do writeln ('   count of planet for system=', sys,' is now=', count, ' orbit=', orbit, ' psize=', psize, ' state=', state, ' mode=', mode, ' notes=', notes, ' bots=', bots, ' seed=', seed, ' age=', age, ' visits=', visits, ' water=', water, ' date=', datey,'/', datem );
+    end;
+ countplanets:=count;
+end;
+
+procedure fixupcoord(sys: integer);
+type
+ oldsystype= record
+   x,y,z,lastdate,visits,numplanets: integer;
+  end;
+ oldsysarray= array[1..250] of oldsystype;
+var systfile: file of oldsystype;
+    oldsys: ^oldsysarray;
+begin
+   new(oldsys);
+
+   assign(systfile,'data/sysset.dta');
+   reset(systfile);
+   if ioresult<>0 then errorhandler('sysset.dta',1);
+   for j:=1 to 250 do read(systfile,oldsys^[j]);
+   if ioresult<>0 then errorhandler('sysset.dta',5);
+   close(systfile);
+
+   systems[sys].x := oldsys^[sys].x;
+   systems[sys].y := oldsys^[sys].y;
+   systems[sys].z := oldsys^[sys].z;
+   systems[sys].numplanets := countplanets(sys);
+   //writeln ('  check counted live planets=', systems[sys].numplanets, ' initial=', oldsys^[sys].numplanets);
+
+   dispose(oldsys);
+end;
+
+
 procedure readysector;
 var sec: integer;
 begin
@@ -91,16 +132,13 @@ begin
    if (ord(systems[i].name[0]) <> 12) then
    begin
       { memory corruption bug - try autorepair workaround, so we do not crash later if ephemeris is corrupted }
-      systems[i].x := cenx+index*20;	{ fixme how it finds the name and changes 'UNKNOWN' to 'UVO' for example for #38? can we fix coords/mode/numplanets too? and notes? }
-      systems[i].y := ceny;
-      systems[i].z := cenz;
       systems[i].name := format('BROKEN %.4d ',[i]);
       systems[i].visits := 0;
       systems[i].datey := 0;
       systems[i].datem := 0;
-      systems[i].mode := 1; // ?
-      systems[i].numplanets := 3;
-      systems[i].notes := 1; // ?
+      systems[i].mode := 1;
+      systems[i].notes := 1;
+      fixupcoord(i);
       with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    end;
    
