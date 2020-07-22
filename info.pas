@@ -104,6 +104,7 @@ end;
 procedure readysector;
 var sec: integer;
 begin
+ checkcanary;
  sec:=sector;
  if sec>4 then
   begin
@@ -170,6 +171,7 @@ end;
 
 procedure displaysector;
 begin
+ checkcanary;
  if ship.damages[7]>59 then
   begin
    mousehide;
@@ -253,6 +255,7 @@ end;
 procedure displaysideview;
 var c1: integer;
 begin
+ checkcanary;
  mousehide;
  for i:=20 to 88 do
   fillchar(screen[i,160],141,5);
@@ -540,6 +543,7 @@ procedure findtarget;
 var minx, miny: integer;
     str1: string[12];
 begin
+ checkcanary;
  if infoindex=1 then exit;
  setcolor(47);
  setwritemode(xorput);
@@ -803,6 +807,7 @@ end;
 procedure findhome;
 var str1: string[12];
 begin
+ checkcanary;
  undocursor;
  if ship.posx>1250 then sector:=2 else sector:=1;
  if ship.posy>1250 then sector:=sector+2;
@@ -846,6 +851,7 @@ end;
 procedure findtarget2;
 var str1: string[12];
 begin
+ checkcanary;
  if infoindex=0 then
   begin
    setcolor(47);
