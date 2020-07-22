@@ -52,15 +52,23 @@ begin
    for i:= 1 to maxcargo do
       if cargo[i].index = item then
       begin
+         //writeln ('GetBuildTime found item=', item, ' at position i=', i, ' bldcargo[i]=', bldcargo[i]);
+         { special artifacts with id>6000 like "Glyptic Scythe" do not have entry creation.dta, so they default to 30000 
+           while their timeleft in go2() is initialized to timeleft:=6000+random(5)*100, which causes progress bar to break.
+           So initialize to worst case 6500 so we have something more reasonable.
+         }
+         if bldcargo[i]=30000 then bldcargo[i] := 65;
 	 GetBuildTime := bldcargo[i] * 100;
 	 exit;
       end;
+      writeln ('GetBuildTime did not find item!!');
 end;
 
 function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
 var
    i, j, k : Integer;
 begin
+   writeln ('StartBuild starts for item=', item);
    i := 1;
    while (i <= maxcargo) and (cargo[i].index <> item) do inc(i);
    if i > maxcargo then {doesn't exist!}
@@ -109,6 +117,7 @@ begin
    ship.engrteam[team].extra := root;
    ship.engrteam[team].jobtype := 3;
    ship.engrteam[team].timeleft := GetBuildTime(item);
+   writeln ('start build team', team, ' for item=', item, ' initial timeleft=', GetBuildTime(item));
    for j := 1 to 3 do
       RemoveCargo(prtcargo[i,j]);
    RebuildCargoReserve;
@@ -1525,8 +1534,10 @@ begin
       mouseshow;
       exit;
    end;
-   if ship.engrteam[team].jobtype<5 then displaybreakdown(ship.engrteam[team].job);
+   if ship.engrteam[team].jobtype<5 then displaybreakdown(ship.engrteam[team].job);	// fixme /mn/ timeleft! for research artifact bug - line too long, screen corrupt
    b:=76-round(ship.engrteam[team].timeleft/GetBuildTime(ship.engrteam[team].job)*76);
+   writeln ('  engineer team', team, ' timeleft=', ship.engrteam[team].timeleft, ' buildtime=',GetBuildTime(ship.engrteam[team].job), ' calc b=', b);
+   assert ((b>=0) and (b<=76), 'engineering team gradient progressbar out of bounds');
    {b:=round((ship.engrteam[team].extra shr 8) * 76/
    (ship.engrteam[team].extra and 255));}
    if b=0 then b:=1;
@@ -1563,7 +1574,7 @@ begin
      i:=1;
      while createinfo^[i].index<>job do inc(i);
      for j:=1 to 6 do timeleft:=timeleft+100*createinfo^[i].levels[j];
-    end else timeleft:=6000+random(5)*100;
+    end else timeleft:=6000+random(5)*100;	// /mn/ artifact gets timeleft 6000 to 6500
    dec(ship.numcargo[cargoindex]);
    if ship.numcargo[cargoindex]=0 then
     begin
