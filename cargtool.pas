@@ -59,7 +59,7 @@ begin
 	 GetBuildTime := bldcargo[i] * 100;
 	 exit;
       end;
-      assert (0>1, 'GetBuildTime did not find item!!');
+      GetBuildTime := 6500;
 end;
 
 function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
