@@ -1,0 +1,10 @@
+*.ppu
+*.s
+*.o
+*~
+tags
+LPT1
+crewgen
+intro
+main
+is

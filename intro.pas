@@ -374,6 +374,8 @@ begin
      for a:=7 downto 4 do
       begin
        inc(x);
+       //writeln ('y=', y, ' x=', x, ' mem=', y*320+x, ' c=', s[j]);
+       assert (y*320+x < 320*200, 'printxy memory overflow1');
        if font[letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
@@ -384,12 +386,15 @@ begin
      for a:=3 downto 0 do
       begin
        inc(x);
+       //assert ((x>=0) and (x<320) and (y>=0) and (y<200), 'printxy coords out of range');
+       assert (y*320+x < 320*200, 'printxy memory overflow2');
        if font[letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
      dec(tcolor,2);
     end;
    x1:=x1+5;
+   assert ((y1+i)*320+x1 < 320*200, 'printxy memory overflow3');
    if bkcolor<255 then for i:=1 to 6 do screen[y1+i,x1]:=bkcolor;
   end;
  tcolor:=t;
@@ -418,6 +423,7 @@ begin
      for a:=7 downto 0 do
       begin
        inc(x);
+       assert (y*320+x < 320*200, 'bigprintxy memory overflow');
        if bigfont[letter,i] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
