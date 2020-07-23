@@ -104,6 +104,7 @@ end;
 procedure readysector;
 var sec: integer;
 begin
+ checkcanary;
  sec:=sector;
  if sec>4 then
   begin
@@ -139,7 +140,7 @@ begin
       systems[i].mode := 1;
       systems[i].notes := 1;
       fixupcoord(i);
-      //with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
+      with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    end;
    
 {$IFDEF DEMO}
@@ -159,7 +160,7 @@ begin
     assert ((systems[i].x>=0) and (systems[i].y>=0) and (systems[i].z>=0), 'x/y/z are negative');
     assert ((systems[i].x<=2500) and (systems[i].y<=2500) and (systems[i].z<=2500), 'x/y/z are too big');
     assert (ord(systems[i].name[0]) = 12, 'system name size corrupted' );
-    assert (systems[i].numplanets < 7, 'too many planets' );
+    assert (systems[i].numplanets <= 7, 'too many planets' );
     assert (systems[i].visits <= 255, 'too many visits' );
   end;
  tarxr:=(tarx-cenx)/10;
@@ -170,6 +171,7 @@ end;
 
 procedure displaysector;
 begin
+ checkcanary;
  if ship.damages[7]>59 then
   begin
    mousehide;
@@ -253,6 +255,7 @@ end;
 procedure displaysideview;
 var c1: integer;
 begin
+ checkcanary;
  mousehide;
  for i:=20 to 88 do
   fillchar(screen[i,160],141,5);
@@ -540,6 +543,7 @@ procedure findtarget;
 var minx, miny: integer;
     str1: string[12];
 begin
+ checkcanary;
  if infoindex=1 then exit;
  setcolor(47);
  setwritemode(xorput);
@@ -803,6 +807,7 @@ end;
 procedure findhome;
 var str1: string[12];
 begin
+ checkcanary;
  undocursor;
  if ship.posx>1250 then sector:=2 else sector:=1;
  if ship.posy>1250 then sector:=sector+2;
@@ -846,6 +851,7 @@ end;
 procedure findtarget2;
 var str1: string[12];
 begin
+ checkcanary;
  if infoindex=0 then
   begin
    setcolor(47);

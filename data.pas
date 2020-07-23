@@ -267,10 +267,15 @@ const
    (39,34,32),(9,153,240),(9,149,32),(9,155,96),(9,105,144),
    (9,159,31),(15,36,240)));
 
+const
+   MAXCANARY_=8192;
+   CANARY_QW=6148914691236517205; { 'UUUUUUUU' }
+
 var
  colors: paltype;
  icons: ^iconarray;
  screen: screentype; // !!!!
+ canary_: array[0..MAXCANARY_] of qword;
  systems: systemarray;
  weapons: weaponarray;
  cargo: cargoarray;
@@ -334,6 +339,8 @@ procedure loadpal(s: string);
 procedure mymove(var src,tar; count: word);
 //procedure fillchar(var src; count: word; databyte: byte);
 //procedure move(var src,tar; count: word);
+procedure checkcanary;
+procedure checkcanary2;
 
 procedure quicksavescreen(s : String; scr : pscreentype; savepal : Boolean);
 procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
@@ -860,7 +867,46 @@ begin
    haltmod;
 end;
 
+procedure initializecanary;
+var
+   i : integer;
+begin
+   for i:=0 to MAXCANARY_ do
+      canary_[i] := CANARY_QW;
+end;
+
+procedure dumpcanary;
+var
+   i : integer;
+begin
+   writeln('cannary dump follows (corrupted entries only):');
+   for i:=0 to MAXCANARY_ do
+   begin
+      if canary_[i] <> CANARY_QW then
+         writeln (i, ': ', canary_[i]);
+   end;
+end;
+
+procedure checkcanary;
+var
+   i : integer;
+begin
+   checkcanary2;
+   for i:=0 to MAXCANARY_ do
+    begin
+      if canary_[i] <> CANARY_QW then dumpcanary;
+      assert (canary_[i] = CANARY_QW, 'full check canary failed, memory may be corrupted');
+    end;
+end;
+
+procedure checkcanary2;
+begin
+      if canary_[MAXCANARY_] <> CANARY_QW then writeln ('quick canary check failed, ', canary_[MAXCANARY_], ' != ', CANARY_QW);
+      assert (canary_[MAXCANARY_] = CANARY_QW, 'quick check canary failed, memory is corrupted');
+end;
+
 begin 
+   initializecanary;
    initializemod;
    checkbreak:=false;
    readygraph;
@@ -869,4 +915,5 @@ begin
    new(planicons);
    new(tempplan);
    defaultsong:='SECTOR.MOD';
+   checkcanary;
 end.
