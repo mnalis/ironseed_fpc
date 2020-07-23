@@ -4,7 +4,8 @@ flags:= -Mtp -g -Aas -a
 debug:= -C3 -Ci -Co -CO  -O- -gh -gl -gw -godwarfsets  -gt -gv -vw  -Sa
 # -Cr -CR -Ct  -gc
 p_link:=-k-lSDL_mixer -k-lSDL -k-lm -k-lGL -k-lGLU
-cflags:= -O2 -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter  -Wconversion -Werror
+cflags:= -O2 -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter 
+# -Wconversion -Werror
 includes=`sdl-config --cflags` -I /usr/X11R6/include
 libdir=`sdl-config --libs` -L /usr/X11R6/lib 
 link:= -lSDL_mixer -lm -lGL -lGLU
