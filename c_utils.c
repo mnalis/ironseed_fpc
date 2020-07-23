@@ -17,6 +17,7 @@
  */
 
 
+#include <assert.h>
 #include <string.h>
 #include <stdio.h>
 #include "SDL.h"
@@ -102,9 +103,9 @@ int resize_y=480;
 int wx0=0;
 int wy0=0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10	,0};
-const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       };
-const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 };
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS	,0};
+const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 0           , 0           };
+const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 , 43          , 45          };
 
 
 int dummy(int w,int h);
@@ -716,10 +717,16 @@ uint8_t readkey(void)
 			}
 			key_index++;
 		}
-		if(spec_keys[key_index]==0) key=key_;
+		if(spec_keys[key_index]==0)
+		{
+			assert (key_ < 256);
+			key=(uint8_t)key_;
+		}
 		else
-		if(!null_key) key=spec_map[key_index];
-		else key=0;
+		{
+			if(!null_key) key=spec_map[key_index];
+			else key=0;
+		}
 	}
     ts2.tv_sec=0;
 	ts2.tv_nsec=500000;
