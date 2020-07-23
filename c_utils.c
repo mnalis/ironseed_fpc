@@ -103,9 +103,9 @@ int resize_y=480;
 int wx0=0;
 int wy0=0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS	,0};
-const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 0           , 0           };
-const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 , 43          , 45          };
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD	,0};
+const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 0           , 0            , 0            };
+const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 , 43          , 45           , 10           };
 
 
 int dummy(int w,int h);
