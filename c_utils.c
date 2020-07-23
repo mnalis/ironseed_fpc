@@ -102,9 +102,9 @@ int resize_y=480;
 int wx0=0;
 int wy0=0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT,SDLK_RIGHT,SDLK_UP,SDLK_DOWN, SDLK_F10 	,0};
-const uint8_t spec_null[] =  {1        , 1        , 1     , 1       , 1			}		;
-const uint8_t spec_map[] =   {75       , 77       , 72    , 80      , 16		};
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10	,0};
+const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       };
+const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 };
 
 
 int dummy(int w,int h);
@@ -389,7 +389,7 @@ int  handle_keys(void *useless)
 			{
 				uint8_t key_found;
 				key_found=0;
-				printf ("SDL_KEYDOWN keysym.sym: %"PRIu16"\t", event.key.keysym.sym);
+				printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
 				if (event.key.keysym.sym <= 255)	/* regular ASCII key, process as normal */
 				{
 					key_found=1;
