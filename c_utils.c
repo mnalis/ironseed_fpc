@@ -387,11 +387,30 @@ int  handle_keys(void *useless)
 				turbo_mode=1;
 			} else
 			{
-       			keypressed_=1;
-       			key_=event.key.keysym.sym;
-       			printf ("SDL_KEYDOWN keysym.sym: %"PRIu16"\r\n", key_);
+				uint8_t key_found;
+				key_found=0;
+				printf ("SDL_KEYDOWN keysym.sym: %"PRIu16"\t", event.key.keysym.sym);
+				if (event.key.keysym.sym <= 255)	/* regular ASCII key, process as normal */
+				{
+					key_found=1;
+				}
+				else			/* it is extended keycode, check if it is one on our list */
+				{
+					uint8_t key_index=0;
+					while(spec_keys[key_index])
+					{
+						if(spec_keys[key_index]==event.key.keysym.sym) key_found=2;
+						key_index++;
+					}
+				}
+				if (key_found)  /* only return key pressed if it is either regular ASCII key, or extended key we know about */
+				{
+					keypressed_=1;
+					key_=event.key.keysym.sym;
+				}
+				printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16"\r\n", key_found, keypressed_, key_);
 			}
-     	}
+		}
 		if( event.type == SDL_KEYUP )
 		{
 			if(event.key.keysym.sym==SDLK_SCROLLOCK)
