@@ -1489,17 +1489,22 @@ label continue,jumpto,skip,skip2;
 begin
  bkcolor:=0;
  tcolor:=22;
- printxy(5,5,#1#2'1994 Channel 7, Destiny: Virtual');
- printxy(5,15,'Released Under GPL V3.0 in 2013 by Jeremy D Stanton of IronSeed.net');
- printxy(5,25,#1#2'2013 y-salnikov - Converted IronSeed to FreePascal and GNU/Linux');
- printxy(5,35,#1#2'2016 Nuke Bloodaxe');
- printxy(5,45,'All rights reserved.');
+ a:=5;
+ printxy(5, a, #1#2'1994 Channel 7, Destiny: Virtual'); a:=a+10;
+ printxy(5, a, 'Released Under GPL V3.0 in 2013 by Jeremy D Stanton'); a:=a+10;
+ printxy(15,a, ' of IronSeed.net'); a:=a+10;
+ printxy(5, a, #1#2'2013 y-salnikov - Converted IronSeed to FreePascal'); a:=a+10;
+ printxy(15,a, ' and GNU/Linux'); a:=a+10;
+ printxy(5, a, #1#2'2016 Nuke Bloodaxe'); a:=a+10;
+ printxy(5, a, #1#2'2020 Matija Nalis'); a:=a+10;
+ a:=a+10;
+ printxy(5, a, 'Some rights reserved.'); a:=a+20;
 {$IFDEF DEMO}
- printxy(5,55,'IronSeed ' + versionstring + ' Demo');
+ printxy(5, a,'IronSeed ' + versionstring + ' Demo'); a:=a+10;
 {$ELSE}
- printxy(5,55,'IronSeed ' + versionstring);
+ printxy(5, a,'IronSeed ' + versionstring); a:=a+10;
 {$ENDIF}
- wait(1);
+ wait(3);
  new(planet);
  new(landform);
  if fastkeypressed then goto continue;
