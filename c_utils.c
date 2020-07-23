@@ -389,6 +389,7 @@ int  handle_keys(void *useless)
 			{
        			keypressed_=1;
        			key_=event.key.keysym.sym;
+       			printf ("SDL_KEYDOWN keysym.sym: %"PRIu16"\r\n", key_);
 			}
      	}
 		if( event.type == SDL_KEYUP )
