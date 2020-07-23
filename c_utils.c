@@ -109,6 +109,8 @@ const uint8_t spec_map[] =   {75       , 77       , 72    , 80      , 16		};
 
 int dummy(int w,int h);
 int (*resize_callback)(int w,int h)=dummy;
+int32_t mouse_get_x(void);
+int32_t mouse_get_y(void);
 
 
 void set_resize_callback(int (*callback)(int w,int h))
@@ -118,6 +120,7 @@ void set_resize_callback(int (*callback)(int w,int h))
 
 int dummy(int w,int h)
 {
+	return 0;
 }
 
 
@@ -327,7 +330,7 @@ int video_output(void *notused)
 			}
 
 			
-			show_cursor();
+		show_cursor();
 		Sulock(sdl_screen);
 		SDL_Flip(sdl_screen);
 #ifndef NO_OGL
@@ -359,6 +362,7 @@ int video_output(void *notused)
 		 video_done=1;
 		 nanosleep(ts);
 		 SDL_Quit();
+		 return 0;
 }
 
 int  handle_keys(void *useless)
@@ -421,6 +425,7 @@ int  handle_keys(void *useless)
 		
    	}
    	keys_done=1;
+   	return 0;
 }
 
 
@@ -467,8 +472,8 @@ void SDL_init_video(uint8_t *vga_buf)
  	v_buf=vga_buf;
  	video_stop=0;
  	video_done=0;
- 		video=SDL_CreateThread(video_output,NULL);
- 		keyshandler=SDL_CreateThread(handle_keys,NULL);
+	video=SDL_CreateThread(video_output,NULL);
+	keyshandler=SDL_CreateThread(handle_keys,NULL);
 
 }
 
