@@ -488,12 +488,10 @@ var ans: char;
     i: byte;
 begin
  ans:=readkey;
- writeln ('ch=', ord(ans), ' >', ans, '<');
  case upcase(ans) of
   #0: begin
        ans:=readkey;
-       writeln ('  ch2=', ord(ans), ' >', ans, '<');
-      case ans of
+       case ans of
         #72: rotateit(0);
         #80: rotateit(1);
         #75: rotateit(2);
