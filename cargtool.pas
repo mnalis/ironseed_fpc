@@ -52,9 +52,14 @@ begin
    for i:= 1 to maxcargo do
       if cargo[i].index = item then
       begin
+         { special artifacts with id>6000 like "Glyptic Scythe" do not have entry creation.dta, so they default to 30000 
+           while their timeleft in go2() is initialized to timeleft:=6000+random(5)*100, which causes progress bar to break.
+           So initialize to worst case 6500 so we have something more reasonable for progressbar. }
+         if bldcargo[i]=30000 then bldcargo[i] := 65;
 	 GetBuildTime := bldcargo[i] * 100;
 	 exit;
       end;
+      GetBuildTime := 6500;
 end;
 
 function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
@@ -1527,6 +1532,7 @@ begin
    end;
    if ship.engrteam[team].jobtype<5 then displaybreakdown(ship.engrteam[team].job);
    b:=76-round(ship.engrteam[team].timeleft/GetBuildTime(ship.engrteam[team].job)*76);
+   assert ((b>=0) and (b<=76), 'engineering team gradient progressbar out of bounds');
    {b:=round((ship.engrteam[team].extra shr 8) * 76/
    (ship.engrteam[team].extra and 255));}
    if b=0 then b:=1;
