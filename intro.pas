@@ -609,13 +609,13 @@ end;
 procedure checkkey(c: char);
 begin
 case c of
-  #17: if cursor=0 then cursor:=1
+  #72: if cursor=0 then cursor:=1
        else if cursor=1 then cursor:=4 else dec(cursor);
-  #18: if cursor=0 then cursor:=1
+  #80: if cursor=0 then cursor:=1
        else if cursor=4 then cursor:=1 else inc(cursor);
-  #20: if cursor>2 then cursor:=cursor-2
+  #75: if cursor>2 then cursor:=cursor-2
        else cursor:=cursor+2;
-  #19: if cursor>2 then cursor:=cursor-2
+  #77: if cursor>2 then cursor:=cursor-2
        else cursor:=cursor+2;
  end;
 end;
@@ -704,9 +704,8 @@ begin
     keymode:=true;
     permx:=mouse.x;
     permy:=mouse.y;
-    key:=readkey_raw;
-    checkkey(key);
-//    writeln(ord(key),' ',cursor, ' ', code);
+    key:=readkey;
+    if key=#0 then checkkey(readkey);
     if key=#13 then startit;
    end;
   delay(tslice);
@@ -1683,7 +1682,7 @@ skip2:
  loadscreen('data/intro6',@screen);
 {$ENDIF}
  fadein;
- while fastkeypressed do readkey_raw;
+ while fastkeypressed do readkey;
 {FINAL********************************************************************}
 continue:
  stopmod;
@@ -1692,7 +1691,7 @@ continue:
  if fastkeypressed then
   begin
 
-   while fastkeypressed do readkey_raw;
+   while fastkeypressed do readkey;
 
    fillchar(colors,768,0);
    set256colors(colors);
