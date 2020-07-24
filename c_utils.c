@@ -85,7 +85,7 @@ int looping;
 int interactive;
 uint8_t audio_open;
 uint8_t keypressed_;
-uint16_t key_;
+uint16_t key_, keymod_;
 int32_t mouse_x,mouse_y;
 uint8_t mouse_buttons;
 uint8_t showmouse;
@@ -103,9 +103,10 @@ int resize_y=480;
 int wx0=0;
 int wy0=0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD	,0};
-const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1			, 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 0           , 0            , 0            };
-const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16		 , 43          , 45           , 10           };
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q	,0};
+const uint16_t spec_mod[] =  {0        , 0         , 0      , 0        , 0          , 0        , 0       , 0          , 0            , 0      , 0      , 0      , 0      , 0      , 0      , 0       , 0           , 0            , 0             , 16640};
+const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1          , 1        , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 0           , 0            , 0             , 1    };
+const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 79      , 73         , 81           , 59     , 60     , 61     , 62     , 63     , 64     , 16      , 43          , 45           , 10            , 16   };
 
 
 int dummy(int w,int h);
@@ -388,28 +389,31 @@ int  handle_keys(void *useless)
 				turbo_mode=1;
 			} else
 			{
-				uint8_t key_found;
-				key_found=0;
-				printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
-				if (event.key.keysym.sym <= 255)	/* regular ASCII key, process as normal */
+				uint8_t key_found=0, key_index=0;
+				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+
+				/* traverse list of all special keys and their modifiers, and verify if we match */
+				while(spec_keys[key_index])
+				{
+					//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event.key.keysym.mod & spec_mod[key_index]);
+					if ((spec_mod[key_index] == 0) || (event.key.keysym.mod & spec_mod[key_index]))
+						if (spec_keys[key_index] == event.key.keysym.sym) key_found=2;
+					key_index++;
+					//if (!key_found) printf (" No match.\r\n");
+				}
+
+				if ((event.key.keysym.sym <= 255) && (event.key.keysym.mod == 0))	/* regular ASCII key, and no modifiers, process as normal */
 				{
 					key_found=1;
 				}
-				else			/* it is extended keycode, check if it is one on our list */
-				{
-					uint8_t key_index=0;
-					while(spec_keys[key_index])
-					{
-						if(spec_keys[key_index]==event.key.keysym.sym) key_found=2;
-						key_index++;
-					}
-				}
+
 				if (key_found)  /* only return key pressed if it is either regular ASCII key, or extended key we know about */
 				{
 					keypressed_=1;
 					key_=event.key.keysym.sym;
+					keymod_=event.key.keysym.mod;
 				}
-				printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16"\r\n", key_found, keypressed_, key_);
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16"\r\n", key_found, keypressed_, key_);
 			}
 		}
 		if( event.type == SDL_KEYUP )
@@ -710,19 +714,21 @@ uint8_t readkey(void)
 		key_index=0;
 		while(spec_keys[key_index])
 		{
-			if(spec_keys[key_index]==key_)
-			{
-				null_key=spec_null[key_index];
-				break;
-			}
+			if ((spec_mod[key_index] == 0) || (keymod_ & spec_mod[key_index]))	/* if special key requires no modifier, of if modifier match ... */
+				if(spec_keys[key_index] == key_)								/* ... and the key itself matches ... */
+				{
+					null_key=spec_null[key_index];								/* ... then generate extended keycode */
+					break;
+				}
 			key_index++;
 		}
-		if(spec_keys[key_index]==0)
+
+		if(spec_keys[key_index]==0)		/* no special keys matched; so it is regular ASCII key without modifiers */
 		{
 			assert (key_ < 256);
 			key=(uint8_t)key_;
 		}
-		else
+		else							/* we matched some special key, translate it as regular or extended keycode */
 		{
 			if(!null_key) key=spec_map[key_index];
 			else key=0;
