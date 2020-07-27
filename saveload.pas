@@ -811,8 +811,8 @@ begin
         case ans of
          #72:if cursor=0 then cursor:=1
               else if cursor>1 then dec(cursor)
-              else cursor:=5;
-         #80:if cursor<5 then inc(cursor) else cursor:=1;
+              else cursor:=6;
+         #80:if cursor<6 then inc(cursor) else cursor:=1;
         end;
        end;
   '1'..'6': cursor:=ord(ans)-48;
@@ -820,7 +820,7 @@ begin
   'C': cursor:=7;
   #13: if cursor<>0 then done:=true;
   #27: begin
-        cursor:=5;
+        cursor:=7;
         done:=true;
        end;
  end;
@@ -906,10 +906,15 @@ begin
    delay(tslice*10);
    mousehide;
    displayencodes;
-   if mainencloop<7 then ship.encodes[cursor]:=ship.crew[src];
+   if mainencloop<7 then
+    ship.encodes[cursor]:=ship.crew[src];
   end;
- if src=8 then
-  for j:=1 to 6 do ship.encodes[j]:=ship.crew[j];
+ if (src=8) or (cursor=8) then
+ begin
+  if tcolor=181 then i:=38 else i:=0;
+  if yesnorequest('Encode All?',i,tcolor) then
+   for j:=1 to 6 do ship.encodes[j]:=ship.crew[j];
+ end;
  mousehide;
  loadscreen(tempdir+'/current2',@screen);
  mouseshow;
