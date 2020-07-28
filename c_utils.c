@@ -778,6 +778,7 @@ int32_t mouse_get_x(void)
 	x=(x-X0)/XSCALE;
 	if(x<0) x=0;
 	if(x>319) x=319;
+	//printf ("c_utils mouse_x=%i, x=%i\r\n", mouse_x, x);
 	return x;
 }
 
@@ -792,6 +793,7 @@ int32_t mouse_get_y(void)
 	y=(y-Y0)/YSCALE;
 	if(y<0) y=0;
 	if(y>199) y=199;
+	//printf ("c_utils mouse_y=%i, y=%i\r\n", mouse_y, y);
 	return y;
 }
 
@@ -835,9 +837,26 @@ void setmodvolumeto(uint16_t vol)
 }
 void move_mouse(uint16_t x, uint16_t y)
 {
-	SDL_WarpMouse(x,y);
-}
+	double rx0,ry0;
+	uint16_t sdl_x, sdl_y;
 
+	if(x>319) x=319;
+	x = x * XSCALE + X0;
+	rx0=(double)(wx0)/(double)(resize_x);
+	sdl_x = ((double)x * (1-2*rx0) / (double)WIDTH + rx0) * (double)(resize_x);
+
+	if(y>199) y=199;
+	y = y * YSCALE + Y0;
+	ry0=(double)(wy0)/(double)(resize_y);
+	sdl_y = ((double)y * (1-2*ry0) / (double)HEIGHT + ry0) * (double)(resize_y);
+
+	//printf ("sdl move_mouse sdl_x=%i, sdl_y=%i; wx0=%i, resize_x=%i, WIDTH=%i, wy0=%i, resize_y=%i, HEIGHT=%i\r\n", sdl_x, sdl_y, wx0, resize_x, WIDTH, wy0, resize_y, HEIGHT);
+
+	/* save current mouse position if anybody asks, because it may happen before SDL_MOUSEMOTION event fires and updates variables */
+	mouse_x=sdl_x;
+	mouse_y=sdl_y;
+	SDL_WarpMouse(sdl_x,sdl_y);
+}
 
 void play_sound(char *filename, uint16_t rate)
 {
