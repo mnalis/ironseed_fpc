@@ -1996,21 +1996,9 @@ begin
         #60: setcargomode;
        end;
       end;
-  '1': begin
-        if filters[1]=0 then filters[1]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
-  '2': begin
-        if filters[2]=0 then filters[2]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
-  '3': begin
-        if filters[3]=0 then filters[3]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
+  '1': setfilter(1);
+  '2': setfilter(2);
+  '3': setfilter(3);
   '?','/': if qmode then
         begin
          qmode:=false;
