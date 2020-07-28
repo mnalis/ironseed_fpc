@@ -1992,10 +1992,10 @@ begin
               move_mouse(mouse.x,22);
               findcursor;
              end;
+        #59: setdevicemode;
+        #60: setcargomode;
        end;
       end;
- #59: setdevicemode;
- #60: setcargomode;
   '1': begin
         if filters[1]=0 then filters[1]:=1 else filters[1]:=0;
         dec(cargoindex);

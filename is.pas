@@ -13,7 +13,7 @@ program ironseed;
 
 ***************************}
 
-uses dos;
+uses dos, version;
 
 const
  p: array[0..4] of string[6]=
@@ -37,10 +37,16 @@ begin
 end;
 
 begin
+{$IFDEF DEMO}
+ writeln('IronSeed ' + versionstring + ' Demo');
+{$ELSE}
+ writeln('IronSeed ' + versionstring);
+{$ENDIF}
  {Write out copyright lines, which were lacking previously}
  writeln('ironseed      Copyright (C) 1994  Channel 7');
  writeln('ironseed_fpc  Copyright (C) 2013  y-salnikov');
  writeln('ironseed_fpc  Copyright (C) 2016  Nuke Bloodaxe');
+ writeln('ironseed_fpc  Copyright (C) 2020  Matija Nalis');
  str1:=paramstr(1)+' '+paramstr(2)+' '+paramstr(3)+' '+paramstr(4);
  code:=5;
  repeat

@@ -17,6 +17,7 @@
  */
 
 
+#include <assert.h>
 #include <string.h>
 #include <stdio.h>
 #include "SDL.h"
@@ -84,7 +85,7 @@ int looping;
 int interactive;
 uint8_t audio_open;
 uint8_t keypressed_;
-uint16_t key_;
+uint16_t key_, keymod_;
 int32_t mouse_x,mouse_y;
 uint8_t mouse_buttons;
 uint8_t showmouse;
@@ -102,13 +103,16 @@ int resize_y=480;
 int wx0=0;
 int wy0=0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT,SDLK_RIGHT,SDLK_UP,SDLK_DOWN, SDLK_F10 	,0};
-const uint8_t spec_null[] =  {1        , 1        , 1     , 1       , 1			}		;
-const uint8_t spec_map[] =   {75       , 77       , 72    , 80      , 16		};
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i	,0};
+const uint16_t spec_mod[] =  {0        , 0         , 0      , 0        , 0          , 0        , 192     , 0       , 0          , 0            , 3      , 0      , 0      , 0      , 0      , 0      , 0      , 192     , 0       , 0           , 0            , 0             , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640 , 16640};
+const uint8_t spec_null[] =  {1        , 1         , 1      , 1        , 1          , 1        , 1       , 1       , 1          , 1            , 1      , 1      , 1      , 1      , 1      , 1      , 1      , 1       , 1       , 0           , 0            , 0             , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1     , 1    };
+const uint8_t spec_map[] =   {75       , 77        , 72     , 80       , 83         , 71       , 117     , 79      , 73         , 81           , 84     , 59     , 60     , 61     , 62     , 63     , 64     , 103     , 16      , 43          , 45           , 10            , 16    , 45    , 120   , 121   , 122   , 123   , 126   , 129   , 49    , 25    , 48    , 31    , 22    , 23   };
 
 
 int dummy(int w,int h);
 int (*resize_callback)(int w,int h)=dummy;
+int32_t mouse_get_x(void);
+int32_t mouse_get_y(void);
 
 
 void set_resize_callback(int (*callback)(int w,int h))
@@ -118,6 +122,7 @@ void set_resize_callback(int (*callback)(int w,int h))
 
 int dummy(int w,int h)
 {
+	return 0;
 }
 
 
@@ -327,7 +332,7 @@ int video_output(void *notused)
 			}
 
 			
-			show_cursor();
+		show_cursor();
 		Sulock(sdl_screen);
 		SDL_Flip(sdl_screen);
 #ifndef NO_OGL
@@ -359,6 +364,7 @@ int video_output(void *notused)
 		 video_done=1;
 		 nanosleep(ts);
 		 SDL_Quit();
+		 return 0;
 }
 
 int  handle_keys(void *useless)
@@ -383,10 +389,33 @@ int  handle_keys(void *useless)
 				turbo_mode=1;
 			} else
 			{
-       			keypressed_=1;
-       			key_=event.key.keysym.sym;
+				uint8_t key_found=0, key_index=0;
+				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+
+				/* traverse list of all special keys and their modifiers, and verify if we match */
+				while(spec_keys[key_index])
+				{
+					//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event.key.keysym.mod & spec_mod[key_index]);
+					if ((spec_mod[key_index] == 0) || (event.key.keysym.mod & spec_mod[key_index]))
+						if (spec_keys[key_index] == event.key.keysym.sym) key_found=2;
+					key_index++;
+					//if (!key_found) printf (" No match.\r\n");
+				}
+
+				if ((event.key.keysym.sym <= 255) && (event.key.keysym.mod == 0))	/* regular ASCII key, and no modifiers, process as normal */
+				{
+					key_found=1;
+				}
+
+				if (key_found)  /* only return key pressed if it is either regular ASCII key, or extended key we know about */
+				{
+					keypressed_=1;
+					key_=event.key.keysym.sym;
+					keymod_=event.key.keysym.mod;
+				}
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16"\r\n", key_found, keypressed_, key_);
 			}
-     	}
+		}
 		if( event.type == SDL_KEYUP )
 		{
 			if(event.key.keysym.sym==SDLK_SCROLLOCK)
@@ -421,6 +450,7 @@ int  handle_keys(void *useless)
 		
    	}
    	keys_done=1;
+   	return 0;
 }
 
 
@@ -467,8 +497,8 @@ void SDL_init_video(uint8_t *vga_buf)
  	v_buf=vga_buf;
  	video_stop=0;
  	video_done=0;
- 		video=SDL_CreateThread(video_output,NULL);
- 		keyshandler=SDL_CreateThread(handle_keys,NULL);
+	video=SDL_CreateThread(video_output,NULL);
+	keyshandler=SDL_CreateThread(handle_keys,NULL);
 
 }
 
@@ -684,17 +714,25 @@ uint8_t readkey(void)
 		key_index=0;
 		while(spec_keys[key_index])
 		{
-			if(spec_keys[key_index]==key_)
-			{
-				null_key=spec_null[key_index];
-				break;
-			}
+			if ((spec_mod[key_index] == 0) || (keymod_ & spec_mod[key_index]))	/* if special key requires no modifier, of if modifier match ... */
+				if(spec_keys[key_index] == key_)								/* ... and the key itself matches ... */
+				{
+					null_key=spec_null[key_index];								/* ... then generate extended keycode */
+					break;
+				}
 			key_index++;
 		}
-		if(spec_keys[key_index]==0) key=key_;
-		else
-		if(!null_key) key=spec_map[key_index];
-		else key=0;
+
+		if(spec_keys[key_index]==0)		/* no special keys matched; so it is regular ASCII key without modifiers */
+		{
+			assert (key_ < 256);
+			key=(uint8_t)key_;
+		}
+		else							/* we matched some special key, translate it as regular or extended keycode */
+		{
+			if(!null_key) key=spec_map[key_index];
+			else key=0;
+		}
 	}
     ts2.tv_sec=0;
 	ts2.tv_nsec=500000;
