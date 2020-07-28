@@ -799,12 +799,10 @@ begin
               if cargoindex=251 then revnewcursor(251);
              end;
         #81: begin
-              //mouse.y:=101;
-              move_mouse(mouse.x,101);
+              move_mouse(mouse.x,98);
               findcargcursor;
              end;
         #73: begin
-              //mouse.y:=22;
               move_mouse(mouse.x,22);
               findcargcursor;
              end;
@@ -1983,12 +1981,10 @@ begin
               if cargoindex<1 then inccursor;
              end;
         #81: begin {pgdn}
-//              mouse.y:=113;
               move_mouse(mouse.x,113);
               findcursor;
              end;
         #73: begin {pgup}
-//              mouse.y:=22;
               move_mouse(mouse.x,22);
               findcursor;
              end;
