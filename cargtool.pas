@@ -286,6 +286,7 @@ var finished: boolean;
 begin
  cargoindex:=start;
  finished:=false;
+ if cargoindex=251 then exit;
  repeat
   inc(cargoindex);
   case ship.cargo[cargoindex] of
@@ -303,6 +304,7 @@ var finished: boolean;
 begin
  cargoindex:=start;
  finished:=false;
+ if cargoindex<1 then exit;
  repeat
   dec(cargoindex);
   case ship.cargo[cargoindex] of
@@ -357,7 +359,8 @@ procedure checklist(down: boolean);
 var str1: string[3];
 var str2: string[3];
 begin
-   str(rescargo[x]:3,str2);
+ if (x<1) or (x>250) then exit;
+ str(rescargo[x]:3,str2);
  case ship.cargo[x] of
             0: ;
    1000..1499: if filters2[1]=1 then
