@@ -988,14 +988,24 @@ begin
  idletime:=0;
 end;
 
+procedure delay_blink;
+var c: Integer;
+begin
+   for c := 1 to 8 do
+   begin
+      if fastkeypressed then exit;
+      delay(tslice);
+   end;
+end;
+
 procedure mainloop2;
 begin
-   repeat
-      fadestep(8);
+ repeat
+  fadestep(8);
   if fastkeypressed then
-  	begin
-		processkey2;
-	end;
+   begin
+    processkey2;
+   end;
   findmouse2;
   if batindex<8 then inc(batindex) else
    begin
@@ -1008,12 +1018,12 @@ begin
    begin
     bkcolor:=95;
     printxy(cursorx*5+52,182,question[cursorx]);
-    delay(tslice*2);
+    delay_blink();
     bkcolor:=0;
     printxy(cursorx*5+52,182,question[cursorx]);
-    delay(tslice*2);
+    delay_blink();
    end
-  else delay(tslice*4);
+  else delay_blink();
  until done;
 end;
 
@@ -1517,12 +1527,12 @@ begin
    begin
     bkcolor:=47;
     printxy(cursorx*5+52,182,question[cursorx]);
-    delay(tslice*2);
+    delay_blink();
     bkcolor:=0;
     printxy(cursorx*5+52,182,question[cursorx]);
-    delay(tslice*2);
+    delay_blink();
    end
-  else delay(tslice*4);
+  else delay_blink();
   animatealien;
  until done;
 end;
