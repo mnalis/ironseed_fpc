@@ -1,6 +1,28 @@
+- fix more Encode crew bugs, including bailing out on "Encode All"
+v 0.0.4
+- fix cargo crash with too strong filters
+- fix cargo PgUp/PgDn
+- fix mouse movement bugs
+- fix conversation sluggishess and lost keypresses
+- fix various bugs when Encoding crew
+- fix keyboard control bugs in Device Creation Mode and Encoding crew
+- fix implementing keyboard special (non-ASCII) keys
+v 0.0.3
+- fix progressbar when researching artifacts
+- fix crash in astrogation due to memory corruption
+- fix spurious keypresses when pressing alt/control keys
+- fix manually entering Astrogation map coordinates
+- convert music from MOD to OGG format
+- add Data generators from an alternate Ironseed Repository
+- all graphics assets in PNG format
+- copyright updates
+- add devel docs and manual
+- fix crashes related to savegames and UPCASE filenames
 v 0.0.2
 - add "turbo" key - "Scroll Lock"
 - OpenGL renderer, now window resizable. Can be switched off by #define NO_OGL
 - trade: Add items prices
 v 0.0.1
 - it's working !
+
+fpc version
