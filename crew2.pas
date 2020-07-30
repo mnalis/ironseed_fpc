@@ -482,6 +482,7 @@ end;
 
 procedure findmouse;
 begin
+ writeln('crew2 findmouse starts');
  if not mouse.getstatus then exit;
  case mouse.y of
   157..175: if (mouse.x>295) and (mouse.x<307) then done:=true;
@@ -554,6 +555,7 @@ begin
                         else encodecrew(181);
             end;
     end;
+    writeln('crew2 findmouse after 1st case');
     case mouse.y of
     22..60: if (mouse.x<20) and (mouse.x>11) then
              begin
@@ -562,6 +564,7 @@ begin
              end;
  end;
  idletime:=0;
+ writeln('crew2 findmouse ends');
 end;
 
 procedure mainloop;
@@ -592,6 +595,7 @@ begin
     end;
     delay(tslice*6);
     movebubbles;
+    writeln('crew2 mainloop done=',done, ' mouse=',mouse.x,',',mouse.y,':'{,mouse.getstatus}, ' fastkeypressed:', fastkeypressed);
  until done;
 end;
 

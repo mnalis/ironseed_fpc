@@ -882,13 +882,14 @@ begin
   findencmouse;
   if fastkeypressed then processenckey;
  until done;
- mainencloop:=cursor;
  writeln('mainencloop=', cursor);
+ mainencloop:=cursor;
 end;
 
 procedure encodecrew(tc: integer);
 var src,t,b,alt: integer;
 begin
+ writeln('encodecrew(',tc,') starts'); { fixme add breakpoint here }
  t:=tcolor;
  b:=bkcolor;
  encoding:=true;
@@ -927,6 +928,7 @@ begin
  mouseshow;
  tcolor:=t;
  bkcolor:=b;
+ writeln('encodecrew() finishes');
 end;
 
 procedure decodecrew;
