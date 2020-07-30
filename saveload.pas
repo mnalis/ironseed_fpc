@@ -734,7 +734,6 @@ begin
   mymove(tempscr^[i,74],screen[i,74],43);
  dispose(tempscr);
  yesnorequest:=result;
- writeln('yesnorequest=',result);
  bkcolor:=3;
  mouseshow;
 // mouse.x:=0;
@@ -864,8 +863,6 @@ begin
     begin
      if yesnorequest('Encode All?',i,tcolor) then newcursor:=8 else newcursor:=7; { if answered "no", simulate as "cancel" has been pressed }
     end;
-
-    writeln('findencmouse DONE. old cursor=',cursor, ' newcursor=',newcursor, ' button=', button);
     done:=true;
     cursor:=newcursor;
   end;
@@ -882,14 +879,12 @@ begin
   findencmouse;
   if fastkeypressed then processenckey;
  until done;
- writeln('mainencloop=', cursor);
  mainencloop:=cursor;
 end;
 
 procedure encodecrew(tc: integer);
 var src,t,b,alt: integer;
 begin
- writeln('encodecrew(',tc,') starts'); { fixme add breakpoint here }
  t:=tcolor;
  b:=bkcolor;
  encoding:=true;
@@ -920,7 +915,6 @@ begin
   end;
  if src=8 then
   begin
-   writeln ('encoding all, src=',src,' cursor=', cursor);
    for j:=1 to 6 do ship.encodes[j]:=ship.crew[j];
   end;
  mousehide;
@@ -928,7 +922,6 @@ begin
  mouseshow;
  tcolor:=t;
  bkcolor:=b;
- writeln('encodecrew() finishes');
 end;
 
 procedure decodecrew;
