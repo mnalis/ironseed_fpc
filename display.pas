@@ -1187,14 +1187,14 @@ begin
  if systems[n].y>1250 then j:=j+2;
  if systems[n].z>1250 then j:=j+4;
  case j of
-  1: str4:='ALPHA';
-  2: str4:='BETA';
-  3: str4:='GAMMA';
-  4: str4:='DELTA';
+  1: str4:='  ALPHA';
+  2: str4:='   BETA';
+  3: str4:='  GAMMA';
+  4: str4:='  DELTA';
   5: str4:='EPSILON';
-  6: str4:='ZETA';
-  7: str4:='ETA';
-  8: str4:='THETA';
+  6: str4:='   ZETA';
+  7: str4:='    ETA';
+  8: str4:='  THETA';
  end;
  printxy(270-length(str4)*5,73,str4);
  setcolor(2);
