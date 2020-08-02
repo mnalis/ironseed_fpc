@@ -774,7 +774,7 @@ begin
 	 end;
       end;
       set256colors(temppal);
-      delay(b);
+      if not fastkeypressed then delay(b);
    end;
    fillchar(temppal,768,0);
    set256colors(temppal);
@@ -808,7 +808,7 @@ begin
 	 end;
       end;
       set256colors(temppal);
-      delay(b);
+      if not fastkeypressed then delay(b);
    end;
    set256colors(colors);
    fadelevel := 64;
