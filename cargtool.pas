@@ -286,6 +286,7 @@ var finished: boolean;
 begin
  cargoindex:=start;
  finished:=false;
+ if cargoindex=251 then exit;
  repeat
   inc(cargoindex);
   case ship.cargo[cargoindex] of
@@ -303,6 +304,7 @@ var finished: boolean;
 begin
  cargoindex:=start;
  finished:=false;
+ if cargoindex<1 then exit;
  repeat
   dec(cargoindex);
   case ship.cargo[cargoindex] of
@@ -357,7 +359,8 @@ procedure checklist(down: boolean);
 var str1: string[3];
 var str2: string[3];
 begin
-   str(rescargo[x]:3,str2);
+ if (x<1) or (x>250) then exit;
+ str(rescargo[x]:3,str2);
  case ship.cargo[x] of
             0: ;
    1000..1499: if filters2[1]=1 then
@@ -799,12 +802,10 @@ begin
               if cargoindex=251 then revnewcursor(251);
              end;
         #81: begin
-              //mouse.y:=101;
-              move_mouse(mouse.x,101);
+              move_mouse(mouse.x,98);
               findcargcursor;
              end;
         #73: begin
-              //mouse.y:=22;
               move_mouse(mouse.x,22);
               findcargcursor;
              end;
@@ -1983,12 +1984,10 @@ begin
               if cargoindex<1 then inccursor;
              end;
         #81: begin {pgdn}
-//              mouse.y:=113;
               move_mouse(mouse.x,113);
               findcursor;
              end;
         #73: begin {pgup}
-//              mouse.y:=22;
               move_mouse(mouse.x,22);
               findcursor;
              end;
@@ -1996,21 +1995,9 @@ begin
         #60: setcargomode;
        end;
       end;
-  '1': begin
-        if filters[1]=0 then filters[1]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
-  '2': begin
-        if filters[2]=0 then filters[2]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
-  '3': begin
-        if filters[3]=0 then filters[3]:=1 else filters[1]:=0;
-        dec(cargoindex);
-        inccursor;
-       end;
+  '1': setfilter(1);
+  '2': setfilter(2);
+  '3': setfilter(3);
   '?','/': if qmode then
         begin
          qmode:=false;

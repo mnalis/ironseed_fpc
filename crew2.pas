@@ -494,8 +494,6 @@ begin
                         altmen(-1);
                         if psychemode=0 then redraw1 else redraw2;
                        end;
-               12..19: if ship.damages[5]>39 then lifesupportfailure
-                        else encodecrew(181);
             end;
     26..32: case mouse.x of
              250..259: begin
@@ -506,8 +504,6 @@ begin
                         altphy(-1);
                         if psychemode=0 then redraw1 else redraw2;
                        end;
-               12..19: if ship.damages[5]>39 then lifesupportfailure
-                        else encodecrew(181);
             end;
     34..40: case mouse.x of
              250..259: begin
@@ -518,8 +514,6 @@ begin
                         altemo(-1);
                         if psychemode=0 then redraw1 else redraw2;
                        end;
-               12..19: if ship.damages[5]>39 then lifesupportfailure
-                        else encodecrew(181);
             end;
     41..48: case mouse.x of
              179..205: if psychemode<>0 then
@@ -550,8 +544,6 @@ begin
                         if psychemode=0 then redraw1 else redraw2;
                         newbubbles;
                        end;
-               12..19: if ship.damages[5]>39 then lifesupportfailure
-                        else encodecrew(181);
             end;
     end;
     case mouse.y of

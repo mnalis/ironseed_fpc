@@ -835,9 +835,20 @@ void setmodvolumeto(uint16_t vol)
 }
 void move_mouse(uint16_t x, uint16_t y)
 {
-	SDL_WarpMouse(x,y);
-}
+	double rx0,ry0;
 
+	if(x>319) x=319;
+	x = x * XSCALE + X0;
+	rx0=(double)(wx0)/(double)(resize_x);
+	mouse_x = ((double)x * (1-2*rx0) / (double)WIDTH + rx0) * (double)(resize_x);
+
+	if(y>199) y=199;
+	y = y * YSCALE + Y0;
+	ry0=(double)(wy0)/(double)(resize_y);
+	mouse_y = ((double)y * (1-2*ry0) / (double)HEIGHT + ry0) * (double)(resize_y);
+
+	SDL_WarpMouse(mouse_x,mouse_y);
+}
 
 void play_sound(char *filename, uint16_t rate)
 {

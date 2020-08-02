@@ -856,12 +856,16 @@ begin
    drawenccursor;
   end;
  if tcolor=181 then i:=38 else i:=0;
- if ((cursor=8) and (button) and (yesnorequest('Encode All?',i,tcolor))) or
-  ((cursor<>0) and (cursor<>8) and (button)) then
-   begin
+
+ if (newcursor<>0) and (button) then { if we clicked on one of 8 buttons }
+  begin
+   if newcursor=8 then
+    begin
+     if yesnorequest('Encode All?',i,tcolor) then newcursor:=8 else newcursor:=7; { if answered "no", simulate as "cancel" has been pressed }
+    end;
     done:=true;
     cursor:=newcursor;
-   end;
+  end;
 end;
 
 function mainencloop: integer;
@@ -909,12 +913,10 @@ begin
    if mainencloop<7 then
     ship.encodes[cursor]:=ship.crew[src];
   end;
- if (src=8) or (cursor=8) then
- begin
-  if tcolor=181 then i:=38 else i:=0;
-  if yesnorequest('Encode All?',i,tcolor) then
+ if src=8 then
+  begin
    for j:=1 to 6 do ship.encodes[j]:=ship.crew[j];
- end;
+  end;
  mousehide;
  loadscreen(tempdir+'/current2',@screen);
  mouseshow;
