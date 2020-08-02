@@ -477,7 +477,10 @@ begin
   y:=13+(j div 240);
   x:=28+(j mod 240);
   screen[y,x]:=landcolors^[y,x];
-  if index mod 50=0 then delay(tslice div 9);
+  if index mod 50=0 then 
+   begin
+    if not fastkeypressed then delay(tslice div 9);
+   end;
  until index=28799;
  mouseshow;
 end;
@@ -1950,7 +1953,6 @@ procedure readydata;
 var vgafile : file of screentype;
    i, j, a  : Integer;
 begin
-// writeln('explore ready data \n');
  {dispose(backgr);}
  explorelevel:=-1;
  {backgr := nil;}
@@ -2022,7 +2024,7 @@ begin
    if zoomy>88 then zoomy:=88
     else if zoomy<1 then zoomy:=1;
   end;
- {fadein;}
+ fadein;
  displaylandform;
  redraw;
  showzoom;
