@@ -809,8 +809,8 @@ begin
    printxy(228,54,str1+' KKM  ');
    str(weapons[weap].energy:5,str1);
    printxy(218,61,str1+' GW   ');
-   str(weapons[weap].damage:3,str1);
-   printxy(228,68,str1+' GJ   ');
+   str(weapons[weap].damage:4,str1);
+   printxy(223,68,str1+' GJ   ');
    j:=1;
    while cargo[j].index<>(weap+999)
     do inc(j);
