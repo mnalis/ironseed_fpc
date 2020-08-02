@@ -134,14 +134,14 @@ begin
       begin
 	 c:=1;
 	 mousehide;
-	 plainfadearea(80,146,240,160,3);
+	 plainfadearea(80,146+12,240,160+12,3);
 	 mouseshow;
       end
       else if (c=1) and ((mouse.y<146+12) or (mouse.y>160+12) or (mouse.x<80) or (mouse.x>240)) then
       begin
 	 c:=0;
 	 mousehide;
-	 plainfadearea(80,146,240,160,-3);
+	 plainfadearea(80,146+12,240,160+12,-3);
 	 mouseshow;
       end;
       if fastkeypressed then ans:=readkey;
