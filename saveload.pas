@@ -129,7 +129,7 @@ begin
  assign(tarfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
  rewrite(tarfile);
  if ioresult<>0 then errorhandler('save'+chr(curfilenum+48)+'/CONTACTS.DTA',1);
- assign(srcfile,tempdir+'/CONTACTS.DTA');
+ assign(srcfile,tempdir+'/contacts.dta');
  reset(srcfile);
  err:=false;
  repeat
@@ -203,9 +203,9 @@ begin
  read(planfile,tempplan^);
  if ioresult<>0 then errorhandler('PLANETS.DTA',5);
  close(planfile);
- assign(tarfile,tempdir+'/CONTACTS.DTA');
+ assign(tarfile,tempdir+'/contacts.dta');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler(tempdir+'/CONTACTS.DTA',1);
+ if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
  assign(srcfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
  reset(srcfile);
  if ioresult<>0 then errorhandler('CONTACTS.DTA',1);
@@ -216,7 +216,7 @@ begin
   if (not err) and ((temp.id>1000) or (tempplan^[temp.id].notes and 2>0)) then
    begin
     write(tarfile,temp);
-    if ioresult<>0 then errorhandler(tempdir+'/CONTACTS.DTA',5);
+    if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',5);
    end;
  until err;
  close(tarfile);
