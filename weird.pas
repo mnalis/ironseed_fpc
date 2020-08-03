@@ -549,7 +549,7 @@ begin
 {$IFDEF DEMO}
  exit;
 {$ELSE}
-{ mousehide;
+ mousehide;
  compressfile(tempdir+'/current',@screen);
  tcolor:=92;
  bkcolor:=5;
@@ -564,7 +564,6 @@ begin
    graybutton(213,35+j*34,313,47+j*34);
   end;
  tcolor:=22;
- if module^.patterncount>100 then module^.patterncount:=0;
  printxy(30,38,'Sengzhac');
  printxy(35,72,'D''Pahk');
  printxy(40,106,'Aard');
@@ -580,14 +579,14 @@ begin
  tcolor:=188;
  printxy(56,183,'Welcome To The Channel 7 Easteregg Hunt!');
  c:=0;
- str(module^.patterncount-1:2,s2);
+ s2:='  ';
  printxy(130,155,'/'+s2);
  printxy(175,155,'/63');
  mouseshow;
  repeat
-  str(getpattern:2,s2);
+  s2:='  ';
   printxy(120,155,s2);
-  str(getrow:2,s2);
+  s2:='  ';
   printxy(165,155,s2);
   done:=mouse.getstatus;
   if (c=0) and (mouse.y>165) and (mouse.y<181) and (mouse.x>79) and (mouse.x<241) then
@@ -609,28 +608,28 @@ begin
     s:='';
     case mouse.x of
        5..105: case mouse.y of
-                  35..47: s:='sengzhac.mod';
-                  69..81: s:='dpak.mod';
-                103..115: s:='aard.mod';
-                137..149: s:='ermigen.mod';
+                  35..47: s:='SENGZHAC.MOD';
+                  69..81: s:='DPAK.MOD';
+                103..115: s:='AARD.MOD';
+                137..149: s:='ERMIGEN.MOD';
                end;
      109..209: case mouse.y of
-                  35..47: s:='titarian.mod';
-                  69..81: s:='quai.mod';
-                103..115: s:='scaveng.mod';
-                137..149: s:='icon.mod';
+                  35..47: s:='TITARIAN.MOD';
+                  69..81: s:='QUAI.MOD';
+                103..115: s:='SCAVENG.MOD';
+                137..149: s:='ICON.MOD';
                end;
      213..313: case mouse.y of
-                  35..47: s:='guild.mod';
-                  69..81: s:='phador.mod';
-                103..115: s:='void.mod';
-                137..149: s:='sector.mod';
+                  35..47: s:='GUILD.MOD';
+                  69..81: s:='PHADOR.MOD';
+                103..115: s:='VOID.MOD';
+                137..149: s:='SECTOR.MOD';
                end;
     end;
    if s<>'' then
     begin
      playmod(true,'sound/'+s);
-     str(module^.patterncount-1:2,s2);
+     s2:='  ';
      mousehide;
      printxy(130,155,'/'+s2);
      mouseshow;
@@ -644,7 +643,6 @@ begin
  loadscreen(tempdir+'/current',@screen);
  set256colors(colors);
  mouseshow;
-}
 {$ENDIF}
 end;
 

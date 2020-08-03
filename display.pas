@@ -809,8 +809,8 @@ begin
    printxy(228,54,str1+' KKM  ');
    str(weapons[weap].energy:5,str1);
    printxy(218,61,str1+' GW   ');
-   str(weapons[weap].damage:3,str1);
-   printxy(228,68,str1+' GJ   ');
+   str(weapons[weap].damage:4,str1);
+   printxy(223,68,str1+' GJ   ');
    j:=1;
    while cargo[j].index<>(weap+999)
     do inc(j);
@@ -1187,14 +1187,14 @@ begin
  if systems[n].y>1250 then j:=j+2;
  if systems[n].z>1250 then j:=j+4;
  case j of
-  1: str4:='ALPHA';
-  2: str4:='BETA';
-  3: str4:='GAMMA';
-  4: str4:='DELTA';
+  1: str4:='  ALPHA';
+  2: str4:='   BETA';
+  3: str4:='  GAMMA';
+  4: str4:='  DELTA';
   5: str4:='EPSILON';
-  6: str4:='ZETA';
-  7: str4:='ETA';
-  8: str4:='THETA';
+  6: str4:='   ZETA';
+  7: str4:='    ETA';
+  8: str4:='  THETA';
  end;
  printxy(270-length(str4)*5,73,str4);
  setcolor(2);

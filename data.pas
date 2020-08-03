@@ -774,7 +774,7 @@ begin
 	 end;
       end;
       set256colors(temppal);
-      delay(b);
+      if not fastkeypressed then delay(b);
    end;
    fillchar(temppal,768,0);
    set256colors(temppal);
@@ -808,7 +808,7 @@ begin
 	 end;
       end;
       set256colors(temppal);
-      delay(b);
+      if not fastkeypressed then delay(b);
    end;
    set256colors(colors);
    fadelevel := 64;
@@ -879,12 +879,14 @@ procedure dumpcanary;
 var
    i : integer;
 begin
-   writeln('cannary dump follows (corrupted entries only):');
+   writeln('WARNING: MEMORY OVERFLOW DETECTED. Cannary dump follows (corrupted entries only):');
    for i:=0 to MAXCANARY_ do
    begin
       if canary_[i] <> CANARY_QW then
          writeln (i, ': ', canary_[i]);
    end;
+   if canary_[MAXCANARY_] = CANARY_QW then writeln ('[...]');
+   writeln (MAXCANARY_, ': END.');
 end;
 
 procedure checkcanary;
@@ -895,14 +897,18 @@ begin
    for i:=0 to MAXCANARY_ do
     begin
       if canary_[i] <> CANARY_QW then dumpcanary;
-      assert (canary_[i] = CANARY_QW, 'full check canary failed, memory may be corrupted');
+      assert (canary_[i] = CANARY_QW, 'full check canary failed: memory may be corrupted, but not fatal');
     end;
 end;
 
 procedure checkcanary2;
 begin
-      if canary_[MAXCANARY_] <> CANARY_QW then writeln ('quick canary check failed, ', canary_[MAXCANARY_], ' != ', CANARY_QW);
-      assert (canary_[MAXCANARY_] = CANARY_QW, 'quick check canary failed, memory is corrupted');
+      if canary_[MAXCANARY_] <> CANARY_QW then 
+       begin
+         dumpcanary;
+         writeln ('FATAL ERROR: memory surely corrupted - quick canary check failed, ', canary_[MAXCANARY_], ' != ', CANARY_QW);
+         errorhandler('SYSTEM MEMORY CORRUPTION' ,6);
+       end;
 end;
 
 begin 

@@ -1,3 +1,9 @@
+v 0.0.5
+- see generating planet scan, instead of black screen with delay
+- some cosmetic display fixes in weapons, and planets screens
+- allows skipping too slow fading/fadein animations with any keypress
+- reenables some easter eggs
+- helper debug utility to see TEMP/*.scr files
 - fix more Encode crew bugs, including bailing out on "Encode All"
 v 0.0.4
 - fix cargo crash with too strong filters
