@@ -1,3 +1,8 @@
+v 0.0.6
+- fix crash on starting and saving new game
+- workaround SDL thread crashes at startup
+- Makefile improvements
+- make possible compiling without OpenGL
 v 0.0.5
 - see generating planet scan, instead of black screen with delay
 - some cosmetic display fixes in weapons, and planets screens
