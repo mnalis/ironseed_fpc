@@ -17,6 +17,8 @@
  */
 
 
+//#define NO_OGL
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
@@ -25,11 +27,11 @@
 #include <sys/time.h>
 #include <math.h>
 #include <errno.h>
+#ifndef NO_OGL
 #include "SDL_opengl.h"
 #include <GL/gl.h>
+#endif
 
-
-//#define NO_OGL
 
 #define WIDTH 640
 #ifdef NO_OGL
@@ -96,7 +98,9 @@ uint16_t cur_x;
 uint16_t cur_y;
 uint8_t cur_writemode;
 uint8_t turbo_mode=0;
+#ifndef NO_OGL
 GLuint main_texture;
+#endif
 uint8_t resize;
 int resize_x=640;
 int resize_y=480;
@@ -155,6 +159,8 @@ void Sulock(SDL_Surface *screen){
  } 
 
 }
+
+#ifndef NO_OGL
 
 void set_perspective(void)
 {
@@ -222,7 +228,7 @@ void init_opengl(void)
 	resizeWindow(resize_x,resize_y);
     
 }
-
+#endif
 
 
 
@@ -313,13 +319,13 @@ int video_output(void *notused)
 					glGenTextures(1,&main_texture);
 					
 			}
-#endif
 		if(resize)
 		{
 			resize=0;
 			resizeWindow(resize_x,resize_y);
 			
 		}
+#endif
 		Slock(sdl_screen);
 		for(vga_y=0;vga_y<200;vga_y++)
 			for(vga_x=0;vga_x<320;vga_x++)
