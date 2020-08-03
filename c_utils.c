@@ -309,21 +309,19 @@ int video_output(void *notused)
 
 	ts.tv_sec=0;
 	ts.tv_nsec=10000000;
-	 while(!video_stop)
-	 	{
+	while(!video_stop)
+	{
 #ifndef NO_OGL			
 			if((init_flag==0))
 			{
 				init_flag=1;
 					init_opengl();
 					glGenTextures(1,&main_texture);
-					
 			}
 		if(resize)
 		{
 			resize=0;
 			resizeWindow(resize_x,resize_y);
-			
 		}
 #endif
 		Slock(sdl_screen);
@@ -366,7 +364,7 @@ int video_output(void *notused)
     SDL_GL_SwapBuffers();
 #endif		
 		nanosleep(ts);
-		}
+	}
 		 video_done=1;
 		 nanosleep(ts);
 		 SDL_Quit();
@@ -453,9 +451,10 @@ int  handle_keys(void *useless)
 
 		
      }	
-		SDL_Delay(20);
-//		printf("Keys thread  %d \n",fence);
-		
+     	/* we are abusing threads with SDL, and it is wonder it works at all.
+     	   This delay makes it not crash on startup somehow. 
+     	   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
+		SDL_Delay(50);
    	}
    	keys_done=1;
    	return 0;
@@ -507,7 +506,6 @@ void SDL_init_video(uint8_t *vga_buf)
  	video_done=0;
 	video=SDL_CreateThread(video_output,NULL);
 	keyshandler=SDL_CreateThread(handle_keys,NULL);
-
 }
 
 void stop_video_thread(void)
