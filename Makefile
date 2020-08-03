@@ -1,8 +1,8 @@
 compiler:= fpc
 c_compiler:= gcc
-flags:= -Mtp -g
+flags:= -Mtp -g -gl
 #-Aas -ap
-#debug:= -C3 -Ci -Co -CO  -O- -gl -gw -godwarfsets  -gt -gv -vw  -Sa
+#debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vw  -Sa
 # -Cr -CR -Ct   -gh  -gc
 p_link:=-k-lSDL_mixer -k-lSDL -k-lm  -k-lGL -k-lGLU
 cflags:= -O2 -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter
