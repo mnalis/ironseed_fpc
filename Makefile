@@ -1,36 +1,38 @@
 compiler:= fpc
 c_compiler:= gcc
-flags:= -Mtp -g -Aas -a 
-#debug:= -C3 -Ci -Co -CO  -O- -gh -gl -gw -godwarfsets  -gt -gv -vw  -Sa
-# -Cr -CR -Ct  -gc
-p_link:=-k-lSDL_mixer -k-lSDL -k-lm -k-lGL -k-lGLU
-cflags:= -O2 -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter 
-# -Wconversion -Werror
+flags:= -Mtp -g -gl
+#-Aas -ap
+#debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vw  -Sa
+# -Cr -CR -Ct   -gh  -gc
+p_link:=-k-lSDL_mixer -k-lSDL -k-lm  -k-lGL -k-lGLU
+cflags:= -O2 -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter
+# -Wconversion -Werror -DNO_OGL
 includes=`sdl-config --cflags` -I /usr/X11R6/include
-libdir=`sdl-config --libs` -L /usr/X11R6/lib 
-link:= -lSDL_mixer -lm -lGL -lGLU
 
-target:=
+all: clean build cleantmp
 
+build: is crewgen intro main
 
-all:	is
+c_utils.o: Makefile c_utils.c
+	$(c_compiler) $(includes) $(cflags) -c c_utils.c
 
-is:	 crewgen intro main
-		$(compiler) $(flags) $(debug)  is.pas
+is: Makefile is.pas version.pas
+	$(compiler) $(flags) $(debug) is.pas
 
-intro:
-	$(c_compiler) $(includes) $(libdir) $(cflags)  $(link) -c c_utils.c
-#	$(compiler) $(flags) $(debug) utils_
+intro: Makefile c_utils.o *.pas
 	$(compiler) $(flags) $(debug) $(p_link) intro.pas
 
-crewgen:
-		$(c_compiler) $(includes) $(libdir) $(cflags) $(link) -c c_utils.c
-		$(compiler) $(flags) $(debug)  $(p_link) crewgen.pas
+crewgen: Makefile c_utils.o *.pas
+	$(compiler) $(flags) $(debug) $(p_link) crewgen.pas
 
-main:
-		$(c_compiler) $(includes) $(libdir) $(cflags) $(link) -c c_utils.c
-		$(compiler) $(flags) $(debug)  $(p_link) main.pas
+main: Makefile c_utils.o *.pas
+	$(compiler) $(flags) $(debug) $(p_link) main.pas
 
 
-clean:
-	rm -f intro crewgen is main *.o *.ppu *.s
+cleantmp:
+	rm -f *.ppu *.s
+
+clean: cleantmp
+	rm -f is intro crewgen  main *.o
+
+.PHONY: all build cleantmp clean

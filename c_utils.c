@@ -17,6 +17,8 @@
  */
 
 
+//#define NO_OGL
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
@@ -25,11 +27,11 @@
 #include <sys/time.h>
 #include <math.h>
 #include <errno.h>
+#ifndef NO_OGL
 #include "SDL_opengl.h"
 #include <GL/gl.h>
+#endif
 
-
-//#define NO_OGL
 
 #define WIDTH 640
 #ifdef NO_OGL
@@ -96,7 +98,9 @@ uint16_t cur_x;
 uint16_t cur_y;
 uint8_t cur_writemode;
 uint8_t turbo_mode=0;
+#ifndef NO_OGL
 GLuint main_texture;
+#endif
 uint8_t resize;
 int resize_x=640;
 int resize_y=480;
@@ -155,6 +159,8 @@ void Sulock(SDL_Surface *screen){
  } 
 
 }
+
+#ifndef NO_OGL
 
 void set_perspective(void)
 {
@@ -222,7 +228,7 @@ void init_opengl(void)
 	resizeWindow(resize_x,resize_y);
     
 }
-
+#endif
 
 
 
@@ -303,23 +309,21 @@ int video_output(void *notused)
 
 	ts.tv_sec=0;
 	ts.tv_nsec=10000000;
-	 while(!video_stop)
-	 	{
+	while(!video_stop)
+	{
 #ifndef NO_OGL			
 			if((init_flag==0))
 			{
 				init_flag=1;
 					init_opengl();
 					glGenTextures(1,&main_texture);
-					
 			}
-#endif
 		if(resize)
 		{
 			resize=0;
 			resizeWindow(resize_x,resize_y);
-			
 		}
+#endif
 		Slock(sdl_screen);
 		for(vga_y=0;vga_y<200;vga_y++)
 			for(vga_x=0;vga_x<320;vga_x++)
@@ -360,7 +364,7 @@ int video_output(void *notused)
     SDL_GL_SwapBuffers();
 #endif		
 		nanosleep(ts);
-		}
+	}
 		 video_done=1;
 		 nanosleep(ts);
 		 SDL_Quit();
@@ -447,9 +451,10 @@ int  handle_keys(void *useless)
 
 		
      }	
-		SDL_Delay(20);
-//		printf("Keys thread  %d \n",fence);
-		
+     	/* we are abusing threads with SDL, and it is wonder it works at all.
+     	   This delay makes it not crash on startup somehow. 
+     	   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
+		SDL_Delay(50);
    	}
    	keys_done=1;
    	return 0;
@@ -501,7 +506,6 @@ void SDL_init_video(uint8_t *vga_buf)
  	video_done=0;
 	video=SDL_CreateThread(video_output,NULL);
 	keyshandler=SDL_CreateThread(handle_keys,NULL);
-
 }
 
 void stop_video_thread(void)
@@ -544,22 +548,27 @@ void sdl_mixer_init(void)
 	audio_buffers = 4096;
 	if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
 	{
-    	printf("Unable to open audio!\n");
-    	exit(123);
-  	}
-	audio_open = 1;
+		audio_open = 0;
+		printf("Unable to open audio!\n");
+	} else {
+		audio_open = 1;
+	}
 }
 
 void musicDone(void)
 {
-  Mix_HaltMusic();
-  Mix_FreeMusic(music);
-  music = NULL;
+	if (audio_open)
+	{
+		Mix_HaltMusic();
+		Mix_FreeMusic(music);
+	}
+	music = NULL;
 }
 
 void play_mod(uint8_t loop,char *filename)
 {
 	int l;
+	if (! audio_open) return;
 	
 	if(music!=NULL) musicDone();
 
@@ -583,7 +592,8 @@ void play_mod(uint8_t loop,char *filename)
 
 void haltmod(void)
 {
-	  Mix_HaltMusic();
+	if (! audio_open) return;
+	Mix_HaltMusic();
 }
 
 
@@ -832,6 +842,7 @@ void all_done(void)
 
 void setmodvolumeto(uint16_t vol)
 {
+	if (! audio_open) return;
 	Mix_VolumeMusic(vol/2);
 }
 void move_mouse(uint16_t x, uint16_t y)
@@ -860,6 +871,8 @@ void play_sound(char *filename, uint16_t rate)
 	float k;
 	int16_t *sound,smp;
 	char *fn,*s,*s1;
+
+	if (! audio_open) return;
 
 	fn=malloc(256);
 	s1=strdup(filename);
@@ -935,12 +948,14 @@ void play_sound(char *filename, uint16_t rate)
 
 void pausemod(void)
 {
+	if (! audio_open) return;
 	Mix_PauseMusic();
 }
+
 void continuemod(void)
 {
+	if (! audio_open) return;
 	Mix_ResumeMusic();
-	
 }
 
 
@@ -1051,5 +1066,6 @@ void setwritemode(uint16_t mode)
 
 uint8_t playing(void)
 {
+	if (! audio_open) return 0;
 	return Mix_PlayingMusic();
 }
