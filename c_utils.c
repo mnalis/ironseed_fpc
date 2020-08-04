@@ -548,22 +548,27 @@ void sdl_mixer_init(void)
 	audio_buffers = 4096;
 	if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
 	{
-    	printf("Unable to open audio!\n");
-    	exit(123);
-  	}
-	audio_open = 1;
+		audio_open = 0;
+		printf("Unable to open audio!\n");
+	} else {
+		audio_open = 1;
+	}
 }
 
 void musicDone(void)
 {
-  Mix_HaltMusic();
-  Mix_FreeMusic(music);
-  music = NULL;
+	if (audio_open)
+	{
+		Mix_HaltMusic();
+		Mix_FreeMusic(music);
+	}
+	music = NULL;
 }
 
 void play_mod(uint8_t loop,char *filename)
 {
 	int l;
+	if (! audio_open) return;
 	
 	if(music!=NULL) musicDone();
 
@@ -587,7 +592,8 @@ void play_mod(uint8_t loop,char *filename)
 
 void haltmod(void)
 {
-	  Mix_HaltMusic();
+	if (! audio_open) return;
+	Mix_HaltMusic();
 }
 
 
@@ -836,6 +842,7 @@ void all_done(void)
 
 void setmodvolumeto(uint16_t vol)
 {
+	if (! audio_open) return;
 	Mix_VolumeMusic(vol/2);
 }
 void move_mouse(uint16_t x, uint16_t y)
@@ -864,6 +871,8 @@ void play_sound(char *filename, uint16_t rate)
 	float k;
 	int16_t *sound,smp;
 	char *fn,*s,*s1;
+
+	if (! audio_open) return;
 
 	fn=malloc(256);
 	s1=strdup(filename);
@@ -939,12 +948,14 @@ void play_sound(char *filename, uint16_t rate)
 
 void pausemod(void)
 {
+	if (! audio_open) return;
 	Mix_PauseMusic();
 }
+
 void continuemod(void)
 {
+	if (! audio_open) return;
 	Mix_ResumeMusic();
-	
 }
 
 
@@ -1055,5 +1066,6 @@ void setwritemode(uint16_t mode)
 
 uint8_t playing(void)
 {
+	if (! audio_open) return 0;
 	return Mix_PlayingMusic();
 }
