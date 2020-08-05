@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-# /mn/ converts TEMP/*.scr and TEMP/*.pal produced by quicksavescreen() to standard ppm(5) image
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/08
+# converts TEMP/*.scr and TEMP/*.pal produced by quicksavescreen() to standard ppm(5) image
 
 use strict;
 use warnings;
