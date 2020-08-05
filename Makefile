@@ -5,7 +5,7 @@ flags:= -Mtp -g -gl
 #debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vw  -Sa
 # -Cr -CR -Ct   -gh  -gc
 p_link:=-k-lSDL_mixer -k-lSDL -k-lm  -k-lGL -k-lGLU
-cflags:= -O -g -W -Wall -pedantic  -Wno-implicit-function-declaration -Wno-unused-parameter
+cflags:= -O -g -Wall -W -pedantic -Wno-unused-parameter
 # -Wconversion -Werror -DNO_OGL -O0
 includes=`sdl-config --cflags` -I /usr/X11R6/include
 

@@ -30,6 +30,7 @@
 #include <math.h>
 #include <errno.h>
 #ifndef NO_OGL
+#    define GL_GLEXT_LEGACY
 #    include "SDL_opengl.h"
 #    include <GL/gl.h>
 #endif
@@ -310,7 +311,9 @@ int video_output(void *notused)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
+#ifndef NO_OGL
 	static uint8_t init_flag;
+#endif
 
 	while (!video_stop) {
 #ifndef NO_OGL
