@@ -60,7 +60,17 @@ SDL_Thread *video, *keyshandler;
 Mix_Music *music = NULL;
 Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
-
+/* pascal types definitions */
+typedef uint8_t		fpc_char_t;
+typedef	uint8_t		fpc_byte_t;
+typedef	uint8_t		fpc_boolean_t;
+typedef	int16_t		fpc_smallint_t;
+typedef	int16_t		fpc_integer_t;
+typedef	uint16_t	fpc_word_t;
+typedef	uint32_t	fpc_dword_t;
+typedef	uint64_t	fpc_qword_t;
+typedef	char *		fpc_pchar_t;
+typedef	fpc_byte_t *	fpc_screentype_t;	/* array of 320x200 bytes */
 
 typedef struct {
 	uint8_t r;
@@ -111,8 +121,8 @@ const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60
 
 int dummy(int w, int h);
 int (*resize_callback)(int w, int h) = dummy;
-int32_t mouse_get_x(void);
-int32_t mouse_get_y(void);
+fpc_dword_t mouse_get_x(void);
+fpc_dword_t mouse_get_y(void);
 
 
 void set_resize_callback(int (*callback)(int w, int h))
@@ -452,7 +462,7 @@ int handle_keys(void *useless)
 
 
 
-void SDL_init_video(uint8_t * vga_buf)
+void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 {
 	uint16_t x, y;
 
@@ -503,14 +513,14 @@ void stop_video_thread(void)
 		sleep(0);
 }
 
-void setrgb256(uint8_t palnum, uint8_t r, uint8_t g, uint8_t b)	// set palette
+void setrgb256(fpc_byte_t palnum, fpc_byte_t r, fpc_byte_t g, fpc_byte_t b)	// set palette
 {
 	palette[palnum].r = r;
 	palette[palnum].g = g;
 	palette[palnum].b = b;
 }
 
-void getrgb256_(uint8_t palnum, uint8_t * r, uint8_t * g, uint8_t * b)	// get palette
+void getrgb256_(fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * b)	// get palette
 {
 	*r = palette[palnum].r;
 	*g = palette[palnum].g;
@@ -552,7 +562,7 @@ void musicDone(void)
 	music = NULL;
 }
 
-void play_mod(uint8_t loop, char *filename)
+void play_mod(fpc_byte_t loop, fpc_pchar_t filename)
 {
 	int l;
 	if (!audio_open)
@@ -604,7 +614,7 @@ uint64_t delta_usec(void)
 	return tmp;
 }
 
-void delay(uint16_t ms)
+void delay(fpc_word_t ms)
 {
 	static uint64_t err;
 	int64_t us = 1;
@@ -621,7 +631,7 @@ void delay(uint16_t ms)
 		exit(4);
 }
 
-void upscroll(uint8_t * img)
+void upscroll(fpc_screentype_t img)	// 320x200 bytes 
 {
 	uint16_t y;
 	for (y = 1; y < 100; y++) {
@@ -630,7 +640,7 @@ void upscroll(uint8_t * img)
 	}
 }
 
-void scale_img(uint16_t x0s, uint16_t y0s, uint16_t widths, uint16_t heights, uint16_t x0d, uint16_t y0d, uint16_t widthd, uint16_t heightd, uint8_t * s, uint8_t * d)
+void scale_img(fpc_word_t x0s, fpc_word_t y0s, fpc_word_t widths, fpc_word_t heights, fpc_word_t x0d, fpc_word_t y0d, fpc_word_t widthd, fpc_word_t heightd, fpc_screentype_t s, fpc_screentype_t d)
 {
 	uint16_t xd, yd;
 	double kx, ky;
@@ -643,7 +653,7 @@ void scale_img(uint16_t x0s, uint16_t y0s, uint16_t widths, uint16_t heights, ui
 
 }
 
-void setcolor(uint16_t color)
+void setcolor(fpc_word_t color)
 {
 	cur_color = color;
 }
@@ -656,7 +666,7 @@ void draw_pixel(uint16_t x, uint16_t y)
 		v_buf[x + 320 * y] = cur_color;
 }
 
-void circle(uint16_t x, uint16_t y, uint16_t r)
+void circle(fpc_word_t x, fpc_word_t y, fpc_word_t r)
 {
 	int64_t xx, yy;
 	const float E = 0.9;
@@ -681,7 +691,7 @@ void circle(uint16_t x, uint16_t y, uint16_t r)
 
 }
 
-uint8_t key_pressed(void)
+fpc_byte_t key_pressed(void)
 {
 	uint8_t k;
 	k = keypressed_;
@@ -692,7 +702,7 @@ uint8_t key_pressed(void)
 
 }
 
-uint8_t readkey(void)
+fpc_char_t readkey(void)
 {
 	static uint8_t null_key, key_index;
 	uint8_t key;
@@ -726,8 +736,7 @@ uint8_t readkey(void)
 	return key;
 }
 
-
-uint8_t mouse_get_status(void)
+fpc_char_t mouse_get_status(void)
 {
 	uint8_t t;
 	t = mouse_buttons;
@@ -736,7 +745,7 @@ uint8_t mouse_get_status(void)
 	return t;
 }
 
-int32_t mouse_get_x(void)
+fpc_dword_t mouse_get_x(void)
 {
 	int32_t x;
 	double rx, rx0;
@@ -753,7 +762,7 @@ int32_t mouse_get_x(void)
 	return x;
 }
 
-int32_t mouse_get_y(void)
+fpc_dword_t mouse_get_y(void)
 {
 	int32_t y;
 	double ry, ry0;
@@ -771,7 +780,7 @@ int32_t mouse_get_y(void)
 }
 
 
-void rectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+void rectangle(fpc_smallint_t x1, fpc_smallint_t y1, fpc_smallint_t x2, fpc_smallint_t y2)
 {
 	uint16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -809,7 +818,7 @@ void mouseshow(void)
 
 void mousesetcursor(uint8_t * icon)
 {
-	memcpy(mouse_icon, icon, 256);
+	memcpy(mouse_icon, icon, 16*16);
 }
 
 void all_done(void)
@@ -822,14 +831,14 @@ void all_done(void)
 		sleep(0);
 }
 
-void setmodvolumeto(uint16_t vol)
+void setmodvolumeto(fpc_integer_t vol)
 {
 	if (!audio_open)
 		return;
 	Mix_VolumeMusic(vol / 2);
 }
 
-void move_mouse(uint16_t x, uint16_t y)
+void move_mouse(fpc_word_t x, fpc_word_t y)
 {
 	double rx0, ry0;
 
@@ -848,7 +857,7 @@ void move_mouse(uint16_t x, uint16_t y)
 	SDL_WarpMouse(mouse_x, mouse_y);
 }
 
-void play_sound(char *filename, uint16_t rate)
+void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 {
 
 	FILE *f;
@@ -941,7 +950,7 @@ void continuemod(void)
 }
 
 
-void setfillstyle(uint16_t style, uint16_t f_color)
+void setfillstyle(fpc_word_t style, fpc_word_t f_color)
 {
 	fill_color = f_color;
 	if (style > 1)
@@ -949,7 +958,7 @@ void setfillstyle(uint16_t style, uint16_t f_color)
 
 }
 
-void bar(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+void bar(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 {
 	uint16_t i, j, x, xe, y, ye;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -976,7 +985,7 @@ void bar(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 
 
-void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
+void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 {
 //      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
 	int i, dx, dy, sdx, sdy, dxabs, dyabs, x, y, px, py;
@@ -1028,18 +1037,18 @@ void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 
 
 
-void moveto(uint16_t x, uint16_t y)
+void moveto(fpc_word_t x, fpc_word_t y)
 {
 	cur_x = x;
 	cur_y = y;
 }
 
-void lineto(uint16_t x, uint16_t y)
+void lineto(fpc_word_t x, fpc_word_t y)
 {
 	line(cur_x, cur_y, x, y);
 }
 
-void pieslice(uint16_t x, uint16_t y, uint16_t phi0, uint16_t phi1, uint16_t r)
+void pieslice(fpc_word_t x, fpc_word_t y, fpc_word_t phi0, fpc_word_t phi1, fpc_word_t r)
 {
 	int16_t i, j;
 	double f, f0, f1;
@@ -1058,12 +1067,12 @@ void pieslice(uint16_t x, uint16_t y, uint16_t phi0, uint16_t phi1, uint16_t r)
 		}
 }
 
-void setwritemode(uint16_t mode)
+void setwritemode(fpc_word_t mode)
 {
 	cur_writemode = mode;
 }
 
-uint8_t playing(void)
+fpc_boolean_t playing(void)
 {
 	if (!audio_open)
 		return 0;
