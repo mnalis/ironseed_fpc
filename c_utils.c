@@ -132,11 +132,6 @@ int dummy(int w, int h)
 void stop_video_thread(void);
 void all_done(void);
 
-void memmove_wrapper(void *dest, void *src, int n)
-{
-	memmove(dest, src, n);
-}
-
 void musicDone(void);
 
 /* ------------------------------------------------------ */
@@ -341,7 +336,7 @@ int video_output(void *notused)
 
 		show_cursor();
 		Sulock(sdl_screen);
-		SDL_Flip(sdl_screen);
+		SDL_Flip(sdl_screen);	// fixme: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
 #ifndef NO_OGL
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
@@ -518,7 +513,7 @@ void getrgb256_(uint8_t palnum, uint8_t * r, uint8_t * g, uint8_t * b)	// get pa
 	*b = palette[palnum].b;
 }
 
-void set256Colors(pal_color_type * pal)	// set all palette
+void set256colors(pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -744,21 +739,6 @@ uint8_t readkey(void)
 	keypressed_ = 0;
 	nanosleep(ts2);
 	return key;
-}
-
-uint8_t readkey_raw(void)
-{
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
-	keypressed_ = 0;
-	nanosleep(ts2);
-	return key_;
-
 }
 
 

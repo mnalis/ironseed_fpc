@@ -458,7 +458,7 @@ var a,b: integer;
     temppal: paltype;
     px,dx,pdx: array[1..768] of shortint;
 begin
- mymove2(colors,temppal,192);
+ mymove(colors,temppal,192);
  fillchar(dx,768,48);
  for j:=1 to 768 do
   begin
@@ -542,7 +542,7 @@ begin
  new(s2);
  new(s3);
  mousehide;
- //mymove2(screen,s2^,16000);
+ //mymove(screen,s2^,16000);
  move(screen,s2^,16000*4);
  mouseshow;
  loadscreen('data/cloud',s1);
@@ -694,7 +694,7 @@ begin
 
 
   mousehide;
-  mymove2(s3^,screen,16000);
+  mymove(s3^,screen,16000);
 //  move(s3^,screen,16000*4);
   mouseshow;
   drawcursor;
@@ -750,7 +750,7 @@ procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- mymove2(colors,temppal,192);
+ mymove(colors,temppal,192);
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -774,7 +774,7 @@ begin
    set256colors(temppal);
    delay(tslice);
   end;
- mymove2(temppal,colors,192);
+ mymove(temppal,colors,192);
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -882,7 +882,7 @@ begin
  loadscreen('data/cloud',backgr);
  set256colors(colors);
  for i:=1 to 120 do
-  mymove2(planet^[i],backgr^[i+12,28],30);
+  mymove(planet^[i],backgr^[i+12,28],30);
  for y1:=0 to 4 do
   for b:=6 to 138 do
    for a:=10 to 303 do
@@ -1041,7 +1041,7 @@ begin
       end;
     end;
   for i:=1 to 120 do
-   mymove2(planet^[i],screen[i+12,28],30);
+   mymove(planet^[i],screen[i+12,28],30);
 //  delay(tslice);
     delay(tslice*3);
 getcurtime;
@@ -1098,7 +1098,7 @@ var a,b: integer;
 begin
  index:=0;
  a:=24;
- mymove2(colors,temppal,192);
+ mymove(colors,temppal,192);
  b:=tslice div 2;
  repeat
   inc(index);
@@ -1187,7 +1187,7 @@ begin
  until index=75;
  index:=0;
  a:=24;
- mymove2(colors,temppal,192);
+ mymove(colors,temppal,192);
  if fastkeypressed then goto ending;
  repeat
   inc(index);
@@ -1335,11 +1335,11 @@ begin
    scale_img(10,0,200,106,startx,starty,round(partx),round(party),t^,screen);
   end;
  for i:=142 to 176 do
-  mymove2(screen[i,234],t^[i,234],18);
+  mymove(screen[i,234],t^[i,234],18);
  set256colors(temppal);
  loadscreen('data/alien',@screen);
  for i:=142 to 176 do
-  mymove2(t^[i,234],screen[i,234],18);
+  mymove(t^[i,234],screen[i,234],18);
  dispose(t);
 end;
 
@@ -1410,7 +1410,7 @@ begin
   for i:=0 to 199 do
    if screen[i,j]=255 then screen[i,j]:=backgr^[i,j];
  for i:=1 to 120 do
-  mymove2(screen[i+12,28],planet^[i],30);
+  mymove(screen[i+12,28],planet^[i],30);
  radius:=400;
  c2:=1.30;
  r2:=round(sqrt(radius));
@@ -1552,7 +1552,7 @@ begin
  loadpalette('data/main.pal');
  loadscreen('data/cloud',@screen);
  for i:=1 to 120 do
-  mymove2(screen[i+12,28],planet^[i],30);
+  mymove(screen[i+12,28],planet^[i],30);
  sleep(0);
  makeplanet(0,false);
  tcolor:=22;
@@ -1601,7 +1601,7 @@ begin
  bigprintxy(0,183,'crew some thousand years later and are');
  bigprintxy(0,191,'confronted by an alien horde...');
  for i:=1 to 120 do
-  mymove2(screen[i+12,28],planet^[i],30);
+  mymove(screen[i+12,28],planet^[i],30);
  makeplanet(0,false);
  fadein;
  makeplanet(10,false);
@@ -1664,7 +1664,7 @@ skip2:
  spcindex[4]:=128;
  spcindex[5]:=129;
  for i:=1 to 120 do
-  mymove2(screen[i+12,28],planet^[i],30);
+  mymove(screen[i+12,28],planet^[i],30);
  makeplanet(0,false);
  tcolor:=22;
  bkcolor:=255;
