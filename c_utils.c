@@ -505,6 +505,7 @@ void SDL_init_video(uint8_t *vga_buf)
  	video_stop=0;
  	video_done=0;
 	video=SDL_CreateThread(video_output,NULL);
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
 	keyshandler=SDL_CreateThread(handle_keys,NULL);
 }
 
