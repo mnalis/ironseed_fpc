@@ -22,8 +22,10 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include <time.h>
 #include <sys/time.h>
 #include <math.h>
 #include <errno.h>
@@ -66,12 +68,6 @@ typedef struct {
 } pal_color_type;
 
 pal_color_type palette[256];
-
-struct {
-	time_t tv_sec;				/* seconds */
-	long tv_nsec;				/* nanoseconds */
-} ts;
-
 
 uint8_t *v_buf;
 uint8_t video_stop = 0;
@@ -128,6 +124,13 @@ int dummy(int w, int h)
 	return 0;
 }
 
+static inline void _nanosleep(long nsec)
+{
+	struct timespec ts;
+	ts.tv_sec = 0;
+	ts.tv_nsec = nsec;
+	nanosleep(&ts, NULL);
+}
 
 void stop_video_thread(void);
 void all_done(void);
@@ -309,8 +312,6 @@ int video_output(void *notused)
 	pal_color_type c;
 	static uint8_t init_flag;
 
-	ts.tv_sec = 0;
-	ts.tv_nsec = 10000000;
 	while (!video_stop) {
 #ifndef NO_OGL
 		if ((init_flag == 0)) {
@@ -361,10 +362,10 @@ int video_output(void *notused)
 		glFlush();
 		SDL_GL_SwapBuffers();
 #endif
-		nanosleep(ts);
+		_nanosleep(10000000);
 	}
 	video_done = 1;
-	nanosleep(ts);
+	_nanosleep(10000000);
 	SDL_Quit();
 	return 0;
 }
@@ -604,19 +605,13 @@ void delay(uint16_t ms)
 {
 	static uint64_t err;
 	int64_t us = 1;
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 5000;
 	delta_usec();
 	us = (ms * 1000 * TIMESCALE) - err;
 	if (turbo_mode)
 		us /= TURBO_FACTOR;
 	while (us > 0) {
 		us -= delta_usec();
-		nanosleep(ts2);
+		_nanosleep(5000);
 	}
 	err = -us;
 	if (video_done && !normal_exit)
@@ -686,15 +681,9 @@ void circle(uint16_t x, uint16_t y, uint16_t r)
 uint8_t key_pressed(void)
 {
 	uint8_t k;
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
 	k = keypressed_;
 //      keypressed=0;
-	nanosleep(ts2);
+	_nanosleep(500000);
 	return k;
 
 
@@ -702,11 +691,6 @@ uint8_t key_pressed(void)
 
 uint8_t readkey(void)
 {
-
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
 	static uint8_t null_key, key_index;
 	uint8_t key;
 
@@ -734,10 +718,8 @@ uint8_t readkey(void)
 				key = 0;
 		}
 	}
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
 	keypressed_ = 0;
-	nanosleep(ts2);
+	_nanosleep(500000);
 	return key;
 }
 
