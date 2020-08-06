@@ -19,7 +19,7 @@ const
 
 procedure delay(MS:Word); cdecl ; external;
 procedure setcolor(Color: Word); cdecl ; external;
-procedure rectangle(x1: SmallInt; y1:SmallInt; x2: SmallInt; y2:SmallInt);cdecl ; external;
+procedure rectangle(x1: word; y1:word; x2: word; y2:word);cdecl ; external;
 procedure circle(x,y,r:word); cdecl ; external;
 procedure mymove(var src,tar; count: word); 
 procedure SDL_init_video(scr:screentype); cdecl ; external;

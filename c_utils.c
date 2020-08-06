@@ -64,8 +64,8 @@ static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 typedef uint8_t		fpc_char_t;
 typedef	uint8_t		fpc_byte_t;
 typedef	uint8_t		fpc_boolean_t;
-typedef	int16_t		fpc_smallint_t;
-typedef	int16_t		fpc_integer_t;
+//typedef	int16_t		fpc_smallint_t;
+//typedef	int16_t		fpc_integer_t;
 typedef	uint16_t	fpc_word_t;
 typedef	uint32_t	fpc_dword_t;
 typedef	uint64_t	fpc_qword_t;
@@ -785,7 +785,7 @@ fpc_char_t readkey(void)
 }
 
 
-void rectangle(const fpc_smallint_t x1, const fpc_smallint_t y1, const fpc_smallint_t x2, const fpc_smallint_t y2)
+void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -827,7 +827,7 @@ void mousesetcursor(uint8_t * icon)
 }
 
 
-void setmodvolumeto(const fpc_integer_t vol)
+void setmodvolumeto(const fpc_word_t vol)
 {
 	if (!audio_open)
 		return;
@@ -856,7 +856,7 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 	SDL_WarpMouse(mouse_x, mouse_y);
 }
 
-void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
+void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 {
 	FILE *f;
 	long l;
@@ -918,7 +918,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 	sound = calloc(1 + qwords, 4);
 	assert(sound != NULL);
 	for (i = 0; i < qwords; i++) {
-		uint32_t idx = (uint32_t) ((float) i * k);	// FIXME: k is float, so this does not look really exact
+		uint32_t idx = (uint32_t) ((float) i * k);	// k is float, so this does not look really exact, but is seems to work...
 		int32_t test_smp = (sound_raw[idx] * SOUNDS_VOLUME); assert (test_smp <= INT16_MAX && test_smp >= INT16_MIN);
 		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;

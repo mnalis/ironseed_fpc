@@ -2,13 +2,13 @@ unit modplay;
 {$L c_utils.o}
 interface
 	
-	procedure setmodvolumeto(vol:integer);cdecl ; external;
+	procedure setmodvolumeto(vol:word);cdecl ; external;
 	procedure haltmod;cdecl ; external;
 	procedure initializemod;
 	procedure stopmod;       // stop music + unload
 	procedure ampsetpanning(n:smallint;pantype:smallint);
 	procedure playmod(looping: boolean;s: string);  // load & play mod
-	procedure soundeffect(s: string; rate: integer); 
+	procedure soundeffect(s: string; rate: word);
 	procedure pausemod;cdecl ; external;
 	procedure continuemod;cdecl ; external;
 	procedure setmodvolume;
@@ -18,8 +18,8 @@ implementation
 uses strings;
 	procedure sdl_mixer_init;cdecl ; external;
 	procedure musicDone;cdecl ; external;
-	procedure play_mod(loop:byte;filename:pchar);cdecl ; external;
-	procedure play_sound(filename:pchar; rate:integer);cdecl ; external;
+	procedure play_mod(loop:byte; filename:pchar);cdecl ; external;
+	procedure play_sound(filename:pchar; rate:word);cdecl ; external;
 	
 procedure playmod(looping: boolean;s: string);  // load & play mod
 Var p : Pchar;
@@ -51,7 +51,7 @@ end;
 
 
 
-procedure soundeffect(s: string; rate: integer); 
+procedure soundeffect(s: string; rate: word);
 Var p : Pchar;
 begin
     
