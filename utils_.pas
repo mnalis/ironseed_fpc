@@ -41,7 +41,7 @@ procedure line(x1: word; y1:word; x2: word; y2:word);cdecl ; external;
 procedure lineto(x1: word; y1:word);cdecl ; external;
 procedure moveto(x1: word; y1:word);cdecl ; external;
 procedure pieslice(x1,y1,phi0,phi1,r: word);cdecl ; external;
-procedure setwritemode(mode: Word); cdecl ; external;
+procedure setwritemode(mode: byte); cdecl ; external;
 implementation
 
 uses sysutils;
