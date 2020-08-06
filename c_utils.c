@@ -1,4 +1,4 @@
-/* by y.salnikov
+/* by y.salnikov, mnalis
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ uint8_t *v_buf;
 uint8_t video_stop = 0;
 uint8_t video_done = 0;
 uint8_t keys_done = 0;
-uint16_t cur_color = 31;
+uint8_t cur_color = 31;
 int audio_rate;
 Uint16 audio_format;
 int audio_channels;
@@ -94,7 +94,7 @@ int interactive;
 uint8_t audio_open;
 uint8_t keypressed_;
 uint16_t key_, keymod_;
-int32_t mouse_x, mouse_y;
+uint16_t mouse_x, mouse_y;
 uint8_t mouse_buttons;
 uint8_t showmouse;
 uint8_t mouse_icon[256];
@@ -191,16 +191,18 @@ int resizeWindow(int width, int height)
 	WWIDTH = width;
 	WHEIGHT = height;
 	if (width / ratio > height) {
-		WWIDTH = height * ratio;
+		WWIDTH = (int) (height * ratio);	// always fits double in int
 		WHEIGHT = height;
 		x0 = (width - WWIDTH) / 2;
 		y0 = 0;
 	} else {
 		WWIDTH = width;
-		WHEIGHT = width / ratio;
+		WHEIGHT = (int) (width / ratio);
 		x0 = 0;
 		y0 = (height - WHEIGHT) / 2;
 	}
+	assert(x0 > 0);
+	assert(y0 > 0);
 
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
 
@@ -250,14 +252,14 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 		{
 			Uint8 *bufp;
 			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x;
-			*bufp = color;
+			*bufp = (Uint8) color;		// 8 bits per color
 		}
 		break;
 	case 2:					// Probably 15-bpp or 16-bpp 
 		{
 			Uint16 *bufp;
 			bufp = (Uint16 *) screen->pixels + y * screen->pitch / 2 + x;
-			*bufp = color;
+			*bufp = (Uint16) color;		// 16 bits per color
 		}
 		break;
 	case 3:					// Slow 24-bpp mode, usually not used 
@@ -265,13 +267,13 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 			Uint8 *bufp;
 			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x * 3;
 			if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
-				bufp[0] = color;
-				bufp[1] = color >> 8;
-				bufp[2] = color >> 16;
+				bufp[0] = (Uint8) color;		// always 8 bits per R/G/B value
+				bufp[1] = (Uint8) (color >> 8);
+				bufp[2] = (Uint8) (color >> 16);
 			} else {
-				bufp[2] = color;
-				bufp[1] = color >> 8;
-				bufp[0] = color >> 16;
+				bufp[2] = (Uint8) color;
+				bufp[1] = (Uint8) (color >> 8);
+				bufp[0] = (Uint8) (color >> 16);
 			}
 		}
 		break;
@@ -293,12 +295,14 @@ void show_cursor(void)
 	pal_color_type c;
 
 	if (showmouse) {
-		mx0 = mouse_get_x();
-		my0 = mouse_get_y();
-		mw = (319 - mx0);
+		mx0 = (uint16_t) mouse_get_x();		// 16 bits are always more than enough
+		my0 = (uint16_t) mouse_get_y();
+		assert (mx0 < 320);
+		mw = (uint16_t) (319 - mx0);
 		if (mw > 15)
 			mw = 15;
-		mh = (199 - my0);
+		assert (my0 < 200);
+		mh = (uint16_t) (199 - my0);
 		if (mh > 15)
 			mh = 15;
 		for (my = 0; my <= mh; my++)
@@ -306,10 +310,13 @@ void show_cursor(void)
 				b = mouse_icon[mx + 16 * my];
 				if (b != 255) {
 					c = palette[b];
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
+					assert (c.r < 64);
+					assert (c.g < 64);
+					assert (c.b < 64);
+					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 				}
 			}
 
@@ -341,16 +348,19 @@ int video_output(void *notused)
 		for (vga_y = 0; vga_y < 200; vga_y++)
 			for (vga_x = 0; vga_x < 320; vga_x++) {
 				c = palette[v_buf[vga_x + 320 * vga_y]];
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
+				assert (c.r < 64);
+				assert (c.g < 64);
+				assert (c.b < 64);
+				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 			}
 
 
 		show_cursor();
 		Sulock(sdl_screen);
-		SDL_Flip(sdl_screen);	// fixme: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
+		SDL_Flip(sdl_screen);	// FIXME: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
 #ifndef NO_OGL
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
@@ -400,7 +410,7 @@ int handle_keys(void *useless)
 					turbo_mode = 1;
 				} else {
 					uint8_t key_found = 0, key_index = 0;
-					uint16_t event_mod = event.key.keysym.mod & (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
+					uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
 					//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
 
 					/* traverse list of all special keys and their modifiers, and verify if we match */
@@ -433,8 +443,15 @@ int handle_keys(void *useless)
 			}
 
 			if (event.type == SDL_MOUSEMOTION) {
-				mouse_x = event.motion.x;
-				mouse_y = event.motion.y;
+				int32_t ex, ey;
+				ex = event.motion.x;
+				ey = event.motion.y;
+				assert (ex >= 0);
+				assert (ex < UINT16_MAX);
+				assert (ey >= 0);
+				assert (ey < UINT16_MAX);
+				mouse_x = (uint16_t) ex;
+				mouse_y = (uint16_t) ey;
 			}
 			if (event.type == SDL_MOUSEBUTTONDOWN) {	//If the left mouse button was pressed
 				if (event.button.button == SDL_BUTTON_LEFT) {
@@ -489,7 +506,7 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 		}
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
-//              ---- copy - paste ----
+//   ---- copy - paste ----
 	Slock(sdl_screen);
 	for (y = 0; y < HEIGHT; y++)
 		for (x = 0; x < WIDTH; x++) {
@@ -608,7 +625,7 @@ uint64_t delta_usec(void)
 	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
-	cur_usec = tv.tv_sec * 1000000L + tv.tv_usec;
+	cur_usec = (uint64_t) tv.tv_sec * 1000000L + (uint64_t) tv.tv_usec;	// struct timeval elements should never be negative
 	tmp = cur_usec - old_usec;
 	old_usec = cur_usec;
 	return tmp;
@@ -619,14 +636,14 @@ void delay(fpc_word_t ms)
 	static uint64_t err;
 	int64_t us = 1;
 	delta_usec();
-	us = (ms * 1000 * TIMESCALE) - err;
+	us = (int64_t) (ms * 1000 * TIMESCALE) - (int64_t) err;	// we're always small enough so convert to int64 is not a problem
 	if (turbo_mode)
 		us /= TURBO_FACTOR;
 	while (us > 0) {
-		us -= delta_usec();
+		us -= (int64_t) delta_usec();	// delta_usec() will always be small, so 63bits are always OK
 		_nanosleep(5000);
 	}
-	err = -us;
+	err = (uint64_t) -us;		// while(us>0) guarantees that us "<= 0" now
 	if (video_done && !normal_exit)
 		exit(4);
 }
@@ -635,7 +652,7 @@ void upscroll(fpc_screentype_t img)	// 320x200 bytes
 {
 	uint16_t y;
 	for (y = 1; y < 100; y++) {
-		memmove(v_buf + (320 * (200 - y)), img, 320 * (y));
+		memmove(v_buf + (320 * (200 - y)), img, 320U * y);
 		delay(5);
 	}
 }
@@ -655,11 +672,16 @@ void scale_img(fpc_word_t x0s, fpc_word_t y0s, fpc_word_t widths, fpc_word_t hei
 
 void setcolor(fpc_word_t color)
 {
-	cur_color = color;
+	assert(color < 256);
+	cur_color = (uint8_t) color;
 }
 
-void draw_pixel(uint16_t x, uint16_t y)
+void draw_pixel(int16_t x, int16_t y)
 {
+	assert (x >= 0);
+	assert (x < 320);
+	assert (y >= 0);
+	assert (y < 200);
 	if (cur_writemode)
 		v_buf[x + 320 * y] = v_buf[x + 320 * y] ^ cur_color;
 	else
@@ -668,27 +690,25 @@ void draw_pixel(uint16_t x, uint16_t y)
 
 void circle(fpc_word_t x, fpc_word_t y, fpc_word_t r)
 {
-	int64_t xx, yy;
-	const float E = 0.9;
+	int16_t xx, yy;
+	const double E = 0.9;
 	xx = 0;
-	yy = r;
-	draw_pixel(x + xx, (y + yy * E));
-	draw_pixel(x - xx, (y + yy * E));
-	draw_pixel(x + xx, (y - yy * E));
-	draw_pixel(x - xx, (y - yy * E));
+	yy =(int16_t) r;	// we're confident it will always fit in < 32767. Also, draw_pixel() does sanity checks.
+	draw_pixel((int16_t) (x + xx), (int16_t) (y + yy * E));
+	draw_pixel((int16_t) (x - xx), (int16_t) (y + yy * E));
+	draw_pixel((int16_t) (x + xx), (int16_t) (y - yy * E));
+	draw_pixel((int16_t) (x - xx), (int16_t) (y - yy * E));
 	while (yy >= 1) {
-		yy = yy - 1;
+		yy = (int16_t) (yy - 1);
 		if ((xx * xx) + (yy * yy) < (r * r))
-			xx = xx + 1;
+			xx = (int16_t) (xx + 1);
 		if ((xx * xx) + (yy * yy) < (r * r))
-			yy = yy + 1;
-		draw_pixel(x + xx, (y + yy * E));
-		draw_pixel(x - xx, (y + yy * E));
-		draw_pixel(x + xx, (y - yy * E));
-		draw_pixel(x - xx, (y - yy * E));
-
+			yy = (int16_t) (yy + 1);
+		draw_pixel((int16_t) (x + xx), (int16_t) (y + yy * E));
+		draw_pixel((int16_t) (x - xx), (int16_t) (y + yy * E));
+		draw_pixel((int16_t) (x + xx), (int16_t) (y - yy * E));
+		draw_pixel((int16_t) (x - xx), (int16_t) (y - yy * E));
 	}
-
 }
 
 fpc_byte_t key_pressed(void)
@@ -698,8 +718,6 @@ fpc_byte_t key_pressed(void)
 //      keypressed=0;
 	_nanosleep(500000);
 	return k;
-
-
 }
 
 fpc_char_t readkey(void)
@@ -747,16 +765,14 @@ fpc_char_t mouse_get_status(void)
 
 fpc_dword_t mouse_get_x(void)
 {
-	int32_t x;
+	uint32_t x;
 	double rx, rx0;
 	if (resize_x == 0)
 		return 0;
 	rx = (double) (mouse_x) / (double) (resize_x);
 	rx0 = (double) (wx0) / (double) (resize_x);
-	x = WIDTH * ((rx - rx0) / (1 - 2 * rx0));
+	x = (uint32_t) (WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
 	x = (x - X0) / XSCALE;
-	if (x < 0)
-		x = 0;
 	if (x > 319)
 		x = 319;
 	return x;
@@ -764,16 +780,14 @@ fpc_dword_t mouse_get_x(void)
 
 fpc_dword_t mouse_get_y(void)
 {
-	int32_t y;
+	uint32_t y;
 	double ry, ry0;
 	if (resize_y == 0)
 		return 0;
 	ry = (double) (mouse_y) / (double) (resize_y);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	y = HEIGHT * ((ry - ry0) / (1 - 2 * ry0));
+	y = (uint32_t) (HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
 	y = (y - Y0) / YSCALE;
-	if (y < 0)
-		y = 0;
 	if (y > 199)
 		y = 199;
 	return y;
@@ -782,7 +796,7 @@ fpc_dword_t mouse_get_y(void)
 
 void rectangle(fpc_smallint_t x1, fpc_smallint_t y1, fpc_smallint_t x2, fpc_smallint_t y2)
 {
-	uint16_t i;
+	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
 	if (x2 > x1)
 		for (i = x1; i < x2; i++) {
@@ -844,24 +858,25 @@ void move_mouse(fpc_word_t x, fpc_word_t y)
 
 	if (x > 319)
 		x = 319;
-	x = x * XSCALE + X0;
+	x = (fpc_word_t) (x * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = ((double) x * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x);
+	mouse_x = (uint16_t) (((double) x * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
 
 	if (y > 199)
 		y = 199;
-	y = y * YSCALE + Y0;
+	y = (fpc_word_t) (y * YSCALE + Y0);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	mouse_y = ((double) y * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y);
+	mouse_y = (uint16_t) (((double) y * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
 
 	SDL_WarpMouse(mouse_x, mouse_y);
 }
 
 void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 {
-
 	FILE *f;
-	int32_t length, readed, r, i;
+	long l;
+	uint32_t i;
+	size_t length, loaded, r, remains;
 	int8_t *sound_raw, chan;
 	float k;
 	int16_t *sound, smp;
@@ -871,10 +886,12 @@ void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 		return;
 
 	fn = malloc(256);
+	assert(fn != NULL);
 	s1 = strdup(filename);
+	assert(s1 != NULL);
 	s = s1;
 	while (*s) {
-		*s = toupper(*s);
+		*s = (char) toupper(*s);	// toupper(3) works with int, but only defined on char
 		s++;
 	}
 	strcpy(fn, SOUNDS_PATH);
@@ -882,19 +899,25 @@ void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 	f = fopen(fn, "rb");
 	if (f == NULL) {
 		printf("Can't open file %s\n", fn);
+		// FIXME: should free fn/s1 here if we fail early
 		return;
 	}
 	fseek(f, 0, SEEK_END);
-	length = ftell(f);
+	l = ftell(f);
+	assert(l >= 0);
+	length = (size_t) l;
 	fseek(f, 0, SEEK_SET);
 	sound_raw = malloc(length);
-	readed = 0;
-	while (readed < length) {
-		r = fread(sound_raw + readed, 1, length - readed, f);
-		if (r >= 0)
-			readed += r;
+	assert(sound_raw != NULL);
+	loaded = 0;
+	while (loaded < length) {
+		remains = length - loaded;
+		r = fread(sound_raw + loaded, 1, remains, f);
+		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
+			loaded += r;
 		else {
 			printf("Can't read %s @%ld error= %d\n", fn, ftell(f), errno);
+			// FIXME: should free fn/s1 here if we fail early
 			return;
 		}
 	}
@@ -903,9 +926,13 @@ void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 	free(s1);
 // resample and play    
 	k = (float) rate / (float) audio_rate;
-	sound = calloc(1 + (length / k), 4);
-	for (i = 0; i < (length / k); i++) {
-		smp = (sound_raw[(uint32_t) (i * k)]) * SOUNDS_VOLUME;
+	uint32_t qwords = (uint32_t) ((float)length / k);	// not really exact, so we'll allocate + 1 quadword extra
+	sound = calloc(1 + qwords, 4);
+	assert(sound != NULL);
+	for (i = 0; i < qwords; i++) {
+		uint32_t idx = (uint32_t) ((float) i * k);	// FIXME: k is float, so this does not look really exact
+		assert (sound_raw[idx] < INT16_MIN/SOUNDS_VOLUME);
+		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;
 		sound[1 + i * 2] = smp;
 //              printf("%d / %d, %d / %d\n\r",i,(uint32_t)(length/k),(int32_t)(i*k),length);
@@ -913,21 +940,22 @@ void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
 	free(sound_raw);
 	chan = -1;
 	for (i = 0; i < SOUNDS_MAX_CHANNELS; i++) {
-		if (!Mix_Playing(i)) {
+		if (!Mix_Playing((int) i)) {
 			if (raw_chunks[i] != NULL) {
 				Mix_FreeChunk(raw_chunks[i]);
 				raw_chunks[i] = NULL;
 			}
-			chan = i;
+			assert(i < 256);
+			chan = (int8_t) i;
 			break;
 		}
 	}
 	if (chan >= 0) {
-		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, (uint32_t) (length / k) * 4))) {
+		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, qwords * 4))) {
 			printf("Mix_QuickLoad_RAW: %s\n", Mix_GetError());
 		}
 		if (sound != NULL)
-			free(sound);
+			free(sound);	// FIXME - we should free even when chan<0?
 		Mix_PlayChannel(chan, raw_chunks[chan], 0);
 	}
 
@@ -952,7 +980,8 @@ void continuemod(void)
 
 void setfillstyle(fpc_word_t style, fpc_word_t f_color)
 {
-	fill_color = f_color;
+	assert(f_color < 256);
+	fill_color = (uint8_t) f_color;
 	if (style > 1)
 		printf("setfillstyle style=%d\n", style);
 
@@ -976,6 +1005,7 @@ void bar(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 		y = y2;
 		ye = y1;
 	}
+	assert (ye*320+xe < 320*200);
 	for (j = y; j < ye; j++)
 		for (i = x; i < xe; i++)
 			v_buf[i + 320 * j] = fill_color;
@@ -988,6 +1018,11 @@ void bar(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 {
 //      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
+	assert (x1 < 320);
+	assert (x2 < 320);
+	assert (y1 < 200);
+	assert (y2 < 200);
+
 	int i, dx, dy, sdx, sdy, dxabs, dyabs, x, y, px, py;
 	dx = x2 - x1;				// the horizontal distance of the line
 	dy = y2 - y1;				// the vertical distance of the line
@@ -1005,8 +1040,8 @@ void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 	y = dxabs >> 1;
 	px = x1;
 	py = y1;
-	draw_pixel(px, py);
-	if (dxabs >= dyabs) {		// the line is more horizontal than vertical
+	draw_pixel((int16_t) px, (int16_t) py);	// we trust line() calculations given asserts above and in draw_pixel()
+	if (dxabs >= dyabs) {			// the line is more horizontal than vertical
 		for (i = 0; i < dxabs; i++) {
 			y += dyabs;
 			if (y >= dxabs) {
@@ -1014,9 +1049,9 @@ void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 				py += sdy;
 			}
 			px += sdx;
-			draw_pixel(px, py);
+			draw_pixel((int16_t) px, (int16_t) py);
 		}
-	} else {					// the line is more vertical than horizontal
+	} else {				// the line is more vertical than horizontal
 		for (i = 0; i < dyabs; i++) {
 			x += dxabs;
 			if (x >= dyabs) {
@@ -1024,7 +1059,7 @@ void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 				px += sdx;
 			}
 			py += sdy;
-			draw_pixel(px, py);
+			draw_pixel((int16_t) px, (int16_t) py);
 		}
 	}
 
@@ -1051,23 +1086,28 @@ void lineto(fpc_word_t x, fpc_word_t y)
 void pieslice(fpc_word_t x, fpc_word_t y, fpc_word_t phi0, fpc_word_t phi1, fpc_word_t r)
 {
 	int16_t i, j;
+	int32_t pos;
 	double f, f0, f1;
-	const float E = 0.9;
+	const double E = 0.9;
 	f0 = phi0 * M_PI / 180.0;
 	f1 = phi1 * M_PI / 180.0;
-	for (j = -r; j < r; j++)
-		for (i = -r; i < r; i++) {
+	for (j = (int16_t) -r; j < r; j++)
+		for (i = (int16_t) -r; i < r; i++) {
 			f = atan2(j, i);
 			if (f < 0)
 				f += 2 * M_PI;
 			if ((f >= f0) && (f < f1)) {
-				if ((i * i + j * j) <= r * r)
-					v_buf[i + x + 320 * (y - (int) (j * E))] = fill_color;
+				if ((i * i + j * j) <= r * r) {
+					pos = i + x + 320 * (y - (int) (j * E));
+					assert(pos >= 0);
+					assert(pos < 320*200);
+					v_buf[pos] = fill_color;
+				}
 			}
 		}
 }
 
-void setwritemode(fpc_word_t mode)
+void setwritemode(fpc_byte_t mode)	/* it can be CopyPut=0 or XorPut=1, so byte is ok, doesn't need to be SmallInt */
 {
 	cur_writemode = mode;
 }
@@ -1076,5 +1116,5 @@ fpc_boolean_t playing(void)
 {
 	if (!audio_open)
 		return 0;
-	return Mix_PlayingMusic();
+	return (fpc_boolean_t) Mix_PlayingMusic();	/* Mix_PlayingMusic() returns 0 or 1, so it is OK for boolean */
 }
