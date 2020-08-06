@@ -53,12 +53,12 @@
 #define SOUNDS_PATH "sound/"
 #define TURBO_FACTOR 60
 
-const double ratio = 640.0 / 480;
+static const double ratio = 640.0 / 480;
 
-SDL_Surface *sdl_screen, *opengl_screen;
-SDL_Thread *video, *keyshandler;
-Mix_Music *music = NULL;
-Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
+static SDL_Surface *sdl_screen, *opengl_screen;
+static SDL_Thread *video, *keyshandler;
+static Mix_Music *music = NULL;
+static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
 /* pascal types definitions */
 typedef uint8_t		fpc_char_t;
@@ -78,59 +78,57 @@ typedef struct {
 	uint8_t b;
 } pal_color_type;
 
-pal_color_type palette[256];
+static pal_color_type palette[256];
 
-uint8_t *v_buf;
-uint8_t video_stop = 0;
-uint8_t video_done = 0;
-uint8_t keys_done = 0;
-uint8_t cur_color = 31;
-int audio_rate;
-Uint16 audio_format;
-int audio_channels;
-int audio_buffers;
-int looping;
-int interactive;
-uint8_t audio_open;
-uint8_t keypressed_;
-uint16_t key_, keymod_;
-uint16_t mouse_x, mouse_y;
-uint8_t mouse_buttons;
-uint8_t showmouse;
-uint8_t mouse_icon[256];
-uint8_t normal_exit = 1;
-uint8_t fill_color;
-uint16_t cur_x;
-uint16_t cur_y;
-uint8_t cur_writemode;
-uint8_t turbo_mode = 0;
+static uint8_t *v_buf;
+static uint8_t video_stop = 0;
+static uint8_t video_done = 0;
+static uint8_t keys_done = 0;
+static uint8_t cur_color = 31;
+static int audio_rate;
+static Uint16 audio_format;
+static int audio_channels;
+static int audio_buffers;
+static int looping;
+static int interactive;
+static uint8_t audio_open;
+static uint8_t keypressed_;
+static uint16_t key_, keymod_;
+static uint16_t mouse_x, mouse_y;
+static uint8_t mouse_buttons;
+static uint8_t showmouse;
+static uint8_t mouse_icon[256];
+static uint8_t normal_exit = 1;
+static uint8_t fill_color;
+static uint16_t cur_x;
+static uint16_t cur_y;
+static uint8_t cur_writemode;
+static uint8_t turbo_mode = 0;
 #ifndef NO_OGL
-GLuint main_texture;
+static GLuint main_texture;
 #endif
-uint8_t resize;
-int resize_x = 640;
-int resize_y = 480;
-int wx0 = 0;
-int wy0 = 0;
+static uint8_t resize;
+static int resize_x = 640;
+static int resize_y = 480;
+static int wx0 = 0;
+static int wy0 = 0;
 
-const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
-const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
-const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
-
-
-int dummy(int w, int h);
-int (*resize_callback)(int w, int h) = dummy;
-fpc_dword_t mouse_get_x(void);
-fpc_dword_t mouse_get_y(void);
+static const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
+static const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
+static const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+static const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
 
 
-void set_resize_callback(int (*callback)(int w, int h))
+static int dummy(int w, int h);
+static int (*resize_callback)(int w, int h) = dummy;
+
+
+static void set_resize_callback(int (*callback)(int w, int h))
 {
 	resize_callback = callback;
 }
 
-int dummy(int w, int h)
+static int dummy(int w, int h)
 {
 	return 0;
 }
@@ -143,13 +141,9 @@ static inline void _nanosleep(long nsec)
 	nanosleep(&ts, NULL);
 }
 
-void stop_video_thread(void);
-void all_done(void);
-
-void musicDone(void);
 
 /* ------------------------------------------------------ */
-void Slock(SDL_Surface * screen)
+static void Slock(SDL_Surface * screen)
 {
 
 	if (SDL_MUSTLOCK(screen)) {
@@ -161,7 +155,7 @@ void Slock(SDL_Surface * screen)
 }
 
 /* ------------------------------------------------------ */
-void Sulock(SDL_Surface * screen)
+static void Sulock(SDL_Surface * screen)
 {
 
 	if (SDL_MUSTLOCK(screen)) {
@@ -172,7 +166,7 @@ void Sulock(SDL_Surface * screen)
 
 #ifndef NO_OGL
 
-void set_perspective(void)
+static void set_perspective(void)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -185,7 +179,7 @@ void set_perspective(void)
 
 
 
-int resizeWindow(int width, int height)
+static int resizeWindow(int width, int height)
 {
 	int x0, y0, WWIDTH, WHEIGHT;
 	WWIDTH = width;
@@ -216,7 +210,7 @@ int resizeWindow(int width, int height)
 
 
 
-void init_opengl(void)
+static void init_opengl(void)
 {
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
@@ -243,7 +237,7 @@ void init_opengl(void)
 
 
 
-void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
+static void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 {
 
 	Uint32 color = SDL_MapRGB(screen->format, R, G, B);
@@ -288,7 +282,7 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 
 }
 
-void show_cursor(void)
+static void show_cursor(void)
 {
 	uint16_t mx, my, mw, mh, mx0, my0;
 	uint8_t b;
@@ -324,7 +318,7 @@ void show_cursor(void)
 
 }
 
-int video_output(void *notused)
+static int video_output(void *notused)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
@@ -393,7 +387,7 @@ int video_output(void *notused)
 	return 0;
 }
 
-int handle_keys(void *useless)
+static int handle_keys(void *useless)
 {
 	SDL_Event event;
 	while (!video_stop) {
@@ -544,7 +538,7 @@ void getrgb256_(fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * 
 	*b = palette[palnum].b;
 }
 
-void set256colors(pal_color_type * pal)	// set all palette
+static void set256colors(pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -607,7 +601,6 @@ void play_mod(fpc_byte_t loop, fpc_pchar_t filename)
 	   exactly that */
 	Mix_HookMusicFinished(musicDone);
 	Mix_VolumeMusic(128);
-
 }
 
 void haltmod(void)
@@ -618,7 +611,7 @@ void haltmod(void)
 }
 
 
-uint64_t delta_usec(void)
+static uint64_t delta_usec(void)
 {
 	uint64_t cur_usec, tmp;
 	static uint64_t old_usec;
@@ -676,7 +669,7 @@ void setcolor(fpc_word_t color)
 	cur_color = (uint8_t) color;
 }
 
-void draw_pixel(int16_t x, int16_t y)
+static void draw_pixel(int16_t x, int16_t y)
 {
 	assert (x >= 0);
 	assert (x < 320);
