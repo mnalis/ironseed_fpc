@@ -884,7 +884,8 @@ void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 	f = fopen(fn, "rb");
 	if (f == NULL) {
 		printf("Can't open file %s\n", fn);
-		// FIXME: should free fn/s1 here if we fail early
+		free(fn);
+		free(s1);
 		return;
 	}
 	fseek(f, 0, SEEK_END);
@@ -902,7 +903,9 @@ void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 			loaded += r;
 		else {
 			printf("Can't read %s @%ld error= %d\n", fn, ftell(f), errno);
-			// FIXME: should free fn/s1 here if we fail early
+			free(sound_raw);
+			free(fn);
+			free(s1);
 			return;
 		}
 	}
@@ -939,12 +942,10 @@ void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, qwords * 4))) {
 			printf("Mix_QuickLoad_RAW: %s\n", Mix_GetError());
 		}
-		if (sound != NULL)
-			free(sound);	// FIXME - we should free even when chan<0?
 		Mix_PlayChannel(chan, raw_chunks[chan], 0);
 	}
-
-
+	if (sound != NULL)
+		free(sound);
 }
 
 
