@@ -919,7 +919,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 	assert(sound != NULL);
 	for (i = 0; i < qwords; i++) {
 		uint32_t idx = (uint32_t) ((float) i * k);	// FIXME: k is float, so this does not look really exact
-		assert (sound_raw[idx] < INT16_MIN/SOUNDS_VOLUME);
+		int32_t test_smp = (sound_raw[idx] * SOUNDS_VOLUME); assert (test_smp <= INT16_MAX && test_smp >= INT16_MIN);
 		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;
 		sound[1 + i * 2] = smp;
