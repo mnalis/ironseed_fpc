@@ -1,3 +1,6 @@
+v 0.0.7
+- c_utils.c force correct filetypes and asserts and fix warnings
+- debug tools: scr/cpr image converters
 - enabled keyboard autorepeat
 - allow game to run on systems without soundcards
 v 0.0.6
