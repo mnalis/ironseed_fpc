@@ -201,8 +201,8 @@ int resizeWindow(int width, int height)
 		x0 = 0;
 		y0 = (height - WHEIGHT) / 2;
 	}
-	assert(x0 > 0);
-	assert(y0 > 0);
+	assert(x0 >= 0);
+	assert(y0 >= 0);
 
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
 
