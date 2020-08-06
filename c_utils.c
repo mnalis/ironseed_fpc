@@ -789,23 +789,27 @@ void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, co
 {
 	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+	assert (x1 < 320);
+	assert (x2 < 320);
+	assert (y1 < 200);
+	assert (y2 < 200);
 	if (x2 > x1)
-		for (i = x1; i < x2; i++) {
-			draw_pixel(i, y1);
-			draw_pixel(i, y2);
+		for (i = (int16_t) x1; i < (int16_t) x2; i++) {
+			draw_pixel(i, (int16_t) y1);
+			draw_pixel(i, (int16_t) y2);
 	} else
-		for (i = x2; i < x1; i++) {
-			draw_pixel(i, y1);
-			draw_pixel(i, y2);
+		for (i = (int16_t) x2; i < (int16_t) x1; i++) {
+			draw_pixel(i, (int16_t) y1);
+			draw_pixel(i, (int16_t) y2);
 		}
 	if (y2 > y1)
-		for (i = y1; i < y2; i++) {
-			draw_pixel(x1, i);
-			draw_pixel(x2, i);
+		for (i = (int16_t) y1; i < (int16_t) y2; i++) {
+			draw_pixel((int16_t) x1, i);
+			draw_pixel((int16_t) x2, i);
 	} else
-		for (i = y2; i < y1; i++) {
-			draw_pixel(x1, i);
-			draw_pixel(x2, i);
+		for (i = (int16_t) y2; i < (int16_t) y1; i++) {
+			draw_pixel((int16_t) x1, i);
+			draw_pixel((int16_t) x2, i);
 		}
 
 
