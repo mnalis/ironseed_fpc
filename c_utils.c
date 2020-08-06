@@ -569,14 +569,14 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 	keyshandler = SDL_CreateThread(handle_keys, NULL);
 }
 
-void setrgb256(fpc_byte_t palnum, fpc_byte_t r, fpc_byte_t g, fpc_byte_t b)	// set palette
+void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
 {
 	palette[palnum].r = r;
 	palette[palnum].g = g;
 	palette[palnum].b = b;
 }
 
-void getrgb256_(fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * b)	// get palette
+void getrgb256_(const fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * b)	// get palette
 {
 	*r = palette[palnum].r;
 	*g = palette[palnum].g;
@@ -610,7 +610,7 @@ void sdl_mixer_init(void)
 }
 
 
-void play_mod(fpc_byte_t loop, fpc_pchar_t filename)
+void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 {
 	int l;
 	if (!audio_open)
@@ -661,7 +661,7 @@ static uint64_t delta_usec(void)
 	return tmp;
 }
 
-void delay(fpc_word_t ms)
+void delay(const fpc_word_t ms)
 {
 	static uint64_t err;
 	int64_t us = 1;
@@ -678,7 +678,7 @@ void delay(fpc_word_t ms)
 		exit(4);
 }
 
-void upscroll(fpc_screentype_t img)	// 320x200 bytes 
+void upscroll(const fpc_screentype_t img)	// 320x200 bytes 
 {
 	uint16_t y;
 	for (y = 1; y < 100; y++) {
@@ -687,7 +687,7 @@ void upscroll(fpc_screentype_t img)	// 320x200 bytes
 	}
 }
 
-void scale_img(fpc_word_t x0s, fpc_word_t y0s, fpc_word_t widths, fpc_word_t heights, fpc_word_t x0d, fpc_word_t y0d, fpc_word_t widthd, fpc_word_t heightd, fpc_screentype_t s, fpc_screentype_t d)
+void scale_img(const fpc_word_t x0s, const fpc_word_t y0s, const fpc_word_t widths, const fpc_word_t heights, const fpc_word_t x0d, const fpc_word_t y0d, const fpc_word_t widthd, const fpc_word_t heightd, const fpc_screentype_t s, fpc_screentype_t d)
 {
 	uint16_t xd, yd;
 	double kx, ky;
@@ -700,7 +700,7 @@ void scale_img(fpc_word_t x0s, fpc_word_t y0s, fpc_word_t widths, fpc_word_t hei
 
 }
 
-void setcolor(fpc_word_t color)
+void setcolor(const fpc_word_t color)
 {
 	assert(color < 256);
 	cur_color = (uint8_t) color;
@@ -718,7 +718,7 @@ static void draw_pixel(int16_t x, int16_t y)
 		v_buf[x + 320 * y] = cur_color;
 }
 
-void circle(fpc_word_t x, fpc_word_t y, fpc_word_t r)
+void circle(const fpc_word_t x, const fpc_word_t y, const fpc_word_t r)
 {
 	int16_t xx, yy;
 	const double E = 0.9;
@@ -785,7 +785,7 @@ fpc_char_t readkey(void)
 }
 
 
-void rectangle(fpc_smallint_t x1, fpc_smallint_t y1, fpc_smallint_t x2, fpc_smallint_t y2)
+void rectangle(const fpc_smallint_t x1, const fpc_smallint_t y1, const fpc_smallint_t x2, const fpc_smallint_t y2)
 {
 	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -827,33 +827,36 @@ void mousesetcursor(uint8_t * icon)
 }
 
 
-void setmodvolumeto(fpc_integer_t vol)
+void setmodvolumeto(const fpc_integer_t vol)
 {
 	if (!audio_open)
 		return;
 	Mix_VolumeMusic(vol / 2);
 }
 
-void move_mouse(fpc_word_t x, fpc_word_t y)
+void move_mouse(const fpc_word_t x, const fpc_word_t y)
 {
 	double rx0, ry0;
+	fpc_word_t xx, yy;
+	xx = x;
+	yy = y;
 
-	if (x > 319)
-		x = 319;
-	x = (fpc_word_t) (x * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
+	if (xx > 319)
+		xx = 319;
+	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = (uint16_t) (((double) x * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
+	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
 
-	if (y > 199)
-		y = 199;
-	y = (fpc_word_t) (y * YSCALE + Y0);
+	if (yy > 199)
+		yy = 199;
+	yy = (fpc_word_t) (yy * YSCALE + Y0);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	mouse_y = (uint16_t) (((double) y * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
+	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
 
 	SDL_WarpMouse(mouse_x, mouse_y);
 }
 
-void play_sound(fpc_pchar_t filename, fpc_integer_t rate)
+void play_sound(const fpc_pchar_t filename, const fpc_integer_t rate)
 {
 	FILE *f;
 	long l;
@@ -960,7 +963,7 @@ void continuemod(void)
 }
 
 
-void setfillstyle(fpc_word_t style, fpc_word_t f_color)
+void setfillstyle(const fpc_word_t style, const fpc_word_t f_color)
 {
 	assert(f_color < 256);
 	fill_color = (uint8_t) f_color;
@@ -969,7 +972,7 @@ void setfillstyle(fpc_word_t style, fpc_word_t f_color)
 
 }
 
-void bar(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
+void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	uint16_t i, j, x, xe, y, ye;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -997,7 +1000,7 @@ void bar(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 
 
 
-void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
+void line(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 //      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
 	assert (x1 < 320);
@@ -1054,18 +1057,18 @@ void line(fpc_word_t x1, fpc_word_t y1, fpc_word_t x2, fpc_word_t y2)
 
 
 
-void moveto(fpc_word_t x, fpc_word_t y)
+void moveto(const fpc_word_t x, const fpc_word_t y)
 {
 	cur_x = x;
 	cur_y = y;
 }
 
-void lineto(fpc_word_t x, fpc_word_t y)
+void lineto(const fpc_word_t x, const fpc_word_t y)
 {
 	line(cur_x, cur_y, x, y);
 }
 
-void pieslice(fpc_word_t x, fpc_word_t y, fpc_word_t phi0, fpc_word_t phi1, fpc_word_t r)
+void pieslice(const fpc_word_t x, const fpc_word_t y, const fpc_word_t phi0, const fpc_word_t phi1, const fpc_word_t r)
 {
 	int16_t i, j;
 	int32_t pos;
@@ -1089,7 +1092,7 @@ void pieslice(fpc_word_t x, fpc_word_t y, fpc_word_t phi0, fpc_word_t phi1, fpc_
 		}
 }
 
-void setwritemode(fpc_byte_t mode)	/* it can be CopyPut=0 or XorPut=1, so byte is ok, doesn't need to be SmallInt */
+void setwritemode(const fpc_byte_t mode)	/* it can be CopyPut=0 or XorPut=1, so byte is ok, doesn't need to be SmallInt */
 {
 	cur_writemode = mode;
 }
