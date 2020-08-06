@@ -89,8 +89,6 @@ static int audio_rate;
 static Uint16 audio_format;
 static int audio_channels;
 static int audio_buffers;
-static int looping;
-static int interactive;
 static uint8_t audio_open;
 static uint8_t keypressed_;
 static uint16_t key_, keymod_;
@@ -118,20 +116,6 @@ static const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_
 static const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 static const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
 
-
-static int dummy(int w, int h);
-static int (*resize_callback)(int w, int h) = dummy;
-
-
-static void set_resize_callback(int (*callback)(int w, int h))
-{
-	resize_callback = callback;
-}
-
-static int dummy(int w, int h)
-{
-	return 0;
-}
 
 static inline void _nanosleep(long nsec)
 {
