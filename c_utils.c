@@ -282,6 +282,46 @@ static void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint
 
 }
 
+fpc_char_t mouse_get_status(void)
+{
+	uint8_t t;
+	t = mouse_buttons;
+	mouse_buttons = 0;
+	//if (t) printf ("mouse buttons=%d, coords=%d,%d\r\n", t, mouse_get_x(), mouse_get_y());
+	return t;
+}
+
+fpc_dword_t mouse_get_x(void)
+{
+	uint32_t x;
+	double rx, rx0;
+	if (resize_x == 0)
+		return 0;
+	rx = (double) (mouse_x) / (double) (resize_x);
+	rx0 = (double) (wx0) / (double) (resize_x);
+	x = (uint32_t) (WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
+	x = (x - X0) / XSCALE;
+	if (x > 319)
+		x = 319;
+	return x;
+}
+
+fpc_dword_t mouse_get_y(void)
+{
+	uint32_t y;
+	double ry, ry0;
+	if (resize_y == 0)
+		return 0;
+	ry = (double) (mouse_y) / (double) (resize_y);
+	ry0 = (double) (wy0) / (double) (resize_y);
+	y = (uint32_t) (HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
+	y = (y - Y0) / YSCALE;
+	if (y > 199)
+		y = 199;
+	return y;
+}
+
+
 static void show_cursor(void)
 {
 	uint16_t mx, my, mw, mh, mx0, my0;
@@ -385,6 +425,34 @@ static int video_output(void *notused)
 	_nanosleep(10000000);
 	SDL_Quit();
 	return 0;
+}
+
+
+
+void musicDone(void)
+{
+	if (audio_open) {
+		Mix_HaltMusic();
+		Mix_FreeMusic(music);
+	}
+	music = NULL;
+}
+
+void all_done(void)
+{
+	musicDone();
+	video_stop = 1;
+	while (!video_done)
+		sleep(0);
+	while (!keys_done)
+		sleep(0);
+}
+
+void stop_video_thread(void)
+{
+	video_stop = 1;
+	while (!video_done)
+		sleep(0);
 }
 
 static int handle_keys(void *useless)
@@ -517,13 +585,6 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 	keyshandler = SDL_CreateThread(handle_keys, NULL);
 }
 
-void stop_video_thread(void)
-{
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
-}
-
 void setrgb256(fpc_byte_t palnum, fpc_byte_t r, fpc_byte_t g, fpc_byte_t b)	// set palette
 {
 	palette[palnum].r = r;
@@ -538,7 +599,7 @@ void getrgb256_(fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * 
 	*b = palette[palnum].b;
 }
 
-static void set256colors(pal_color_type * pal)	// set all palette
+void set256colors(pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -564,14 +625,6 @@ void sdl_mixer_init(void)
 	}
 }
 
-void musicDone(void)
-{
-	if (audio_open) {
-		Mix_HaltMusic();
-		Mix_FreeMusic(music);
-	}
-	music = NULL;
-}
 
 void play_mod(fpc_byte_t loop, fpc_pchar_t filename)
 {
@@ -747,45 +800,6 @@ fpc_char_t readkey(void)
 	return key;
 }
 
-fpc_char_t mouse_get_status(void)
-{
-	uint8_t t;
-	t = mouse_buttons;
-	mouse_buttons = 0;
-	//if (t) printf ("mouse buttons=%d, coords=%d,%d\r\n", t, mouse_get_x(), mouse_get_y());
-	return t;
-}
-
-fpc_dword_t mouse_get_x(void)
-{
-	uint32_t x;
-	double rx, rx0;
-	if (resize_x == 0)
-		return 0;
-	rx = (double) (mouse_x) / (double) (resize_x);
-	rx0 = (double) (wx0) / (double) (resize_x);
-	x = (uint32_t) (WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
-	x = (x - X0) / XSCALE;
-	if (x > 319)
-		x = 319;
-	return x;
-}
-
-fpc_dword_t mouse_get_y(void)
-{
-	uint32_t y;
-	double ry, ry0;
-	if (resize_y == 0)
-		return 0;
-	ry = (double) (mouse_y) / (double) (resize_y);
-	ry0 = (double) (wy0) / (double) (resize_y);
-	y = (uint32_t) (HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
-	y = (y - Y0) / YSCALE;
-	if (y > 199)
-		y = 199;
-	return y;
-}
-
 
 void rectangle(fpc_smallint_t x1, fpc_smallint_t y1, fpc_smallint_t x2, fpc_smallint_t y2)
 {
@@ -828,15 +842,6 @@ void mousesetcursor(uint8_t * icon)
 	memcpy(mouse_icon, icon, 16*16);
 }
 
-void all_done(void)
-{
-	musicDone();
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
-	while (!keys_done)
-		sleep(0);
-}
 
 void setmodvolumeto(fpc_integer_t vol)
 {
