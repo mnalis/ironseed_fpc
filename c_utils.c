@@ -93,7 +93,7 @@ static int audio_rate;
 static Uint16 audio_format;
 static int audio_channels;
 static int audio_buffers;
-static uint8_t audio_open;
+static uint8_t audio_open = 0;
 static uint8_t keypressed_;
 static uint16_t key_, keymod_;
 static uint16_t mouse_x, mouse_y;
@@ -623,8 +623,7 @@ void set256colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
-	while (!video_initialized)
-		SDL_Delay(100);
+	assert (video_initialized);
 	audio_rate = 44100;
 	audio_format = AUDIO_S16;
 	audio_channels = 2;
@@ -641,11 +640,12 @@ void sdl_mixer_init(void)
 void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 {
 	int l;
-	if (!audio_open)
-		return;
 
 	if (music != NULL)
 		musicDone();
+
+	if (!audio_open)
+		return;
 
 	music = Mix_LoadMUS(filename);
 	/* This begins playing the music - the first argument is a
