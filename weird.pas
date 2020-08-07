@@ -850,7 +850,7 @@ var
 begin
 { mousehide;
  compressfile(tempdir+'/current3',@screen);
- textmode(co80);
+ //textmode(co80);
  case random(2) of
   0: begin
       s:='boss1.dta';

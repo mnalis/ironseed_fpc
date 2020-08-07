@@ -83,10 +83,10 @@ typedef struct {
 
 static pal_color_type palette[256];
 
-static uint8_t video_initialized = 0;
+static uint8_t has_video_initialized = 0;
 static uint8_t *v_buf = NULL;
-static uint8_t video_stop = 0;
-static uint8_t video_done = 0;
+static uint8_t do_video_stop = 0;	// command video to stop
+static uint8_t has_video_finished = 0;	// has video stopped? returns status
 static uint8_t cur_color = 31;
 static int audio_rate;
 static Uint16 audio_format;
@@ -360,14 +360,14 @@ static void video_output_once(void)
 	pal_color_type c;
 
 // FIXME indent
-		if (!video_initialized) {
+		if (!has_video_initialized) {
 			SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 			SDL_init_video_real();
 #ifndef NO_OGL
 			init_opengl();
 			glGenTextures(1, &main_texture);
 #endif
-			video_initialized = 1;
+			has_video_initialized = 1;
 		}
 		if (resize) {
 			resize = 0;
@@ -427,27 +427,23 @@ void musicDone(void)
 	music = NULL;
 }
 
-void stop_video_thread(void)
-{
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
-}
-
+/* stops audio and video */
 void all_done(void)
 {
 	musicDone();
-	stop_video_thread();
+
+	do_video_stop = 1;
+	while (!has_video_finished)
+		sleep(0);
 }
 
 static void handle_events_once(void)
 {
 	SDL_Event event;
-	assert(video_initialized);
+	assert(has_video_initialized);
 	// FIXME reduce indent now
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
-				stop_video_thread();
 				normal_exit = 0;
 				all_done();
 				SDL_Quit();
@@ -519,7 +515,7 @@ static void handle_events_once(void)
 
 static int event_thread(void *notused)
 {
-	while (!video_stop) {
+	while (!do_video_stop) {
 		video_output_once();	/* updates screen, and on startup initializes all of SDL if not done already */
 		handle_events_once();	/* keyboard, mouse, windows resize/close, and more */
 		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
@@ -529,7 +525,7 @@ static int event_thread(void *notused)
 		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
 		SDL_Delay(50);
 	}
-	video_done = 1;
+	has_video_finished = 1;
 	_nanosleep(10000000);
 	SDL_Quit();
 	return 0;
@@ -540,10 +536,10 @@ static int event_thread(void *notused)
 void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
 {
 	v_buf = vga_buf;
-	video_stop = 0;
-	video_done = 0;
+	do_video_stop = 0;
+	has_video_finished = 0;
 	events = SDL_CreateThread(event_thread, NULL);
-	while (!video_initialized)
+	while (!has_video_initialized)
 		SDL_Delay(100);
 }
 
@@ -617,7 +613,7 @@ void set256colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
-	assert (video_initialized);
+	assert (has_video_initialized);
 	audio_rate = 44100;
 	audio_format = AUDIO_S16;
 	audio_channels = 2;
@@ -696,7 +692,7 @@ void delay(const fpc_word_t ms)
 		_nanosleep(5000);
 	}
 	err = (uint64_t) -us;		// while(us>0) guarantees that us "<= 0" now
-	if (video_done && !normal_exit)
+	if (has_video_finished && !normal_exit)
 		exit(4);
 }
 

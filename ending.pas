@@ -416,7 +416,7 @@ begin
  credits;
 
  stopmod;
- textmode(co80);
+ //textmode(co80);
  halt(3);
 end;
 
