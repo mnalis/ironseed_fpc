@@ -729,7 +729,7 @@ end;
 procedure readygraph;
 var testdriver,driver,mode,errcode: integer;
 begin
-  SDL_init_video(screen);
+ SDL_init_video(screen);
  loadpal('data/main.pal');
  set256colors(colors);
 end;
@@ -900,9 +900,9 @@ end;
 
 begin 
    initializecanary;
+   readygraph;
    initializemod;
    checkbreak:=false;
-   readygraph;
    tcolor:=22;
    bkcolor:=0;
    new(planicons);

@@ -448,9 +448,6 @@ begin
  SDL_init_video(screen);
  loadpalette('data/main.pal');
  set256colors(colors);
-
-
- 
 end;
 
 procedure fading;
@@ -1737,8 +1734,8 @@ begin
 end;
 
 begin
+ readygraph;
  initializemod;
-    readygraph;
  tslice:=25;
  checkparams;
  closegraph;
