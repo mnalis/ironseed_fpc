@@ -347,13 +347,13 @@ static int video_output(void *notused)
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
 #ifndef NO_OGL
-	static uint8_t init_flag;
+	static uint8_t video_initialized = 0;
 #endif
 
 	while (!video_stop) {
 #ifndef NO_OGL
-		if ((init_flag == 0)) {
-			init_flag = 1;
+		if (!video_initialized) {
+			video_initialized = 1;
 			init_opengl();
 			glGenTextures(1, &main_texture);
 		}
