@@ -108,7 +108,7 @@ static uint8_t turbo_mode = 0;
 static SDL_Surface *opengl_screen;
 static GLuint main_texture;
 #endif
-static uint8_t resize;
+static uint8_t do_resize = 0;
 static int resize_x = 640;
 static int resize_y = 480;
 static int wx0 = 0;
@@ -444,8 +444,8 @@ static int video_output_once(void)
 			return 0;
 		is_video_initialized = 1;
 	}
-	if (resize) {
-		resize = 0;
+	if (do_resize) {
+		do_resize = 0;
 		resizeWindow(resize_x, resize_y);
 	}
 	Slock(sdl_screen);
@@ -558,9 +558,9 @@ static int handle_events_once(void)
 			}
 		}
 		if (event.type == SDL_VIDEORESIZE) {
-			resize = 1;
 			resize_x = event.resize.w;
 			resize_y = event.resize.h;
+			do_resize = 1;
 		}
 	}
 	return 1; 	// events without error
