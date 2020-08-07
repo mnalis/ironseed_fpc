@@ -55,7 +55,10 @@
 
 static const double ratio = 640.0 / 480;
 
-static SDL_Surface *sdl_screen, *opengl_screen;
+static SDL_Surface *sdl_screen;
+#ifndef NO_OGL
+static SDL_Surface *opengl_screen;
+#endif
 static SDL_Thread *events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
@@ -215,6 +218,13 @@ static void init_opengl(void)
 	resizeWindow(resize_x, resize_y);
 
 }
+#else
+// FIXME merge with resizeWindow above - when I do non-functional code rearranging
+static int resizeWindow(int width, int height)
+{
+	if (width / ratio > height) { /* dummy just so gcc does not complain for now */ }
+	return 2;
+}
 #endif
 
 
@@ -347,22 +357,21 @@ static void video_output_once(void)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
-#ifndef NO_OGL
 	static uint8_t video_initialized = 0;
-#endif
 
 // FIXME indent
-#ifndef NO_OGL
 		if (!video_initialized) {
-			video_initialized = 1;
+			SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+#ifndef NO_OGL
 			init_opengl();
 			glGenTextures(1, &main_texture);
+#endif
+			video_initialized = 1;
 		}
 		if (resize) {
 			resize = 0;
 			resizeWindow(resize_x, resize_y);
 		}
-#endif
 		Slock(sdl_screen);
 		for (vga_y = 0; vga_y < 200; vga_y++)
 			for (vga_x = 0; vga_x < 320; vga_x++) {
@@ -513,8 +522,8 @@ static void handle_events_once(void)
 static int event_thread(void *notused)
 {
 	while (!video_stop) {
+		video_output_once();	/* updates screen, and on startup initializes all of SDL if not done already */
 		handle_events_once();	/* keyboard, mouse, windows resize/close, and more */
-		video_output_once();	/* updates screen, and on startup initializes all of SDL video if needed */
 		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
 
 		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
@@ -535,7 +544,11 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 {
 	uint16_t x, y;
 
-	SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
+	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
+		printf("Unable to initialize SDL: %s\n", SDL_GetError());
+		exit(51);
+	}
+
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
@@ -570,7 +583,6 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 	v_buf = vga_buf;
 	video_stop = 0;
 	video_done = 0;
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	events = SDL_CreateThread(event_thread, NULL);
 }
 
