@@ -87,7 +87,6 @@ static uint8_t video_initialized = 0;
 static uint8_t *v_buf = NULL;
 static uint8_t video_stop = 0;
 static uint8_t video_done = 0;
-static uint8_t keys_done = 0;
 static uint8_t cur_color = 31;
 static int audio_rate;
 static Uint16 audio_format;
@@ -428,21 +427,17 @@ void musicDone(void)
 	music = NULL;
 }
 
-void all_done(void)
-{
-	musicDone();
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
-	while (!keys_done)
-		sleep(0);
-}
-
 void stop_video_thread(void)
 {
 	video_stop = 1;
 	while (!video_done)
 		sleep(0);
+}
+
+void all_done(void)
+{
+	musicDone();
+	stop_video_thread();
 }
 
 static void handle_events_once(void)
@@ -534,8 +529,7 @@ static int event_thread(void *notused)
 		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
 		SDL_Delay(50);
 	}
-	keys_done = 1;	// FIXME: is this needed anymore?
-	video_done = 1;	// FIXME: is this needed anymore?
+	video_done = 1;
 	_nanosleep(10000000);
 	SDL_Quit();
 	return 0;
