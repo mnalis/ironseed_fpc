@@ -23,6 +23,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "SDL.h"
 #include "SDL_mixer.h"
 #include <time.h>
@@ -463,7 +464,6 @@ static int video_output_once(void)
 
 	show_cursor();
 	Sulock(sdl_screen);
-	SDL_Flip(sdl_screen);	// FIXME: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
 #ifndef NO_OGL
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
@@ -487,6 +487,8 @@ static int video_output_once(void)
 	glEnd();
 	glFlush();
 	SDL_GL_SwapBuffers();
+#else
+	SDL_Flip(sdl_screen);
 #endif
 	return 1;	// no errors
 }
