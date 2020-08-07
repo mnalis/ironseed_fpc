@@ -7,12 +7,14 @@ fpc -Mtp -g -C3 -Ci -Co -CO  -O- -gl -gw -godwarfsets  -gt -gv -vw  -Sa testdiv0
 program testdiv0;
 
 // runtime error 200 if not using SysUtils, EDivByZero if we use SysUtils
-uses sysutils;
+uses sysutils, math;
 
 var a, b, c: integer;
 var r, s, t: real;
 
 begin
+//    SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision]);	// https://delphi.fandom.com/wiki/SetExceptionMask_Routine
+    SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);    		// this helps agains floating point division by zero (but not integer one)
     a:=0;
     b:=0;
     r:=0;
