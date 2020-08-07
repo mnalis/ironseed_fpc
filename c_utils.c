@@ -56,9 +56,6 @@
 static const double ratio = 640.0 / 480;
 
 static SDL_Surface *sdl_screen;
-#ifndef NO_OGL
-static SDL_Surface *opengl_screen;
-#endif
 static SDL_Thread *events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
@@ -107,6 +104,7 @@ static uint16_t cur_y;
 static uint8_t cur_writemode;
 static uint8_t turbo_mode = 0;
 #ifndef NO_OGL
+static SDL_Surface *opengl_screen;
 static GLuint main_texture;
 #endif
 static uint8_t resize;
@@ -153,7 +151,6 @@ static void Sulock(SDL_Surface * screen)
 }
 
 #ifndef NO_OGL
-
 static void set_perspective(void)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -162,7 +159,7 @@ static void set_perspective(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
+#endif
 
 
 
@@ -186,26 +183,16 @@ static int resizeWindow(int width, int height)
 	assert(x0 >= 0);
 	assert(y0 >= 0);
 
+#ifndef NO_OGL
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
-
 	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
-
 	set_perspective();
+#endif
+
 	wx0 = x0;
 	wy0 = y0;
 	return 1;
 }
-
-
-
-#else
-// FIXME merge with resizeWindow above - when I do non-functional code rearranging
-static int resizeWindow(int width, int height)
-{
-	if (width / ratio > height) { /* dummy just so gcc does not complain for now */ }
-	return 2;
-}
-#endif
 
 
 
@@ -332,70 +319,6 @@ static void show_cursor(void)
 
 }
 
-static int SDL_init_video_real(void);	// FIXME move code around and get rid of this declaration
-
-static int video_output_once(void)
-{
-	uint16_t vga_x, vga_y;
-	pal_color_type c;
-
-// FIXME indent
-		if (!is_video_initialized) {
-			SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-			if (!SDL_init_video_real())
-				return 0;
-			is_video_initialized = 1;
-		}
-		if (resize) {
-			resize = 0;
-			resizeWindow(resize_x, resize_y);
-		}
-		Slock(sdl_screen);
-		for (vga_y = 0; vga_y < 200; vga_y++)
-			for (vga_x = 0; vga_x < 320; vga_x++) {
-				c = palette[v_buf[vga_x + 320 * vga_y]];
-				assert (c.r < 64);
-				assert (c.g < 64);
-				assert (c.b < 64);
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			}
-
-
-		show_cursor();
-		Sulock(sdl_screen);
-		SDL_Flip(sdl_screen);	// FIXME: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
-#ifndef NO_OGL
-		glLoadIdentity();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
-		glEnable(GL_TEXTURE_2D);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-		glBindTexture(GL_TEXTURE_2D, main_texture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, sdl_screen->pixels);
-
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0, 1.0);
-		glVertex2f(0.0, 0.0);
-		glTexCoord2f(1.0, 1.0);
-		glVertex2f(1.0, 0.0);
-		glTexCoord2f(1.0, 0.0);
-		glVertex2f(1.0, 1.0);
-		glTexCoord2f(0.0, 0.0);
-		glVertex2f(0.0, 1.0);
-		glEnd();
-		glFlush();
-		SDL_GL_SwapBuffers();
-#endif
-		return 1;	// no errors
-}
-
-
-
 void musicDone(void)
 {
 	if (audio_open) {
@@ -430,7 +353,7 @@ static int initiate_abnormal_exit(void)
 	return 0;
 }
 
-/* called from main pascal thread on delay() or SDL_init_video() and possibly other often used function, to abort cleanly if abnormal condition was detected */
+/* called from main pascal thread on delay() or SDL_init_video() and possibly other often used functions, to abort cleanly if abnormal condition was detected */
 static void abort_if_abnormal_exit(void)
 {
 	if (is_video_finished && !normal_exit) {
@@ -439,109 +362,11 @@ static void abort_if_abnormal_exit(void)
 	}
 }
 
-static int handle_events_once(void)
-{
-	SDL_Event event;
-	assert(is_video_initialized);
-	// FIXME reduce indent now
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				return initiate_abnormal_exit();
-			}
-			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_SCROLLOCK) {
-					turbo_mode = 1;
-				} else {
-					uint8_t key_found = 0, key_index = 0;
-					uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-					//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
 
-					/* traverse list of all special keys and their modifiers, and verify if we match */
-					while (spec_keys[key_index]) {
-						//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event_mod & spec_mod[key_index]);
-						if ((spec_mod[key_index] == 0) || (event_mod & spec_mod[key_index]))
-							if (spec_keys[key_index] == event.key.keysym.sym)
-								key_found = 2;
-						key_index++;
-						//if (!key_found) printf (" No match.\r\n");
-					}
-
-					if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
-						key_found = 1;
-					}
-
-					if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
-						keypressed_ = 1;
-						key_ = event.key.keysym.sym;
-						keymod_ = event_mod;
-
-					}
-					//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
-				}
-			}
-			if (event.type == SDL_KEYUP) {
-				if (event.key.keysym.sym == SDLK_SCROLLOCK) {
-					turbo_mode = 0;
-				}
-			}
-
-			if (event.type == SDL_MOUSEMOTION) {
-				int32_t ex, ey;
-				ex = event.motion.x;
-				ey = event.motion.y;
-				assert (ex >= 0);
-				assert (ex < UINT16_MAX);
-				assert (ey >= 0);
-				assert (ey < UINT16_MAX);
-				mouse_x = (uint16_t) ex;
-				mouse_y = (uint16_t) ey;
-			}
-			if (event.type == SDL_MOUSEBUTTONDOWN) {	//If the left mouse button was pressed
-				if (event.button.button == SDL_BUTTON_LEFT) {
-					mouse_buttons = 0x01;
-				}
-			}
-			if (event.type == SDL_VIDEORESIZE) {
-				resize = 1;
-				resize_x = event.resize.w;
-				resize_y = event.resize.h;
-			}
-		}
-		return 1; 	// events without error
-}
-
-
-static int event_thread(void *notused)
-{
-	while (!do_video_stop) {
-		if (!video_output_once())	/* updates screen, and on startup initializes all of SDL if not done already */
-			break;			/* some error, probably video/audio failed to initialize or something, abort */
-		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
-			break;			/* some error like SDL_QUIT, abort */
-		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
-
-		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
-		   This delay makes it not crash on startup somehow. 
-		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
-		SDL_Delay(50);
-	}
-	is_video_finished = 1;
-	//_nanosleep(10000000);
-	return 0;	// and thread terminates
-}
-
-
-
-void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
-{
-	v_buf = vga_buf;
-	do_video_stop = 0;
-	is_video_finished = 0;
-	events = SDL_CreateThread(event_thread, NULL);
-	while (!(is_video_initialized || is_video_finished))
-		SDL_Delay(100);
-}
-
+/*
+ * real video hardware initialization.
+ * must be only called from event_thread() thread which did SDL_SetVideoMode() - not from main pascal thread!
+ */
 static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
@@ -581,7 +406,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		}
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
-//   -------------------------  
+//   -------------------------
 
 #ifndef NO_OGL
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -606,6 +431,171 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 
 	return 1;	// init OK
 }
+
+static int video_output_once(void)
+{
+	uint16_t vga_x, vga_y;
+	pal_color_type c;
+
+	if (!is_video_initialized) {
+		SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+		if (!SDL_init_video_real())
+			return 0;
+		is_video_initialized = 1;
+	}
+	if (resize) {
+		resize = 0;
+		resizeWindow(resize_x, resize_y);
+	}
+	Slock(sdl_screen);
+	for (vga_y = 0; vga_y < 200; vga_y++)
+		for (vga_x = 0; vga_x < 320; vga_x++) {
+			c = palette[v_buf[vga_x + 320 * vga_y]];
+			assert (c.r < 64);
+			assert (c.g < 64);
+			assert (c.b < 64);
+			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+		}
+
+
+	show_cursor();
+	Sulock(sdl_screen);
+	SDL_Flip(sdl_screen);	// FIXME: shouldn't use with opengl? http://lazyfoo.net/SDL_tutorials/lesson36/index.php
+#ifndef NO_OGL
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glBindTexture(GL_TEXTURE_2D, main_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, sdl_screen->pixels);
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 1.0);
+	glVertex2f(0.0, 0.0);
+	glTexCoord2f(1.0, 1.0);
+	glVertex2f(1.0, 0.0);
+	glTexCoord2f(1.0, 0.0);
+	glVertex2f(1.0, 1.0);
+	glTexCoord2f(0.0, 0.0);
+	glVertex2f(0.0, 1.0);
+	glEnd();
+	glFlush();
+	SDL_GL_SwapBuffers();
+#endif
+	return 1;	// no errors
+}
+
+
+
+
+static int handle_events_once(void)
+{
+	SDL_Event event;
+	assert(is_video_initialized);
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			return initiate_abnormal_exit();
+		}
+		if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+				turbo_mode = 1;
+			} else {
+				uint8_t key_found = 0, key_index = 0;
+				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
+				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+
+				/* traverse list of all special keys and their modifiers, and verify if we match */
+				while (spec_keys[key_index]) {
+					//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event_mod & spec_mod[key_index]);
+					if ((spec_mod[key_index] == 0) || (event_mod & spec_mod[key_index]))
+						if (spec_keys[key_index] == event.key.keysym.sym)
+							key_found = 2;
+					key_index++;
+					//if (!key_found) printf (" No match.\r\n");
+				}
+
+				if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
+					key_found = 1;
+				}
+
+				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
+					keypressed_ = 1;
+					key_ = event.key.keysym.sym;
+					keymod_ = event_mod;
+
+				}
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
+			}
+		}
+		if (event.type == SDL_KEYUP) {
+			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+				turbo_mode = 0;
+			}
+		}
+
+		if (event.type == SDL_MOUSEMOTION) {
+			int32_t ex, ey;
+			ex = event.motion.x;
+			ey = event.motion.y;
+			assert (ex >= 0);
+			assert (ex < UINT16_MAX);
+			assert (ey >= 0);
+			assert (ey < UINT16_MAX);
+			mouse_x = (uint16_t) ex;
+			mouse_y = (uint16_t) ey;
+		}
+		if (event.type == SDL_MOUSEBUTTONDOWN) {	//If the left mouse button was pressed
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				mouse_buttons = 0x01;
+			}
+		}
+		if (event.type == SDL_VIDEORESIZE) {
+			resize = 1;
+			resize_x = event.resize.w;
+			resize_y = event.resize.h;
+		}
+	}
+	return 1; 	// events without error
+}
+
+
+static int event_thread(void *notused)
+{
+	while (!do_video_stop) {
+		if (!video_output_once())	/* updates screen, and on startup initializes all of SDL if not done already */
+			break;			/* some error, probably video/audio failed to initialize or something, abort */
+		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
+			break;			/* some error like SDL_QUIT, abort */
+		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
+
+		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
+		   This delay makes it not crash on startup somehow. 
+		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
+		SDL_Delay(50);
+	}
+	is_video_finished = 1;
+	//_nanosleep(10000000);
+	return 0;	// and thread terminates
+}
+
+
+
+void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
+{
+	v_buf = vga_buf;
+	do_video_stop = 0;
+	is_video_finished = 0;
+	events = SDL_CreateThread(event_thread, NULL);
+	while (!(is_video_initialized || is_video_finished))
+		SDL_Delay(100);
+}
+
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
 {
