@@ -83,10 +83,11 @@ typedef struct {
 
 static pal_color_type palette[256];
 
-static uint8_t has_video_initialized = 0;
+static uint8_t is_video_initialized = 0;
+static uint8_t is_audio_initialized = 0;
 static uint8_t *v_buf = NULL;
 static uint8_t do_video_stop = 0;	// command video to stop
-static uint8_t has_video_finished = 0;	// has video stopped? returns status
+static uint8_t is_video_finished = 0;	// has video stopped? returns status
 static uint8_t cur_color = 31;
 static int audio_rate;
 static Uint16 audio_format;
@@ -197,27 +198,6 @@ static int resizeWindow(int width, int height)
 
 
 
-static void init_opengl(void)
-{
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
-		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
-		SDL_Quit();
-		exit(1);
-	}
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_WM_SetCaption("Ironseed", NULL);
-	glViewport(0, 0, WIDTH, HEIGHT);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-	glShadeModel(GL_SMOOTH);
-	glClearStencil(0);
-	glClearDepth(1.0f);
-	resizeWindow(resize_x, resize_y);
-
-}
 #else
 // FIXME merge with resizeWindow above - when I do non-functional code rearranging
 static int resizeWindow(int width, int height)
@@ -352,22 +332,19 @@ static void show_cursor(void)
 
 }
 
-void SDL_init_video_real(void);	// FIXME move code around and get rid of this declaration
+static int SDL_init_video_real(void);	// FIXME move code around and get rid of this declaration
 
-static void video_output_once(void)
+static int video_output_once(void)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
 
 // FIXME indent
-		if (!has_video_initialized) {
+		if (!is_video_initialized) {
 			SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-			SDL_init_video_real();
-#ifndef NO_OGL
-			init_opengl();
-			glGenTextures(1, &main_texture);
-#endif
-			has_video_initialized = 1;
+			if (!SDL_init_video_real())
+				return 0;
+			is_video_initialized = 1;
 		}
 		if (resize) {
 			resize = 0;
@@ -414,6 +391,7 @@ static void video_output_once(void)
 		glFlush();
 		SDL_GL_SwapBuffers();
 #endif
+		return 1;	// no errors
 }
 
 
@@ -427,27 +405,48 @@ void musicDone(void)
 	music = NULL;
 }
 
-/* stops audio and video */
+/* stops audio and video. 
+ * Normal exit from pascal calls this before finishing.
+ * Must not terminate program - just stop all activities, wait for threads to finish, and free resources.
+ * Pascal code must not call anything from c_utils.c ever again after this is called!
+ */
 void all_done(void)
 {
 	musicDone();
 
 	do_video_stop = 1;
-	while (!has_video_finished)
+	while (!is_video_finished)
 		sleep(0);
+	SDL_Quit();
 }
 
-static void handle_events_once(void)
+/* initiate exit from inside event_thread(), due to same error or forced close window event
+ * event_thread() then must finish its near-infinite loop, set is_video_finished=1, and terminate thread  */
+static int initiate_abnormal_exit(void)
+{
+	normal_exit = 0;
+	musicDone();
+	do_video_stop = 1;
+	return 0;
+}
+
+/* called from main pascal thread on delay() or SDL_init_video() and possibly other often used function, to abort cleanly if abnormal condition was detected */
+static void abort_if_abnormal_exit(void)
+{
+	if (is_video_finished && !normal_exit) {
+		SDL_Quit();
+		exit(4);
+	}
+}
+
+static int handle_events_once(void)
 {
 	SDL_Event event;
-	assert(has_video_initialized);
+	assert(is_video_initialized);
 	// FIXME reduce indent now
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
-				normal_exit = 0;
-				all_done();
-				SDL_Quit();
-				exit(4);
+				return initiate_abnormal_exit();
 			}
 			if (event.type == SDL_KEYDOWN) {
 				if (event.key.keysym.sym == SDLK_SCROLLOCK) {
@@ -507,17 +506,18 @@ static void handle_events_once(void)
 				resize_x = event.resize.w;
 				resize_y = event.resize.h;
 			}
-
-
 		}
+		return 1; 	// events without error
 }
 
 
 static int event_thread(void *notused)
 {
 	while (!do_video_stop) {
-		video_output_once();	/* updates screen, and on startup initializes all of SDL if not done already */
-		handle_events_once();	/* keyboard, mouse, windows resize/close, and more */
+		if (!video_output_once())	/* updates screen, and on startup initializes all of SDL if not done already */
+			break;			/* some error, probably video/audio failed to initialize or something, abort */
+		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
+			break;			/* some error like SDL_QUIT, abort */
 		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
 
 		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
@@ -525,10 +525,9 @@ static int event_thread(void *notused)
 		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
 		SDL_Delay(50);
 	}
-	has_video_finished = 1;
-	_nanosleep(10000000);
-	SDL_Quit();
-	return 0;
+	is_video_finished = 1;
+	//_nanosleep(10000000);
+	return 0;	// and thread terminates
 }
 
 
@@ -537,20 +536,21 @@ void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 
 {
 	v_buf = vga_buf;
 	do_video_stop = 0;
-	has_video_finished = 0;
+	is_video_finished = 0;
 	events = SDL_CreateThread(event_thread, NULL);
-	while (!has_video_initialized)
+	while (!(is_video_initialized || is_video_finished))
 		SDL_Delay(100);
 }
 
-void SDL_init_video_real(void)			/* called from event_thread() if it was never called before (on startup only) */
+static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
 
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
 		printf("Unable to initialize SDL: %s\n", SDL_GetError());
-		exit(51);	// FIXME: should not quit like from thread
+		return initiate_abnormal_exit();
 	}
+	is_audio_initialized = 1;
 
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
@@ -559,12 +559,11 @@ void SDL_init_video_real(void)			/* called from event_thread() if it was never c
 		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 	} else
 		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-
-
 #endif
+
 	if (sdl_screen == NULL) {
 		printf("Unable to set %dx%d video: %s\n", WIDTH, HEIGHT, SDL_GetError());
-		exit(50);	// FIXME: should not quit like from thread
+		return initiate_abnormal_exit();
 	}
 	SDL_ShowCursor(SDL_DISABLE);
 	Slock(sdl_screen);
@@ -583,6 +582,29 @@ void SDL_init_video_real(void)			/* called from event_thread() if it was never c
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
 //   -------------------------  
+
+#ifndef NO_OGL
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
+		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
+		return initiate_abnormal_exit();
+	}
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_WM_SetCaption("Ironseed", NULL);
+	glViewport(0, 0, WIDTH, HEIGHT);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_POINT_SMOOTH);
+	glShadeModel(GL_SMOOTH);
+	glClearStencil(0);
+	glClearDepth(1.0f);
+	resizeWindow(resize_x, resize_y);
+
+	glGenTextures(1, &main_texture);
+#endif
+
+	return 1;	// init OK
 }
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
@@ -613,7 +635,7 @@ void set256colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
-	assert (has_video_initialized);
+	assert (is_audio_initialized);
 	audio_rate = 44100;
 	audio_format = AUDIO_S16;
 	audio_channels = 2;
@@ -691,9 +713,8 @@ void delay(const fpc_word_t ms)
 		us -= (int64_t) delta_usec();	// delta_usec() will always be small, so 63bits are always OK
 		_nanosleep(5000);
 	}
-	err = (uint64_t) -us;		// while(us>0) guarantees that us "<= 0" now
-	if (has_video_finished && !normal_exit)
-		exit(4);
+	err = (uint64_t) -us;		// while(us>0) guarantees that "us <= 0" now
+	abort_if_abnormal_exit();
 }
 
 void upscroll(const fpc_screentype_t img)	// 320x200 bytes 
