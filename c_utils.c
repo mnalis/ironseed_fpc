@@ -83,7 +83,7 @@ typedef struct {
 
 static pal_color_type palette[256];
 
-static uint8_t *v_buf;
+static uint8_t *v_buf = NULL;
 static uint8_t video_stop = 0;
 static uint8_t video_done = 0;
 static uint8_t keys_done = 0;
@@ -352,6 +352,7 @@ static void show_cursor(void)
 
 }
 
+void SDL_init_video_real(void);	// FIXME move code around and get rid of this declaration
 
 static void video_output_once(void)
 {
@@ -362,6 +363,7 @@ static void video_output_once(void)
 // FIXME indent
 		if (!video_initialized) {
 			SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+			SDL_init_video_real();
 #ifndef NO_OGL
 			init_opengl();
 			glGenTextures(1, &main_texture);
@@ -540,13 +542,22 @@ static int event_thread(void *notused)
 
 
 
-void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
+void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
+{
+	v_buf = vga_buf;
+	video_stop = 0;
+	video_done = 0;
+	events = SDL_CreateThread(event_thread, NULL);
+	// FIXME: should idle-loop here on until (make it volatile) variable video_initialized becomes true
+}
+
+void SDL_init_video_real(void)			/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
 
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
 		printf("Unable to initialize SDL: %s\n", SDL_GetError());
-		exit(51);
+		exit(51);	// FIXME: should not quit like from thread
 	}
 
 #ifdef NO_OGL
@@ -561,7 +572,7 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 #endif
 	if (sdl_screen == NULL) {
 		printf("Unable to set %dx%d video: %s\n", WIDTH, HEIGHT, SDL_GetError());
-		exit(50);
+		exit(50);	// FIXME: should not quit like from thread
 	}
 	SDL_ShowCursor(SDL_DISABLE);
 	Slock(sdl_screen);
@@ -580,10 +591,6 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
 //   -------------------------  
-	v_buf = vga_buf;
-	video_stop = 0;
-	video_done = 0;
-	events = SDL_CreateThread(event_thread, NULL);
 }
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
