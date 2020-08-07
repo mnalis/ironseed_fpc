@@ -56,6 +56,13 @@ main: Makefile c_utils.o *.pas
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
 	$(c_compiler) $(includes) $(cflags) -O0 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
 
+test/test_0_pas: cflags += -O0 -Werror
+test/test_0_pas: flags  += $(debug)
+test/test_0_pas: p_link += -k-lGL -k-lGLU
+test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
+	$(compiler) $(flags) $(p_link) test/test_0_pas.pas
+
+
 cleantmp:
 	rm -f *.ppu *.s
 
