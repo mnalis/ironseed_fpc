@@ -572,12 +572,11 @@ static int event_thread(void *notused)
 			break;			/* some error, probably video/audio failed to initialize or something, abort */
 		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
 			break;			/* some error like SDL_QUIT, abort */
-		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
 
 		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
 		   This delay makes it not crash on startup somehow. 
 		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
-		SDL_Delay(50);
+		SDL_Delay(10);
 	}
 	is_video_finished = 1;
 	//_nanosleep(10000000);
