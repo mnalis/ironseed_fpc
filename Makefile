@@ -53,6 +53,8 @@ crewgen: Makefile c_utils.o *.pas
 main: Makefile c_utils.o *.pas
 	$(compiler) $(flags) $(p_link) main.pas
 
+test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
+	$(c_compiler) $(includes) $(cflags) -O0 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
 
 cleantmp:
 	rm -f *.ppu *.s
