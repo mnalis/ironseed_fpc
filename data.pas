@@ -342,7 +342,7 @@ procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 
 implementation
 
-uses crt,  gmouse, utils,modplay;
+uses crt,  gmouse, utils,modplay,math;
 
 const                           { compression constants        }
  CPR_VER4=4;                    {   4 new header               }
@@ -729,6 +729,7 @@ end;
 procedure readygraph;
 var testdriver,driver,mode,errcode: integer;
 begin
+ SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  SDL_init_video(screen);
  loadpal('data/main.pal');
  set256colors(colors);

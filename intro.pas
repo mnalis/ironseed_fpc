@@ -16,7 +16,7 @@ program intro;
 {* 
      $I dsmi.inc, emhm, crt, graph, gmouse, getcpu, dos, version; 
 *}
-uses sdl,utils_,sysutils,gmouse,modplay,version;
+uses sdl,utils_,sysutils,gmouse,modplay,version,math;
 //var   sdl_scr: PSDL_Surface;
 {* begin
   SDL_Init(SDL_INIT_VIDEO); // Initialize the video SDL subsystem
@@ -445,6 +445,7 @@ end;
 
 procedure readygraph;       // init video
 begin
+ SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  SDL_init_video(screen);
  loadpalette('data/main.pal');
  set256colors(colors);
