@@ -56,8 +56,8 @@
 
 static const double ratio = 640.0 / 480;
 
-static SDL_Surface *sdl_screen;
-static SDL_Thread *events;
+static volatile SDL_Surface *sdl_screen;
+static volatile SDL_Thread *events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
@@ -79,40 +79,37 @@ typedef struct {
 	uint8_t b;
 } pal_color_type;
 
-static pal_color_type palette[256];
+static volatile pal_color_type palette[256];
 
-static uint8_t is_video_initialized = 0;
-static uint8_t is_audio_initialized = 0;
-static uint8_t *v_buf = NULL;
-static uint8_t do_video_stop = 0;	// command video to stop
-static uint8_t is_video_finished = 0;	// has video stopped? returns status
+static volatile uint8_t is_video_initialized = 0;
+static volatile uint8_t is_audio_initialized = 0;
+static volatile uint8_t *v_buf = NULL;
+static volatile uint8_t do_video_stop = 0;	// command video to stop
+static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
 static uint8_t cur_color = 31;
-static int audio_rate;
-static Uint16 audio_format;
-static int audio_channels;
-static int audio_buffers;
+static const int audio_rate = 44100;
 static uint8_t audio_open = 0;
-static uint8_t keypressed_;
-static uint16_t key_, keymod_;
-static uint16_t mouse_x, mouse_y;
-static uint8_t mouse_buttons;
+static volatile uint8_t keypressed_;
+static volatile uint16_t key_, keymod_;
+static volatile uint16_t mouse_x, mouse_y;
+static volatile uint8_t mouse_buttons;
 static uint8_t showmouse;
 static uint8_t mouse_icon[256];
-static uint8_t normal_exit = 1;
+static volatile uint8_t normal_exit = 1;
 static uint8_t fill_color;
 static uint16_t cur_x;
 static uint16_t cur_y;
 static uint8_t cur_writemode;
-static uint8_t turbo_mode = 0;
+static volatile uint8_t turbo_mode = 0;
 #ifndef NO_OGL
 static SDL_Surface *opengl_screen;
 static GLuint main_texture;
 #endif
 static uint8_t do_resize = 0;
-static int resize_x = 640;
-static int resize_y = 480;
-static int wx0 = 0;
-static int wy0 = 0;
+static volatile int resize_x = 640;
+static volatile int resize_y = 480;
+static volatile int wx0 = 0;
+static volatile int wy0 = 0;
 
 static const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
 static const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
@@ -623,11 +620,11 @@ void set256colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
+	static const Uint16 audio_format = AUDIO_S16;
+	static const int audio_channels = 2;
+	static const int audio_buffers = 4096;
+
 	assert (is_audio_initialized);
-	audio_rate = 44100;
-	audio_format = AUDIO_S16;
-	audio_channels = 2;
-	audio_buffers = 4096;
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
 		audio_open = 0;
 		printf("Unable to open audio!\n");
