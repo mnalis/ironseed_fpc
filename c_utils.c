@@ -573,10 +573,7 @@ static int event_thread(void *notused)
 		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
 			break;			/* some error like SDL_QUIT, abort */
 
-		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
-		   This delay makes it not crash on startup somehow. 
-		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
-		SDL_Delay(10);
+		SDL_Delay(10);			/* give up some time to other threads */
 	}
 	is_video_finished = 1;
 	//_nanosleep(10000000);
