@@ -1,6 +1,6 @@
 program main;
 
-uses crt, sysutils;
+uses crt, sysutils, math;
 
 {$L c_utils.o}
 
@@ -16,6 +16,7 @@ var count, x1,x2,y1,y2: integer;
 
 begin
         writeln ('pascal start');
+        SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);	// fix the EDivByZero error in software OpenGL ?
         pas_screen[10,30] := 31;
         
         setrgb256(31,60,10,20);
