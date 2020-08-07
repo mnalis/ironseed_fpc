@@ -56,7 +56,7 @@
 static const double ratio = 640.0 / 480;
 
 static SDL_Surface *sdl_screen, *opengl_screen;
-static SDL_Thread *video, *keyshandler;
+static SDL_Thread *events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
@@ -342,7 +342,8 @@ static void show_cursor(void)
 
 }
 
-static int video_output(void *notused)
+
+static void video_output_once(void)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
@@ -350,7 +351,7 @@ static int video_output(void *notused)
 	static uint8_t video_initialized = 0;
 #endif
 
-	while (!video_stop) {
+// FIXME indent
 #ifndef NO_OGL
 		if (!video_initialized) {
 			video_initialized = 1;
@@ -403,12 +404,6 @@ static int video_output(void *notused)
 		glFlush();
 		SDL_GL_SwapBuffers();
 #endif
-		_nanosleep(10000000);
-	}
-	video_done = 1;
-	_nanosleep(10000000);
-	SDL_Quit();
-	return 0;
 }
 
 
@@ -439,10 +434,10 @@ void stop_video_thread(void)
 		sleep(0);
 }
 
-static int handle_keys(void *useless)
+static void handle_events_once(void)
 {
 	SDL_Event event;
-	while (!video_stop) {
+	// FIXME reduce indent now
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				stop_video_thread();
@@ -512,16 +507,27 @@ static int handle_keys(void *useless)
 
 
 		}
-		/* we are abusing threads with SDL, and it is wonder it works at all.
+}
+
+
+static int event_thread(void *notused)
+{
+	while (!video_stop) {
+		handle_events_once();	/* keyboard, mouse, windows resize/close, and more */
+		video_output_once();	/* updates screen, and on startup initializes all of SDL video if needed */
+		_nanosleep(10000000);	// FIXME: is it needed here? maybe replace with SDL_Delay() ?
+
+		/* FIXME: we weare abusing threads with SDL, and it is wonder it worked at all.  is it fixed now? still we need to give up some timeslices
 		   This delay makes it not crash on startup somehow. 
 		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
 		SDL_Delay(50);
 	}
-	keys_done = 1;
+	keys_done = 1;	// FIXME: is this needed anymore?
+	video_done = 1;	// FIXME: is this needed anymore?
+	_nanosleep(10000000);
+	SDL_Quit();
 	return 0;
 }
-
-
 
 
 
@@ -564,9 +570,8 @@ void SDL_init_video(fpc_screentype_t vga_buf)	// 320x200 bytes
 	v_buf = vga_buf;
 	video_stop = 0;
 	video_done = 0;
-	video = SDL_CreateThread(video_output, NULL);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	keyshandler = SDL_CreateThread(handle_keys, NULL);
+	events = SDL_CreateThread(event_thread, NULL);
 }
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
