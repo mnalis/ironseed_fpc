@@ -6,6 +6,9 @@ fpc -Mtp -g -C3 -Ci -Co -CO  -O- -gl -gw -godwarfsets  -gt -gv -vw  -Sa testdiv0
 
 program testdiv0;
 
+// runtime error 200 if not using SysUtils, EDivByZero if we use SysUtils
+uses sysutils;
+
 var a, b, c: integer;
 var r, s, t: real;
 
