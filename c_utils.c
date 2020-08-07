@@ -83,6 +83,7 @@ typedef struct {
 
 static pal_color_type palette[256];
 
+static uint8_t video_initialized = 0;
 static uint8_t *v_buf = NULL;
 static uint8_t video_stop = 0;
 static uint8_t video_done = 0;
@@ -358,7 +359,6 @@ static void video_output_once(void)
 {
 	uint16_t vga_x, vga_y;
 	pal_color_type c;
-	static uint8_t video_initialized = 0;
 
 // FIXME indent
 		if (!video_initialized) {
@@ -448,6 +448,7 @@ void stop_video_thread(void)
 static void handle_events_once(void)
 {
 	SDL_Event event;
+	assert(video_initialized);
 	// FIXME reduce indent now
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
@@ -548,7 +549,8 @@ void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 
 	video_stop = 0;
 	video_done = 0;
 	events = SDL_CreateThread(event_thread, NULL);
-	// FIXME: should idle-loop here on until (make it volatile) variable video_initialized becomes true
+	while (!video_initialized)
+		SDL_Delay(100);
 }
 
 void SDL_init_video_real(void)			/* called from event_thread() if it was never called before (on startup only) */
@@ -621,6 +623,8 @@ void set256colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
+	while (!video_initialized)
+		SDL_Delay(100);
 	audio_rate = 44100;
 	audio_format = AUDIO_S16;
 	audio_channels = 2;
