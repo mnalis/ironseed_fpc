@@ -56,8 +56,8 @@
 
 static const double ratio = 640.0 / 480;
 
-static volatile SDL_Surface *sdl_screen;
-static volatile SDL_Thread *events;
+static SDL_Surface *sdl_screen;
+static SDL_Thread *events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
@@ -79,11 +79,11 @@ typedef struct {
 	uint8_t b;
 } pal_color_type;
 
-static volatile pal_color_type palette[256];
+static pal_color_type palette[256];
 
 static volatile uint8_t is_video_initialized = 0;
 static volatile uint8_t is_audio_initialized = 0;
-static volatile uint8_t *v_buf = NULL;
+static uint8_t *v_buf = NULL;
 static volatile uint8_t do_video_stop = 0;	// command video to stop
 static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
 static uint8_t cur_color = 31;
