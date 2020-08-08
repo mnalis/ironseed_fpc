@@ -1179,7 +1179,7 @@ var temp : byte;
 begin
  idletime:=0;
  temp:=0;
- ans:=readkey;
+ ans:=readkey_nomap;
  case upcase(ans) of
    #0: begin
         ans:=readkey;

@@ -1121,7 +1121,7 @@ end;
 procedure processkey;
 var ans: char;
 begin
- ans:=readkey;
+ ans:=readkey_nomap;
  case upcase(ans) of
    #0: begin
         ans:=readkey;

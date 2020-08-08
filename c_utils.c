@@ -89,8 +89,8 @@ static volatile uint8_t is_video_finished = 0;	// has video stopped? returns sta
 static uint8_t cur_color = 31;
 static const int audio_rate = 44100;
 static uint8_t audio_open = 0;
-static volatile uint8_t keypressed_;
-static volatile uint16_t key_, keymod_;
+static volatile uint8_t keypressed_, keyscan_;
+static volatile uint16_t key_, keyutf8_,keymod_;
 static volatile uint16_t mouse_x, mouse_y;
 static volatile uint8_t mouse_buttons;
 static uint8_t showmouse;
@@ -400,6 +400,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+	SDL_EnableUNICODE(1);
 
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
@@ -537,7 +538,7 @@ static int handle_events_once(void)
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+				//printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16" .unicode:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod,  event.key.keysym.unicode);
 
 				/* traverse list of all special keys and their modifiers, and verify if we match */
 				while (spec_keys[key_index]) {
@@ -551,15 +552,19 @@ static int handle_events_once(void)
 
 				if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
 					key_found = 1;
+				} else if ((event.key.keysym.sym <= 255) && ((event_mod & (~KMOD_SHIFT)) == 0)) {	/* regular ASCII key, and shift modifier, process as normal */
+					key_found = 1;
 				}
 
 				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
 					keypressed_ = 1;
 					key_ = event.key.keysym.sym;
+					keyutf8_ = event.key.keysym.unicode;
+					keyscan_ = event.key.keysym.scancode;
 					keymod_ = event_mod;
 
 				}
-				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
 			}
 		}
 		if (event.type == SDL_KEYUP) {
@@ -846,6 +851,56 @@ fpc_char_t readkey(void)
 	return key;
 }
 
+/* like readkey(), but for standard letters returns UTF8 version
+ * which takes into account shift and other modifiers used.
+ * we actually only need it for ASCII uppercase/lowecase, and punctuations,
+ * as the game does not support real UTF-8....
+ *
+ * Used only for typing activies, like crew/aliens chat, entering
+ * savegame name or inputting astrogation coordinates manually.
+ */
+fpc_char_t readkey_utf8(void)
+{
+	fpc_char_t key = readkey();
+	if ((key > 32) && (key < 127) && keyutf8_ < 255) {
+		key = (fpc_char_t) keyutf8_;
+	}
+	return key;
+}
+
+/*
+ * like readkey(), but never remaps keys, used for cube navigation and alike.
+ * so third keyboard row is always "QWERTY" no matter what mapping OS does (AZERTY, QWERTZ etc).
+ * actually we get remapped letter, and then try to unmap it for keys the game uses.
+ */
+fpc_char_t readkey_nomap(void)
+{
+	uint8_t key_index = 0;
+	/*
+	static const uint16_t spec_codes[] = { SDL_SCANCODE_GRAVE, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_R, SDL_SCANCODE_T, SDL_SCANCODE_A, SDL_SCANCODE_S, SDL_SCANCODE_D,SDL_SCANCODE_F, SDL_SCANCODE_G, SDL_SCANCODE_Z, SDL_SCANCODE_X, SDL_SCANCODE_C, SDL_SCANCODE_V, SDL_SCANCODE_B, SDL_SCANCODE_P,	0 };	// SDL 2.x has names, and they should work?...
+	//static const uint16_t spec_codes[] = { 53 , 30 , 31 , 32 , 20 , 26 ,  8 , 21 , 23 ,  4 , 22 ,  7 ,  9 , 10 , 29 , 27 ,  6 , 25 ,  5 , 19 ,	0 };	// SDL 1.2 does not have symbolic names for keycodes, those values from SDL2 do not work: https://wiki.libsdl.org/SDL_Keycode
+	static const uint8_t  spec_unmap[] = { '`', '1', '2', '3', 'q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'p' };
+
+	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependant, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
+	*/
+
+	static const uint16_t spec_codes[] = { 0 };
+	static const uint8_t  spec_unmap[] = { 0 };
+
+	fpc_char_t key = readkey();
+	//printf ("unmapped b4: readkey()=%d >%c<, keyutf8_=%d, keyscan=%d\r\n", key, key, keyutf8_, keyscan_);
+	if ((key > 32) && (key < 127)) {
+		while (spec_codes[key_index]) {
+			if (spec_codes[key_index] == keyscan_) {
+				key = spec_unmap[key_index];
+				//printf ("   unmap[%d]: readkey()=%d >%c<, keyutf8_=%d, keyscan=%d\r\n", key_index, key, key, keyutf8_, keyscan_);
+				break;
+			}
+			key_index++;
+		}
+	}
+	return key;
+}
 
 void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {

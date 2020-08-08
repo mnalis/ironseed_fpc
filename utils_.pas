@@ -32,6 +32,8 @@ procedure scale_img(x0s, y0s, widths, heights, x0d, y0d, widthd, heightd: word; 
 function fastkeypressed: boolean;   // not so fast anymore
 function key_pressed : byte;cdecl ; external;
 function readkey : char;cdecl ; external;
+function readkey_utf8 : char;cdecl ; external;
+function readkey_nomap : char;cdecl ; external;
 procedure all_done;cdecl ; external;
 procedure closegraph;   // close video
 procedure move_mouse(x,y:word);cdecl ; external;
