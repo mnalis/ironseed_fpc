@@ -474,9 +474,10 @@ static int video_output_once(void)
 	for (vga_y = 0; vga_y < 200; vga_y++)
 		for (vga_x = 0; vga_x < 320; vga_x++) {
 			c = palette[v_buf[vga_x + 320 * vga_y]];
-			assert (c.r < 64);
-			assert (c.g < 64);
-			assert (c.b < 64);
+#ifndef NDEBUG
+			if ((c.r >= 64) || (c.g >= 64) || (c.b >= 64))
+				printf ("WARNING: RGB at %d,%d color=%d will overflow: %d,%d,%d\r\n", vga_x, vga_y, v_buf[vga_x + 320 * vga_y], c.r, c.g, c.b);
+#endif
 			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
@@ -628,6 +629,9 @@ void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
 {
+	assert (r<64);
+	assert (g<64);
+	assert (b<64);
 	palette[palnum].r = r;
 	palette[palnum].g = g;
 	palette[palnum].b = b;

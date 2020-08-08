@@ -171,28 +171,6 @@ begin
     until(t2>=s);
 end;
 
-function loadconfigfile : boolean;
-var
-   f : file of configfile;
-begin
-   loadconfigfile := true;
-   assign(f, 'sound.cfg');
-   if ioresult<>0 then begin
-      loadconfigfile := false;
-      exit;
-   end;
-   reset(f);
-   if ioresult<>0 then begin
-      loadconfigfile := false;
-      exit;
-   end;
-   read(f, cf);
-   if ioresult<>0 then begin
-      loadconfigfile := false;
-   end;
-   close(f);
-end;
-
 
 
 

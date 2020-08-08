@@ -1928,6 +1928,7 @@ begin
 end;
 
 procedure mainloop;
+var green: byte;
 begin
  mouseshow;
  displayinfogathered;
@@ -1941,7 +1942,9 @@ begin
     batindex:=0;
     addtime2;
    end;
-  setrgb256(235,0,batindex shl 3,0);
+  green := batindex shl 3;
+  if green > 63 then green := 63;
+  setrgb256(235,0,green,0);
   showzoom;
   controlprobes;
   delay(tslice*2);
