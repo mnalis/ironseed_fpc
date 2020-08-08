@@ -440,7 +440,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	}
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_WM_SetCaption("Ironseed", NULL);
 	glViewport(0, 0, WIDTH, HEIGHT);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
@@ -452,6 +451,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 
 	glGenTextures(1, &main_texture);
 #endif
+	SDL_WM_SetCaption("Ironseed", NULL);
 
 	return 1;	// init OK
 }
