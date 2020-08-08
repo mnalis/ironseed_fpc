@@ -103,8 +103,6 @@ static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
 #ifdef NO_OGL
 static int is_sdl_fullscreen = 0;		// assume we're in windowed (not fullscreen) mode on startup
-static int max_sdl_w = 0;
-static int max_sdl_h = 0;
 #else
 static SDL_Surface *opengl_screen;
 static GLuint main_texture;
@@ -155,15 +153,17 @@ static void Sulock(SDL_Surface * screen)
 #ifdef NO_OGL
 static void sdl_go_back_to_windowed_mode(void)
 {
-	printf ("entering sdl_go_back_to_windowed_mode\r\n");
 	if (!is_sdl_fullscreen)
 		return;
 
-	printf ("SDL trying to get back to windowed mode\r\n");
 	SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
 	is_sdl_fullscreen = 0;
 }
 #else
+static void sdl_go_back_to_windowed_mode(void)
+{
+	/* not needed, happens automatically */
+}
 static void set_perspective(void)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -196,11 +196,13 @@ static int resizeWindow(int width, int height)
 	assert(x0 >= 0);
 	assert(y0 >= 0);
 
-	printf ("resizeWindow w=%d,h=%d; calc x0=%d, y0=%d, w=%d, h=%d\r\n", width, height, x0, y0, WWIDTH, WHEIGHT);
+	//printf ("resizeWindow w=%d,h=%d; calc x0=%d, y0=%d, w=%d, h=%d\r\n", width, height, x0, y0, WWIDTH, WHEIGHT);
 #ifndef NO_OGL
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
 	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
 	set_perspective();
+	wx0 = x0;
+	wy0 = y0;
 #else	// plain SDL only
 	if (is_sdl_fullscreen) {
 		sdl_go_back_to_windowed_mode();
@@ -208,11 +210,8 @@ static int resizeWindow(int width, int height)
 		SDL_WM_ToggleFullScreen(sdl_screen);
 		is_sdl_fullscreen = 1;
 	}
-	return 2;	// FIXME - cemu sluze wx0 i x0?
 #endif
 
-	wx0 = x0;
-	wy0 = y0;
 	return 1;
 }
 
@@ -357,7 +356,6 @@ void musicDone(void)
  */
 void all_done(void)
 {
-	printf ("all_done called\r\n");
 	musicDone();
 
 	do_video_stop = 1;
@@ -402,12 +400,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-#ifdef NO_OGL
-	const SDL_VideoInfo *max_sdl_screen = SDL_GetVideoInfo();	/* to get best screen resolution, must call it before SDL_SetVideoMode() ! */
-	max_sdl_w = max_sdl_screen->current_w;
-	max_sdl_h = max_sdl_screen->current_h;
-#endif
 
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
@@ -539,15 +531,7 @@ static int handle_events_once(void)
 				turbo_mode = 1;
 #ifdef NO_OGL
 			} else if (event.key.keysym.sym == SDLK_F11) {
-				if (is_sdl_fullscreen) {	/* go back to windowed mode */
-					resize_x = WIDTH;
-					resize_y = HEIGHT;
-				} else {			/* go to SDL fullscreen mode */
-					//resize_x = max_sdl_w;
-					//resize_y = max_sdl_h;
-				}
-				do_resize = 1;
-				printf("SDLonly F11 (is_sdl_fullscreen=%d) force resize req %d,%d\r\n", is_sdl_fullscreen, resize_x, resize_y);
+				do_resize = 1;	// note: updating resize_x, resize_y only breaks the mouse movements.
 #endif
 			} else {
 				uint8_t key_found = 0, key_index = 0;
@@ -599,12 +583,15 @@ static int handle_events_once(void)
 				mouse_buttons = 0x01;
 			}
 		}
+#ifndef NO_OGL
+		/* this only-half works without OpenGL, so disable it and use soft "F11" for fullscreen if in SDL-only mode */
 		if (event.type == SDL_VIDEORESIZE) {
 			resize_x = event.resize.w;
 			resize_y = event.resize.h;
-			printf("SDL_VIDEORESIZE  req %d,%d\r\n", resize_x, resize_y);
+			//printf("SDL_VIDEORESIZE  req %d,%d\r\n", resize_x, resize_y);
 			do_resize = 1;
 		}
+#endif
 	}
 	return 1; 	// events without error
 }
