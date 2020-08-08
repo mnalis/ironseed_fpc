@@ -375,6 +375,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	}
 	is_audio_initialized = 1;
 
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
@@ -436,7 +438,6 @@ static int video_output_once(void)
 	pal_color_type c;
 
 	if (!is_video_initialized) {
-		SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 		if (!SDL_init_video_real())
 			return 0;
 		is_video_initialized = 1;
