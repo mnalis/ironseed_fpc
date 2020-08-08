@@ -103,6 +103,8 @@ static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
 #ifdef NO_OGL
 static int is_sdl_fullscreen = 0;		// assume we're in windowed (not fullscreen) mode on startup
+static int max_sdl_w = 0;
+static int max_sdl_h = 0;
 #else
 static SDL_Surface *opengl_screen;
 static GLuint main_texture;
@@ -206,7 +208,7 @@ static int resizeWindow(int width, int height)
 		SDL_WM_ToggleFullScreen(sdl_screen);
 		is_sdl_fullscreen = 1;
 	}
-	//return 2;	// FIXME - cemu sluze wx0 i x0?
+	return 2;	// FIXME - cemu sluze wx0 i x0?
 #endif
 
 	wx0 = x0;
@@ -402,6 +404,12 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
 #ifdef NO_OGL
+	const SDL_VideoInfo *max_sdl_screen = SDL_GetVideoInfo();	/* to get best screen resolution, must call it before SDL_SetVideoMode() ! */
+	max_sdl_w = max_sdl_screen->current_w;
+	max_sdl_h = max_sdl_screen->current_h;
+#endif
+
+#ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
@@ -531,11 +539,15 @@ static int handle_events_once(void)
 				turbo_mode = 1;
 #ifdef NO_OGL
 			} else if (event.key.keysym.sym == SDLK_F11) {
-				printf ("F11 pressed\r\n");
-				resize_x = 0;	// FIXME
-				resize_y = 0;	// FIXME
-				printf("SDLonly F11 force resize req %d,%d\r\n", resize_x, resize_y);
+				if (is_sdl_fullscreen) {	/* go back to windowed mode */
+					resize_x = WIDTH;
+					resize_y = HEIGHT;
+				} else {			/* go to SDL fullscreen mode */
+					//resize_x = max_sdl_w;
+					//resize_y = max_sdl_h;
+				}
 				do_resize = 1;
+				printf("SDLonly F11 (is_sdl_fullscreen=%d) force resize req %d,%d\r\n", is_sdl_fullscreen, resize_x, resize_y);
 #endif
 			} else {
 				uint8_t key_found = 0, key_index = 0;
@@ -590,7 +602,7 @@ static int handle_events_once(void)
 		if (event.type == SDL_VIDEORESIZE) {
 			resize_x = event.resize.w;
 			resize_y = event.resize.h;
-			printf("resize req %d,%d\r\n", resize_x, resize_y);
+			printf("SDL_VIDEORESIZE  req %d,%d\r\n", resize_x, resize_y);
 			do_resize = 1;
 		}
 	}
