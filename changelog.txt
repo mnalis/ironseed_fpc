@@ -1,3 +1,4 @@
+- slow down some animations so they can actually be seen
 v 0.0.8
 - huge rewrite of c_utils.c to fix OpenGL and SDL bugs and crashes
 v 0.0.7
