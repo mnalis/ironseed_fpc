@@ -591,6 +591,7 @@ begin
    repeat until (mouse.getstatus) or (fastkeypressed);
    while fastkeypressed do readkey;
    fading;
+   closegraph;
    halt(1);
   end;
 {$ENDIF}

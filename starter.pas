@@ -350,6 +350,7 @@ begin
  if (curfilenum=0) and (not loadgamedata(true)) then
  begin
       //textmode(co80);
+      closegraph;
       halt(3);
  end;
  {HeapStats;}
@@ -386,6 +387,7 @@ reload:
  if reloading then goto reload;
  //textmode(co80);
  while fastkeypressed do readkey;
+ closegraph;
  halt(4);
 end;
 

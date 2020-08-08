@@ -714,7 +714,6 @@ begin
  stopmod;
  fading;
  mousehide;
- closegraph;
 
 // textmode(co80);
 end;

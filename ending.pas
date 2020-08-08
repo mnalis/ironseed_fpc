@@ -416,6 +416,7 @@ begin
  credits;
 
  stopmod;
+ closegraph;
  //textmode(co80);
  halt(3);
 end;
