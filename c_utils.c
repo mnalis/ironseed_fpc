@@ -153,13 +153,13 @@ static void Sulock(SDL_Surface * screen)
 #ifdef NO_OGL
 static void sdl_go_back_to_windowed_mode(void)
 {
+	printf ("entering sdl_go_back_to_windowed_mode\n");
 	if (!is_sdl_fullscreen)
 		return;
 
-	if (0 != SDL_WM_ToggleFullScreen(sdl_screen))
-		printf("Unable to change SDL back from fullscreen to windowed mode: %s\n", SDL_GetError());
-	else
-		is_sdl_fullscreen = 0;
+	printf ("SDL trying to get back to windowed mode\n");
+	SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
+	is_sdl_fullscreen = 0;
 }
 #else
 static void set_perspective(void)
@@ -199,25 +199,12 @@ static int resizeWindow(int width, int height)
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
 	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
 	set_perspective();
-#else	// plain SDL
-	if (is_sdl_fullscreen) {	// FIXME: convert back to regular windowed mode? does this work? (we never get another event to resize back...)
+#else	// plain SDL only
+	if (is_sdl_fullscreen) {
 		sdl_go_back_to_windowed_mode();
-		// sdl_screen = SDL_SetVideoMode(WWIDTH, WHEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
-		//sdl_screen = SDL_SetVideoMode(0, 0, 0, sdl_screen->flags ^ SDL_FULLSCREEN); /*Toggles FullScreen Mode */
-		//FIXME: maybe: SDL_SetWindowFullscreen(0, SDL_WINDOW_FULLSCREEN_DESKTOP); // what is my window ID?
-		//FIXME: maybe: SDL_SetWindowFullscreen(sdl_screen, SDL_WINDOW_FULLSCREEN);
-		//FIXME: maybe: SDL_SetWindowFullscreen(0, 1);
-    		//FIXME: maybe: sdl_screen = SDL_SetVideoMode(width, height, 0, SDL_FULLSCREEN );
-
-	} else {	// was in windowed mode, go fullscreen now
-		//sdl_screen = SDL_SetVideoMode(0, 0, 0, sdl_screen->flags ^ SDL_FULLSCREEN); /*Toggles FullScreen Mode */
-		// http://sdl.beuc.net/sdl.wiki/SDL_WM_ToggleFullScreen
-		if (0 != SDL_WM_ToggleFullScreen(sdl_screen))	// this actually doesn't have a problem with the mouse! but still no switching back with alt-f11 try eventloop regular f11 ?
-			printf("Unable to change SDL to fullscreen: %s\n", SDL_GetError());
-		else
-			is_sdl_fullscreen = 1;
-		//sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN | SDL_RESIZABLE);
-		// FIXME - this does resize the screen, but move remains in restricted part (upper-left), probably unresized coords
+	} else {
+		SDL_WM_ToggleFullScreen(sdl_screen);
+		is_sdl_fullscreen = 1;
 	}
 	//return 2;	// FIXME - cemu sluze wx0 i x0?
 #endif
@@ -368,6 +355,7 @@ void musicDone(void)
  */
 void all_done(void)
 {
+	printf ("all_done called\n");
 	musicDone();
 
 	do_video_stop = 1;
