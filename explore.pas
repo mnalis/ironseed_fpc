@@ -1839,19 +1839,19 @@ begin
   #0: begin
        ans:=readkey;
        case ans of
-        #75: begin
+        #75: if not showscan then begin
 	   undo;
 	   newzoom(zoomx - 2 + 28 + zoomoffset, zoomy + 13 + zoomoffset);
 	end;
-        #77: begin
+        #77: if not showscan then begin
 	   undo;
 	   newzoom(zoomx + 2 + 28 + zoomoffset, zoomy + 13 + zoomoffset);
 	end;
-        #72: begin
+        #72: if not showscan then begin
 	   undo;
 	   newzoom(zoomx + 28 + zoomoffset, zoomy - 2 + 13 + zoomoffset);
 	end;
-        #80: begin
+        #80: if not showscan then begin
 	   undo;
 	   newzoom(zoomx + 28 + zoomoffset, zoomy + 2 + 13 + zoomoffset);
 	end;
