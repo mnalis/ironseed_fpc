@@ -50,6 +50,7 @@ procedure getrgb256_(palnum: byte; r,g,b: pointer);  cdecl ; external;// get pal
 
 procedure closegraph;   // close video
 begin
+    writeln ('pascal: closegraph called');
     all_done;
 //    SDL_Quit();
     

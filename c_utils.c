@@ -153,11 +153,11 @@ static void Sulock(SDL_Surface * screen)
 #ifdef NO_OGL
 static void sdl_go_back_to_windowed_mode(void)
 {
-	printf ("entering sdl_go_back_to_windowed_mode\n");
+	printf ("entering sdl_go_back_to_windowed_mode\r\n");
 	if (!is_sdl_fullscreen)
 		return;
 
-	printf ("SDL trying to get back to windowed mode\n");
+	printf ("SDL trying to get back to windowed mode\r\n");
 	SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
 	is_sdl_fullscreen = 0;
 }
@@ -355,7 +355,7 @@ void musicDone(void)
  */
 void all_done(void)
 {
-	printf ("all_done called\n");
+	printf ("all_done called\r\n");
 	musicDone();
 
 	do_video_stop = 1;
@@ -394,7 +394,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	uint16_t x, y;
 
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
-		printf("Unable to initialize SDL: %s\n", SDL_GetError());
+		printf("Unable to initialize SDL: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	is_audio_initialized = 1;
@@ -411,7 +411,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 #endif
 
 	if (sdl_screen == NULL) {
-		printf("Unable to set %dx%d video: %s\n", WIDTH, HEIGHT, SDL_GetError());
+		printf("Unable to set %dx%d video: %s\r\n", WIDTH, HEIGHT, SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	SDL_ShowCursor(SDL_DISABLE);
@@ -435,7 +435,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 #ifndef NO_OGL
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
-		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
+		printf("Can't set OpenGL mode: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -529,6 +529,14 @@ static int handle_events_once(void)
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
 				turbo_mode = 1;
+#ifdef NO_OGL
+			} else if (event.key.keysym.sym == SDLK_F11) {
+				printf ("F11 pressed\r\n");
+				resize_x = 0;	// FIXME
+				resize_y = 0;	// FIXME
+				printf("SDLonly F11 force resize req %d,%d\r\n", resize_x, resize_y);
+				do_resize = 1;
+#endif
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
@@ -654,7 +662,7 @@ void sdl_mixer_init(void)
 	assert (is_audio_initialized);
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
 		audio_open = 0;
-		printf("Unable to open audio!\n");
+		printf("Unable to open audio!\r\n");
 	} else {
 		audio_open = 1;
 	}
@@ -677,7 +685,7 @@ void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 	   times you want it to loop (use -1 for infinite, and 0 to
 	   have it just play once) */
 	if (music == NULL)
-		printf("load music error %s\n", filename);
+		printf("load music error %s\r\n", filename);
 	if (loop)
 		l = -1;
 	else
@@ -839,7 +847,7 @@ fpc_char_t readkey(void)
 void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	int16_t i;
-//      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+//      printf("rect : %d %d %d %d  color %d\r\n",x1,y1,x2,y2,cur_color);
 	assert (x1 < 320);
 	assert (x2 < 320);
 	assert (y1 < 200);
@@ -938,7 +946,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	strcat(fn, s1);
 	f = fopen(fn, "rb");
 	if (f == NULL) {
-		printf("Can't open file %s\n", fn);
+		printf("Can't open file %s\r\n", fn);
 		free(fn);
 		free(s1);
 		return;
@@ -957,7 +965,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
 			loaded += r;
 		else {
-			printf("Can't read %s @%ld error= %d\n", fn, ftell(f), errno);
+			printf("Can't read %s @%ld error= %d\r\n", fn, ftell(f), errno);
 			free(sound_raw);
 			free(fn);
 			free(s1);
@@ -978,7 +986,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;
 		sound[1 + i * 2] = smp;
-//              printf("%d / %d, %d / %d\n\r",i,(uint32_t)(length/k),(int32_t)(i*k),length);
+//              printf("%d / %d, %d / %d\r\n",i,(uint32_t)(length/k),(int32_t)(i*k),length);
 	}
 	free(sound_raw);
 	chan = -1;
@@ -995,7 +1003,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	}
 	if (chan >= 0) {
 		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, qwords * 4))) {
-			printf("Mix_QuickLoad_RAW: %s\n", Mix_GetError());
+			printf("Mix_QuickLoad_RAW: %s\r\n", Mix_GetError());
 		}
 		Mix_PlayChannel(chan, raw_chunks[chan], 0);
 	}
@@ -1024,14 +1032,14 @@ void setfillstyle(const fpc_word_t style, const fpc_word_t f_color)
 	assert(f_color < 256);
 	fill_color = (uint8_t) f_color;
 	if (style > 1)
-		printf("setfillstyle style=%d\n", style);
+		printf("setfillstyle style=%d\r\n", style);
 
 }
 
 void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	uint16_t i, j, x, xe, y, ye;
-//      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+//      printf("rect : %d %d %d %d  color %d\r\n",x1,y1,x2,y2,cur_color);
 	if (x2 > x1) {
 		x = x1;
 		xe = x2;
@@ -1058,7 +1066,7 @@ void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fp
 
 void line(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
-//      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
+//      printf("%d,%d - %d,%d\r\n",x1,y1,x2,y2);
 	assert (x1 < 320);
 	assert (x2 < 320);
 	assert (y1 < 200);
