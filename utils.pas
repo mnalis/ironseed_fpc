@@ -54,8 +54,7 @@ procedure PopRand;
 
 implementation
 
-uses crt,  data, journey, gmouse, usecode, display, saveload,
- utils2, combat, weird, modplay, crewtick, utils_;
+uses data, journey, gmouse, usecode, display, saveload, utils2, combat, weird, modplay, crewtick, utils_;
 
 type
  scandatatype= array[0..11] of byte;

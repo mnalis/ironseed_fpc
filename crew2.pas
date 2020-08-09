@@ -19,7 +19,7 @@ procedure psyche;
 
 implementation
 
-uses crt, utils_, gmouse, data, utils, utils2, weird, saveload, modplay, crewtick, heapchk;
+uses utils_, gmouse, data, utils, utils2, weird, saveload, modplay, crewtick, heapchk;
 
 const
  jobs: array[1..6] of string[13] = ('Psychometry','Engineering','  Science  ',' Security ','Astrogation','  Medical  ');

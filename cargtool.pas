@@ -21,8 +21,7 @@ function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
 
 implementation
 
-uses crt, data, gmouse, utils, weird, utils2, saveload, modplay, journey,
- display, usecode,heapchk, utils_;
+uses data, gmouse, utils, weird, utils2, saveload, modplay, journey, display, usecode,heapchk, utils_;
 {$PACKRECORDS 1}
 type
  cargobuttontype= array[110..126,92..228] of byte;

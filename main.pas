@@ -13,7 +13,7 @@ program main;
 
 ***************************}
 
-uses sdl,init, gmouse, starter, data,heapchk,crt;
+uses sdl,init, gmouse, starter, data,heapchk;
 
 {$O cargtool}
 {$O comm}

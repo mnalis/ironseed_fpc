@@ -39,8 +39,7 @@ procedure readybots;
 
 implementation
 
-uses crt, utils_, data, gmouse, journey, explore, saveload, display, utils, cargtool, crewinfo,
- info, comm, utils2, crew2, weird, modplay, comm2,crewtick;
+uses utils_, data, gmouse, journey, explore, saveload, display, utils, cargtool, crewinfo, info, comm, utils2, crew2, weird, modplay, comm2,crewtick;
 
 const
  batmax= 32000;

@@ -20,8 +20,7 @@ procedure exploreplanet;
 
 implementation
 
-uses crt, utils_, data, gmouse, usecode, journey, utils, utils2, weird,
- display, modplay, crewtick, heapchk;
+uses utils_, data, gmouse, usecode, journey, utils, utils2, weird, display, modplay, crewtick, heapchk;
 {$PACKRECORDS 1}
 
 type

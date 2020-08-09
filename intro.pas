@@ -13,9 +13,6 @@ program intro;
 
 ***************************}
 
-{* 
-     $I dsmi.inc, emhm, crt, graph, gmouse, getcpu, dos, version; 
-*}
 uses sdl,utils_,sysutils,gmouse,modplay,version,math;
 //var   sdl_scr: PSDL_Surface;
 {* begin

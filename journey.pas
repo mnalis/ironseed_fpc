@@ -28,8 +28,7 @@ procedure mainloop;
 
 implementation
 
-uses crt, utils_, gmouse, usecode, data, saveload, utils, display, combat, {combat2,}
- utils2, weird, modplay, comm, crewtick, heapchk;
+uses utils_, gmouse, usecode, data, saveload, utils, display, combat, utils2, weird, modplay, comm, crewtick, heapchk;
 
 const
 asintab :array[0..1024] of byte =
