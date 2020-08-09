@@ -9,8 +9,8 @@ Documentation
 =============
 - `Documents/ironseed-manual.txt` is old ironseed manual, not completely up-to-date
 - `Documents/changelog.txt` contains current SDL/fpc development log.
-- `Documents/version.txt` is original developers historic (DOS) version list.
-- `Documents/todo.txt` is original developers historic (DOS) TODO file.
+- `Documents/old_version.txt` is original developers historic (DOS) version list.
+- `Documents/old_todo.txt` is original developers historic (DOS) TODO file.
 - Current TODO is online at https://github.com/mnalis/ironseed_fpc/issues
 
 Compilation
