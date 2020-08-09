@@ -15,7 +15,8 @@ interface
 	function playing: boolean;cdecl ; external;
 implementation
 
-uses strings;
+uses strings, data;
+
 	procedure sdl_mixer_init;cdecl ; external;
 	procedure musicDone;cdecl ; external;
 	procedure play_mod(loop:byte; filename:pchar);cdecl ; external;
@@ -63,6 +64,8 @@ end;
 
 procedure setmodvolume;
 begin
+	//if (not playing) then exit;
+	setmodvolumeto(ship.options[9])
 end;
 
 end.

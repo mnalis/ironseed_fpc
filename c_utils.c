@@ -952,7 +952,8 @@ void setmodvolumeto(const fpc_word_t vol)
 {
 	if (!audio_open)
 		return;
-	Mix_VolumeMusic(vol / 2);
+	assert (vol * 2 <= MIX_MAX_VOLUME);
+	Mix_VolumeMusic(vol * 2);
 }
 
 void move_mouse(const fpc_word_t x, const fpc_word_t y)
