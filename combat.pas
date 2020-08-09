@@ -648,6 +648,7 @@ begin
    if ship.shieldlevel=0 then takedamage(j,i)
    else
     begin
+     writeln('debug impact: s=',s, ' n=',n, ' j=',j, ' i=',i, ' a=',a, ' b=',b, ' c=',c);
      a:=round(weapons[b].dmgtypes[j]/100*weapons[b].damage*ship.shieldlevel/100);
      if a<i then
       begin
