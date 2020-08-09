@@ -26,4 +26,4 @@ build `demo_sdl`, which is original shareware demo restricted version.
 
 Running
 =======
-./is
+`./is`
