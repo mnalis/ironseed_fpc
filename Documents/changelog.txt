@@ -1,3 +1,4 @@
+- fix sound controls
 v 0.0.9
 - keyboard utf8 support (supports shift for lowercase/uppercase etc)
 - minor cosmetic updates
