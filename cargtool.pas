@@ -537,7 +537,7 @@ var
  var ans: char;
  begin
   undocursor2;
-  ans:=readkey;
+  ans:=readkey_utf8;
   case upcase(ans) of
     #0:begin
         ans:=readkey;
@@ -790,7 +790,7 @@ end;
 procedure processkey;
 var ans: char;
 begin
- ans:=readkey;
+ ans:=readkey_utf8;
  case upcase(ans) of
   #27,'Q': done:=true;
   #0: begin
@@ -1968,7 +1968,7 @@ end;
 procedure processcreationkey;
 var ans: char;
 begin
- ans:=readkey;
+ ans:=readkey_nomap;
  case upcase(ans) of
   #0: begin
        ans:=readkey;

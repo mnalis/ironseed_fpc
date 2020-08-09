@@ -916,7 +916,7 @@ var ans: char;
 begin
 //	    writeln('comm.pas:917  processkey2');
 //	    p^:=0;
- ans:=upcase(readkey);
+ ans:=upcase(readkey_utf8);
 // ans:=readkey;
 // writeln('key= ',ord(ans));
  tcolor:=31;
@@ -1285,7 +1285,7 @@ end;
 procedure processkey3;
 var ans: char;
 begin
- ans:=upcase(readkey);
+ ans:=upcase(readkey_utf8);
  tcolor:=26;
  case ans of
   'A'..'Z',' ','0'..'9','''','-': if contactindex>-1 then

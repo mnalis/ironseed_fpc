@@ -326,7 +326,7 @@ procedure processkey;
 var ans: char;
 begin
  undocursor;
- ans:=readkey;
+ ans:=readkey_utf8;
  case ans of
    #0: begin
         ans:=readkey;
@@ -545,7 +545,7 @@ begin
   delay(tslice*2);
   if fastkeypressed then
    begin
-    ans:=readkey;
+    ans:=readkey_utf8;
     case upcase(ans) of
      #0:
       begin
@@ -645,7 +645,7 @@ procedure processkey2;
 var ans: char;
 begin
  undocursor2;
- ans:=readkey;
+ ans:=readkey_utf8;
  case upcase(ans) of
    #0:begin
        ans:=readkey;
@@ -804,7 +804,7 @@ procedure processenckey;
 var ans: char;
 begin
  undoenccursor;
- ans:=readkey;
+ ans:=readkey_utf8;
  case upcase(ans) of
    #0: begin
         ans:=readkey;

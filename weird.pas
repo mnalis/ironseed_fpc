@@ -835,6 +835,7 @@ begin
  until fastkeypressed;
  stopmod;
  fading;
+ closegraph;
  halt(3);
 {$ENDIF}
 end;*)
@@ -1258,6 +1259,7 @@ procedure deathsequence(n: integer);
 begin
  stopmod;
  blast(63,0,0);
+ closegraph;
  halt(3);
 end;
 

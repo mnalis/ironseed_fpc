@@ -35,6 +35,11 @@ debug_ogl1:  flags  += $(debug)
 debug_ogl1:  p_link += -k-lGL -k-lGLU
 debug_ogl1:  build
 
+# DEMO SDL debug version
+demo_sdl:   clean demo_sdl1 cleantmp
+demo_sdl1:  cflags += -O0 -DNO_OGL -Werror
+demo_sdl1:  flags  += $(debug) -dDEMO
+demo_sdl1:  build
 
 build: is crewgen intro main
 

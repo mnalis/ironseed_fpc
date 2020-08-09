@@ -89,8 +89,8 @@ static volatile uint8_t is_video_finished = 0;	// has video stopped? returns sta
 static uint8_t cur_color = 31;
 static const int audio_rate = 44100;
 static uint8_t audio_open = 0;
-static volatile uint8_t keypressed_;
-static volatile uint16_t key_, keymod_;
+static volatile uint8_t keypressed_, keyscan_;
+static volatile uint16_t key_, keyutf8_,keymod_;
 static volatile uint16_t mouse_x, mouse_y;
 static volatile uint8_t mouse_buttons;
 static uint8_t showmouse;
@@ -101,7 +101,9 @@ static uint16_t cur_x;
 static uint16_t cur_y;
 static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
-#ifndef NO_OGL
+#ifdef NO_OGL
+static int is_sdl_fullscreen = 0;		// assume we're in windowed (not fullscreen) mode on startup
+#else
 static SDL_Surface *opengl_screen;
 static GLuint main_texture;
 #endif
@@ -111,10 +113,10 @@ static volatile int resize_y = 480;
 static volatile int wx0 = 0;
 static volatile int wy0 = 0;
 
-static const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
-static const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
-static const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-static const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
+const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END , SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	,0};
+const uint16_t spec_mod[] =  {0        , 0         , 0      , 0        , 0          , 0        , KMOD_CTRL, 0       , 0          , 0            , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
+const uint8_t  spec_null[] = {1        , 1         , 1      , 1        , 1          , 1        , 1        , 1       , 1          , 1            , 1         , 1      , 1      , 1      , 1      , 1      , 1      , 1        , 1       , 0           , 0            , 0        , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1    };
+const uint8_t  spec_map[] =  {75       , 77        , 72     , 80       , 83         , 71       , 117      , 79      , 73         , 81           , 84        , 59     , 60     , 61     , 62     , 63     , 64     , 103      , 16      , 43          , 45           , 10       , 16      , 45      , 120     , 121     , 122     , 123     , 126     , 129     , 49      , 25      , 48      , 31      , 22      , 23   };
 
 
 static inline void _nanosleep(long nsec)
@@ -148,7 +150,20 @@ static void Sulock(SDL_Surface * screen)
 
 }
 
-#ifndef NO_OGL
+#ifdef NO_OGL
+static void sdl_go_back_to_windowed_mode(void)
+{
+	if (!is_sdl_fullscreen)
+		return;
+
+	SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
+	is_sdl_fullscreen = 0;
+}
+#else
+static void sdl_go_back_to_windowed_mode(void)
+{
+	/* not needed, happens automatically */
+}
 static void set_perspective(void)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -181,14 +196,22 @@ static int resizeWindow(int width, int height)
 	assert(x0 >= 0);
 	assert(y0 >= 0);
 
+	//printf ("resizeWindow w=%d,h=%d; calc x0=%d, y0=%d, w=%d, h=%d\r\n", width, height, x0, y0, WWIDTH, WHEIGHT);
 #ifndef NO_OGL
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
 	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
 	set_perspective();
-#endif
-
 	wx0 = x0;
 	wy0 = y0;
+#else	// plain SDL only
+	if (is_sdl_fullscreen) {
+		sdl_go_back_to_windowed_mode();
+	} else {
+		SDL_WM_ToggleFullScreen(sdl_screen);
+		is_sdl_fullscreen = 1;
+	}
+#endif
+
 	return 1;
 }
 
@@ -347,6 +370,7 @@ static int initiate_abnormal_exit(void)
 {
 	normal_exit = 0;
 	musicDone();
+	sdl_go_back_to_windowed_mode();		/* no-op if we're not in SDL fullscreen mode */
 	do_video_stop = 1;
 	return 0;
 }
@@ -370,12 +394,13 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	uint16_t x, y;
 
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
-		printf("Unable to initialize SDL: %s\n", SDL_GetError());
+		printf("Unable to initialize SDL: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+	SDL_EnableUNICODE(1);
 
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
@@ -387,7 +412,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 #endif
 
 	if (sdl_screen == NULL) {
-		printf("Unable to set %dx%d video: %s\n", WIDTH, HEIGHT, SDL_GetError());
+		printf("Unable to set %dx%d video: %s\r\n", WIDTH, HEIGHT, SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	SDL_ShowCursor(SDL_DISABLE);
@@ -411,12 +436,11 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 #ifndef NO_OGL
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
-		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
+		printf("Can't set OpenGL mode: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_WM_SetCaption("Ironseed", NULL);
 	glViewport(0, 0, WIDTH, HEIGHT);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
@@ -428,6 +452,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 
 	glGenTextures(1, &main_texture);
 #endif
+	SDL_WM_SetCaption("Ironseed", NULL);
 
 	return 1;	// init OK
 }
@@ -450,9 +475,10 @@ static int video_output_once(void)
 	for (vga_y = 0; vga_y < 200; vga_y++)
 		for (vga_x = 0; vga_x < 320; vga_x++) {
 			c = palette[v_buf[vga_x + 320 * vga_y]];
-			assert (c.r < 64);
-			assert (c.g < 64);
-			assert (c.b < 64);
+#ifndef NDEBUG
+			if ((c.r >= 64) || (c.g >= 64) || (c.b >= 64))
+				printf ("WARNING: RGB at %d,%d color=%d will overflow: %d,%d,%d\r\n", vga_x, vga_y, v_buf[vga_x + 320 * vga_y], c.r, c.g, c.b);
+#endif
 			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
@@ -505,10 +531,14 @@ static int handle_events_once(void)
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
 				turbo_mode = 1;
+#ifdef NO_OGL
+			} else if (event.key.keysym.sym == SDLK_F11) {
+				do_resize = 1;	// note: updating resize_x, resize_y only breaks the mouse movements.
+#endif
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+				//printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16" .unicode:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod,  event.key.keysym.unicode);
 
 				/* traverse list of all special keys and their modifiers, and verify if we match */
 				while (spec_keys[key_index]) {
@@ -522,15 +552,19 @@ static int handle_events_once(void)
 
 				if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
 					key_found = 1;
+				} else if ((event.key.keysym.sym <= 255) && ((event_mod & (~KMOD_SHIFT)) == 0)) {	/* regular ASCII key, and shift modifier, process as normal */
+					key_found = 1;
 				}
 
 				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
 					keypressed_ = 1;
 					key_ = event.key.keysym.sym;
+					keyutf8_ = event.key.keysym.unicode;
+					keyscan_ = event.key.keysym.scancode;
 					keymod_ = event_mod;
 
 				}
-				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
 			}
 		}
 		if (event.type == SDL_KEYUP) {
@@ -555,11 +589,15 @@ static int handle_events_once(void)
 				mouse_buttons = 0x01;
 			}
 		}
+#ifndef NO_OGL
+		/* this only-half works without OpenGL, so disable it and use soft "F11" for fullscreen if in SDL-only mode */
 		if (event.type == SDL_VIDEORESIZE) {
 			resize_x = event.resize.w;
 			resize_y = event.resize.h;
+			//printf("SDL_VIDEORESIZE  req %d,%d\r\n", resize_x, resize_y);
 			do_resize = 1;
 		}
+#endif
 	}
 	return 1; 	// events without error
 }
@@ -575,6 +613,7 @@ static int event_thread(void *notused)
 
 		SDL_Delay(10);			/* give up some time to other threads */
 	}
+	sdl_go_back_to_windowed_mode();		/* no-op if we're not in SDL fullscreen mode */
 	is_video_finished = 1;
 	//_nanosleep(10000000);
 	return 0;	// and thread terminates
@@ -595,6 +634,9 @@ void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 
 
 void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
 {
+	assert (r<64);
+	assert (g<64);
+	assert (b<64);
 	palette[palnum].r = r;
 	palette[palnum].g = g;
 	palette[palnum].b = b;
@@ -628,7 +670,7 @@ void sdl_mixer_init(void)
 	assert (is_audio_initialized);
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
 		audio_open = 0;
-		printf("Unable to open audio!\n");
+		printf("Unable to open audio!\r\n");
 	} else {
 		audio_open = 1;
 	}
@@ -651,7 +693,7 @@ void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 	   times you want it to loop (use -1 for infinite, and 0 to
 	   have it just play once) */
 	if (music == NULL)
-		printf("load music error %s\n", filename);
+		printf("load music error %s\r\n", filename);
 	if (loop)
 		l = -1;
 	else
@@ -809,11 +851,61 @@ fpc_char_t readkey(void)
 	return key;
 }
 
+/* like readkey(), but for standard letters returns UTF8 version
+ * which takes into account shift and other modifiers used.
+ * we actually only need it for ASCII uppercase/lowecase, and punctuations,
+ * as the game does not support real UTF-8....
+ *
+ * Used only for typing activies, like crew/aliens chat, entering
+ * savegame name or inputting astrogation coordinates manually.
+ */
+fpc_char_t readkey_utf8(void)
+{
+	fpc_char_t key = readkey();
+	if ((key > 32) && (key < 127) && keyutf8_ < 255) {
+		key = (fpc_char_t) keyutf8_;
+	}
+	return key;
+}
+
+/*
+ * like readkey(), but never remaps keys, used for cube navigation and alike.
+ * so third keyboard row is always "QWERTY" no matter what mapping OS does (AZERTY, QWERTZ etc).
+ * actually we get remapped letter, and then try to unmap it for keys the game uses.
+ */
+fpc_char_t readkey_nomap(void)
+{
+	uint8_t key_index = 0;
+	/*
+	static const uint16_t spec_codes[] = { SDL_SCANCODE_GRAVE, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_R, SDL_SCANCODE_T, SDL_SCANCODE_A, SDL_SCANCODE_S, SDL_SCANCODE_D,SDL_SCANCODE_F, SDL_SCANCODE_G, SDL_SCANCODE_Z, SDL_SCANCODE_X, SDL_SCANCODE_C, SDL_SCANCODE_V, SDL_SCANCODE_B, SDL_SCANCODE_P,	0 };	// SDL 2.x has names, and they should work?...
+	//static const uint16_t spec_codes[] = { 53 , 30 , 31 , 32 , 20 , 26 ,  8 , 21 , 23 ,  4 , 22 ,  7 ,  9 , 10 , 29 , 27 ,  6 , 25 ,  5 , 19 ,	0 };	// SDL 1.2 does not have symbolic names for keycodes, those values from SDL2 do not work: https://wiki.libsdl.org/SDL_Keycode
+	static const uint8_t  spec_unmap[] = { '`', '1', '2', '3', 'q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'p' };
+
+	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependant, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
+	*/
+
+	static const uint16_t spec_codes[] = { 0 };
+	static const uint8_t  spec_unmap[] = { 0 };
+
+	fpc_char_t key = readkey();
+	//printf ("unmapped b4: readkey()=%d >%c<, keyutf8_=%d, keyscan=%d\r\n", key, key, keyutf8_, keyscan_);
+	if ((key > 32) && (key < 127)) {
+		while (spec_codes[key_index]) {
+			if (spec_codes[key_index] == keyscan_) {
+				key = spec_unmap[key_index];
+				//printf ("   unmap[%d]: readkey()=%d >%c<, keyutf8_=%d, keyscan=%d\r\n", key_index, key, key, keyutf8_, keyscan_);
+				break;
+			}
+			key_index++;
+		}
+	}
+	return key;
+}
 
 void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	int16_t i;
-//      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+//      printf("rect : %d %d %d %d  color %d\r\n",x1,y1,x2,y2,cur_color);
 	assert (x1 < 320);
 	assert (x2 < 320);
 	assert (y1 < 200);
@@ -912,7 +1004,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	strcat(fn, s1);
 	f = fopen(fn, "rb");
 	if (f == NULL) {
-		printf("Can't open file %s\n", fn);
+		printf("Can't open file %s\r\n", fn);
 		free(fn);
 		free(s1);
 		return;
@@ -931,7 +1023,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
 			loaded += r;
 		else {
-			printf("Can't read %s @%ld error= %d\n", fn, ftell(f), errno);
+			printf("Can't read %s @%ld error= %d\r\n", fn, ftell(f), errno);
 			free(sound_raw);
 			free(fn);
 			free(s1);
@@ -952,7 +1044,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;
 		sound[1 + i * 2] = smp;
-//              printf("%d / %d, %d / %d\n\r",i,(uint32_t)(length/k),(int32_t)(i*k),length);
+//              printf("%d / %d, %d / %d\r\n",i,(uint32_t)(length/k),(int32_t)(i*k),length);
 	}
 	free(sound_raw);
 	chan = -1;
@@ -969,7 +1061,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	}
 	if (chan >= 0) {
 		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, qwords * 4))) {
-			printf("Mix_QuickLoad_RAW: %s\n", Mix_GetError());
+			printf("Mix_QuickLoad_RAW: %s\r\n", Mix_GetError());
 		}
 		Mix_PlayChannel(chan, raw_chunks[chan], 0);
 	}
@@ -998,14 +1090,14 @@ void setfillstyle(const fpc_word_t style, const fpc_word_t f_color)
 	assert(f_color < 256);
 	fill_color = (uint8_t) f_color;
 	if (style > 1)
-		printf("setfillstyle style=%d\n", style);
+		printf("setfillstyle style=%d\r\n", style);
 
 }
 
 void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	uint16_t i, j, x, xe, y, ye;
-//      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+//      printf("rect : %d %d %d %d  color %d\r\n",x1,y1,x2,y2,cur_color);
 	if (x2 > x1) {
 		x = x1;
 		xe = x2;
@@ -1032,7 +1124,7 @@ void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fp
 
 void line(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
-//      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
+//      printf("%d,%d - %d,%d\r\n",x1,y1,x2,y2);
 	assert (x1 < 320);
 	assert (x2 < 320);
 	assert (y1 < 200);

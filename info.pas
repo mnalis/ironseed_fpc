@@ -636,7 +636,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,172,temp[j]);
    end;
-  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2);
+  ans:='@'; if fastkeypressed then ans:=readkey_utf8 else delay(tslice*2);
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;
@@ -692,7 +692,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,180,temp[j]);
    end;
-  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2);
+  ans:='@'; if fastkeypressed then ans:=readkey_utf8 else delay(tslice*2);
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;
@@ -748,7 +748,7 @@ begin
     if curx=j then bkcolor:=88 else bkcolor:=0;
     printxy(37+j*5,188,temp[j]);
    end;
-  ans:='@'; if fastkeypressed then ans:=readkey else delay(tslice*2);
+  ans:='@'; if fastkeypressed then ans:=readkey_utf8 else delay(tslice*2);
   case ans of
    '0'..'9',' ': begin
                   temp[curx]:=ans;

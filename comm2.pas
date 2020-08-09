@@ -955,7 +955,7 @@ end;
 procedure processkey2;
 var ans: char;
 begin
- ans:=readkey;
+ ans:=readkey_utf8;
  case upcase(ans) of
    #0: begin
         ans:=readkey;
