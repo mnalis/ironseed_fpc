@@ -323,6 +323,7 @@ var
    fadelevel :Integer;
    palettedirty :Boolean;
 
+procedure init_everything;
 procedure errorhandler(s: string;errtype: integer);
 procedure printxy(x1,y1: integer; s: string);
 procedure fading;
@@ -899,7 +900,8 @@ begin
        end;
 end;
 
-begin 
+procedure init_everything;
+begin
    initializecanary;
    readygraph;
    initializemod;
@@ -910,4 +912,9 @@ begin
    new(tempplan);
    defaultsong:='SECTOR.MOD';
    checkcanary;
+end;
+
+begin
+   ship.options[9]:=64;
+   ship.options[3]:=1;
 end.

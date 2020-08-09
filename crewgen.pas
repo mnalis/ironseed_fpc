@@ -1107,8 +1107,7 @@ end;
 
 
 begin
- ship.options[9]:=64;
- ship.options[3]:=1;
+ init_everything;
  code:=3;
  tslice:=10;
  randomize;

@@ -43,6 +43,7 @@ uses init, gmouse, starter, data,heapchk;
 
 
 begin
+ init_everything;
 // HeapError := @HeapFunc;
  checkparams;
  readydata;
