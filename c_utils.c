@@ -705,7 +705,6 @@ void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 	   provides us with a callback routine we can use to do
 	   exactly that */
 	Mix_HookMusicFinished(musicDone);
-	Mix_VolumeMusic(128);
 }
 
 void haltmod(void)

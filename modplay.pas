@@ -15,7 +15,7 @@ interface
 	function playing: boolean;cdecl ; external;
 implementation
 
-uses strings, data;
+uses strings, data, utils_;
 
 	procedure sdl_mixer_init;cdecl ; external;
 	procedure musicDone;cdecl ; external;
@@ -25,11 +25,12 @@ uses strings, data;
 procedure playmod(looping: boolean;s: string);  // load & play mod
 Var p : Pchar;
 begin
-    
+    if ship.options[3]=0 then exit;
     p:=StrAlloc (length(s)+1);
     StrPCopy (P,s);
     play_mod(byte(looping),P);
     StrDispose(P);
+    setmodvolumeto(ship.options[9]);
 end;
 
 	
@@ -40,7 +41,13 @@ begin
 end;
 
 procedure stopmod;       // stop music + unload
+var i: integer;
 begin
+ for i:=ship.options[9] downto 0 do
+  begin
+   setmodvolumeto(i);
+   delay(10);
+  end;
  musicDone;
 end;
 
@@ -55,6 +62,7 @@ end;
 procedure soundeffect(s: string; rate: word);
 Var p : Pchar;
 begin
+    if ship.options[3]=0 then exit;
     
     p:=StrAlloc (length(s)+1);
     StrPCopy (P,s);
