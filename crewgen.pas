@@ -11,7 +11,7 @@ program crewgen;
 
 ***************************}
 
-uses sdl, data, gmouse, utils_, saveload, display, utils, modplay;
+uses data, gmouse, utils_, saveload, display, utils, modplay;
 {$PACKRECORDS 1}
 
 type
