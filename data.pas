@@ -324,8 +324,6 @@ var
    palettedirty :Boolean;
 
 procedure errorhandler(s: string;errtype: integer);
-//procedure setrgb256(palnum,r,g,b: byte);
-//procedure set256colors(pal : paltype);
 procedure printxy(x1,y1: integer; s: string);
 procedure fading;
 procedure fadein;
@@ -335,10 +333,7 @@ procedure fadestopmod(step, slice : Integer);
 procedure loadscreen(s: string; ts:pointer);
 procedure compressfile(s: string; ts: pscreentype);
 procedure loadpal(s: string);
-//function fastkeypressed : boolean;
-procedure mymove(var src,tar; count: word);
 //procedure fillchar(var src; count: word; databyte: byte);
-//procedure move(var src,tar; count: word);
 procedure checkcanary;
 procedure checkcanary2;
 
@@ -347,7 +342,7 @@ procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 
 implementation
 
-uses crt,  gmouse, utils,modplay;
+uses crt,  gmouse, utils,modplay,math;
 
 const                           { compression constants        }
  CPR_VER4=4;                    {   4 new header               }
@@ -369,14 +364,6 @@ var
 
 
 {$PACKRECORDS DEFAULT}
-
-
-procedure mymove(var src,tar; count: word);
-begin
-    move(src,tar,count*4);
-end;
-//procedure move; external;
-//procedure fillchar; external;
 
 
 
@@ -742,7 +729,8 @@ end;
 procedure readygraph;
 var testdriver,driver,mode,errcode: integer;
 begin
-  SDL_init_video(screen);
+ SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
+ SDL_init_video(screen);
  loadpal('data/main.pal');
  set256colors(colors);
 end;
@@ -913,9 +901,9 @@ end;
 
 begin 
    initializecanary;
+   readygraph;
    initializemod;
    checkbreak:=false;
-   readygraph;
    tcolor:=22;
    bkcolor:=0;
    new(planicons);

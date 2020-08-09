@@ -68,9 +68,6 @@ uses crt, utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay,
 var
  done: boolean;
 
-//{$L mover2}
-procedure mymove2(var src,tar; count: integer); external;
-
 procedure blast(c1,c2,c3: integer);
 var a,b,j: integer;
     temppal: paltype;
@@ -853,7 +850,7 @@ var
 begin
 { mousehide;
  compressfile(tempdir+'/current3',@screen);
- textmode(co80);
+ //textmode(co80);
  case random(2) of
   0: begin
       s:='boss1.dta';
@@ -1096,7 +1093,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   mymove2(screen,s^,16000);
+   mymove(screen,s^,16000);
    max:=60;
    repeat
     for a:=5 to max do
@@ -1126,7 +1123,7 @@ begin
   end
  else if i=1 then
   begin
-   mymove2(screen,s^,16000);
+   mymove(screen,s^,16000);
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1216,7 +1213,7 @@ begin
     if (fastkeypressed) or (mouse.getstatus) then quit:=true;
     if not quit then
      begin
-      mymove2(s^,backgr^,16000);
+      mymove(s^,backgr^,16000);
       asm
        push es
        push ds
@@ -1235,7 +1232,7 @@ begin
        pop es
       end;
       if (fastkeypressed) or (mouse.getstatus) then quit:=true;
-      if not quit then mymove2(backgr^[1],screen,15600);
+      if not quit then mymove(backgr^[1],screen,15600);
      end;
    until quit;
    dispose(s2);

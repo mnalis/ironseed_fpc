@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
+my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+
 my $basename = $ARGV[0];
 my $ppm_name = $basename;
 
@@ -41,9 +43,9 @@ open my $pal_fd, '>', $pal_tmp;
 open my $scr_fd, '>', $scr_tmp;
 
 for (my $i = 0; $i < $height * $width * 3; $i+=3) {
-  my $r = $SCR[$i]; 
-  my $g = $SCR[$i+1];
-  my $b = $SCR[$i+2];
+  my $r = int($SCR[$i] / $COLOR_FACTOR);
+  my $g = int($SCR[$i+1] / $COLOR_FACTOR);
+  my $b = int($SCR[$i+2] / $COLOR_FACTOR);
   my $pal_idx = "$r:$g:$b";
   my $val = $PALLETE{$pal_idx};
   
@@ -65,5 +67,5 @@ close $scr_fd;
 rename $pal_tmp, $pal_final;
 rename $scr_tmp, $scr_final;
 
+print "Written: $scr_final and $pal_final.\n";
 print "Done, used $pal_used / $bpp colors in pallete.\n";
-

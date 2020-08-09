@@ -47,7 +47,7 @@ var i,j: integer;
 begin
  if (paramstr(1)<>'/playseed') and (paramstr(1)<>'/killseed') then
   begin
-   textmode(co80);
+   //textmode(co80);
    writeln('Do not run this program separately.  Please run IS.EXE.');
    halt(4);
   end;
@@ -349,7 +349,7 @@ begin
  if paramstr(2)<>'' then loadspecial;
  if (curfilenum=0) and (not loadgamedata(true)) then
  begin
-      textmode(co80);
+      //textmode(co80);
       halt(3);
  end;
  {HeapStats;}
@@ -384,7 +384,7 @@ reload:
  checkpendingevent;
  mainloop;
  if reloading then goto reload;
- textmode(co80);
+ //textmode(co80);
  while fastkeypressed do readkey;
  halt(4);
 end;

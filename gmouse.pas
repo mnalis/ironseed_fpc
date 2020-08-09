@@ -32,7 +32,7 @@ var
 procedure mousehide;cdecl; external;
 procedure mousesetcursor(i: mouseicontype); cdecl; external;
 procedure mouseshow; cdecl; external;
-procedure mousemove; cdecl; external;
+
 implementation
 
 
@@ -46,9 +46,6 @@ begin
 end;
 
 
-
-
-function mouseinitialize: boolean; external;
 
 
 function mousetype.x:integer;

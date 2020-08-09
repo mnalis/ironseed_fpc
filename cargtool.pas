@@ -254,6 +254,7 @@ begin
       for a:=0 to 109 do
       begin
 	 fadestep(1);
+	 delay(tslice div 4);
 	 for i:=20 to 130-a do
 	    mymove(screen[i+1,90],screen[i,90],36);
 	 if ((131-a)<127) and ((131-a)>109) then
@@ -273,8 +274,11 @@ begin
  for i:=110 to 126 do
   fillchar(temp^[i,94],133,0);
  for a:=1 to 110 do
-  for i:=20 to 20+a do
-   mymove(temp^[110-a+i,90],screen[i,90],36);
+  begin
+   delay(tslice div 4);
+   for i:=20 to 20+a do
+    mymove(temp^[110-a+i,90],screen[i,90],36);
+  end;
  dispose(temp);
  mouseshow;
  plainfadearea(38,78,40,82,12);
@@ -343,7 +347,7 @@ begin
    end;
    plainfadearea(38,78,40,82,12);
    drawfilters;
-   {fadein;}
+   fadein;
    opendoors;
    dispose(cargobuttons);
    mouseshow;

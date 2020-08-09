@@ -1,4 +1,4 @@
-/* by y.salnikov
+/* by y.salnikov, mnalis
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,16 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include <time.h>
 #include <sys/time.h>
 #include <math.h>
 #include <errno.h>
 #ifndef NO_OGL
+#    define GL_GLEXT_LEGACY
 #    include "SDL_opengl.h"
 #    include <GL/gl.h>
 #endif
@@ -50,14 +54,24 @@
 #define SOUNDS_PATH "sound/"
 #define TURBO_FACTOR 60
 
-const double ratio = 640.0 / 480;
+static const double ratio = 640.0 / 480;
 
-SDL_Surface *sdl_screen, *opengl_screen;
-SDL_Thread *video, *keyshandler;
-Mix_Music *music = NULL;
-Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
+static SDL_Surface *sdl_screen;
+static SDL_Thread *events;
+static Mix_Music *music = NULL;
+static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
-
+/* pascal types definitions */
+typedef uint8_t		fpc_char_t;
+typedef	uint8_t		fpc_byte_t;
+typedef	uint8_t		fpc_boolean_t;
+//typedef	int16_t		fpc_smallint_t;
+//typedef	int16_t		fpc_integer_t;
+typedef	uint16_t	fpc_word_t;
+typedef	uint32_t	fpc_dword_t;
+typedef	uint64_t	fpc_qword_t;
+typedef	char *		fpc_pchar_t;
+typedef	fpc_byte_t *	fpc_screentype_t;	/* array of 320x200 bytes */
 
 typedef struct {
 	uint8_t r;
@@ -65,82 +79,55 @@ typedef struct {
 	uint8_t b;
 } pal_color_type;
 
-pal_color_type palette[256];
+static pal_color_type palette[256];
 
-struct {
-	time_t tv_sec;				/* seconds */
-	long tv_nsec;				/* nanoseconds */
-} ts;
-
-
-uint8_t *v_buf;
-uint8_t video_stop = 0;
-uint8_t video_done = 0;
-uint8_t keys_done = 0;
-uint16_t cur_color = 31;
-int audio_rate;
-Uint16 audio_format;
-int audio_channels;
-int audio_buffers;
-int looping;
-int interactive;
-uint8_t audio_open;
-uint8_t keypressed_;
-uint16_t key_, keymod_;
-int32_t mouse_x, mouse_y;
-uint8_t mouse_buttons;
-uint8_t showmouse;
-uint8_t mouse_icon[256];
-uint8_t normal_exit = 1;
-uint8_t fill_color;
-uint16_t cur_x;
-uint16_t cur_y;
-uint8_t cur_writemode;
-uint8_t turbo_mode = 0;
+static volatile uint8_t is_video_initialized = 0;
+static volatile uint8_t is_audio_initialized = 0;
+static uint8_t *v_buf = NULL;
+static volatile uint8_t do_video_stop = 0;	// command video to stop
+static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
+static uint8_t cur_color = 31;
+static const int audio_rate = 44100;
+static uint8_t audio_open = 0;
+static volatile uint8_t keypressed_;
+static volatile uint16_t key_, keymod_;
+static volatile uint16_t mouse_x, mouse_y;
+static volatile uint8_t mouse_buttons;
+static uint8_t showmouse;
+static uint8_t mouse_icon[256];
+static volatile uint8_t normal_exit = 1;
+static uint8_t fill_color;
+static uint16_t cur_x;
+static uint16_t cur_y;
+static uint8_t cur_writemode;
+static volatile uint8_t turbo_mode = 0;
 #ifndef NO_OGL
-GLuint main_texture;
+static SDL_Surface *opengl_screen;
+static GLuint main_texture;
 #endif
-uint8_t resize;
-int resize_x = 640;
-int resize_y = 480;
-int wx0 = 0;
-int wy0 = 0;
+static uint8_t do_resize = 0;
+static volatile int resize_x = 640;
+static volatile int resize_y = 480;
+static volatile int wx0 = 0;
+static volatile int wy0 = 0;
 
-const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
-const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
-const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
-
-
-int dummy(int w, int h);
-int (*resize_callback)(int w, int h) = dummy;
-int32_t mouse_get_x(void);
-int32_t mouse_get_y(void);
+static const uint16_t spec_keys[] = { SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END, SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1, SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10, SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_KP_PERIOD, SDLK_q, SDLK_x, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_7, SDLK_0, SDLK_n, SDLK_p, SDLK_b, SDLK_s, SDLK_u, SDLK_i, 0 };
+static const uint16_t spec_mod[] = { 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, KMOD_SHIFT, 0, 0, 0, 0, 0, 0, KMOD_CTRL, 0, 0, 0, 0, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT };
+static const uint8_t spec_null[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+static const uint8_t spec_map[] = { 75, 77, 72, 80, 83, 71, 117, 79, 73, 81, 84, 59, 60, 61, 62, 63, 64, 103, 16, 43, 45, 10, 16, 45, 120, 121, 122, 123, 126, 129, 49, 25, 48, 31, 22, 23 };
 
 
-void set_resize_callback(int (*callback)(int w, int h))
+static inline void _nanosleep(long nsec)
 {
-	resize_callback = callback;
+	struct timespec ts;
+	ts.tv_sec = 0;
+	ts.tv_nsec = nsec;
+	nanosleep(&ts, NULL);
 }
 
-int dummy(int w, int h)
-{
-	return 0;
-}
-
-
-void stop_video_thread(void);
-void all_done(void);
-
-void memmove_wrapper(void *dest, void *src, int n)
-{
-	memmove(dest, src, n);
-}
-
-void musicDone(void);
 
 /* ------------------------------------------------------ */
-void Slock(SDL_Surface * screen)
+static void Slock(SDL_Surface * screen)
 {
 
 	if (SDL_MUSTLOCK(screen)) {
@@ -152,7 +139,7 @@ void Slock(SDL_Surface * screen)
 }
 
 /* ------------------------------------------------------ */
-void Sulock(SDL_Surface * screen)
+static void Sulock(SDL_Surface * screen)
 {
 
 	if (SDL_MUSTLOCK(screen)) {
@@ -162,8 +149,7 @@ void Sulock(SDL_Surface * screen)
 }
 
 #ifndef NO_OGL
-
-void set_perspective(void)
+static void set_perspective(void)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -171,33 +157,36 @@ void set_perspective(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+#endif
 
 
 
 
-
-int resizeWindow(int width, int height)
+static int resizeWindow(int width, int height)
 {
 	int x0, y0, WWIDTH, WHEIGHT;
 	WWIDTH = width;
 	WHEIGHT = height;
 	if (width / ratio > height) {
-		WWIDTH = height * ratio;
+		WWIDTH = (int) (height * ratio);	// always fits double in int
 		WHEIGHT = height;
 		x0 = (width - WWIDTH) / 2;
 		y0 = 0;
 	} else {
 		WWIDTH = width;
-		WHEIGHT = width / ratio;
+		WHEIGHT = (int) (width / ratio);
 		x0 = 0;
 		y0 = (height - WHEIGHT) / 2;
 	}
+	assert(x0 >= 0);
+	assert(y0 >= 0);
 
+#ifndef NO_OGL
 	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
-
 	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
-
 	set_perspective();
+#endif
+
 	wx0 = x0;
 	wy0 = y0;
 	return 1;
@@ -205,34 +194,9 @@ int resizeWindow(int width, int height)
 
 
 
-void init_opengl(void)
-{
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
-		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
-		SDL_Quit();
-		exit(1);
-	}
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_WM_SetCaption("Ironseed", NULL);
-	glViewport(0, 0, WIDTH, HEIGHT);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-	glShadeModel(GL_SMOOTH);
-	glClearStencil(0);
-	glClearDepth(1.0f);
-	resizeWindow(resize_x, resize_y);
-
-}
-#endif
 
 
-
-
-
-void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
+static void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 {
 
 	Uint32 color = SDL_MapRGB(screen->format, R, G, B);
@@ -241,14 +205,14 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 		{
 			Uint8 *bufp;
 			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x;
-			*bufp = color;
+			*bufp = (Uint8) color;		// 8 bits per color
 		}
 		break;
 	case 2:					// Probably 15-bpp or 16-bpp 
 		{
 			Uint16 *bufp;
 			bufp = (Uint16 *) screen->pixels + y * screen->pitch / 2 + x;
-			*bufp = color;
+			*bufp = (Uint16) color;		// 16 bits per color
 		}
 		break;
 	case 3:					// Slow 24-bpp mode, usually not used 
@@ -256,13 +220,13 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 			Uint8 *bufp;
 			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x * 3;
 			if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
-				bufp[0] = color;
-				bufp[1] = color >> 8;
-				bufp[2] = color >> 16;
+				bufp[0] = (Uint8) color;		// always 8 bits per R/G/B value
+				bufp[1] = (Uint8) (color >> 8);
+				bufp[2] = (Uint8) (color >> 16);
 			} else {
-				bufp[2] = color;
-				bufp[1] = color >> 8;
-				bufp[0] = color >> 16;
+				bufp[2] = (Uint8) color;
+				bufp[1] = (Uint8) (color >> 8);
+				bufp[0] = (Uint8) (color >> 16);
 			}
 		}
 		break;
@@ -277,19 +241,61 @@ void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
 
 }
 
-void show_cursor(void)
+fpc_char_t mouse_get_status(void)
+{
+	uint8_t t;
+	t = mouse_buttons;
+	mouse_buttons = 0;
+	//if (t) printf ("mouse buttons=%d, coords=%d,%d\r\n", t, mouse_get_x(), mouse_get_y());
+	return t;
+}
+
+fpc_dword_t mouse_get_x(void)
+{
+	uint32_t x;
+	double rx, rx0;
+	if (resize_x == 0)
+		return 0;
+	rx = (double) (mouse_x) / (double) (resize_x);
+	rx0 = (double) (wx0) / (double) (resize_x);
+	x = (uint32_t) (WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
+	x = (x - X0) / XSCALE;
+	if (x > 319)
+		x = 319;
+	return x;
+}
+
+fpc_dword_t mouse_get_y(void)
+{
+	uint32_t y;
+	double ry, ry0;
+	if (resize_y == 0)
+		return 0;
+	ry = (double) (mouse_y) / (double) (resize_y);
+	ry0 = (double) (wy0) / (double) (resize_y);
+	y = (uint32_t) (HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
+	y = (y - Y0) / YSCALE;
+	if (y > 199)
+		y = 199;
+	return y;
+}
+
+
+static void show_cursor(void)
 {
 	uint16_t mx, my, mw, mh, mx0, my0;
 	uint8_t b;
 	pal_color_type c;
 
 	if (showmouse) {
-		mx0 = mouse_get_x();
-		my0 = mouse_get_y();
-		mw = (319 - mx0);
+		mx0 = (uint16_t) mouse_get_x();		// 16 bits are always more than enough
+		my0 = (uint16_t) mouse_get_y();
+		assert (mx0 < 320);
+		mw = (uint16_t) (319 - mx0);
 		if (mw > 15)
 			mw = 15;
-		mh = (199 - my0);
+		assert (my0 < 200);
+		mh = (uint16_t) (199 - my0);
 		if (mh > 15)
 			mh = 15;
 		for (my = 0; my <= mh; my++)
@@ -297,10 +303,13 @@ void show_cursor(void)
 				b = mouse_icon[mx + 16 * my];
 				if (b != 255) {
 					c = palette[b];
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, c.r << 2, c.g << 2, c.b << 2);
+					assert (c.r < 64);
+					assert (c.g < 64);
+					assert (c.b < 64);
+					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 				}
 			}
 
@@ -308,156 +317,66 @@ void show_cursor(void)
 
 }
 
-int video_output(void *notused)
+void musicDone(void)
 {
-	uint16_t vga_x, vga_y;
-	pal_color_type c;
-	static uint8_t init_flag;
-
-	ts.tv_sec = 0;
-	ts.tv_nsec = 10000000;
-	while (!video_stop) {
-#ifndef NO_OGL
-		if ((init_flag == 0)) {
-			init_flag = 1;
-			init_opengl();
-			glGenTextures(1, &main_texture);
-		}
-		if (resize) {
-			resize = 0;
-			resizeWindow(resize_x, resize_y);
-		}
-#endif
-		Slock(sdl_screen);
-		for (vga_y = 0; vga_y < 200; vga_y++)
-			for (vga_x = 0; vga_x < 320; vga_x++) {
-				c = palette[v_buf[vga_x + 320 * vga_y]];
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-				DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, c.r << 2, c.g << 2, c.b << 2);
-			}
-
-
-		show_cursor();
-		Sulock(sdl_screen);
-		SDL_Flip(sdl_screen);
-#ifndef NO_OGL
-		glLoadIdentity();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
-		glEnable(GL_TEXTURE_2D);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-		glBindTexture(GL_TEXTURE_2D, main_texture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, sdl_screen->pixels);
-
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0, 1.0);
-		glVertex2f(0.0, 0.0);
-		glTexCoord2f(1.0, 1.0);
-		glVertex2f(1.0, 0.0);
-		glTexCoord2f(1.0, 0.0);
-		glVertex2f(1.0, 1.0);
-		glTexCoord2f(0.0, 0.0);
-		glVertex2f(0.0, 1.0);
-		glEnd();
-		glFlush();
-		SDL_GL_SwapBuffers();
-#endif
-		nanosleep(ts);
+	if (audio_open) {
+		Mix_HaltMusic();
+		Mix_FreeMusic(music);
 	}
-	video_done = 1;
-	nanosleep(ts);
+	music = NULL;
+}
+
+/* stops audio and video. 
+ * Normal exit from pascal calls this before finishing.
+ * Must not terminate program - just stop all activities, wait for threads to finish, and free resources.
+ * Pascal code must not call anything from c_utils.c ever again after this is called!
+ */
+void all_done(void)
+{
+	musicDone();
+
+	do_video_stop = 1;
+	while (!is_video_finished)
+		sleep(0);
 	SDL_Quit();
-	return 0;
 }
 
-int handle_keys(void *useless)
+/* initiate exit from inside event_thread(), due to same error or forced close window event
+ * event_thread() then must finish its near-infinite loop, set is_video_finished=1, and terminate thread  */
+static int initiate_abnormal_exit(void)
 {
-	SDL_Event event;
-	while (!video_stop) {
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				stop_video_thread();
-				normal_exit = 0;
-				all_done();
-				SDL_Quit();
-				exit(4);
-			}
-			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_SCROLLOCK) {
-					turbo_mode = 1;
-				} else {
-					uint8_t key_found = 0, key_index = 0;
-					uint16_t event_mod = event.key.keysym.mod & (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-					//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
-
-					/* traverse list of all special keys and their modifiers, and verify if we match */
-					while (spec_keys[key_index]) {
-						//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event_mod & spec_mod[key_index]);
-						if ((spec_mod[key_index] == 0) || (event_mod & spec_mod[key_index]))
-							if (spec_keys[key_index] == event.key.keysym.sym)
-								key_found = 2;
-						key_index++;
-						//if (!key_found) printf (" No match.\r\n");
-					}
-
-					if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
-						key_found = 1;
-					}
-
-					if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
-						keypressed_ = 1;
-						key_ = event.key.keysym.sym;
-						keymod_ = event_mod;
-
-					}
-					//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
-				}
-			}
-			if (event.type == SDL_KEYUP) {
-				if (event.key.keysym.sym == SDLK_SCROLLOCK) {
-					turbo_mode = 0;
-				}
-			}
-
-			if (event.type == SDL_MOUSEMOTION) {
-				mouse_x = event.motion.x;
-				mouse_y = event.motion.y;
-			}
-			if (event.type == SDL_MOUSEBUTTONDOWN) {	//If the left mouse button was pressed
-				if (event.button.button == SDL_BUTTON_LEFT) {
-					mouse_buttons = 0x01;
-				}
-			}
-			if (event.type == SDL_VIDEORESIZE) {
-				resize = 1;
-				resize_x = event.resize.w;
-				resize_y = event.resize.h;
-			}
-
-
-		}
-		/* we are abusing threads with SDL, and it is wonder it works at all.
-		   This delay makes it not crash on startup somehow. 
-		   See https://github.com/mnalis/ironseed_fpc/issues/25 for details */
-		SDL_Delay(50);
-	}
-	keys_done = 1;
+	normal_exit = 0;
+	musicDone();
+	do_video_stop = 1;
 	return 0;
 }
 
+/* called from main pascal thread on delay() or SDL_init_video() and possibly other often used functions, to abort cleanly if abnormal condition was detected */
+static void abort_if_abnormal_exit(void)
+{
+	if (is_video_finished && !normal_exit) {
+		SDL_Quit();
+		exit(4);
+	}
+}
 
 
-
-
-void SDL_init_video(uint8_t * vga_buf)
+/*
+ * real video hardware initialization.
+ * must be only called from event_thread() thread which did SDL_SetVideoMode() - not from main pascal thread!
+ */
+static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
 
-	SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
+	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
+		printf("Unable to initialize SDL: %s\n", SDL_GetError());
+		return initiate_abnormal_exit();
+	}
+	is_audio_initialized = 1;
+
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
@@ -465,12 +384,11 @@ void SDL_init_video(uint8_t * vga_buf)
 		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 	} else
 		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-
-
 #endif
+
 	if (sdl_screen == NULL) {
 		printf("Unable to set %dx%d video: %s\n", WIDTH, HEIGHT, SDL_GetError());
-		exit(50);
+		return initiate_abnormal_exit();
 	}
 	SDL_ShowCursor(SDL_DISABLE);
 	Slock(sdl_screen);
@@ -480,7 +398,7 @@ void SDL_init_video(uint8_t * vga_buf)
 		}
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
-//              ---- copy - paste ----
+//   ---- copy - paste ----
 	Slock(sdl_screen);
 	for (y = 0; y < HEIGHT; y++)
 		for (x = 0; x < WIDTH; x++) {
@@ -488,37 +406,208 @@ void SDL_init_video(uint8_t * vga_buf)
 		}
 	Sulock(sdl_screen);
 	SDL_Flip(sdl_screen);
-//   -------------------------  
-	v_buf = vga_buf;
-	video_stop = 0;
-	video_done = 0;
-	video = SDL_CreateThread(video_output, NULL);
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	keyshandler = SDL_CreateThread(handle_keys, NULL);
+//   -------------------------
+
+#ifndef NO_OGL
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
+		printf("Can't set OpenGL mode: %s\n", SDL_GetError());
+		return initiate_abnormal_exit();
+	}
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_WM_SetCaption("Ironseed", NULL);
+	glViewport(0, 0, WIDTH, HEIGHT);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_POINT_SMOOTH);
+	glShadeModel(GL_SMOOTH);
+	glClearStencil(0);
+	glClearDepth(1.0f);
+	resizeWindow(resize_x, resize_y);
+
+	glGenTextures(1, &main_texture);
+#endif
+
+	return 1;	// init OK
 }
 
-void stop_video_thread(void)
+static int video_output_once(void)
 {
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
+	uint16_t vga_x, vga_y;
+	pal_color_type c;
+
+	if (!is_video_initialized) {
+		if (!SDL_init_video_real())
+			return 0;
+		is_video_initialized = 1;
+	}
+	if (do_resize) {
+		do_resize = 0;
+		resizeWindow(resize_x, resize_y);
+	}
+	Slock(sdl_screen);
+	for (vga_y = 0; vga_y < 200; vga_y++)
+		for (vga_x = 0; vga_x < 320; vga_x++) {
+			c = palette[v_buf[vga_x + 320 * vga_y]];
+			assert (c.r < 64);
+			assert (c.g < 64);
+			assert (c.b < 64);
+			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+		}
+
+
+	show_cursor();
+	Sulock(sdl_screen);
+#ifndef NO_OGL
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glBindTexture(GL_TEXTURE_2D, main_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, sdl_screen->pixels);
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 1.0);
+	glVertex2f(0.0, 0.0);
+	glTexCoord2f(1.0, 1.0);
+	glVertex2f(1.0, 0.0);
+	glTexCoord2f(1.0, 0.0);
+	glVertex2f(1.0, 1.0);
+	glTexCoord2f(0.0, 0.0);
+	glVertex2f(0.0, 1.0);
+	glEnd();
+	glFlush();
+	SDL_GL_SwapBuffers();
+#else
+	SDL_Flip(sdl_screen);
+#endif
+	return 1;	// no errors
 }
 
-void setrgb256(uint8_t palnum, uint8_t r, uint8_t g, uint8_t b)	// set palette
+
+
+
+static int handle_events_once(void)
+{
+	SDL_Event event;
+	assert(is_video_initialized);
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			return initiate_abnormal_exit();
+		}
+		if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+				turbo_mode = 1;
+			} else {
+				uint8_t key_found = 0, key_index = 0;
+				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
+				//printf ("SDL_KEYDOWN keysym.sym: %"PRIu16" keysym.mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.mod);
+
+				/* traverse list of all special keys and their modifiers, and verify if we match */
+				while (spec_keys[key_index]) {
+					//printf (" check key_index=%"PRIu8", spec_mod[key_index]=%"PRIu16" AND=%"PRIu16" -- ", key_index, spec_mod[key_index], event_mod & spec_mod[key_index]);
+					if ((spec_mod[key_index] == 0) || (event_mod & spec_mod[key_index]))
+						if (spec_keys[key_index] == event.key.keysym.sym)
+							key_found = 2;
+					key_index++;
+					//if (!key_found) printf (" No match.\r\n");
+				}
+
+				if ((event.key.keysym.sym <= 255) && (event_mod == 0)) {	/* regular ASCII key, and no modifiers, process as normal */
+					key_found = 1;
+				}
+
+				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
+					keypressed_ = 1;
+					key_ = event.key.keysym.sym;
+					keymod_ = event_mod;
+
+				}
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" key_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, key_, keymod_);
+			}
+		}
+		if (event.type == SDL_KEYUP) {
+			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+				turbo_mode = 0;
+			}
+		}
+
+		if (event.type == SDL_MOUSEMOTION) {
+			int32_t ex, ey;
+			ex = event.motion.x;
+			ey = event.motion.y;
+			assert (ex >= 0);
+			assert (ex < UINT16_MAX);
+			assert (ey >= 0);
+			assert (ey < UINT16_MAX);
+			mouse_x = (uint16_t) ex;
+			mouse_y = (uint16_t) ey;
+		}
+		if (event.type == SDL_MOUSEBUTTONDOWN) {	//If the left mouse button was pressed
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				mouse_buttons = 0x01;
+			}
+		}
+		if (event.type == SDL_VIDEORESIZE) {
+			resize_x = event.resize.w;
+			resize_y = event.resize.h;
+			do_resize = 1;
+		}
+	}
+	return 1; 	// events without error
+}
+
+
+static int event_thread(void *notused)
+{
+	while (!do_video_stop) {
+		if (!video_output_once())	/* updates screen, and on startup initializes all of SDL if not done already */
+			break;			/* some error, probably video/audio failed to initialize or something, abort */
+		if (!handle_events_once())	/* keyboard, mouse, windows resize/close, and more */
+			break;			/* some error like SDL_QUIT, abort */
+
+		SDL_Delay(10);			/* give up some time to other threads */
+	}
+	is_video_finished = 1;
+	//_nanosleep(10000000);
+	return 0;	// and thread terminates
+}
+
+
+
+void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
+{
+	v_buf = vga_buf;
+	do_video_stop = 0;
+	is_video_finished = 0;
+	events = SDL_CreateThread(event_thread, NULL);
+	while (!(is_video_initialized || is_video_finished))
+		SDL_Delay(100);
+}
+
+
+void setrgb256(const fpc_byte_t palnum, const fpc_byte_t r, const fpc_byte_t g, const fpc_byte_t b)	// set palette
 {
 	palette[palnum].r = r;
 	palette[palnum].g = g;
 	palette[palnum].b = b;
 }
 
-void getrgb256_(uint8_t palnum, uint8_t * r, uint8_t * g, uint8_t * b)	// get palette
+void getrgb256_(const fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byte_t * b)	// get palette
 {
 	*r = palette[palnum].r;
 	*g = palette[palnum].g;
 	*b = palette[palnum].b;
 }
 
-void set256Colors(pal_color_type * pal)	// set all palette
+void set256colors(pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -532,10 +621,11 @@ void set256Colors(pal_color_type * pal)	// set all palette
 
 void sdl_mixer_init(void)
 {
-	audio_rate = 44100;
-	audio_format = AUDIO_S16;
-	audio_channels = 2;
-	audio_buffers = 4096;
+	static const Uint16 audio_format = AUDIO_S16;
+	static const int audio_channels = 2;
+	static const int audio_buffers = 4096;
+
+	assert (is_audio_initialized);
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
 		audio_open = 0;
 		printf("Unable to open audio!\n");
@@ -544,23 +634,16 @@ void sdl_mixer_init(void)
 	}
 }
 
-void musicDone(void)
-{
-	if (audio_open) {
-		Mix_HaltMusic();
-		Mix_FreeMusic(music);
-	}
-	music = NULL;
-}
 
-void play_mod(uint8_t loop, char *filename)
+void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 {
 	int l;
-	if (!audio_open)
-		return;
 
 	if (music != NULL)
 		musicDone();
+
+	if (!audio_open)
+		return;
 
 	music = Mix_LoadMUS(filename);
 	/* This begins playing the music - the first argument is a
@@ -581,7 +664,6 @@ void play_mod(uint8_t loop, char *filename)
 	   exactly that */
 	Mix_HookMusicFinished(musicDone);
 	Mix_VolumeMusic(128);
-
 }
 
 void haltmod(void)
@@ -592,52 +674,45 @@ void haltmod(void)
 }
 
 
-uint64_t delta_usec(void)
+static uint64_t delta_usec(void)
 {
 	uint64_t cur_usec, tmp;
 	static uint64_t old_usec;
 	struct timeval tv;
 
 	gettimeofday(&tv, NULL);
-	cur_usec = tv.tv_sec * 1000000L + tv.tv_usec;
+	cur_usec = (uint64_t) tv.tv_sec * 1000000L + (uint64_t) tv.tv_usec;	// struct timeval elements should never be negative
 	tmp = cur_usec - old_usec;
 	old_usec = cur_usec;
 	return tmp;
 }
 
-void delay(uint16_t ms)
+void delay(const fpc_word_t ms)
 {
 	static uint64_t err;
 	int64_t us = 1;
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 5000;
 	delta_usec();
-	us = (ms * 1000 * TIMESCALE) - err;
+	us = (int64_t) (ms * 1000 * TIMESCALE) - (int64_t) err;	// we're always small enough so convert to int64 is not a problem
 	if (turbo_mode)
 		us /= TURBO_FACTOR;
 	while (us > 0) {
-		us -= delta_usec();
-		nanosleep(ts2);
+		us -= (int64_t) delta_usec();	// delta_usec() will always be small, so 63bits are always OK
+		_nanosleep(5000);
 	}
-	err = -us;
-	if (video_done && !normal_exit)
-		exit(4);
+	err = (uint64_t) -us;		// while(us>0) guarantees that "us <= 0" now
+	abort_if_abnormal_exit();
 }
 
-void upscroll(uint8_t * img)
+void upscroll(const fpc_screentype_t img)	// 320x200 bytes 
 {
 	uint16_t y;
 	for (y = 1; y < 100; y++) {
-		memmove(v_buf + (320 * (200 - y)), img, 320 * (y));
+		memmove(v_buf + (320 * (200 - y)), img, 320U * y);
 		delay(5);
 	}
 }
 
-void scale_img(uint16_t x0s, uint16_t y0s, uint16_t widths, uint16_t heights, uint16_t x0d, uint16_t y0d, uint16_t widthd, uint16_t heightd, uint8_t * s, uint8_t * d)
+void scale_img(const fpc_word_t x0s, const fpc_word_t y0s, const fpc_word_t widths, const fpc_word_t heights, const fpc_word_t x0d, const fpc_word_t y0d, const fpc_word_t widthd, const fpc_word_t heightd, const fpc_screentype_t s, fpc_screentype_t d)
 {
 	uint16_t xd, yd;
 	double kx, ky;
@@ -650,68 +725,58 @@ void scale_img(uint16_t x0s, uint16_t y0s, uint16_t widths, uint16_t heights, ui
 
 }
 
-void setcolor(uint16_t color)
+void setcolor(const fpc_word_t color)
 {
-	cur_color = color;
+	assert(color < 256);
+	cur_color = (uint8_t) color;
 }
 
-void draw_pixel(uint16_t x, uint16_t y)
+static void draw_pixel(int16_t x, int16_t y)
 {
+	assert (x >= 0);
+	assert (x < 320);
+	assert (y >= 0);
+	assert (y < 200);
 	if (cur_writemode)
 		v_buf[x + 320 * y] = v_buf[x + 320 * y] ^ cur_color;
 	else
 		v_buf[x + 320 * y] = cur_color;
 }
 
-void circle(uint16_t x, uint16_t y, uint16_t r)
+void circle(const fpc_word_t x, const fpc_word_t y, const fpc_word_t r)
 {
-	int64_t xx, yy;
-	const float E = 0.9;
+	int16_t xx, yy;
+	const double E = 0.9;
 	xx = 0;
-	yy = r;
-	draw_pixel(x + xx, (y + yy * E));
-	draw_pixel(x - xx, (y + yy * E));
-	draw_pixel(x + xx, (y - yy * E));
-	draw_pixel(x - xx, (y - yy * E));
+	yy =(int16_t) r;	// we're confident it will always fit in < 32767. Also, draw_pixel() does sanity checks.
+	draw_pixel((int16_t) (x + xx), (int16_t) (y + yy * E));
+	draw_pixel((int16_t) (x - xx), (int16_t) (y + yy * E));
+	draw_pixel((int16_t) (x + xx), (int16_t) (y - yy * E));
+	draw_pixel((int16_t) (x - xx), (int16_t) (y - yy * E));
 	while (yy >= 1) {
-		yy = yy - 1;
+		yy = (int16_t) (yy - 1);
 		if ((xx * xx) + (yy * yy) < (r * r))
-			xx = xx + 1;
+			xx = (int16_t) (xx + 1);
 		if ((xx * xx) + (yy * yy) < (r * r))
-			yy = yy + 1;
-		draw_pixel(x + xx, (y + yy * E));
-		draw_pixel(x - xx, (y + yy * E));
-		draw_pixel(x + xx, (y - yy * E));
-		draw_pixel(x - xx, (y - yy * E));
-
+			yy = (int16_t) (yy + 1);
+		draw_pixel((int16_t) (x + xx), (int16_t) (y + yy * E));
+		draw_pixel((int16_t) (x - xx), (int16_t) (y + yy * E));
+		draw_pixel((int16_t) (x + xx), (int16_t) (y - yy * E));
+		draw_pixel((int16_t) (x - xx), (int16_t) (y - yy * E));
 	}
-
 }
 
-uint8_t key_pressed(void)
+fpc_byte_t key_pressed(void)
 {
 	uint8_t k;
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
 	k = keypressed_;
 //      keypressed=0;
-	nanosleep(ts2);
+	_nanosleep(500000);
 	return k;
-
-
 }
 
-uint8_t readkey(void)
+fpc_char_t readkey(void)
 {
-
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
 	static uint8_t null_key, key_index;
 	uint8_t key;
 
@@ -739,94 +804,37 @@ uint8_t readkey(void)
 				key = 0;
 		}
 	}
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
 	keypressed_ = 0;
-	nanosleep(ts2);
+	_nanosleep(500000);
 	return key;
 }
 
-uint8_t readkey_raw(void)
+
+void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
-	struct {
-		time_t tv_sec;			/* seconds */
-		long tv_nsec;			/* nanoseconds */
-	} ts2;
-
-	ts2.tv_sec = 0;
-	ts2.tv_nsec = 500000;
-	keypressed_ = 0;
-	nanosleep(ts2);
-	return key_;
-
-}
-
-
-uint8_t mouse_get_status(void)
-{
-	uint8_t t;
-	t = mouse_buttons;
-	mouse_buttons = 0;
-	//if (t) printf ("mouse buttons=%d, coords=%d,%d\r\n", t, mouse_get_x(), mouse_get_y());
-	return t;
-}
-
-int32_t mouse_get_x(void)
-{
-	int32_t x;
-	double rx, rx0;
-	if (resize_x == 0)
-		return 0;
-	rx = (double) (mouse_x) / (double) (resize_x);
-	rx0 = (double) (wx0) / (double) (resize_x);
-	x = WIDTH * ((rx - rx0) / (1 - 2 * rx0));
-	x = (x - X0) / XSCALE;
-	if (x < 0)
-		x = 0;
-	if (x > 319)
-		x = 319;
-	return x;
-}
-
-int32_t mouse_get_y(void)
-{
-	int32_t y;
-	double ry, ry0;
-	if (resize_y == 0)
-		return 0;
-	ry = (double) (mouse_y) / (double) (resize_y);
-	ry0 = (double) (wy0) / (double) (resize_y);
-	y = HEIGHT * ((ry - ry0) / (1 - 2 * ry0));
-	y = (y - Y0) / YSCALE;
-	if (y < 0)
-		y = 0;
-	if (y > 199)
-		y = 199;
-	return y;
-}
-
-
-void rectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
-{
-	uint16_t i;
+	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
+	assert (x1 < 320);
+	assert (x2 < 320);
+	assert (y1 < 200);
+	assert (y2 < 200);
 	if (x2 > x1)
-		for (i = x1; i < x2; i++) {
-			draw_pixel(i, y1);
-			draw_pixel(i, y2);
+		for (i = (int16_t) x1; i < (int16_t) x2; i++) {
+			draw_pixel(i, (int16_t) y1);
+			draw_pixel(i, (int16_t) y2);
 	} else
-		for (i = x2; i < x1; i++) {
-			draw_pixel(i, y1);
-			draw_pixel(i, y2);
+		for (i = (int16_t) x2; i < (int16_t) x1; i++) {
+			draw_pixel(i, (int16_t) y1);
+			draw_pixel(i, (int16_t) y2);
 		}
 	if (y2 > y1)
-		for (i = y1; i < y2; i++) {
-			draw_pixel(x1, i);
-			draw_pixel(x2, i);
+		for (i = (int16_t) y1; i < (int16_t) y2; i++) {
+			draw_pixel((int16_t) x1, i);
+			draw_pixel((int16_t) x2, i);
 	} else
-		for (i = y2; i < y1; i++) {
-			draw_pixel(x1, i);
-			draw_pixel(x2, i);
+		for (i = (int16_t) y2; i < (int16_t) y1; i++) {
+			draw_pixel((int16_t) x1, i);
+			draw_pixel((int16_t) x2, i);
 		}
 
 
@@ -844,50 +852,45 @@ void mouseshow(void)
 
 void mousesetcursor(uint8_t * icon)
 {
-	memcpy(mouse_icon, icon, 256);
+	memcpy(mouse_icon, icon, 16*16);
 }
 
-void all_done(void)
-{
-	musicDone();
-	video_stop = 1;
-	while (!video_done)
-		sleep(0);
-	while (!keys_done)
-		sleep(0);
-}
 
-void setmodvolumeto(uint16_t vol)
+void setmodvolumeto(const fpc_word_t vol)
 {
 	if (!audio_open)
 		return;
 	Mix_VolumeMusic(vol / 2);
 }
 
-void move_mouse(uint16_t x, uint16_t y)
+void move_mouse(const fpc_word_t x, const fpc_word_t y)
 {
 	double rx0, ry0;
+	fpc_word_t xx, yy;
+	xx = x;
+	yy = y;
 
-	if (x > 319)
-		x = 319;
-	x = x * XSCALE + X0;
+	if (xx > 319)
+		xx = 319;
+	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = ((double) x * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x);
+	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
 
-	if (y > 199)
-		y = 199;
-	y = y * YSCALE + Y0;
+	if (yy > 199)
+		yy = 199;
+	yy = (fpc_word_t) (yy * YSCALE + Y0);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	mouse_y = ((double) y * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y);
+	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
 
 	SDL_WarpMouse(mouse_x, mouse_y);
 }
 
-void play_sound(char *filename, uint16_t rate)
+void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 {
-
 	FILE *f;
-	int32_t length, readed, r, i;
+	long l;
+	uint32_t i;
+	size_t length, loaded, r, remains;
 	int8_t *sound_raw, chan;
 	float k;
 	int16_t *sound, smp;
@@ -897,10 +900,12 @@ void play_sound(char *filename, uint16_t rate)
 		return;
 
 	fn = malloc(256);
+	assert(fn != NULL);
 	s1 = strdup(filename);
+	assert(s1 != NULL);
 	s = s1;
 	while (*s) {
-		*s = toupper(*s);
+		*s = (char) toupper(*s);	// toupper(3) works with int, but only defined on char
 		s++;
 	}
 	strcpy(fn, SOUNDS_PATH);
@@ -908,19 +913,28 @@ void play_sound(char *filename, uint16_t rate)
 	f = fopen(fn, "rb");
 	if (f == NULL) {
 		printf("Can't open file %s\n", fn);
+		free(fn);
+		free(s1);
 		return;
 	}
 	fseek(f, 0, SEEK_END);
-	length = ftell(f);
+	l = ftell(f);
+	assert(l >= 0);
+	length = (size_t) l;
 	fseek(f, 0, SEEK_SET);
 	sound_raw = malloc(length);
-	readed = 0;
-	while (readed < length) {
-		r = fread(sound_raw + readed, 1, length - readed, f);
-		if (r >= 0)
-			readed += r;
+	assert(sound_raw != NULL);
+	loaded = 0;
+	while (loaded < length) {
+		remains = length - loaded;
+		r = fread(sound_raw + loaded, 1, remains, f);
+		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
+			loaded += r;
 		else {
 			printf("Can't read %s @%ld error= %d\n", fn, ftell(f), errno);
+			free(sound_raw);
+			free(fn);
+			free(s1);
 			return;
 		}
 	}
@@ -929,9 +943,13 @@ void play_sound(char *filename, uint16_t rate)
 	free(s1);
 // resample and play    
 	k = (float) rate / (float) audio_rate;
-	sound = calloc(1 + (length / k), 4);
-	for (i = 0; i < (length / k); i++) {
-		smp = (sound_raw[(uint32_t) (i * k)]) * SOUNDS_VOLUME;
+	uint32_t qwords = (uint32_t) ((float)length / k);	// not really exact, so we'll allocate + 1 quadword extra
+	sound = calloc(1 + qwords, 4);
+	assert(sound != NULL);
+	for (i = 0; i < qwords; i++) {
+		uint32_t idx = (uint32_t) ((float) i * k);	// k is float, so this does not look really exact, but is seems to work...
+		int32_t test_smp = (sound_raw[idx] * SOUNDS_VOLUME); assert (test_smp <= INT16_MAX && test_smp >= INT16_MIN);
+		smp = (int16_t) (sound_raw[idx] * SOUNDS_VOLUME);
 		sound[i * 2] = smp;
 		sound[1 + i * 2] = smp;
 //              printf("%d / %d, %d / %d\n\r",i,(uint32_t)(length/k),(int32_t)(i*k),length);
@@ -939,25 +957,24 @@ void play_sound(char *filename, uint16_t rate)
 	free(sound_raw);
 	chan = -1;
 	for (i = 0; i < SOUNDS_MAX_CHANNELS; i++) {
-		if (!Mix_Playing(i)) {
+		if (!Mix_Playing((int) i)) {
 			if (raw_chunks[i] != NULL) {
 				Mix_FreeChunk(raw_chunks[i]);
 				raw_chunks[i] = NULL;
 			}
-			chan = i;
+			assert(i < 256);
+			chan = (int8_t) i;
 			break;
 		}
 	}
 	if (chan >= 0) {
-		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, (uint32_t) (length / k) * 4))) {
+		if (!(raw_chunks[chan] = Mix_QuickLoad_RAW((void *) sound, qwords * 4))) {
 			printf("Mix_QuickLoad_RAW: %s\n", Mix_GetError());
 		}
-		if (sound != NULL)
-			free(sound);
 		Mix_PlayChannel(chan, raw_chunks[chan], 0);
 	}
-
-
+	if (sound != NULL)
+		free(sound);
 }
 
 
@@ -976,15 +993,16 @@ void continuemod(void)
 }
 
 
-void setfillstyle(uint16_t style, uint16_t f_color)
+void setfillstyle(const fpc_word_t style, const fpc_word_t f_color)
 {
-	fill_color = f_color;
+	assert(f_color < 256);
+	fill_color = (uint8_t) f_color;
 	if (style > 1)
 		printf("setfillstyle style=%d\n", style);
 
 }
 
-void bar(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 	uint16_t i, j, x, xe, y, ye;
 //      printf("rect : %d %d %d %d  color %d\n",x1,y1,x2,y2,cur_color);
@@ -1002,6 +1020,7 @@ void bar(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 		y = y2;
 		ye = y1;
 	}
+	assert (ye*320+xe < 320*200);
 	for (j = y; j < ye; j++)
 		for (i = x; i < xe; i++)
 			v_buf[i + 320 * j] = fill_color;
@@ -1011,9 +1030,14 @@ void bar(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 
 
-void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
+void line(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 //      printf("%d,%d - %d,%d\n",x1,y1,x2,y2);
+	assert (x1 < 320);
+	assert (x2 < 320);
+	assert (y1 < 200);
+	assert (y2 < 200);
+
 	int i, dx, dy, sdx, sdy, dxabs, dyabs, x, y, px, py;
 	dx = x2 - x1;				// the horizontal distance of the line
 	dy = y2 - y1;				// the vertical distance of the line
@@ -1031,8 +1055,8 @@ void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 	y = dxabs >> 1;
 	px = x1;
 	py = y1;
-	draw_pixel(px, py);
-	if (dxabs >= dyabs) {		// the line is more horizontal than vertical
+	draw_pixel((int16_t) px, (int16_t) py);	// we trust line() calculations given asserts above and in draw_pixel()
+	if (dxabs >= dyabs) {			// the line is more horizontal than vertical
 		for (i = 0; i < dxabs; i++) {
 			y += dyabs;
 			if (y >= dxabs) {
@@ -1040,9 +1064,9 @@ void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 				py += sdy;
 			}
 			px += sdx;
-			draw_pixel(px, py);
+			draw_pixel((int16_t) px, (int16_t) py);
 		}
-	} else {					// the line is more vertical than horizontal
+	} else {				// the line is more vertical than horizontal
 		for (i = 0; i < dyabs; i++) {
 			x += dxabs;
 			if (x >= dyabs) {
@@ -1050,7 +1074,7 @@ void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 				px += sdx;
 			}
 			py += sdy;
-			draw_pixel(px, py);
+			draw_pixel((int16_t) px, (int16_t) py);
 		}
 	}
 
@@ -1063,44 +1087,49 @@ void line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 
 
 
-void moveto(uint16_t x, uint16_t y)
+void moveto(const fpc_word_t x, const fpc_word_t y)
 {
 	cur_x = x;
 	cur_y = y;
 }
 
-void lineto(uint16_t x, uint16_t y)
+void lineto(const fpc_word_t x, const fpc_word_t y)
 {
 	line(cur_x, cur_y, x, y);
 }
 
-void pieslice(uint16_t x, uint16_t y, uint16_t phi0, uint16_t phi1, uint16_t r)
+void pieslice(const fpc_word_t x, const fpc_word_t y, const fpc_word_t phi0, const fpc_word_t phi1, const fpc_word_t r)
 {
 	int16_t i, j;
+	int32_t pos;
 	double f, f0, f1;
-	const float E = 0.9;
+	const double E = 0.9;
 	f0 = phi0 * M_PI / 180.0;
 	f1 = phi1 * M_PI / 180.0;
-	for (j = -r; j < r; j++)
-		for (i = -r; i < r; i++) {
+	for (j = (int16_t) -r; j < r; j++)
+		for (i = (int16_t) -r; i < r; i++) {
 			f = atan2(j, i);
 			if (f < 0)
 				f += 2 * M_PI;
 			if ((f >= f0) && (f < f1)) {
-				if ((i * i + j * j) <= r * r)
-					v_buf[i + x + 320 * (y - (int) (j * E))] = fill_color;
+				if ((i * i + j * j) <= r * r) {
+					pos = i + x + 320 * (y - (int) (j * E));
+					assert(pos >= 0);
+					assert(pos < 320*200);
+					v_buf[pos] = fill_color;
+				}
 			}
 		}
 }
 
-void setwritemode(uint16_t mode)
+void setwritemode(const fpc_byte_t mode)	/* it can be CopyPut=0 or XorPut=1, so byte is ok, doesn't need to be SmallInt */
 {
 	cur_writemode = mode;
 }
 
-uint8_t playing(void)
+fpc_boolean_t playing(void)
 {
 	if (!audio_open)
 		return 0;
-	return Mix_PlayingMusic();
+	return (fpc_boolean_t) Mix_PlayingMusic();	/* Mix_PlayingMusic() returns 0 or 1, so it is OK for boolean */
 }
