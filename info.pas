@@ -766,6 +766,9 @@ begin
                if infoindex=0 then displaysideview else readyhistoryview;
               end;
             end;
+  'X': editx;
+  'Y': edity;
+  'Z': editz;
   '+': if infoindex<>0 then
         begin
          infoindex:=0;
