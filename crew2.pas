@@ -267,7 +267,7 @@ begin {120,37,294,112}
   begin
    inc(j,2);
    if j>285 then exit;
-   {setcolor((j-16) mod 32+128);}
+   setcolor((j-16) mod 32+128);
     d:=random(6);
     case d of
      0:i:=round(a*part);
