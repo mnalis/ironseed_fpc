@@ -2,7 +2,7 @@ compiler:= fpc
 c_compiler:= gcc
 flags:= -Mtp -g -gl
 #-Aas -ap
-debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vw  -Sa
+debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vw  -Sa -Sy
 # -Cr -CR -Ct   -gh  -gc
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
 cflags:= -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion
