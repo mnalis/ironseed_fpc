@@ -13,10 +13,7 @@ program intro;
 
 ***************************}
 
-{* 
-     $I dsmi.inc, emhm, crt, graph, gmouse, getcpu, dos, version; 
-*}
-uses sdl,utils_,sysutils,gmouse,modplay,version,math;
+uses utils_,sysutils,gmouse,modplay,version,math;
 //var   sdl_scr: PSDL_Surface;
 {* begin
   SDL_Init(SDL_INIT_VIDEO); // Initialize the video SDL subsystem
@@ -649,13 +646,16 @@ begin
   end;
 }
 
+{we should probably typecast this to work under "-Sy" instead of disabling it? see https://wiki.freepascal.org/local_compiler_directives}
+{$T-}
+
     p:=@(s3^);
     move(s1^,(p+k)^,64000-k);
     p:=@(s1^);
     move((p+64000-k)^,s3^,k);
     si:=51453; di:=7210;
     ps2:=@(s2^);
-     ps3:=@(s3^);
+    ps3:=@(s3^);
     repeat
         ps2_:=(@ps2^)+di;
         ps3_:=(@ps3^)+di;
@@ -666,7 +666,7 @@ begin
         inc(di);
         dec(si);
     until(si=0);
-
+{$T+}
 
 
   mousehide;

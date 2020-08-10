@@ -19,8 +19,7 @@ procedure sectorinfo;
 
 implementation
 
-uses crt, utils_, data, gmouse, utils, display, utils2, usecode, modplay,
- weird, journey, heapchk, sysutils;
+uses utils_, data, gmouse, utils, display, utils2, usecode, modplay, weird, journey, heapchk, sysutils;
 
 type
  nearsectype= array[1..37] of nearbytype;
@@ -483,62 +482,6 @@ begin
  displaysector;
 end;
 
-procedure processkey;
-var ans: char;
-    i: byte;
-begin
- ans:=readkey;
- case upcase(ans) of
-  #0: begin
-       ans:=readkey;
-       case ans of
-        #72: rotateit(0);
-        #80: rotateit(1);
-        #75: rotateit(2);
-        #77: rotateit(3);
-        #71: rotatemode:=-1;
-        #79: rotatemode:=1;
-       end;
-      end;
-  '1'..'8': begin
-             i:=ord(ans)-48;
-             if i<>sector then
-              begin
-               undocursor;
-               sector:=i;
-               drawcursor;
-               readysector;
-               tarxr:=0;
-               taryr:=0;
-               tarzr:=0;
-               tarx:=cenx;
-               tary:=ceny;
-               tarz:=cenz;
-               if infoindex=0 then displaysideview else readyhistoryview;
-              end;
-            end;
-  '+': if infoindex<>0 then
-        begin
-         infoindex:=0;
-         plainfadearea(145,177,197,185,5);
-         plainfadearea(145,187,197,195,-5);
-         readysideview;
-        end;
-  '-': if infoindex<>1 then
-        begin
-         infoindex:=1;
-         plainfadearea(145,177,197,185,-5);
-         plainfadearea(145,187,197,195,5);
-         readyhistoryview;
-        end;
-  #27: done:=true;
-  ' ': rotatemode:=0;
-  '`': bossmode;
-  #10: printbigbox(GetHeapStats1,GetHeapStats2);
- end;
- idletime:=0;
-end;
-
 procedure findtarget;
 var minx, miny: integer;
     str1: string[12];
@@ -788,6 +731,66 @@ begin
   fillchar(screen[i,40],90,0);
  mouseshow;
 end;
+
+procedure processkey;
+var ans: char;
+    i: byte;
+begin
+ ans:=readkey_utf8;
+ case upcase(ans) of
+  #0: begin
+       ans:=readkey;
+       case ans of
+        #72: rotateit(0);
+        #80: rotateit(1);
+        #75: rotateit(2);
+        #77: rotateit(3);
+        #71: rotatemode:=-1;
+        #79: rotatemode:=1;
+       end;
+      end;
+  '1'..'8': begin
+             i:=ord(ans)-48;
+             if i<>sector then
+              begin
+               undocursor;
+               sector:=i;
+               drawcursor;
+               readysector;
+               tarxr:=0;
+               taryr:=0;
+               tarzr:=0;
+               tarx:=cenx;
+               tary:=ceny;
+               tarz:=cenz;
+               if infoindex=0 then displaysideview else readyhistoryview;
+              end;
+            end;
+  'X': editx;
+  'Y': edity;
+  'Z': editz;
+  '+': if infoindex<>0 then
+        begin
+         infoindex:=0;
+         plainfadearea(145,177,197,185,5);
+         plainfadearea(145,187,197,195,-5);
+         readysideview;
+        end;
+  '-': if infoindex<>1 then
+        begin
+         infoindex:=1;
+         plainfadearea(145,177,197,185,-5);
+         plainfadearea(145,187,197,195,5);
+         readyhistoryview;
+        end;
+  #27: done:=true;
+  ' ': rotatemode:=0;
+  '`': bossmode;
+  #10: printbigbox(GetHeapStats1,GetHeapStats2);
+ end;
+ idletime:=0;
+end;
+
 
 procedure newsec(n: integer);
 begin

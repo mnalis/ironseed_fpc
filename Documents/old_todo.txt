@@ -69,7 +69,7 @@ planets:
 ability to choose who gets mind drugs
 
 mining:
-	stop deployment on stars until heat shield technology
+	x stop deployment on stars until heat shield technology
 	stop deployment on shielded planets
 	x add depletion stat to planets
 	x - resets on state/mode changes
@@ -77,7 +77,7 @@ mining:
 	adjust mining yield chances
 
 sector:
-	bugfix: clicking on empty sectors causes cursor to go to 0,0,0
+	x bugfix: clicking on empty sectors causes cursor to go to 0,0,0
 
 power:
 	add power generation items
@@ -113,7 +113,7 @@ combat:
 	x (aborted, very hard) use real acceleration
 
 creation:
-	Check strange progress meter behaviour when researching the "glyptic scythe".
+	x Check strange progress meter behaviour when researching the "glyptic scythe".
 	"upgrades" should create an items which are then installed/applied
 	investigate: building multiple upgrades causes loss in parts?
 	investigate: when i build thrust enhancer, my engineer reports the increased thrust BEFORE the report of finishing creation of this module... not important but strange.

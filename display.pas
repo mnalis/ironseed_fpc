@@ -36,8 +36,7 @@ function checkloc(l: integer): boolean;
 
 implementation
 
-uses crt, utils_, data, gmouse, journey, utils, usecode, saveload, utils2,
- comm, weird, modplay;
+uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, weird, modplay;
 
 const
  batmax=32000;

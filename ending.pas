@@ -17,7 +17,7 @@ procedure endgame;
 
 implementation
 
-uses crt, modplay, gmouse, data, utils_;
+uses modplay, gmouse, data, utils_;
 
 type
  bigfonttype= array[0..7] of byte;

@@ -45,8 +45,7 @@ function GetTechnologyLevel(plan : Integer) : Integer;
 
 implementation
 
-uses crt, utils_, data, journey, gmouse, usecode, display, saveload, comm,
- utils, weird;
+uses utils_, data, journey, gmouse, usecode, display, saveload, comm, utils, weird;
 
 type
  scandatatype= array[0..11] of byte;

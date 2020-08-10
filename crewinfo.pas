@@ -19,7 +19,7 @@ procedure crewstats;
 
 implementation
 
-uses crt, data, utils_, gmouse, utils, utils2, weird, modplay;
+uses data, utils_, gmouse, utils, utils2, weird, modplay;
 
 type
  hologramtype= array[35..63,84..120] of byte;

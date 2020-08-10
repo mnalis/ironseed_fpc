@@ -392,11 +392,16 @@ static void abort_if_abnormal_exit(void)
 static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
+	static volatile uint8_t is_sdl_initialized = 0;
+
+	//printf ("SDL_init_video_real called, is_sdl_initialized=%d, is_audio_initialized=%d, is_video_initialized=%d\r\n", is_sdl_initialized, is_audio_initialized, is_video_initialized);
+	assert (!is_sdl_initialized);		/* do not allow double init, or terrible bugs happen down the line! */
 
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
 		printf("Unable to initialize SDL: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
+	is_sdl_initialized = 1;
 	is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
@@ -667,7 +672,12 @@ void sdl_mixer_init(void)
 	static const int audio_channels = 2;
 	static const int audio_buffers = 4096;
 
+	//printf ("sdl_mixer_init called, is_audio_initialized=%d, audio_open=%d\r\n", is_audio_initialized, audio_open);
 	assert (is_audio_initialized);
+	//assert (!audio_open);
+	if (audio_open)		/* avoid double initialization */
+		return;
+
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) {
 		audio_open = 0;
 		printf("Unable to open audio!\r\n");
@@ -705,7 +715,6 @@ void play_mod(const fpc_byte_t loop, const fpc_pchar_t filename)
 	   provides us with a callback routine we can use to do
 	   exactly that */
 	Mix_HookMusicFinished(musicDone);
-	Mix_VolumeMusic(128);
 }
 
 void haltmod(void)
@@ -952,7 +961,8 @@ void setmodvolumeto(const fpc_word_t vol)
 {
 	if (!audio_open)
 		return;
-	Mix_VolumeMusic(vol / 2);
+	assert (vol * 2 <= MIX_MAX_VOLUME);
+	Mix_VolumeMusic(vol * 2);
 }
 
 void move_mouse(const fpc_word_t x, const fpc_word_t y)

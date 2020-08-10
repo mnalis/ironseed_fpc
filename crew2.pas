@@ -19,7 +19,7 @@ procedure psyche;
 
 implementation
 
-uses crt, utils_, gmouse, data, utils, utils2, weird, saveload, modplay, crewtick, heapchk;
+uses utils_, gmouse, data, utils, utils2, weird, saveload, modplay, crewtick, heapchk;
 
 const
  jobs: array[1..6] of string[13] = ('Psychometry','Engineering','  Science  ',' Security ','Astrogation','  Medical  ');
@@ -267,7 +267,7 @@ begin {120,37,294,112}
   begin
    inc(j,2);
    if j>285 then exit;
-   {setcolor((j-16) mod 32+128);}
+   setcolor((j-16) mod 32+128);
     d:=random(6);
     case d of
      0:i:=round(a*part);

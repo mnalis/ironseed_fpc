@@ -13,7 +13,7 @@ program main;
 
 ***************************}
 
-uses sdl,init, gmouse, starter, data,heapchk,crt;
+uses init, gmouse, starter, data,heapchk;
 
 {$O cargtool}
 {$O comm}
@@ -43,6 +43,7 @@ uses sdl,init, gmouse, starter, data,heapchk,crt;
 
 
 begin
+ init_everything;
 // HeapError := @HeapFunc;
  checkparams;
  readydata;
