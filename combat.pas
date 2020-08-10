@@ -106,6 +106,11 @@ end;
 procedure displayshieldpic(n: integer);
 begin
  mousehide;
+ if ship.shield = 0 then { no shield is installed, do not allow moving it }
+  begin
+    n := 0;
+    part := 0;
+  end;
  part:=102/100*ship.shieldopt[3];
  for i:=0 to 6 do
   fillchar(screen[114-round(part)+i,312],4,0);
@@ -648,7 +653,6 @@ begin
    if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)
    else
     begin
-     writeln('debug impact: s=',s, ' n=',n, ' j=',j, ' i=',i, ' a=',a, ' b=',b, ' c=',c);
      a:=round(weapons[b].dmgtypes[j]/100*weapons[b].damage*ship.shieldlevel/100);
      if a<i then
       begin
