@@ -1,3 +1,4 @@
+- add F1-F4, numpad, Z/X to combat keyboard controls
 - fixes crash in combat with no shields
 - reenable biorithyms color from gray to pulsing red
 - implement keyboard shortcuts for entering x/y/z coord in Sector map

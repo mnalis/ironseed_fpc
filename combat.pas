@@ -20,7 +20,7 @@ procedure initiatecombat;
 
 implementation
 
-uses  utils_, data, gmouse, utils, utils2, modplay, weird, saveload, usecode, crewtick;
+uses  utils_, data, gmouse, utils, utils2, modplay, weird, saveload, usecode, crewtick, math;
 
 const
  maxships = 25;
@@ -1131,14 +1131,62 @@ begin
    #0: begin
         ans:=readkey;
         case ans of
-         #71: setdir(1);
-         #72: setdir(2);
-         #73: setdir(3);
-         #75: setdir(4);
-         #77: setdir(6);
-         #79: setdir(7);
-         #80: setdir(8);
-         #81: setdir(9);
+         #71: setdir(1); { home }
+         #72: setdir(2); { up }
+         #73: setdir(3); { PgUp }
+         #75: setdir(4); { left }
+         #77: setdir(6); { right }
+         #79: setdir(7); { end }
+         #80: setdir(8); { down } 
+         #81: setdir(9); { PgDn}
+         #59: if range>5000 then	{ F1 - zoom in}
+               begin
+                displaymap;
+                dec(range,5000);
+                str(range*10:7,str1);
+                printxy(33,110,str1);
+                displaymap;
+               end;
+         #60: if range<5000000 then	{ F2 - zoom out}
+               begin
+                displaymap;
+                inc(range,5000);
+                str(range*10:7,str1);
+                printxy(33,110,str1);
+                displaymap;
+               end;
+         #61: if not autofire then	{ F3 - Active Fire (autofire) }
+               begin
+                autofire:=true;
+                mousehide;
+                for i:=125 to 126 do
+                 fillchar(screen[i,163],52,63);
+                mouseshow;
+               end
+              else
+               begin
+                autofire:=false;
+                mousehide;
+                for i:=125 to 126 do
+                 fillchar(screen[i,163],52,95);
+                mouseshow;
+               end;
+         #62: if not scanning then	{ F4 - Active Radar}
+               begin
+                scanning:=true;
+                mousehide;
+                for i:=187 to 188 do
+                 fillchar(screen[i,163],52,63);
+                mouseshow;
+               end
+              else
+               begin
+                scanning:=false;
+                mousehide;
+                for i:=187 to 188 do
+                 fillchar(screen[i,163],52,95);
+                mouseshow;
+               end;
          #16,#45: begin
 	    if yesnorequest('Do you want to quit?',0,31) then
 	    begin
@@ -1153,6 +1201,17 @@ begin
    end;
   '-': setdir2(1);
   '+': setdir2(2);
+  '7': setdir(1);
+  '8': setdir(2);
+  '9': setdir(3);
+  '4': setdir(4);
+  '5', #13: setdir(5);
+  '6': setdir(6);
+  '1': setdir(7);
+  '2': setdir(8);
+  '3': setdir(9);
+  'Z': displayshieldpic(max(0, ship.shieldopt[3] - 10));	{ 'Z' - shield level down }
+  'X': displayshieldpic(min(100, ship.shieldopt[3] + 10));	{ 'X' - shield level up }
   ' ': switchalienmode;
   '<',',': previoustarget;
   '>','.': nexttarget;
