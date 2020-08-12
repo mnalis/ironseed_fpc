@@ -216,6 +216,7 @@ begin
    90..100: soundeffect('laser7.sam',7000);
  end;
  delay(tslice);
+ // FIXME: this is counterpart to impact(), but with us firing weapons at aliens. Should see all the bugs fixed there (esp. for reflective hull), or no shield at all (b<0)!
  {if (skillcheck(4)) or ((scanning) and (random(100)<20)) then}
  if SkillTest(True, 4, ships^[targetindex].skill - (ord(scanning) * 20), learnchance) then
   begin
@@ -568,29 +569,33 @@ begin
  mouseshow;
 end;
 
+
+{ n=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage received }
 procedure takedamage(n,d: integer);
 var j: integer;
 begin
+ writeln ('    takedamage(type=',n,', damage=', d, ')');
  if dead then exit;
  soundeffect('explode'+chr(49+random(2))+'.sam',9000);
  delay(tslice div 2);
  if d<1 then d:=1;
  case n of
-  1: inc(ship.damages[5],d);
-  2: dec(ship.hulldamage,d);
-  3: dec(ship.hulldamage,d div 2);
-  4: case random(8) of
-      0: inc(ship.damages[1],d);
+ // FIXME: there is no check if damages goes over 100%
+  1: inc(ship.damages[5],d);		{ n=1 Psionioc inflicts damage to damages[5] = Lifesupport }
+  2: dec(ship.hulldamage,d);		{ n=2 Particle damage damages hull }
+  3: dec(ship.hulldamage,d div 2);	{ n=3 Intertial damage damages hull more slowly }
+  4: case random(8) of			{ n=4 Energy damage }
+      0: inc(ship.damages[1],d);	{ damages[1] = Power subsystem }
       1: begin
-          if ship.damages[2]+d>135 then ship.shield:=0;
-          inc(ship.damages[2],d);
+          if ship.damages[2]+d>135 then ship.shield:=0;	{ uninstalls / permanently destroys shield if shield subsystem > 135% damage }
+          inc(ship.damages[2],d);	{ damages[2] = Shield subsystem }
          end;
       2: begin
-          inc(ship.damages[4],d);
+          inc(ship.damages[4],d);	{ damages[4] = Engines subsystem }
           if ship.damages[4]>89 then drawdirection(95);
          end;
       3: begin
-          if ship.damages[3]+d>120 then
+          if ship.damages[3]+d>120 then	{ uninstalles / permanently destroys random weapon if weapons subsystems > 120% damage }
            begin
             j:=random(10)+1;
             if ship.gunnodes[j]>0 then
@@ -600,18 +605,18 @@ begin
               displayweapons;
              end;
            end;
-          inc(ship.damages[3],d);
+          inc(ship.damages[3],d);	{ damages[3] = Weapons subsystem }
          end;
-      4: inc(ship.damages[6],d);
-      5: inc(ship.damages[7],d);
-      6,7: dec(ship.hulldamage,d);
+      4: inc(ship.damages[6],d);	{ damages[6] = Communications subsystem }
+      5: inc(ship.damages[7],d);	{ damages[7] = CPU subsystem }
+      6,7: dec(ship.hulldamage,d);	{ hulldamages should've been called hullintegrity, as it is confusing that extra damage does "dec(hulldamage)" }
      end;
-  5: inc(ship.damages[2],d);
+  5: inc(ship.damages[2],d);		{ damages[2] = Shield subsystem }
  end;
  for j:=1 to 7 do if ship.damages[j]>100 then ship.damages[j]:=100;
  if ship.hulldamage<0 then ship.hulldamage:=0;
  displaydamage;
- if ship.hulldamage=0 then
+ if ship.hulldamage=0 then		{ hull breach - we're dead }
   begin
     if ship.wandering.alienid = 1013 then
     begin
@@ -625,7 +630,7 @@ begin
    dead:=true;
    {quit:=true;}
   end
- else if ship.damages[5]=100 then
+ else if ship.damages[5]=100 then	{ damages [5] = Life support - we're dead }
   begin
     if ship.wandering.alienid = 1013 then
     begin
@@ -639,46 +644,75 @@ begin
    dead:=true;
    {quit:=true;}
   end;
- if ship.shield=1501 then ship.shieldlevel:=ship.damages[2];
+ if ship.shield=1501 then 		{ shield=1501 is reflective hull }
+  begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[2])? otherwise we could have shield which has level higher than damaged subsystem!
+     ship.shieldlevel := 100 - ship.damages[2]; { damages[2] is shield subsystem, drop shield level immedately if reflective hull }
+     writeln ('      reflective hull damage sets shieldlevel to ', ship.shieldlevel);
+  end;
 end;
 
+{ s=ship attacking us; n=weapontype of ship attacking us }
 procedure impact(s,n: integer);
 var a,b,c,j,i: integer;
 begin
- b:=ship.shield-1442;
- for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then
+ b:=ship.shield-1442;	{ weapons[b]=our shield, weapons[n]=attacker's weapon; weapons[] array is generic for some type and readonly }
+ for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
   begin
-   i:=round(weapons[n].dmgtypes[j]/100*weapons[n].damage*5);
-   i:=round(i/100*(100-ships^[s].damages[3]));
-   if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)
+   i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
+       { FIXME: why *5 ?!
+         if some weapon has damage potential of 50GJ and 20% is for 'j' damage type, it should be 10GJ damage for this damage type, isn't it so?)
+         yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25 
+
+         Looks like a bug. It might've been some kind of game balance factor; it takes too long to die without it...
+         But then, it should have simply changed weapon72 to have 5 times as much damage dealing in datafile, instead of kludging it in the code!
+
+         Also, it make reflective hull useless - fist hit 
+       }
+   i:=round(i/100*(100-ships^[s].damages[3])); { damages[3] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
+   writeln ('impact: attacker weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
+
+   if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)	{ if no shield installed, take full damage }
    else
-    begin
-     a:=round(weapons[b].dmgtypes[j]/100*weapons[b].damage*ship.shieldlevel/100);
+    begin		{ some shield is installed }
+     a:=round(weapons[b].dmgtypes[j]/100 * weapons[b].damage * ship.shieldlevel/100); { a=how much damage will we resist in GJ = pct. for that dmgtype * total max shield protection * current shield level percentage }
+     writeln ('  shield', ship.shield, ' resist for dmgtype',j, '=', weapons[b].dmgtypes[j], '% of total shield damage absorption=', weapons[b].damage, 'GJ; OUR CURRENT shield subsystem damage=',ship.damages[2],'% current shield level=', ship.shieldlevel,'%   ; our defense total a=', a, 'GJ');
      if a<i then
-      begin
-       takedamage(j,i);{round((i-a)/100*(100-ships^[s].damages[3])));}
-       ship.shieldlevel:=0;
-       if ship.shield=1501 then ship.damages[2]:=100;
+      begin		{ we've taken MORE damage than our shield can handle }
+       writeln ('    a<i: shield overload; taking residual damage for dmgtype',j,' = ', i-a, 'GJ');
+       takedamage(j,i-a); {if weapon deals 90GJ of damage, and our shield absorbs 80GJ of damage, there will be 10GJ of pass-through damage }
+       ship.shieldlevel:=0; { we've taken more damage than shields can handle, so set current level to zero (as it can't be negative). It will automatically slowly recover up to 100% or less if shield subsystem is damaged }
+       if (ship.shield=1501) and (j>1) then ship.damages[2]:=100;	{ damages[2] is as shield subsystem; shield=1501 is reflective hull (50GJ, no psionic defence, about 33% for each of the rest; but it does not use energy }
+          { psionic damage just passes through reflective hull and inflict damage, but if any of the other damage types physically damages the reflective hull to zero or below, whole reflective hull collapses }
+       displaydamage;
       end
      else
-      begin
-       a:=round((i/(ship.shieldlevel/100*weapons[b].damage)*100));
-       c:=ship.shieldlevel-a;
+      begin		{ we've taken LESS damage than our shield can handle }
+       a:=round((i/(ship.shieldlevel/100 *weapons[b].damage)*100));	{ pct current shield level * total shield protection in GJ }
+       { FIXME: what are we actually calculating here in a?! looks strange, but seems to work in practice...
+
+        current_shield_protection = ship.shieldlevel/100 *weapons[b].damage;	// pct current shield level * total shield protection in GJ. FIXME but does not take into account damagetype? because it just wants to move our shield slider which is one type only 0-100%?
+        a := round (attacking_damage_in_GJ / current_shield_protection_in_GJ * 100 )
+        a is by how much would shield level in PCT be reduced
+       }
+       c:=ship.shieldlevel-a; 		{ c will be our new ship.shieldlevel in pct }
+       writeln ('    shield still holding; shield protection a=', a, 'GJ, new shield level c=', c, '%');
        if c<0 then
-        begin
-         takedamage(5,random(3)+1);
-         if ship.shield=1501 then
+        begin		{ shield would be reduced below zero }
+         writeln ('    Shield taking damage afterall (total shield malfunction if reflective hull)');
+         takedamage(5,random(3)+1);	{ shield subsystem takes 1-3 damage }
+         if ship.shield=1501 then	{ shield=1501 is reflective hull }
           begin
            ship.damages[2]:=100;
            displaydamage;
           end;
-         ship.shieldlevel:=1;
+         ship.shieldlevel:=0;
         end
        else
-        begin
+        begin		{ shield stays in positive }
          ship.shieldlevel:=c;
-         if ship.shield=1501 then
+         if ship.shield=1501 then	{ shield=1501 is reflective hull }
           begin
+           writeln ('    Shield stays above zero; reflective hull damage shield subsystem set to', 100-c);
            ship.damages[2]:=100-c;
            displaydamage;
           end;
@@ -745,7 +779,7 @@ begin
 	 if not SkillTest(True, 4, skill + (ord(scanning) * 20), learnchance) then
 	 begin
            displaymap;
-           impact(j,maxweapons);
+           impact(j,maxweapons);	{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
            displaymap;
           end;
          charges[a]:=0;
