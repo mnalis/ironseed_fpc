@@ -30,7 +30,7 @@ program main;
 
 ***************************}
 
-uses init, gmouse, starter, data,heapchk;
+uses starter, data;
 
 {$O cargtool}
 {$O comm}

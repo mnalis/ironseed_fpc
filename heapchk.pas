@@ -27,7 +27,6 @@ function GetHeapStats2:String;
 procedure HeapShow;
 
 implementation
-uses saveload;
 procedure WriteHexWord(w: Word);
 const
  hexChars: array [0..$F] of Char =

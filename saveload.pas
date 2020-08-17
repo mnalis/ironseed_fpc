@@ -43,7 +43,7 @@ procedure loadgame(num: integer);
 
 implementation
 
-uses utils_, gmouse, data, journey, usecode, utils, weird, modplay, version, crewtick;
+uses utils_, gmouse, data, utils, weird, version, crewtick;
 {$PACKRECORDS 1}
 type
  nametype= string[20];

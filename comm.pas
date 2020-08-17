@@ -46,7 +46,7 @@ procedure gettechlevel(plan: integer);
 
 implementation
 
-uses gmouse, utils, combat, utils2, weird, modplay, comm2, journey, saveload, heapchk;
+uses gmouse, utils, utils2, weird, modplay, comm2, journey, saveload, heapchk;
 
 const
  numback= 19;

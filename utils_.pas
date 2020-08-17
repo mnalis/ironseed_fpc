@@ -44,9 +44,8 @@ procedure lineto(x1: word; y1:word);cdecl ; external;
 procedure moveto(x1: word; y1:word);cdecl ; external;
 procedure pieslice(x1,y1,phi0,phi1,r: word);cdecl ; external;
 procedure setwritemode(mode: byte); cdecl ; external;
-implementation
 
-uses sysutils;
+implementation
 
 procedure getrgb256_(palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette 
 

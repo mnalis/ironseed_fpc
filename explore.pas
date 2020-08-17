@@ -36,7 +36,7 @@ procedure exploreplanet;
 
 implementation
 
-uses utils_, data, gmouse, usecode, journey, utils, utils2, weird, display, modplay, crewtick, heapchk;
+uses utils_, data, gmouse, journey, utils, utils2, weird, display, modplay, crewtick, heapchk;
 {$PACKRECORDS 1}
 
 type

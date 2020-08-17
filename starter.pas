@@ -37,7 +37,7 @@ procedure readydata;
 
 implementation
 
-uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird, ending, heapchk;
+uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird, ending;
 
 procedure showcube;
 var i,j: integer;

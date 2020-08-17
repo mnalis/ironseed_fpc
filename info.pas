@@ -35,7 +35,7 @@ procedure sectorinfo;
 
 implementation
 
-uses utils_, data, gmouse, utils, display, utils2, usecode, modplay, weird, journey, heapchk, sysutils;
+uses utils_, data, gmouse, utils, usecode, modplay, weird, journey, heapchk, sysutils;
 
 type
  nearsectype= array[1..37] of nearbytype;

@@ -78,7 +78,7 @@ procedure blast(c1,c2,c3: integer);
 
 implementation
 
-uses utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay, utils2, ending, sysutils;
+uses utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay, utils2, ending;
 
 var
  done: boolean;

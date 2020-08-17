@@ -360,7 +360,7 @@ procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 
 implementation
 
-uses crt,  gmouse, utils,modplay,math;
+uses modplay, math;
 
 const                           { compression constants        }
  CPR_VER4=4;                    {   4 new header               }
@@ -922,7 +922,7 @@ begin
    initializecanary;
    readygraph;
    initializemod;
-   checkbreak:=false;
+   //checkbreak:=false;
    tcolor:=22;
    bkcolor:=0;
    new(planicons);

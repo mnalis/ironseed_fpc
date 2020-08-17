@@ -30,7 +30,7 @@ program intro;
 
 ***************************}
 
-uses utils_,sysutils,gmouse,modplay,version,math;
+uses utils_, sysutils, gmouse, modplay, version, math;
 //var   sdl_scr: PSDL_Surface;
 {* begin
   SDL_Init(SDL_INIT_VIDEO); // Initialize the video SDL subsystem
