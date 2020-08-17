@@ -176,3 +176,5 @@ v1.20.0016:
 v1.30.0001:
 	Source, graphical assets and sound effects have been released under GPL.
 	The DMP library has been replaced with stubs.
+
+- new fpc/SDL version changes are tracked in Documents/changelog.txt
