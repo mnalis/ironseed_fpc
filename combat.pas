@@ -1560,10 +1560,8 @@ begin
    printxy(18,18,'SCAVENGER BOTS DEPLOYED...');
    mouseshow;
    tcolor:=28;
-   {$PUSH}
-   //{$HINTS OFF}
-   fillchar(cargoitems,11,0);	// FIXME: why only 11, when it is array 0..13 ?? and integer!=byte ?!
-   {$POP}
+   cargoitems[0]:=0;				// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(cargoitems,sizeof(cargoitems),0);
    i:=random(nships);
    if i>13 then i:=13;
    a:=1;
