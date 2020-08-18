@@ -1255,7 +1255,7 @@ begin
   begin
    creategasplanet;
    new(t);
-   mymove(screen,t^,16000);
+   move(screen,t^,16000*4);
    fillchar(screen,64000,0);
    set256colors(colors);
    tcolor:=47;
@@ -1278,10 +1278,10 @@ begin
    tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(tpal,768,0);
    set256colors(tpal);
-   mymove(t^,screen,16000);
+   move(t^,screen,16000*4);
    dispose(t);
    for i:=1 to 120 do
-    mymove(screen[i+12,28],planet^[i],30);
+    move(screen[i+12,28],planet^[i],30*4);
    makegasplanet;
   end
  else if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then
@@ -1291,7 +1291,7 @@ begin
    backgry:=0;
    makeastoroidfield;
    new(t);
-   mymove(screen,t^,16000);
+   move(screen,t^,16000*4);
    fillchar(screen,64000,0);
    set256colors(colors);
    tcolor:=47;
@@ -1307,7 +1307,7 @@ begin
    sphere:=3;
    fillchar(tpal,768,0);
    set256colors(tpal);
-   mymove(t^,screen,16000);
+   move(t^,screen,16000*4);
    dispose(t);
    drawastoroid;
  end
@@ -1318,7 +1318,7 @@ begin
    backgry:=0;
    makecloud;
    new(t);
-   mymove(screen,t^,16000);
+   move(screen,t^,16000*4);
    fillchar(screen,64000,0);
    set256colors(colors);
    tcolor:=47;
@@ -1332,18 +1332,18 @@ begin
      delay(tslice);
     end;
    for i:=1 to 120 do
-    mymove(screen[i+12,28],planet^[i],30);
+    move(screen[i+12,28],planet^[i],30*4);
    sphere:=3;
    fillchar(tpal,768,0);
    set256colors(tpal);
-   mymove(t^,screen,16000);
+   move(t^,screen,16000*4);
    dispose(t);
    drawastoroid;
   end
  else
   begin
    new(t);
-   mymove(screen,t^,16000);
+   move(screen,t^,16000*4);
    fillchar(screen,64000,0);
    set256colors(colors);
    tcolor:=47;
@@ -1357,7 +1357,7 @@ begin
    createplanet(120,60);
    fillchar(tpal,768,0);
    set256colors(tpal);
-   mymove(t^,screen,16000);
+   move(t^,screen,16000*4);
    dispose(t);
    water:=50;
    case tempplan^[curplan].state of
@@ -1420,7 +1420,7 @@ begin
      ppart[i]:=r2/y;
     end;
    for i:=1 to 120 do
-    mymove(screen[i+12,28],planet^[i],30);
+    move(screen[i+12,28],planet^[i],30*4);
    makesphere;
    sphere:=1;
   end;
@@ -1488,7 +1488,7 @@ begin
  fillchar(planet^,14400,0);
  i2:=i+6;
  new(t);
- mymove(screen,t^,16000);
+ move(screen,t^,16000*4);
  fillchar(screen,64000,0);
  set256colors(colors);
  tcolor:=47;
@@ -1503,7 +1503,7 @@ begin
  tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(tpal,768,0);
  set256colors(tpal);
- mymove(t^,screen,16000);
+ move(t^,screen,16000*4);
  dispose(t);
  loadscreen(tempdir+'/current',@screen);
  showtime;
@@ -1514,7 +1514,7 @@ begin
    ppart[i]:=r2/y;
   end;
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  makestar;
  checkstats;
  mouseshow;

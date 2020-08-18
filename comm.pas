@@ -1091,9 +1091,9 @@ begin
  str(((n-1) div 2)+1,str1);
  loadscreen('data/back'+str1,backgr);
  {new(p);}
- mymove(colors,p^,192);
+ move(colors,p^,192*4);
  y:=(n-1) mod 2;
- if y=1 then mymove(backgr^[100],backgr^,8000);
+ if y=1 then move(backgr^[100],backgr^,8000*4);
  mousehide;
  for i:=11 to 110 do
   for j:=0 to 319 do
@@ -1238,7 +1238,7 @@ begin
    infomode:=false;
    mousehide;
    for i:=20 to 101 do
-    mymove(backgr^[i-11,222],screen[i,222],19);
+    move(backgr^[i-11,222],screen[i,222],19*4);
    mouseshow;
    exit;
   end;
@@ -1692,7 +1692,7 @@ begin
    new(tmpm);
    for i:=0 to 15 do
    begin
-      mymove(screen[i+130,20],tmpm^[i],4);
+      move(screen[i+130,20],tmpm^[i],4*4);
       fillchar(screen[i+130,20],16,0);
    end;
    mousesetcursor(tmpm^);

@@ -133,7 +133,7 @@ begin
  ship.shieldopt[3]:=n;
  part:=102/100*ship.shieldopt[3];
  for i:=0 to 6 do
-  mymove(shieldpic^[i],screen[114-round(part)+i,312],1);
+  move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
  mouseshow;
 end;
 
@@ -157,7 +157,7 @@ begin
    if picx>139 then j:=10 else j:=5;
    if picy>=179 then a:=19 else a:=20;
    for i:=0 to a do
-    mymove(backgr^[i+picy,picx],screen[161+i,14],j);
+    move(backgr^[i+picy,picx],screen[161+i,14],j*4);
    if j=5 then
     for i:=0 to 19 do
      fillchar(screen[161+i,34],20,0);
@@ -376,9 +376,9 @@ begin
             for j:=0 to 19 do
              screen[y1+j,x1+i]:=tempicon^[i,j];
   4,6: for i:=0 to 19 do
-        mymove(tempicon^[i],screen[y1+i,x1],5);
+        move(tempicon^[i],screen[y1+i,x1],5*4);
   5,7: for i:=0 to 19 do
-        mymove(tempicon^[19-i],screen[y1+i,x1],5);
+        move(tempicon^[19-i],screen[y1+i,x1],5*4);
   9,10: for i:=0 to 19 do
          for j:=0 to 19 do
           screen[y1+j,x1+20-i]:=tempicon^[i,j];
@@ -433,7 +433,7 @@ begin
    for i:=0 to 6 do
     fillchar(screen[oldshddmg+i,296],4,0);
    for i:=0 to 6 do
-    mymove(shieldpic2^[i],screen[round(part)+i,296],1);
+    move(shieldpic2^[i],screen[round(part)+i,296],1*4);
    oldshddmg:=round(part);
   end;
  mouseshow;
@@ -1431,9 +1431,9 @@ begin
    for i:=26 to 27 do
       move(screen[i,269],blank^[i-26],10);
    for i:=0 to 6 do
-      mymove(screen[i+10,91],shieldpic^[i],1);
+      move(screen[i+10,91],shieldpic^[i],1*4);
    for i:=0 to 6 do
-      mymove(screen[i+10,101],shieldpic2^[i],1);
+      move(screen[i+10,101],shieldpic2^[i],1*4);
    for j:=0 to 3 do
       for i:=0 to 9 do
 	 move(screen[i+10,110+j*10],msgs^[j,i],10);

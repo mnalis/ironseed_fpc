@@ -105,7 +105,7 @@ var temppal: paltype;
     a: integer;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -129,7 +129,7 @@ begin
    set256colors(temppal);
    delay(round(tslice*1.6));
   end;
- mymove(temppal,colors,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(temppal,colors,192*4);
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -251,7 +251,7 @@ var t: pscreentype;
 begin
  new(t);
  loadscreen('data/end6',backgr);
- mymove(backgr^,screen,16000);
+ move(backgr^,screen,16000*4);
  loadscreen('data/end5',t);
  fadein;
  k:=0;
@@ -260,8 +260,8 @@ begin
  repeat
   inc(k,80);
   inc(k2,320);
-  mymove(t^[0,64000-k2],screen,k);
-  mymove(backgr^,screen[0,k2],16000-k);
+  move(t^[0,64000-k2],screen,k*4);
+  move(backgr^,screen[0,k2],(16000-k)*4);
   delay(b);
  until k=16000;
  dispose(t);
@@ -272,7 +272,7 @@ var a,b: integer;
     temppal: paltype;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  b:=tslice shr 2;
  for a:=63 downto 32 do
   begin
@@ -280,7 +280,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- mymove(temppal,colors,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(temppal,colors,192*4);
 end;
 
 procedure endgame;

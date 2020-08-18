@@ -758,7 +758,7 @@ var
    px,dx,pdx : array[1..768] of shortint;
 begin
    temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
-   mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+   move(colors,temppal,192*4);
    dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(dx,sizeof(dx),48);
    for j:=1 to 768 do

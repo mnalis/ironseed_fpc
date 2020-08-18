@@ -408,7 +408,7 @@ begin
  close(f2);
  for j:=0 to 6 do
   for i:=0 to 15 do
-   mymove(screen[i+120,j*17+9],tmpm^[j,i],4);
+   move(screen[i+120,j*17+9],tmpm^[j,i],4*4);
  mousesetcursor(tmpm^[0]);
  for i:=15 to 170 do
   fillchar(screen[i,8],246,0);
@@ -1027,7 +1027,7 @@ begin
  done:=false;
  compressfile(tempdir+'/current3',backgr);
  loadscreen('data/trade',backgr);
- mymove(backgr^[111],screen[111],7200);
+ move(backgr^[111],screen[111],7200*4);
  loadscreen(tempdir+'/current3',backgr);
  mouseshow;
  trademode:=0;
@@ -1064,7 +1064,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current3',backgr);
  loadscreen(tempdir+'/current2',backgr);
- mymove(backgr^[111],screen[111],7200);
+ move(backgr^[111],screen[111],7200*4);
  loadscreen(tempdir+'/current3',backgr);
  bkcolor:=3;
 end;

@@ -231,7 +231,7 @@ begin
  for j:=0 to 30 do
   begin
    for i:=0 to 34 do
-    mymove(ani^[j,i],screen[i+81,22],12);
+    move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -243,7 +243,7 @@ begin
  for j:=30 downto 0 do
   begin
    for i:=0 to 34 do
-    mymove(ani^[j,i],screen[i+81,22],12);
+    move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -981,10 +981,10 @@ begin
  if ioresult<>0 then errorhandler('charani.dta',5);
  close(anifile);
  for i:=0 to 34 do
-  mymove(ani^[30,i],screen[i+81,22],12);
+  move(ani^[30,i],screen[i+81,22],12*4);
  new(mcursor);
  for i:=131 to 146 do
-  mymove(screen[i,11],mcursor^[i-131],4);
+  move(screen[i,11],mcursor^[i-131],4*4);
  for i:=131 to 146 do
   fillchar(screen[i,11],16,0);
  mousesetcursor(mcursor^);

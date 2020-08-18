@@ -92,8 +92,7 @@ var a,b,j: integer;
     temppal: paltype;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
-                                // FIXME: unify all such calls into one function/define, as it is often repeated, and with such strange value (192=3*64, only first 64 pallete entries)
+ move(colors,temppal,192*4);	// FIXME: unify all such calls into one function/define, as it is often repeated?
  b:=tslice*4;
  for a:=1 to 63 do
   begin
@@ -107,7 +106,7 @@ begin
    delay(b);
   end;
  set256colors(colors);
- mymove(temppal,colors,192);
+ move(temppal,colors,192*4);
 end;
 
 procedure addpending(n, t : integer);
@@ -1096,7 +1095,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   mymove(screen,s^,16000);
+   move(screen,s^,16000*4);
    max:=60;
    repeat
     for a:=5 to max do
@@ -1126,7 +1125,7 @@ begin
   end
  else if i=1 then
   begin
-   mymove(screen,s^,16000);
+   move(screen,s^,16000*4);
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1150,7 +1149,7 @@ begin
     end;
    if not quit then
     begin
-     mymove(backgr^,screen,16000);
+     move(backgr^,screen,16000*4);
      repeat
       for i:=32 to 63 do
        colors[i]:=colors[random(32)];
@@ -1216,7 +1215,7 @@ begin
     if (fastkeypressed) or (mouse.getstatus) then quit:=true;
     if not quit then
      begin
-      mymove(s^,backgr^,16000);
+      move(s^,backgr^,16000*4);
       asm
        push es
        push ds
@@ -1235,7 +1234,7 @@ begin
        pop es
       end;
       if (fastkeypressed) or (mouse.getstatus) then quit:=true;
-      if not quit then mymove(backgr^[1],screen,15600);
+      if not quit then move(backgr^[1],screen,15600*4);
      end;
    until quit;
    dispose(s2);

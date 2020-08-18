@@ -633,7 +633,7 @@ begin
  viewindex3:=135;
  randomize;
  for i:=18 to 123 do
-  mymove(screen[i,27],starmapscreen^[i,27],29);
+  move(screen[i,27],starmapscreen^[i,27],29*4);
  mouseshow;
  displaylongscan;
 end;
@@ -718,7 +718,7 @@ begin
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
  colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,colors2,192);	// FIXME: why only 192?! colors/colors2 are paltype: 256*3=768 bytes
+ move(colors,colors2,192*4);
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do
@@ -740,7 +740,7 @@ begin
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
  colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
- mymove(temppal,colors2,192);	// FIXME: why only 192?! colors/colors2 are paltype: 256*3=768 bytes? and we DO initialize temppal above for whole range 0-255!
+ move(temppal,colors2,192*4);
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do

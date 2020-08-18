@@ -629,7 +629,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=50 to 102 do
-  mymove(screen[i,75],tempscr^[i,75],43);
+  move(screen[i,75],tempscr^[i,75],43*4);
  if colors[32,2]=63 then ofsc:=-26
   else if colors[32,1]=0 then ofsc:=0
   else ofsc:=74;
@@ -673,7 +673,7 @@ begin
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
-  mymove(tempscr^[i,75],screen[i,75],43);
+  move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  dispose(tempscr);
  tcolor:=oldt;
@@ -840,7 +840,7 @@ begin
    new(tempscr);
    mousehide;
    for i:=50 to 102 do
-      mymove(screen[i,70],tempscr^[i,70],45);
+      move(screen[i,70],tempscr^[i,70],45*4);
    if colors[32,2]=63 then ofsc:=-26
    else if colors[32,1]=0 then ofsc:=0
    else ofsc:=74;
@@ -885,7 +885,7 @@ begin
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
-      mymove(tempscr^[i,70],screen[i,70],45);
+      move(tempscr^[i,70],screen[i,70],45*4);
    mouseshow;
    dispose(tempscr);
    tcolor:=oldt;

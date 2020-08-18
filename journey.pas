@@ -394,7 +394,7 @@ begin  {215,145}
   end;
  mousehide;
  for i:=133 to 144 do
-  mymove(screen[i,215],back1[i-133],13);
+  move(screen[i,215],back1[i-133],13*4);
  b:=tslice div 4;
  for t:=1 to 20 do
   begin
@@ -419,16 +419,16 @@ begin  {215,145}
    end;
 skip1:
    for j:=133 to 145-m do
-    mymove(back1[j-133],screen[j,215],13);
+    move(back1[j-133],screen[j,215],13*4);
    for j:=190+m to 199 do
-    mymove(back2[j-190],screen[j,215],13);
+    move(back2[j-190],screen[j,215],13*4);
    mouseshow;
    delay(b);
    mousehide;
   end;
  for i:=0 to 44 do
   move(cubetar^[i],screen[i+145,215],51);
- mymove(back2,screen[190,215],13);
+ move(back2,screen[190,215],13*4);
  mouseshow;
  cube:=tar;
 end;
@@ -551,7 +551,7 @@ endcheck:
   end;
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -669,7 +669,7 @@ procedure makesphere3;
 begin
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -709,7 +709,7 @@ endcheck:
    end;
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;

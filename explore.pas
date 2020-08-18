@@ -388,7 +388,7 @@ var
 begin
  rectangle(x1+28,y1+13,x1+88,y1+73);
  for a:=1 to 60 do
-  mymove(landform^[x1+a,y1],zoomscr^[a,1],15);
+  move(landform^[x1+a,y1],zoomscr^[a,1],15*4);
 end;
 
 procedure undozoom;
@@ -473,7 +473,7 @@ begin
  setcolor(47);
  mousehide;
  for i:=1 to 60 do
-  mymove(tempzoom^[i],screen[i+138,206],15);
+  move(tempzoom^[i],screen[i+138,206],15*4);
  circle(236,169,8*zoommode);
  circle(236,169,4*zoommode);
  mouseshow;
@@ -586,7 +586,7 @@ begin
    screen[cury+12,curx+27]:=90+random(6);
    a:=num*40-26;
    for i:=1 to 26 do
-    mymove(screen[cury-1+i,curx+11],screen[i+a,281],8);
+    move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
   end;
 end;
 
@@ -1051,7 +1051,7 @@ begin
 	   begin
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 mymove(probeicons^[4,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end;
@@ -1081,7 +1081,7 @@ begin
 	   begin {begin return to craft}
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 mymove(probeicons^[4,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end
@@ -1136,7 +1136,7 @@ begin
 	      end;*)
 	      screen[cury+12,curx+27]:=90+random(6);
 	      for i:=1 to 26 do
-		 mymove(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8);
+		 move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
 	      for b:=1 to 26 do
 		 for a:=1 to 31 do
 		    if probeicons^[1,b,a]<>0 then screen[j*40-26+b,280+a]:=probeicons^[1,b,a];
@@ -1224,7 +1224,7 @@ begin
 	   end;
         5: begin {returning}
 	      for i:=1 to 26 do
-		 mymove(probeicons^[3,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=40;
 	      status:=6;
 	   end;
@@ -1232,7 +1232,7 @@ begin
 	      status := 8;
 	      timeleft:=10;
 	      for i := 1 to 26 do
-		 mymove(probeicons^[2,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
 	      dirty := true;
 	      {if explorelevel = 0 then
 		 displayinfogathered;}
@@ -2016,17 +2016,17 @@ begin
  if datagathered[5,2]>=1000 then doneano:=true;
  for j:=1 to 4 do
   for i:=1 to 26 do
-   mymove(screen[i+j*40-26,281],probeicons^[j,i],8);
+   move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
  for j:=1 to numprobes do
   for i:=1 to 26 do
-   mymove(probeicons^[2,i],screen[i+j*40-26,281],8);
+   move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
  if j<4 then
   for a:=j+1 to 4 do
    for i:=1 to 26 do
     fillchar(screen[i+a*40-26,281],31,0);
  for j:=1 to 7 do
   for i:=20 to 27 do
-   mymove(screen[i,j*20+10],msgs^[j,i-20],4);
+   move(screen[i,j*20+10],msgs^[j,i-20],4*4);
  que:=0;
  SetScan(0);
  for i:=13 to 133 do

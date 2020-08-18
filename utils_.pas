@@ -21,7 +21,6 @@ procedure delay(const MS:Word); cdecl ; external;
 procedure setcolor(const Color: Word); cdecl ; external;
 procedure rectangle(const x1: word; y1:word; x2: word; y2:word);cdecl ; external;
 procedure circle(const x,y,r:word); cdecl ; external;
-procedure mymove(const src; var tar; const count: word);
 procedure SDL_init_video(var scr:screentype); cdecl ; external;
 procedure set256colors(var pal : paltype); cdecl; external;	// NB: pal is actually constref, but fpc still gives "Hint: (3187) C arrays are passed by reference" then in fpc 3.0.4+dfsg-22 :(
 procedure setrgb256(const palnum,r,g,b: byte); cdecl ; external; // set palette
@@ -65,12 +64,6 @@ end;
 function fastkeypressed: boolean;   // not so fast anymore
 begin
  fastkeypressed:=boolean(key_pressed);
-end;
-
-
-procedure mymove(const src; var tar; const count: word);
-begin
-	move(src,tar,count*4);
 end;
 
 

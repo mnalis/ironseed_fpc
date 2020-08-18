@@ -403,7 +403,7 @@ begin
      begin
       readweaicon(shd-1444);
       for i:=0 to 19 do
-       mymove(tempicon^[i],screen[89+i,172],5);
+       move(tempicon^[i],screen[89+i,172],5*4);
      end;
  end;
 end;
@@ -882,7 +882,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  mymove(tempicon^[i],screen[y1+i,x1],5);
+  move(tempicon^[i],screen[y1+i,x1],5*4);
 end;
 
 procedure sideshowweaponicon(x1,y1,weap,node: integer);
@@ -910,7 +910,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  mymove(tempicon^[19-i],screen[y1+i,x1],5);
+  move(tempicon^[19-i],screen[y1+i,x1],5*4);
 end;
 
 procedure displayweaponinfo(com: integer);
@@ -1051,7 +1051,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  mymove(starmapscreen^[i,27],screen[i,27],29);
+  move(starmapscreen^[i,27],screen[i,27],29*4);
  if target>0 then
   begin
    if index<0 then index:=0;
@@ -3034,7 +3034,7 @@ begin
  if (ship.damages[7]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
-  mymove(starmapscreen^[i,27],screen[i,27],29);
+  move(starmapscreen^[i,27],screen[i,27],29*4);
  computegraph;
  mouseshow;
  for i:=1 to 3 do

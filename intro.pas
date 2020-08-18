@@ -429,7 +429,7 @@ var a,b: integer;
     px,dx,pdx: array[1..768] of shortint;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(dx,768,48);
  for j:=1 to 768 do
@@ -516,7 +516,6 @@ begin
  new(s2);
  new(s3);
  mousehide;
- //mymove(screen,s2^,16000);
  move(screen,s2^,16000*4);
  mouseshow;
  loadscreen('data/cloud',s1);
@@ -671,8 +670,7 @@ begin
 
 
   mousehide;
-  mymove(s3^,screen,16000);
-//  move(s3^,screen,16000*4);
+  move(s3^,screen,16000*4);
   mouseshow;
   drawcursor;
   findmouse;
@@ -727,7 +725,7 @@ var temppal: paltype;
     a: integer;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -751,7 +749,7 @@ begin
    set256colors(temppal);
    delay(tslice);
   end;
- mymove(temppal,colors,192);
+ move(temppal,colors,192*4);
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -860,7 +858,7 @@ begin
  loadscreen('data/cloud',backgr);
  set256colors(colors);
  for i:=1 to 120 do
-  mymove(planet^[i],backgr^[i+12,28],30);
+  move(planet^[i],backgr^[i+12,28],30*4);
  for y1:=0 to 4 do
   for b:=6 to 138 do
    for a:=10 to 303 do
@@ -1018,7 +1016,7 @@ begin
       end;
     end;
   for i:=1 to 120 do
-   mymove(planet^[i],screen[i+12,28],30);
+   move(planet^[i],screen[i+12,28],30*4);
 //  delay(tslice);
     delay(tslice*3);
 getcurtime;
@@ -1071,7 +1069,7 @@ begin
  index:=0;
  a:=24;
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  b:=tslice div 2;
  repeat
   inc(index);
@@ -1161,7 +1159,7 @@ begin
  index:=0;
  a:=24;
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ move(colors,temppal,192*4);
  if fastkeypressed then goto ending;
  repeat
   inc(index);
@@ -1310,11 +1308,11 @@ begin
    scale_img(10,0,200,106,startx,starty,round(partx),round(party),t^,screen);
   end;
  for i:=142 to 176 do
-  mymove(screen[i,234],t^[i,234],18);
+  move(screen[i,234],t^[i,234],18*4);
  set256colors(temppal);
  loadscreen('data/alien',@screen);
  for i:=142 to 176 do
-  mymove(t^[i,234],screen[i,234],18);
+  move(t^[i,234],screen[i,234],18*4);
  dispose(t);
 end;
 
@@ -1385,7 +1383,7 @@ begin
   for i:=0 to 199 do
    if screen[i,j]=255 then screen[i,j]:=backgr^[i,j];
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  radius:=400;
  c2:=1.30;
  r2:=round(sqrt(radius));
@@ -1525,7 +1523,7 @@ begin
  loadpalette('data/main.pal');
  loadscreen('data/cloud',@screen);
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  sleep(0);
  makeplanet(0,false);
  tcolor:=22;
@@ -1574,7 +1572,7 @@ begin
  bigprintxy(0,183,'crew some thousand years later and are');
  bigprintxy(0,191,'confronted by an alien horde...');
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  fadein;
  makeplanet(10,false);
@@ -1637,7 +1635,7 @@ skip2:
  spcindex[4]:=128;
  spcindex[5]:=129;
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  tcolor:=22;
  bkcolor:=255;

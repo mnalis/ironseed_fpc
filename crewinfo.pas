@@ -84,7 +84,7 @@ begin {120,37,294,112}
  for i:=14 to 88 do
   fillchar(screen[i,16],185,0);
  for i:=35 to 63 do
-  mymove(holo^[i,84],screen[i,84],9);
+  move(holo^[i,84],screen[i,84],9*4);
  moveto(16,50);
  for j:=17 to 200 do
  begin
@@ -199,17 +199,17 @@ begin
  new(littlemsgs);
  for a:=0 to 8 do
   for i:=0 to 8 do
-   mymove(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10);
+   move(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10*4);
  for a:=0 to 7 do
   for i:=0 to 4 do
-   mymove(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4);
+   move(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4*4);
  for a:=0 to 6 do
   for i:=0 to 15 do
-   mymove(screen[i+180,10+a*17],mcursor^[a,i],4);
+   move(screen[i+180,10+a*17],mcursor^[a,i],4*4);
  for i:=130 to 196 do
   fillchar(screen[i,4],262,0);
  for i:=35 to 63 do
-  mymove(screen[i,84],holo^[i,84],9);
+  move(screen[i,84],holo^[i,84],9*4);
  graphindex:=1;
  adjustgraph;
  crewindex:=1;
@@ -266,7 +266,7 @@ begin
  a:=random(9);
  mousehide;
  for i:=0 to 8 do
-  mymove(msgs^[a,i],screen[122+i,273],10);
+  move(msgs^[a,i],screen[122+i,273],10*4);
  mouseshow;
 end;
 
@@ -277,12 +277,12 @@ begin
  if msgindex mod 2=0 then
   begin
    for i:=0 to 4 do
-    mymove(littlemsgs^[a,i],screen[133+i,273],4);
+    move(littlemsgs^[a,i],screen[133+i,273],4*4);
   end
  else
   begin
    for i:=0 to 4 do
-    mymove(littlemsgs^[a,i],screen[133+i,296],4);
+    move(littlemsgs^[a,i],screen[133+i,296],4*4);
   end;
  mouseshow;
 end;
