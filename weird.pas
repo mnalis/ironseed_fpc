@@ -92,7 +92,7 @@ var a,b,j: integer;
     temppal: paltype;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);	// FIXME: unify all such calls into one function/define, as it is often repeated?
+ move(colors,temppal,sizeof(paltype));
  b:=tslice*4;
  for a:=1 to 63 do
   begin
@@ -106,7 +106,7 @@ begin
    delay(b);
   end;
  set256colors(colors);
- move(temppal,colors,192*4);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure addpending(n, t : integer);
@@ -477,7 +477,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -663,7 +663,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -744,7 +744,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -868,7 +868,7 @@ begin
  close(f);}
  pausemod;
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- fillchar(temppal,768,0);
+ fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
  while fastkeypressed do readkey;
@@ -1095,7 +1095,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   move(screen,s^,16000*4);
+   move(screen,s^,sizeof(screen));
    max:=60;
    repeat
     for a:=5 to max do
@@ -1125,7 +1125,7 @@ begin
   end
  else if i=1 then
   begin
-   move(screen,s^,16000*4);
+   move(screen,s^,sizeof(screen));
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1149,7 +1149,7 @@ begin
     end;
    if not quit then
     begin
-     move(backgr^,screen,16000*4);
+     move(backgr^,screen,sizeof(screen));
      repeat
       for i:=32 to 63 do
        colors[i]:=colors[random(32)];
@@ -1168,7 +1168,7 @@ begin
   begin
    new(s2);
    loadscreen('data/saver',s2);
-   fillchar(screen,64000,0);
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1215,7 +1215,7 @@ begin
     if (fastkeypressed) or (mouse.getstatus) then quit:=true;
     if not quit then
      begin
-      move(s^,backgr^,16000*4);
+      move(s^,backgr^,sizeof(screen));
       asm
        push es
        push ds

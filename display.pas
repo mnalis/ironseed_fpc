@@ -1822,7 +1822,7 @@ begin
         removesystem(true);
         mousehide;
         compressfile(tempdir+'/current',@screen);
-        fillchar(screen,64000,0);
+        fillchar(screen,sizeof(screen),0);
         mouseshow;
         for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
         {fading;}

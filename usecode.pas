@@ -718,7 +718,7 @@ begin
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
  colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
- move(colors,colors2,192*4);
+ move(colors,colors2,sizeof(paltype));
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do
@@ -740,7 +740,7 @@ begin
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
  colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
- move(temppal,colors2,192*4);
+ move(temppal,colors2,sizeof(paltype));
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do
@@ -1599,7 +1599,7 @@ begin
        begin
         reloading:=true;
         quit:=true;
-        fillchar(colors,768,0);
+        fillchar(colors,sizeof(paltype),0);
         set256colors(colors);
        end;
   50: if ship.damages[5]>39 then lifesupportfailure

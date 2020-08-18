@@ -715,7 +715,7 @@ begin
  move(nearby,nearbybackup,sizeof(nearbyarraytype));
  mousehide;
  compressfile(tempdir+'/current',@screen);
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  tcolor:=47;
  bkcolor:=0;
  time:=round(dist*2)+1;
@@ -1255,8 +1255,8 @@ begin
   begin
    creategasplanet;
    new(t);
-   move(screen,t^,16000*4);
-   fillchar(screen,64000,0);
+   move(screen,t^,sizeof(screen));
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1276,9 +1276,9 @@ begin
     end;
    sphere:=2;
    tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
-   fillchar(tpal,768,0);
+   fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,16000*4);
+   move(t^,screen,sizeof(screen));
    dispose(t);
    for i:=1 to 120 do
     move(screen[i+12,28],planet^[i],30*4);
@@ -1291,8 +1291,8 @@ begin
    backgry:=0;
    makeastoroidfield;
    new(t);
-   move(screen,t^,16000*4);
-   fillchar(screen,64000,0);
+   move(screen,t^,sizeof(screen));
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1305,9 +1305,9 @@ begin
      delay(tslice);
     end;
    sphere:=3;
-   fillchar(tpal,768,0);
+   fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,16000*4);
+   move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
  end
@@ -1318,8 +1318,8 @@ begin
    backgry:=0;
    makecloud;
    new(t);
-   move(screen,t^,16000*4);
-   fillchar(screen,64000,0);
+   move(screen,t^,sizeof(screen));
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1334,17 +1334,17 @@ begin
    for i:=1 to 120 do
     move(screen[i+12,28],planet^[i],30*4);
    sphere:=3;
-   fillchar(tpal,768,0);
+   fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,16000*4);
+   move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
   end
  else
   begin
    new(t);
-   move(screen,t^,16000*4);
-   fillchar(screen,64000,0);
+   move(screen,t^,sizeof(screen));
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1355,9 +1355,9 @@ begin
    createplanet(200,90);
    createplanet(30,30);
    createplanet(120,60);
-   fillchar(tpal,768,0);
+   fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,16000*4);
+   move(t^,screen,sizeof(screen));
    dispose(t);
    water:=50;
    case tempplan^[curplan].state of
@@ -1488,8 +1488,8 @@ begin
  fillchar(planet^,14400,0);
  i2:=i+6;
  new(t);
- move(screen,t^,16000*4);
- fillchar(screen,64000,0);
+ move(screen,t^,sizeof(screen));
+ fillchar(screen,sizeof(screen),0);
  set256colors(colors);
  tcolor:=47;
  bkcolor:=0;
@@ -1501,9 +1501,9 @@ begin
  createstar(i2,30,30);
  createstar(i2,120,60);
  tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
- fillchar(tpal,768,0);
+ fillchar(tpal,sizeof(paltype),0);
  set256colors(tpal);
- move(t^,screen,16000*4);
+ move(t^,screen,sizeof(screen));
  dispose(t);
  loadscreen(tempdir+'/current',@screen);
  showtime;
@@ -1777,7 +1777,7 @@ begin
    ship.orbiting:=index;
    mousehide;
    compressfile(tempdir+'/current',@screen);
-   fillchar(screen,64000,0);
+   fillchar(screen,sizeof(screen),0);
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}

@@ -105,7 +105,7 @@ var temppal: paltype;
     a: integer;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -129,7 +129,7 @@ begin
    set256colors(temppal);
    delay(round(tslice*1.6));
   end;
- move(temppal,colors,192*4);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -172,7 +172,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -251,7 +251,7 @@ var t: pscreentype;
 begin
  new(t);
  loadscreen('data/end6',backgr);
- move(backgr^,screen,16000*4);
+ move(backgr^,screen,sizeof(screen));
  loadscreen('data/end5',t);
  fadein;
  k:=0;
@@ -272,7 +272,7 @@ var a,b: integer;
     temppal: paltype;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  b:=tslice shr 2;
  for a:=63 downto 32 do
   begin
@@ -280,7 +280,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- move(temppal,colors,192*4);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure endgame;
@@ -290,7 +290,7 @@ begin
  bkcolor:=255;
  fading;
  mousehide;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
 
  playmod(true,'sound/DIMENSIO.MOD');
  loadscreen('data/end1',@screen);

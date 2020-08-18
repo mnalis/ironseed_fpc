@@ -485,7 +485,7 @@ begin
      pop es
     end;
 }
-    move(s^,screen,64000);
+    move(s^,screen,sizeof(screen));
     mouseshow;
     delay(b);
    end;
@@ -517,7 +517,7 @@ begin
    for i:=40 to 140 do
     move(screen[i,74],tempscr^[i,74],43*4);
    loadscreen('data/cloud',@screen);
-   move(screen,backgr^,16000*4);
+   move(screen,backgr^,sizeof(screen));
    for i:=40 to 140 do
     move(tempscr^[i,74],screen[i,74],43*4);
   end;

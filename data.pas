@@ -758,7 +758,7 @@ var
    px,dx,pdx : array[1..768] of shortint;
 begin
    temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
-   move(colors,temppal,192*4);
+   move(colors,temppal,sizeof(paltype));
    dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(dx,sizeof(dx),48);
    for j:=1 to 768 do
@@ -782,7 +782,7 @@ begin
       set256colors(temppal);
       if not fastkeypressed then delay(b);
    end;
-   fillchar(temppal,768,0);
+   fillchar(temppal,sizeof(paltype),0);
    set256colors(temppal);
    fadelevel := 0;
 end;
@@ -934,4 +934,6 @@ end;
 begin
    ship.options[9]:=64;
    ship.options[3]:=1;
+   assert (sizeof(colors) = 768);
+   assert (sizeof(screen) = 64000);
 end.

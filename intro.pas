@@ -429,9 +429,9 @@ var a,b: integer;
     px,dx,pdx: array[1..768] of shortint;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
- fillchar(dx,768,48);
+ fillchar(dx,sizeof(paltype),48);
  for j:=1 to 768 do
   begin
    px[j]:=colors[0,j] div 48;
@@ -453,7 +453,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- fillchar(temppal,768,0);
+ fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
 end;
 
@@ -464,9 +464,9 @@ var a,b: integer;
 begin
  b:=tslice shr 2;
  temppal[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
- fillchar(temppal,768,0);
+ fillchar(temppal,sizeof(paltype),0);
  dx[1]:=0; 		// to turn off warnings, variables are actually correctly initialized by function below
- fillchar(dx,768,0);
+ fillchar(dx,sizeof(paltype),0);
  for j:=1 to 768 do
   begin
    px[j]:=colors[0,j] div 48;
@@ -516,7 +516,7 @@ begin
  new(s2);
  new(s3);
  mousehide;
- move(screen,s2^,16000*4);
+ move(screen,s2^,sizeof(screen));
  mouseshow;
  loadscreen('data/cloud',s1);
 end;
@@ -531,7 +531,7 @@ begin
       dispose(s3);
       fading;
       mousehide;
-      fillchar(screen,64000,0);
+      fillchar(screen,sizeof(screen),0);
       stopmod;
       runintro;
       playmod(true,'sound/INTRO2.MOD');
@@ -670,7 +670,7 @@ begin
 
 
   mousehide;
-  move(s3^,screen,16000*4);
+  move(s3^,screen,sizeof(screen));
   mouseshow;
   drawcursor;
   findmouse;
@@ -698,7 +698,7 @@ end;
 procedure showmars;
 var temp: pscreentype;
 begin
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  loadscreen('data/cloud',@screen);
  new(temp);
@@ -725,7 +725,7 @@ var temppal: paltype;
     a: integer;
 begin
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -749,7 +749,7 @@ begin
    set256colors(temppal);
    delay(tslice);
   end;
- move(temppal,colors,192*4);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -792,7 +792,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -1069,7 +1069,7 @@ begin
  index:=0;
  a:=24;
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  b:=tslice div 2;
  repeat
   inc(index);
@@ -1101,7 +1101,7 @@ label ending;
 begin
  new(t);
  tslice:=tslice div 2;
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  loadscreen('data/channel7',t);
  for i:=0 to 199 do
@@ -1159,7 +1159,7 @@ begin
  index:=0;
  a:=24;
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- move(colors,temppal,192*4);
+ move(colors,temppal,sizeof(paltype));
  if fastkeypressed then goto ending;
  repeat
   inc(index);
@@ -1188,7 +1188,7 @@ begin
  exit;
 ending:
  dispose(t);
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
 end;
 
@@ -1287,13 +1287,13 @@ var t: pscreentype;
 begin
     
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
- fillchar(temppal,768,0);
+ fillchar(temppal,sizeof(paltype),0);
  for i:=0 to 31 do
   temppal[i]:=colors[i];
  for i:=240 to 255 do
   temppal[i]:=colors[i];
  new(t);
-// fillchar(t^,64000,0);
+// fillchar(t^,sizeof(screen),0);
  if t=nil then writeln('Out of memory !!!');
  move(screen,t^,sizeof(t^));
  max:=25;
@@ -1664,7 +1664,7 @@ continue:
 
    while fastkeypressed do readkey;
 
-   fillchar(colors,768,0);
+   fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
    loadscreen('data/intro5',@screen);
@@ -1689,7 +1689,7 @@ begin
   end;
  if (paramstr(2)='/done') then
   begin
-   fillchar(colors,768,0);
+   fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
    loadscreen('data/intro5',@screen);

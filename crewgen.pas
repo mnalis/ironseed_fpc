@@ -71,7 +71,7 @@ begin
    bkcolor:=5;
    fading;
    loadpal('data/main.pal');
-   fillchar(screen,64000,0);
+   fillchar(screen,sizeof(screen),0);
    for i:=0 to 199 do
       for j:=0 to 319 do
 	 screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -1111,7 +1111,7 @@ var
 begin
  mode:=0;
  done:=false;
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  playmod(true,'sound/CHARGEN.MOD');
  loadscreen('data/demoscr3',@screen);

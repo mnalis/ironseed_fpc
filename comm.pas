@@ -1091,7 +1091,7 @@ begin
  str(((n-1) div 2)+1,str1);
  loadscreen('data/back'+str1,backgr);
  {new(p);}
- move(colors,p^,192*4);
+ move(colors,p^,sizeof(paltype));
  y:=(n-1) mod 2;
  if y=1 then move(backgr^[100],backgr^,8000*4);
  mousehide;
