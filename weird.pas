@@ -62,10 +62,12 @@ const
 
 function skillcheck(n: integer): boolean;
 procedure sanitycheck(n: integer);
+{$IFNDEF DEMO}
 procedure easteregg2;
 procedure easteregg3;
 procedure easteregg4;
 procedure easteregg5;
+{$ENDIF}
 procedure bossmode;
 procedure deathsequence(n: integer);
 procedure event(n: integer);
@@ -80,8 +82,10 @@ implementation
 
 uses utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay, utils2, ending;
 
+{$IFNDEF DEMO}
 var
  done: boolean;
+{$ENDIF}
 
 procedure blast(c1,c2,c3: integer);
 var a,b,j: integer;
@@ -466,14 +470,12 @@ begin
   end;
 end;
 
+{$IFNDEF DEMO}
 procedure easteregg2;
 var 
     c,i,j: integer;
     portrait: ^portraittype;
 begin
-{$IFDEF DEMO}
- exit;
-{$ENDIF}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
@@ -561,9 +563,6 @@ var
     s: string[12];
     s2: string[3];
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current',@screen);
  tcolor:=92;
@@ -658,15 +657,11 @@ begin
  loadscreen(tempdir+'/current',@screen);
  set256colors(colors);
  mouseshow;
-{$ENDIF}
 end;
 
 procedure easteregg4;
 var i,j,c: integer;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
@@ -743,15 +738,11 @@ begin
  set256colors(colors);
  bkcolor:=3;
  mouseshow;
-{$ENDIF}
 end;
 
 procedure easteregg5;
 var i,j,c: integer;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
@@ -828,15 +819,11 @@ begin
  set256colors(colors);
  bkcolor:=0;
  mouseshow;
-{$ENDIF}
 end;
 
 (* NO SPACE!!!
 procedure easteregg6;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  while fastkeypressed do readkey;
  fading;
  mousehide;
@@ -851,8 +838,8 @@ begin
  fading;
  closegraph;
  halt(3);
-{$ENDIF}
 end;*)
+{$ENDIF}
 
 procedure bossmode;
 {type
@@ -1276,7 +1263,7 @@ end;
    
 procedure deathsequence(n: integer);
 begin
- assert (n<2); { just to ignore warning, really not used }
+ assert (n<2); { just to ignore warning, variable really not used }
  stopmod;
  blast(63,0,0);
  closegraph;

@@ -833,7 +833,9 @@ begin
                        if clickcode=3 then
                         begin
                          clickcode:=0;
+                         {$IFNDEF DEMO}
                          easteregg5;
+                         {$ENDIF}
                         end;
                       end;
              49..58: if viewmode<>1 then
@@ -1213,9 +1215,11 @@ begin
                     temp :=0;
                    end;
          #16,#45	 : if yesnorequest('Do you want to quit?',0,31) then quit:=true;
+{$IFNDEF DEMO}
          #117		 : easteregg4;
          #103		 : easteregg3;
          #126		 : easteregg2; {alt-7}
+{$ENDIF}
          #120..#123,#129: begin {alt-1 to 4 and alt-0}
 	    if showplanet then
 	    begin

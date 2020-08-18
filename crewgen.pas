@@ -27,7 +27,10 @@ program crewgen;
 
 ***************************}
 
-uses data, gmouse, utils_, saveload, display, utils, modplay;
+uses data, gmouse, utils_, saveload, utils, modplay {$IFNDEF DEMO}, display{$ENDIF};
+
+var code:integer;
+{$IFNDEF DEMO}
 {$PACKRECORDS 1}
 
 type
@@ -46,7 +49,7 @@ type
  oldsysarray= array[1..250] of oldsystype;
 {$PACKRECORDS DEFAULT}
 var
- i,i2,j,a,code,crewnum,inputlevel: integer;
+ i,j,a,crewnum,inputlevel: integer;
  quit,toggle: boolean;
  shipdata: shipdatatype;
  planets: ^planarray;
@@ -655,7 +658,9 @@ begin
    plainfadearea(247,107,253,112,-144);
   end;
 end;
+{$ENDIF}
 
+{$IFNDEF DEMO}
 procedure findmouse;
 begin
  if not mouse.getstatus then exit;
@@ -688,6 +693,7 @@ begin
 end;
 
 procedure mainloop;
+var i2: integer;
 begin
  i2:=0;
  calculateship;
@@ -997,6 +1003,7 @@ begin
  fadein;
  mouseshow;
 end;
+{$ENDIF}
 
 procedure checkparams;
 var 
@@ -1133,8 +1140,8 @@ begin
 {$IFNDEF DEMO}
  dispose(ani);
  dispose(birdpic);
- halt(code);
 {$ELSE}
- halt(3);
+ code:=3;
 {$ENDIF}
+ halt(code);
 end.

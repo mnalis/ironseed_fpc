@@ -1718,6 +1718,7 @@ begin
    new(p);
    {$IFDEF DEMO}
    contactindex:=-1;
+   if hail then;	// ignore warning if demo
    {$ELSE}
    if hail then getship
    else getlocals;

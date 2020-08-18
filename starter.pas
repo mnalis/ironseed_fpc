@@ -37,7 +37,7 @@ procedure readydata;
 
 implementation
 
-uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird, ending;
+uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird {$IFNDEF DEMO}, ending{$ENDIF};
 
 procedure showcube;
 var i,j: word;

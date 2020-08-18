@@ -71,7 +71,7 @@ procedure PopRand;
 
 implementation
 
-uses data, journey, gmouse, saveload, crewtick, utils_;
+uses data, journey, gmouse, saveload, crewtick, utils_ {$IFDEF DEMO}, modplay{$ENDIF};
 
 var
  a,b,j,i,index : integer;
