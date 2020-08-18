@@ -1006,7 +1006,7 @@ end;
 {$ENDIF}
 
 procedure checkparams;
-var 
+var
     //diskfreespace: longint;
     curdir: string[255];	// NB: hopefully 255 is enough
 begin

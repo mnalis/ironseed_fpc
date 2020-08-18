@@ -1217,7 +1217,7 @@ begin
 end;
 
 procedure readyplanet;
-var 
+var
     t: pscreentype;
     tpal: paltype;
     part2: real;
