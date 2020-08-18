@@ -59,7 +59,7 @@ begin
 end;
 
 procedure checkparams;
-var i,j: integer;
+var
     curdir: string[255];	// NB: hopefully long enough
     diskfreespace: longint;
 begin
@@ -206,8 +206,8 @@ procedure cleartextdisplay;
 var temp: linetype;
     i,j: integer;
 begin
- fillchar(temp[1],30,ord(' '));
  temp[0]:=chr(30);
+ fillchar(temp[1],30,ord(' '));
  for j:=0 to 30 do
   begin
    textdisplay^[j]:=temp;
@@ -270,7 +270,7 @@ begin
 end;
 
 procedure checkpendingevent;
-var i,j,index: integer;
+var j,index: integer;
 begin
  index:=0;
  for j:=1 to nearbymax do
@@ -346,8 +346,6 @@ begin
 end;
 
 procedure journeyon;
-var
- i: word;
 label reload;
 begin
  new(landform);

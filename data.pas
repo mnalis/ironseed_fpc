@@ -758,7 +758,7 @@ var
    px,dx,pdx : array[1..768] of shortint;
 begin
    {$PUSH}
-   //{$HINTS OFF}
+   {$HINTS OFF}
    mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
    fillchar(dx,768,48);
    {$POP}

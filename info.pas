@@ -40,10 +40,10 @@ uses utils_, data, gmouse, utils, usecode, modplay, weird, journey, heapchk, sys
 type
  nearsectype= array[1..37] of nearbytype;
 var
- cenx,ceny,cenz,i,j,sector,index,shipsector,infoindex,sysindex,glowindex,
+ cenx,ceny,cenz,i,j,sector,index,infoindex,
   tarx,tary,tarz,rotatemode: integer;
  nearsec: ^nearsectype;
- tarxr,taryr,tarzr,n2: real;
+ tarxr,taryr,tarzr: real;
  engaging: boolean;
 
 procedure displaytargets;
@@ -831,7 +831,6 @@ begin
  if ship.posx>1250 then sector:=2 else sector:=1;
  if ship.posy>1250 then sector:=sector+2;
  if ship.posz>1250 then sector:=sector+4;
- shipsector:=sector;
  tarx:=ship.posx;
  tary:=ship.posy;
  tarz:=ship.posz;
@@ -1051,7 +1050,6 @@ begin
    {fadein;}
    new(nearsec);
    done:=false;
-   sysindex:=1;
    bkcolor:=0;
    tcolor:=31;
    oldt1:=t1;

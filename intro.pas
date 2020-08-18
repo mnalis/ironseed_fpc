@@ -41,12 +41,13 @@ uses utils_, sysutils, gmouse, modplay, version, math;
 
 const
  CPR_NONE=0;                    {   0 no compresion            }
- CPR_NOPAL=1;                   {   1 no palette, compressed   }
- CPR_PAL=2;                     {   2 palette, compressed      }
- CPR_HEADERINCL=3;              {   3 header included          }
+// CPR_NOPAL=1;                   {   1 no palette, compressed   }
+// CPR_PAL=2;                     {   2 palette, compressed      }
+// CPR_HEADERINCL=3;              {   3 header included          }
  CPR_ERROR=255;                 { global error                 }
- CPR_CURRENT=CPR_HEADERINCL;    { current version              }
+// CPR_CURRENT=CPR_HEADERINCL;    { current version              }
  CPR_BUFFSIZE=8192;             { adjustable buffer size       }
+
 {$PACKRECORDS 1}
 type
  CPR_HEADER=
@@ -58,21 +59,14 @@ type
   end;
  pCPR_HEADER= ^CPR_HEADER;
 type
-   configfile = 
-   record     
-      tslice,rate,soundcard,irq,dma,port,stereo,music : word;
-   end;	      
-type
 // paltype=array[0..255,1..3] of byte;
  fonttype= array[0..2] of byte;
  plantype= array[1..120,1..120] of byte;
  landtype= array[1..240,1..120] of byte;
  pscreentype= ^screentype;
- buftype= array[0..2047] of byte;
  bigfonttype= array[0..7] of byte;
 {$PACKRECORDS DEFAULT}
 const
- buffsize = 4096;
  font: array[1..84] of fonttype=
   ((0,0,0),(34,32,32),(85,0,0),(34,0,0),(36,68,32),
    (66,34,64),(9,105,0),(2,114,0),(0,2,36),(0,240,0),
@@ -114,10 +108,9 @@ const
    (0,130,130,130,130,124,0,0),(0,130,130,68,40,16,0,0),(0,130,130,146,170,68,0,0),(0,130,68,56,68,130,0,0),
    (0,130,130,126,2,252,0,0),(0,124,8,16,32,124,0,0));
 var
-   cf		    : configfile;
   tcolor,bkcolor,i,j,z,cursor,permx,permy,code,j2,m,index,alt,ecl,
   r2,c,radius,m1,m2,m3,m4,tslice,water,waterindex,x,ofsx,ofsy: integer;
- keymode,moderror: boolean;
+ keymode: boolean;
  key: char;
  modth,modtm,modts,curth,curtm,curts: byte;
  y,part,part2,c2: real;
@@ -331,12 +324,6 @@ end;
 
 
 
-function testbit(b,bit: byte) : boolean; // just test bit. Pascal sucks!
-begin
-    if ((1<<bit) and b)<>0 then testbit:=true
-    else testbit:=false;
-end;
-
 procedure printxy(x1,y1: integer; s: string);
 var letter,a,x,y,t: integer;
 begin
@@ -426,13 +413,6 @@ begin
  tcolor:=t;
 end;
 
-//{$F+}
-function testit : integer;
-begin
-    testit:=1;
-end;
-//{$F-}
-
 
 
 procedure readygraph;       // init video
@@ -448,7 +428,9 @@ var a,b: integer;
     temppal: paltype;
     px,dx,pdx: array[1..768] of shortint;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(dx,768,48);
  for j:=1 to 768 do
   begin
@@ -481,7 +463,9 @@ var a,b: integer;
     px,dx,pdx: array[1..768] of shortint;
 begin
  b:=tslice shr 2;
+ temppal[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
  fillchar(temppal,768,0);
+ dx[1]:=0; 		// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(dx,768,0);
  for j:=1 to 768 do
   begin
@@ -730,19 +714,20 @@ end;
 
 
 
-function timewait(t: integer): boolean;  // true if t sec. passed since gettime
+{function timewait(t: integer): boolean;  // true if t sec. passed since gettime
 var i:dword ;
 begin
     getcurtime;
     i:=abs(curth-modth)*3600+abs(curtm-modtm)*60+abs(curts-modts);
     if(i>=t) then timewait:=true else timewait:=false;
-end;
+end;}
 
 procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -834,6 +819,7 @@ begin
  dothefade;
 end;
 
+(*
 procedure domainscreen;
 var backgr: pscreentype;
 begin
@@ -894,14 +880,12 @@ begin
  dispose(backgr);
  dispose(temp);
 end;
+*)
 
 procedure powerupencodes;
-var a,b,t,sd,range: integer;
-    yadj,pfac,part,temp1,temp3: real;
+var a,b,t: integer;
+    part: real;
 begin
- sd:=500;
- range:=80;
- yadj:=1800/1920;
  setcolor(31);
  part:=31/36;
  //t:=tslice div 4;
@@ -928,6 +912,7 @@ begin
    end;
 end;
 
+(*
 procedure createplanet(xc,yc: integer);
 var x1,y1: integer;
     a: longint;
@@ -943,7 +928,7 @@ begin
    if landform^[x1,y1]<240 then landform^[x1,y1]:=landform^[x1,y1]+5;
   end;
 end;
-
+*)
 procedure generateplanet;
 var f: file of landtype;
 begin
@@ -1057,14 +1042,9 @@ end;
 procedure charcomstuff(t: integer);
 //var modth,modtm,modts,curth,curtm,b,curts: byte;
 var b:byte;
-    sd,range,y: integer;
-    pfac,yadj,temp1,temp3: real;
 begin
 gettime;
  b:=tslice div 2;
- sd:=500;
- range:=80;
- yadj:=1800/1920;
  repeat
   for i:=128 to 143 do
    colors[i]:=colors[random(22)];
@@ -1090,7 +1070,8 @@ var a,b: integer;
 begin
  index:=0;
  a:=24;
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
  b:=tslice div 2;
  repeat
   inc(index);
@@ -1179,7 +1160,8 @@ begin
  until index=75;
  index:=0;
  a:=24;
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
  if fastkeypressed then goto ending;
  repeat
   inc(index);
@@ -1306,6 +1288,7 @@ var t: pscreentype;
     temppal: paltype;
 begin
     
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(temppal,768,0);
  for i:=0 to 31 do
   temppal[i]:=colors[i];
@@ -1421,8 +1404,6 @@ begin
 end;
 
 procedure is2wait(alt1,alt2,alt3,alt4: integer);
-var //modth,modtm,modts,curth,curtm,curts: byte;
-    x1,y1,x2,y2: integer;
 begin
  gettime;
  repeat
@@ -1452,6 +1433,7 @@ getcurtime;
  until i>1;
 end;
 
+(*
 procedure staticscreen;
 begin
  for i:=0 to 199 do
@@ -1472,11 +1454,12 @@ begin
   delay(tslice div 4);
  until fastkeypressed;
 end;
+*)
 
 procedure runintro;
-var total,a: integer;
+var a: integer;
     
-label continue,jumpto,skip,skip2;
+label continue,skip,skip2;
 begin
  bkcolor:=0;
  tcolor:=22;

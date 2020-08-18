@@ -259,6 +259,7 @@ begin
  for j:=0 to 16 do
   begin
    amounts[j]:=temp^[j,tempplan^[curplan].state];
+   already[0]:=0;	// to turn off warnings, variables are actually correctly initialized by function below   
    fillchar(already,10,0);
    if temp^[j,tempplan^[curplan].state]>0 then
     for i:=1 to temp^[j,tempplan^[curplan].state] do
@@ -382,7 +383,7 @@ begin
 end;
 
 procedure zoom1x(x1,y1: integer);
-var temp : shortint;
+var
    a	 : Integer;
 begin
  rectangle(x1+28,y1+13,x1+88,y1+73);
@@ -523,8 +524,8 @@ procedure displaylandform;
 var part,part2 : real;
    {part:scales what is above the water level to 0 to 31}
    {part2:scales what is pelow the water level to 0 to 5}
-    index,max  : integer;
-   i, j	       : Integer;
+    index  : integer;
+    i, j   : Integer;
 begin
    part:=31/(255-water);
    if water>0 then part2:=5/water else part2:=0;
@@ -719,8 +720,6 @@ end;
 
 procedure printhigheststar;
 var
-   y	    : word;
-   angle    : real;
    hydrogen : word;
    helium   : word;
    other    : word;
@@ -960,7 +959,7 @@ begin
 end;
 
 procedure displayinfogathered;
-var strs: string[8];
+var
     a, j, i: integer;
 begin
    mousehide;
@@ -1696,7 +1695,7 @@ end;
 
 procedure findmouse;
 var
-   x, y, i, j : Integer;
+   y, i, j : Integer;
 begin
  if not mouse.getstatus then exit;
   case mouse.x of
@@ -1968,7 +1967,7 @@ begin
 end;
 
 procedure readydata;
-var vgafile : file of screentype;
+var
    i, j, a  : Integer;
 begin
  {dispose(backgr);}

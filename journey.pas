@@ -119,9 +119,9 @@ asintab :array[0..1024] of byte =
 var
  alt, i,j,q,m,index,a,b,j2,ofsx,ofsy,clickcode: integer;
  part: real;
- y,part4: real;
+ part4: real;
  s: string[30];
- msg,pd1,pd2,pdx,oldcube: integer;
+ msg,oldcube: integer;
 
 procedure printstring(x1,y1: integer; snum: byte);
 var letter,x,y: integer;
@@ -307,6 +307,7 @@ end;
 
 procedure getcube(src,tar: byte);
 begin
+ assert ((src<=9*9) and (tar<=9*9));	// to turn off warnings, we don't really use those variables here
  move(cubetar^,cubesrc^,sizeof(cubetype));
  for a:=0 to 2 do
   for b:=0 to 2 do
@@ -444,10 +445,9 @@ end;
 
 procedure rendersphere(xx, yy, radius : Integer; angle : Real; eclipse: Boolean; ecl : Real);
 var
-   xradius    : Integer;
    x, y	      : Integer;
    sx, sy     : Integer;
-   ax, ay     : Integer;
+   ax         : Integer;
    e1, e2, ed : Integer;
    radius2    : Integer;
    radius1    : Real;
@@ -1191,7 +1191,6 @@ procedure processkey;
 var temp : byte;
     ans	 : char;
    i	 : Integer;
-   s	 : string[4];
 begin
  idletime:=0;
  temp:=0;
@@ -1440,7 +1439,6 @@ begin
 end;
 
 procedure mainloop;
-label start;
 begin
  repeat
   fadestep(8);

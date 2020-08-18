@@ -968,7 +968,6 @@ end;
 
 procedure showbotstuff(curplan: integer);
 var index,j,max,total: integer;
-    str1: string[10];
     amounts: array[0..16] of byte;
     temp: ^scantype;
     scanfile: file of scantype;

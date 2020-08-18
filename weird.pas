@@ -88,7 +88,7 @@ var a,b,j: integer;
     temppal: paltype;
 begin
  {$PUSH}
- //{$HINTS OFF}
+ {$HINTS OFF}
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
                                 // FIXME: unify all such calls into one function/define, as it is often repeated, and with such strange value
  {$POP}

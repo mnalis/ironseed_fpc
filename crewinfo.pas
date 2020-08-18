@@ -74,13 +74,12 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
- ylast:=50;
  part:=36/100;
  for i:=14 to 88 do
   fillchar(screen[i,16],185,0);
@@ -102,7 +101,6 @@ begin {120,37,294,112}
     5:i:=-round(c*part);
    end;
    lineto(j,i+51);
-   ylast:=i+51;
  end;
 end;
 
@@ -123,7 +121,7 @@ begin
 end;
 
 procedure redraw;
-var c: integer;
+var
     s: string[20];
     crewfile: file of crewdatatype;
     crewdata: crewdatatype;

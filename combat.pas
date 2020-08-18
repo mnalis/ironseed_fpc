@@ -1561,7 +1561,7 @@ begin
    mouseshow;
    tcolor:=28;
    {$PUSH}
-   //{$HINTS OFF}
+   {$HINTS OFF}
    fillchar(cargoitems,11,0);	// FIXME: why only 11, when it is array 0..13 ??
    {$POP}
    i:=random(nships);

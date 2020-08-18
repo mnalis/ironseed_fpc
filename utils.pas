@@ -73,15 +73,12 @@ implementation
 
 uses data, journey, gmouse, saveload, crewtick, utils_;
 
-type
- scandatatype= array[0..11] of byte;
- scantype= array[0..16] of scandatatype;
 var
  a,b,j,i,index : integer;
    randsave    : longint;
 
 function chevent(n: integer): boolean;
-var i,j: integer;
+{var i,j: integer;}
 begin
    if (n<0) or (n>19999) then
    begin
@@ -196,7 +193,6 @@ end;
 
 procedure sprinkle2(x1,y1,x2,y2,seed: integer);
 var max: word;
-    dx,dy: integer;
 begin
  max:=(x2-x1)*(y2-y1);
  index:=0;
@@ -455,7 +451,7 @@ begin
 end;
 
 procedure removecargo(item: integer);
-var i,j: integer;
+var j: integer;
 begin
  j:=1;
  while (j<250) and (ship.cargo[j]<>item) do inc(j);
@@ -1017,7 +1013,7 @@ begin
 end;
 
 function findfirstplanet(sys: integer): integer;
-var done: boolean;
+var
     j: integer;
 begin
  done:=false;

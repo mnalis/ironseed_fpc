@@ -48,7 +48,7 @@ procedure getname(n: integer);
 procedure addgunnode;
 procedure addstuff(n, limit: integer);
 procedure getstuffamounts(
-state	: Integer;
+const state	: Integer;
 var ele	: array{[0..16]} of integer;
 var mat	: array{[0..20]} of Integer;
 var cmp	: array{[0..22]} of Integer);
@@ -67,7 +67,7 @@ type
  scandatatype= array[0..11] of byte;
  scantype= array[0..16] of scandatatype;
 var
- a,b,j,i,index,curplanicons: integer;
+ a,b,j,i,index: integer;
 
 function GetTechnologyLevel(plan : Integer) : Integer;
 var
@@ -187,7 +187,7 @@ end; { getsubamounts }
 
 
 procedure getstuffamounts(
-state	: Integer;
+const state	: Integer;
 var ele	: array{[0..16]} of integer;
 var mat	: array{[0..20]} of Integer;
 var cmp	: array{[0..22]} of Integer);
@@ -256,10 +256,11 @@ var
    i, j, r : Integer;
    lim	   : Integer;
    total   : Integer;
-   s	   : string[10];
+   {s	   : string[10];}
 begin
    if (tempplan^[n].bots and 7) = 0 then
       exit;
+   ele[0]:=0; mat[0]:=0; cmp[0]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    getstuffamounts(tempplan^[n].state, ele, mat, cmp);
    total := 0;
    lim := limit;
@@ -786,6 +787,7 @@ var x1,y1 : integer;
     str1  : string[3];
    tl, i  : Integer;
 begin
+   i:=0;
    x1:=xc;
    y1:=yc;
    randseed:=tempplan^[curplan].seed;
@@ -897,10 +899,10 @@ var x1,y1      : integer;
     a,b,c      : integer;
    c1, c2, c3  : Integer;
    sz,sz2,sz21 : Integer;
-   x12,sz22    : Integer;
+   sz22        : Integer;
    cnt,d,d2    : Integer;
    x, y	       : Integer;
-   xx, yy      : Integer;
+   xx          : Integer;
 begin
    randseed:=tempplan^[curplan].seed;
    {decide on colours}
@@ -975,7 +977,6 @@ begin
       for x1 := -sz to sz do
       begin
 	 xx := x1 + x;
-	 x12 := x1 * x1;
 	 if xx < 1 then inc(xx, 240) else if xx > 240 then dec(xx, 240);
 	 d := round(sqrt(sz2 - x1 * x1));
 	 for y1 := -d to d do
@@ -1070,8 +1071,8 @@ begin
 end; { inter2 }
 
 function inter4(c1, c2, c3, c4 : Integer) : Integer;
-var
-   c : Integer;
+{var
+   c : Integer;}
 begin
    {c := (c1 and $f) + (c2 and $f) + (c3 and $f) + (c4 and $f);}
    inter4 := (c1 + c2 + c3 + c4) shr 2;
@@ -1082,10 +1083,9 @@ end; { inter4 }
 procedure makecloud;
 var
    x, y	      : Integer;
-   x1, y1     : Integer;
+   y1         : Integer;
    x2, y2     : Integer;
    xx, yy     : Integer;
-   stride, s2 : Integer;
    i,c,count  : Integer;
    sz,b,bl    : Integer;
 begin
@@ -1217,7 +1217,7 @@ begin
 end;
 
 procedure readyplanet;
-var planfile: file of planettype;
+var 
     t: pscreentype;
     tpal: paltype;
     part2: real;
@@ -1275,6 +1275,7 @@ begin
      ppart[i]:=r2/y;
     end;
    sphere:=2;
+   tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(tpal,768,0);
    set256colors(tpal);
    mymove(t^,screen,16000);
@@ -1499,6 +1500,7 @@ begin
  createstar(i2,200,90);
  createstar(i2,30,30);
  createstar(i2,120,60);
+ tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(tpal,768,0);
  set256colors(tpal);
  mymove(t^,screen,16000);
@@ -1622,6 +1624,7 @@ var old: array[1..10] of byte;
     t: word;
 begin
  t:=tcolor;
+ old[1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
  move(ship.gunnodes,old,10);
  with ship do
   begin
@@ -1788,7 +1791,7 @@ end;
 
 procedure gotoorbit(sys, n : Integer);
 var
-   i,j : Integer;
+   i : Integer;
 begin
    i := getplanetbyorbit(sys, n);
    if i = 0 then

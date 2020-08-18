@@ -43,7 +43,7 @@ const
 type
  bubblearray= array[0..maxbubbles,1..2] of integer;
 var
- psychemode,graphindex,a,crewindex,r,g,b,i,j: integer;
+ psychemode,graphindex,a,crewindex,i,j: integer;
  bubbles: ^bubblearray;
 
 procedure showportrait(n: integer);
@@ -191,7 +191,7 @@ end;
 
 procedure drawprimarystats(num : integer);
 var
-   a,b,c,d,y,i : integer;
+   a,b,c,d,y : integer;
    part,col,cs : real;
 begin
    a:=ship.crew[num].phy;
@@ -260,14 +260,13 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
  {d:=ship.crew[num].status;}
- ylast:=50;
  part:=34/100;
  {for i:=111 to 145 do
   fillchar(screen[i,299],3,0);
@@ -294,7 +293,6 @@ begin {120,37,294,112}
      5:i:=-round(c*part);
     end;
     lineto(j,i+145);
-    ylast:=i+145;
   end;
 end;
 
