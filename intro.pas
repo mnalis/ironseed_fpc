@@ -1502,8 +1502,6 @@ begin
  generateplanet;
  if fastkeypressed then goto continue;
  playmod(true,'sound/INTRO1.MOD');
- ampsetpanning(0,Pan_Surround);
- ampsetpanning(1,Pan_Surround);
  mouse.setmousecursor(1);
 // goto skip2;
  if fastkeypressed then goto continue;

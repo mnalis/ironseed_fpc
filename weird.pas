@@ -87,7 +87,11 @@ procedure blast(c1,c2,c3: integer);
 var a,b,j: integer;
     temppal: paltype;
 begin
- mymove(colors,temppal,192);
+ {$PUSH}
+ //{$HINTS OFF}
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+                                // FIXME: unify all such calls into one function/define, as it is often repeated, and with such strange value
+ {$POP}
  b:=tslice*4;
  for a:=1 to 63 do
   begin
@@ -463,7 +467,7 @@ begin
 end;
 
 procedure easteregg2;
-var ans: char;
+var 
     c,i,j: integer;
     portrait: ^portraittype;
 begin
@@ -512,7 +516,6 @@ begin
  dispose(portrait);
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -536,7 +539,7 @@ begin
     plainfadearea(80,146,240,160,-3);
     mouseshow;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -553,7 +556,7 @@ begin
 end;
 
 procedure easteregg3;
-var ans: char;
+var 
     j,c: integer;
     s: string[12];
     s2: string[3];
@@ -648,7 +651,7 @@ begin
      defaultsong:=s;
     end;
   end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
  until (done) and (c=1);
  fading;
  mousehide;
@@ -660,7 +663,6 @@ end;
 
 procedure easteregg4;
 var i,j,c: integer;
-    ans: char;
 begin
 {$IFDEF DEMO}
  exit;
@@ -693,7 +695,6 @@ begin
  printxy(169,104,'Recharge Battery');
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -728,7 +729,7 @@ begin
                100..115: ship.battery:=32000;
               end;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -747,7 +748,6 @@ end;
 
 procedure easteregg5;
 var i,j,c: integer;
-    ans: char;
 begin
 {$IFDEF DEMO}
  exit;
@@ -780,7 +780,6 @@ begin
  printxy(179,104,'Add Material');
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -815,7 +814,7 @@ begin
                100..115: if incargo(4000)<16 then addcargo2(4000, true);
               end;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -856,8 +855,8 @@ begin
 end;*)
 
 procedure bossmode;
-type
- texttype= array[0..24,0..79] of integer;
+{type
+ texttype= array[0..24,0..79] of integer;}
 var
 { textscreen: texttype absolute $B800:0000;
  f: file of texttype;
@@ -884,7 +883,10 @@ begin
  if ioresult<>0 then errorhandler('data/boss1.dta',5);
  close(f);}
  pausemod;
+ {$PUSH}
+ {$HINTS OFF}
  fillchar(temppal,768,0);
+ {$POP}
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
  while fastkeypressed do readkey;
@@ -910,6 +912,7 @@ begin
  close(f);
 end;
 
+(*
 procedure loopscale(startx,starty,sizex,sizey,newx,newy: word; var s,t);
 var sety, py, pdy, px, pdx, dcx, dcy, ofsy: word;
 begin
@@ -1091,6 +1094,7 @@ begin
 //  pop ds
 // end;
 end;
+*)
 
 procedure screensaver;
 {var s,s2: pscreentype;
@@ -1272,6 +1276,7 @@ end;
    
 procedure deathsequence(n: integer);
 begin
+ assert (n<2); { just to ignore warning, really not used }
  stopmod;
  blast(63,0,0);
  closegraph;

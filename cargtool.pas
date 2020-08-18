@@ -729,7 +729,6 @@ begin
 end;
 
 procedure findmouse;
-var button: boolean;
 begin
  if not mouse.getstatus then exit;
  case mouse.x of
@@ -1045,7 +1044,10 @@ procedure opendoors2;
 var a,b: integer;
     temppal: paltype;
 begin
+ {$PUSH}
+ {$HINTS OFF}
  fillchar(temppal,768,0);
+ {$POP}
  for j:=112 to 159 do
   temppal[j]:=colors[j];
  set256colors(temppal);

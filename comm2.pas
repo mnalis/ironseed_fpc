@@ -884,7 +884,7 @@ begin
 end;
 
 procedure findleftmouse;
-var y,j: integer;
+var y: integer;
 begin
  y:=-3+((mouse.y-141) div 6);
  repeat
@@ -902,7 +902,7 @@ begin
 end;
 
 procedure findrightmouse;
-var y,j: integer;
+var y: integer;
 begin
  y:=-3+((mouse.y-141) div 6);
  repeat

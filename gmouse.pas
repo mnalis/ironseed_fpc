@@ -47,7 +47,7 @@ var
  mdefault: mouseicontype;
 
 procedure mousehide;cdecl; external;
-procedure mousesetcursor(i: mouseicontype); cdecl; external;
+procedure mousesetcursor(var i: mouseicontype); cdecl; external;	// NB. var should be constref
 procedure mouseshow; cdecl; external;
 
 implementation

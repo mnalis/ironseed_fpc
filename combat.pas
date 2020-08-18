@@ -56,13 +56,12 @@ type
  alienshiparray= array[1..maxships] of alienshiptype;
  statpictype= array[0..1,0..11] of byte;
  alienshipdisplay= array[125..189,6..98] of byte;
- barpictype= array[0..3,0..3] of byte;
  shieldpictype= array[0..6,0..3] of byte;
  msgtype= array[0..9,0..9] of byte;
  msgarray= array[0..3] of msgtype;
  {$PACKRECORDS DEFAULT}
 var
- oldshddmg,i,a,b,nships,targetindex,fireweapon,moveindex,picx,picy: integer;
+ oldshddmg,i,a,b,nships,targetindex,fireweapon,moveindex,picy: integer;
  range: longint;
  scanning,autofire,engaging,alienpicmode,dead,done_: boolean;
  poweredup: array[1..10] of integer;
@@ -741,7 +740,7 @@ end;
 
 procedure moveships;
 var r,rt: real;
-    a,j,i: integer;
+    a,j: integer;
 begin
  for j:=1 to nships do
   with ships^[j] do
@@ -1561,7 +1560,10 @@ begin
    printxy(18,18,'SCAVENGER BOTS DEPLOYED...');
    mouseshow;
    tcolor:=28;
-   fillchar(cargoitems,11,0);
+   {$PUSH}
+   //{$HINTS OFF}
+   fillchar(cargoitems,11,0);	// FIXME: why only 11, when it is array 0..13 ??
+   {$POP}
    i:=random(nships);
    if i>13 then i:=13;
    a:=1;

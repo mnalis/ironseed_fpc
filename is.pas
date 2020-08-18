@@ -38,7 +38,7 @@ const
  s: array[0..2] of string[21]=
   ('Executable not found.','Insufficient memory.','General failure.');
 var
- code: integer;
+ code: word;
  str1: string[64];
 
 procedure getdoserror;
@@ -73,7 +73,7 @@ begin
    3: exec('intro',p[2]+p[4]+p[3]+str1);
    4:;
    5: exec('intro',p[2]+p[4]+str1);
-   49..56: exec('main',p[1]+p[4]+' '+chr(code)+' '+str1);
+   49..56: exec('main',p[1]+p[4]+' '+chr(Lo(code))+' '+str1);
    else
    begin
       str(code, str1);

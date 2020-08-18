@@ -66,12 +66,8 @@ const
  botbut2: buttype= (11,16,12);
  logbut1: buttype= (23,25,12);
  logbut2: buttype= (23,25,6);
-type
- pbyte=^byte;
- undername= array[53..75,98..182] of byte;
 var
  a,b,i,j,index,c1,c2: integer;
- x3,y3: real;
 
 procedure displayoptions(com: integer);
 var s: string[5];
@@ -157,7 +153,7 @@ begin
 end;
 
 procedure displaydamagecontrol(com: integer);
-var s,s2: string[11];
+var s: string[11];
 begin
  mousehide;
  case com of
@@ -882,7 +878,6 @@ begin;
 end;
 
 procedure showweaponicon(x1,y1,weap,node: integer);
-var j: integer;
 begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
@@ -911,7 +906,6 @@ begin
 end;
 
 procedure revshowweaponicon(x1,y1,weap,node: integer);
-var j: integer;
 begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
@@ -1781,7 +1775,7 @@ begin
 end;
 
 procedure displaysystem(com: integer);
-var c: integer;
+var 
     x,z,ang: real;
     s: string[7];
     str1: string[20];
@@ -2093,7 +2087,6 @@ begin
 end;
 
 procedure displayship2(x1,y1: integer);
-var str1: string;
 begin
  loadshipdisplay2(ship.shiptype[1]-1,x1,y1);
  loadshipdisplay2(2+ship.shiptype[2],x1,y1);
@@ -2178,7 +2171,6 @@ begin
 end;
 
 function checkloc(l: integer): boolean;
-var j: integer;
 begin
  checkloc:=false;
  case l of
@@ -2912,7 +2904,7 @@ begin
 end;
 
 procedure displayshortscan;
-label error, error2;
+label error;
 begin
  if (ship.damages[7]>0) and (not checkscandamages) then exit;
  t1:=t1+0.02;
@@ -3010,7 +3002,7 @@ error:
 end;
 
 procedure computegraph;
-var dist,tech,signaly,signalx,noise,wave: integer;
+var dist,tech,signaly,signalx,noise: integer;
 begin
  if ship.wandering.alienid<16000 then
   begin

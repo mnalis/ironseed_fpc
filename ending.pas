@@ -64,7 +64,6 @@ const
 
 var
  i,j: integer;
- modth,modtm,modts,curth,curtm,curts: byte;
 procedure bigprintxy(x1,y1: integer; s: string);
 var letter,a,x,y,t: integer;
 begin
@@ -105,7 +104,10 @@ procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- mymove(colors,temppal,192);
+ {$PUSH}
+ //{$HINTS OFF}
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ {$POP}
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -129,7 +131,7 @@ begin
    set256colors(temppal);
    delay(round(tslice*1.6));
   end;
- mymove(temppal,colors,192);
+ mymove(temppal,colors,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -271,7 +273,10 @@ procedure halffading;
 var a,b: integer;
     temppal: paltype;
 begin
- mymove(colors,temppal,192);
+ {$PUSH}
+ //{$HINTS OFF}
+ mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
+ {$POP}
  b:=tslice shr 2;
  for a:=63 downto 32 do
   begin
@@ -279,7 +284,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- mymove(temppal,colors,192);
+ mymove(temppal,colors,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
 end;
 
 procedure endgame;

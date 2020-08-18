@@ -654,7 +654,7 @@ void getrgb256_(const fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byt
 	*b = palette[palnum].b;
 }
 
-void set256colors(pal_color_type * pal)	// set all palette
+void set256colors(const pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -951,7 +951,7 @@ void mouseshow(void)
 	showmouse = 1;
 }
 
-void mousesetcursor(uint8_t * icon)
+void mousesetcursor(const uint8_t * icon)
 {
 	memcpy(mouse_icon, icon, 16*16);
 }

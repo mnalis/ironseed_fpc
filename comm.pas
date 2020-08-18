@@ -58,7 +58,7 @@ type
   end;
  eventarray= array[0..9] of eventtype;
 var
- commlevel,i,j,techlvl,eattype,contactindex,cursorx,index,indexa,indexb,indexc,oldcontactindex: integer;
+ i,j,techlvl,eattype,contactindex,cursorx,indexa,indexb,indexc,oldcontactindex: integer;
  brighter,infomode,shipflag,eventflag: boolean;
  str1, str2: ^string;
  question: string[20];
@@ -218,7 +218,7 @@ begin
 end;
 
 procedure addtofile;
-var confile,target: file of alientype;
+var confile: file of alientype;
     err,already: boolean;
     temp: alientype;
     index: integer;
@@ -359,8 +359,7 @@ begin
 end; { clearconvflags }
 
 procedure contactsequence(plan,com: integer);
-var a,b,index,contactmade: integer;
-    t: ^char;
+var contactmade: integer;
 begin
  mousehide;
  if plan=0 then techlvl:=alien.techmax
@@ -417,7 +416,6 @@ end;
 procedure loadconversation;
 var fc: file of converseindex;
     fr: file of responsetype;
-    s: string[2];
     str1: string[4];
 begin
    fillchar(r^,sizeof(responsearray),0);
@@ -788,6 +786,7 @@ function run21000event(n, p,q,s: integer) : Boolean;
 var result : boolean;
 begin
    run21000event := false;
+   assert ((p <> -1) and (q <> - 1));	{ just to get rid of warning, really not used }
    case n of
      21001 : begin {Phaedor Moch: Coolant + Radioactive}
 		if (incargo(4007) >= 1) and (incargo(4014) >= 1) then
@@ -1607,7 +1606,6 @@ end;
 procedure checkotherevents2;
 var t	 : ^eventarray;
     f	 : file of eventarray;
-    done : boolean;
     n,i	 : integer;
 
    procedure printstatement;

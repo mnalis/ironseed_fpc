@@ -154,7 +154,7 @@ end;
 
 function getsubamount(item : Integer; ele : array{[0..16]} of Integer; mat : array{[0..20]} of Integer) : Integer;
 var
-   i, j, k, n : Integer;
+   i, j, n    : Integer;
    tt	      : Integer;
 begin
    getsubamount := 0;

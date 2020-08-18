@@ -499,7 +499,6 @@ end;
 
 procedure loadscreen(s: string; ts: pointer);
 var ftype: CPR_HEADER;
-    s2: string[30];
 begin
  uncompressfile(s+'.cpr',ts,@ftype);
  if ftype.version=CPR_ERROR then errorhandler(s,5);
@@ -745,7 +744,6 @@ end;
 
 
 procedure readygraph;
-var testdriver,driver,mode,errcode: integer;
 begin
  SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  SDL_init_video(screen);
@@ -759,8 +757,11 @@ var
    temppal   : paltype;
    px,dx,pdx : array[1..768] of shortint;
 begin
-   mymove(colors,temppal,192);
+   {$PUSH}
+   //{$HINTS OFF}
+   mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
    fillchar(dx,768,48);
+   {$POP}
    for j:=1 to 768 do
    begin
       px[j]:=colors[0,j] div 48;
@@ -794,8 +795,13 @@ var
    px,dx,pdx : array[1..768] of shortint;
 begin
    b:=tslice div 2;
-   fillchar(temppal,768,0);
-   fillchar(dx,768,0);
+
+{$PUSH}
+{$HINTS OFF}
+   fillchar(temppal, 768, 0);
+   fillchar(dx, 768, 0);
+{$POP}
+
    for j:=1 to 768 do
    begin
       px[j]:=colors[0,j] div 48;
@@ -842,8 +848,6 @@ begin
 end;
 
 procedure fadefull(step, slice : Integer);
-var
-   i : integer;
 begin
    if step < 0 then
       while fadelevel > 0 do
@@ -860,8 +864,6 @@ begin
 end;
 
 procedure fadestopmod(step, slice : Integer);
-var
-   i : integer;
 begin
    step := -abs(step);
    while fadelevel > 0 do

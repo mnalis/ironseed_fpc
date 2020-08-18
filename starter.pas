@@ -40,16 +40,19 @@ implementation
 uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird, ending;
 
 procedure showcube;
-var i,j: integer;
+var i,j: word;
 begin
  setcolor(45);
  setwritemode(xorput);
  for j:=0 to 50 do
   for i:=0 to 44 do
    begin
-    line(240,167,j+215,i+145);
-    delay(tslice div 32);
-    line(240,167,j+215,i+145);
+    assert (j+215 < 320);
+    assert (i+145 < 200);
+    line(240,167,word(j+215),word(i+145));
+    assert (tslice > 0);
+    delay(word(tslice div 32));
+    line(240,167,word(j+215),word(i+145));
     screen[i+145,j+215]:=cubetar^[i,j];
    end;
  setwritemode(copyput);
@@ -57,9 +60,10 @@ end;
 
 procedure checkparams;
 var i,j: integer;
-    curdir: string[60];
+    curdir: string[255];	// NB: hopefully long enough
     diskfreespace: longint;
 begin
+ curdir := '.';
  if (paramstr(1)<>'/playseed') and (paramstr(1)<>'/killseed') then
   begin
    //textmode(co80);

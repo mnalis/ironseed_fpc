@@ -19,12 +19,9 @@ unit heapchk;
 interface
 procedure WriteHexWord(w: Word);
 procedure HeapStats;
-function HeapFunc (Size: Word): Integer; 
 function GetHeapStats:String;
 function GetHeapStats1:String;
 function GetHeapStats2:String;
-
-procedure HeapShow;
 
 implementation
 procedure WriteHexWord(w: Word);
@@ -59,11 +56,4 @@ begin
    GetHeapStats := 'heap: TotalSize(' + '10050000' + ') MaxAvail(' + '1005000' + ') MemAvail(' + '1005000' + ')';
 end;
 
-function HeapFunc (Size: Word): Integer;
-begin
-end;
-procedure HeapShow;
-var s1,s2:string[11];
-begin
-end;
 end.

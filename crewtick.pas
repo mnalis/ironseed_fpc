@@ -82,6 +82,7 @@ var
    var
       i	: Integer;
    begin
+      assert(background or not background);	{ just ignore warnings }
       with ship.crew[crew] do
       begin
 	 if (men < 10) or (emo < 10) or (phy < 10) then
@@ -115,6 +116,7 @@ var
    var
       snt, dif : Integer;
    begin
+      assert(background or not background);	{ just ignore warnings }
       with ship.crew[crew] do
 	 begin
 	    snt := san;
@@ -134,6 +136,7 @@ var
    var
       per, dif : Integer;
    begin
+      assert(background or not background);	{ just ignore warnings }
       with ship.crew[crew] do
       begin
 	 per := perf;
@@ -153,6 +156,7 @@ var
    var
       per, dif : Integer;
    begin
+      assert(background or not background);	{ just ignore warnings }
       with ship.crew[crew] do
       begin
 	 per := perf;
@@ -597,10 +601,12 @@ var
 
    procedure SciTick(background : Boolean);
    begin
+      assert(background or not background);	{ just ignore warnings }
    end; { SciTick }
 
    procedure AstTick(background : Boolean);
    begin
+      assert(background or not background);	{ just ignore warnings }
    end; { AstTick }
 
    procedure MedTick(background : Boolean);
@@ -665,6 +671,7 @@ var
    var i, s : Integer ;
       j, c, d  : byte;
    begin
+      assert(background or not background);	{ just ignore warnings }
       s := tempplan^[curplan].system;
       for i := 1 to 1000 do
 	 if (tempplan^[i].system = s) and (tempplan^[i].bots > 0) then

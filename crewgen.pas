@@ -31,8 +31,6 @@ uses data, gmouse, utils_, saveload, display, utils, modplay;
 {$PACKRECORDS 1}
 
 type
- displaytype= array[0..193,0..93] of byte;
- shipdistype= array[0..57,0..74] of byte;
  shipdatatype= record
    guns,cargo: byte;
    maxfuel,mass,accel,hullmax:integer;
@@ -48,8 +46,8 @@ type
  oldsysarray= array[1..250] of oldsystype;
 {$PACKRECORDS DEFAULT}
 var
- i,i2,j,a,cursor,code,crewnum,inputlevel,anihandle: integer;
- quit,crewmode,toggle: boolean;
+ i,i2,j,a,code,crewnum,inputlevel: integer;
+ quit,toggle: boolean;
  shipdata: shipdatatype;
  planets: ^planarray;
  oldsys: ^oldsysarray;
@@ -62,7 +60,6 @@ var
 procedure easteregg1;
 var c		  : integer;
    done		  : boolean;
-   ans		  : char;
    str1,str2,str3 : string[3];
    i, j, k, x, y  : Integer;
 begin
@@ -135,7 +132,6 @@ begin
    end;
    mouseshow;
    c:=0;
-   ans:=' ';
    done:=false;
    set256colors(colors);
    repeat
@@ -160,7 +156,7 @@ begin
 	 plainfadearea(80,146+12,240,160+12,-3);
 	 mouseshow;
       end;
-      if fastkeypressed then ans:=readkey;
+      if fastkeypressed then readkey;
       for i:=216 to 231 do
 	 colors[i]:=colors[random(16)];
       for i:=200 to 215 do
@@ -198,13 +194,12 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
- ylast:=50;
  part:=36/100;
  for i:=14 to 88 do
   fillchar(screen[i,121],175,0);
@@ -224,7 +219,6 @@ begin {120,37,294,112}
     5:i:=-round(c*part);
    end;
    lineto(j,i+51);
-   ylast:=i+51;
  end;
 end;
 
@@ -518,13 +512,12 @@ begin
 end;
 
 procedure addcursor;
-var found,quit: boolean;
+var found: boolean;
 begin
  case inputlevel of
   0: addship;
   1..7: begin
          found:=false;
-         quit:=false;
          repeat
           inc(crewnum);
           while (crewnum<31) and (crewdata^[crewnum].jobtype and (1 shl (7-inputlevel))=0) do inc(crewnum);
@@ -589,7 +582,6 @@ begin
 end;
 
 procedure addlevel;
-var s: string[11];
 begin
  lowerball;
  mousehide;
@@ -800,9 +792,7 @@ var curplan: integer;
     systfile: file of oldsystype;
 label planerror;
 begin
-   cursor:=0;
    quit:=false;
-   crewmode:=true;
    crewnum:=0;
    curplan:=0;
    inputlevel:=0;
@@ -1009,10 +999,11 @@ begin
 end;
 
 procedure checkparams;
-var i,j: integer;
-    diskfreespace: longint;
-    curdir: string[60];
+var 
+    //diskfreespace: longint;
+    curdir: string[255];	// NB: hopefully 255 is enough
 begin
+ curdir := '.';
  if (paramstr(1)<>'/makeseed') then
   begin
    closegraph();
@@ -1041,6 +1032,7 @@ begin
  if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
 end;
 
+{$IFDEF DEMO}
 procedure demostuff;
 var
  mode: word;
@@ -1120,7 +1112,7 @@ begin
  fadein;
  mainloop;
 end;
-
+{$ENDIF}
 
 begin
  init_everything;
