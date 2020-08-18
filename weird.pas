@@ -91,11 +91,9 @@ procedure blast(c1,c2,c3: integer);
 var a,b,j: integer;
     temppal: paltype;
 begin
- {$PUSH}
- {$HINTS OFF}
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
-                                // FIXME: unify all such calls into one function/define, as it is often repeated, and with such strange value
- {$POP}
+                                // FIXME: unify all such calls into one function/define, as it is often repeated, and with such strange value (192=3*64, only first 64 pallete entries)
  b:=tslice*4;
  for a:=1 to 63 do
   begin
@@ -870,10 +868,8 @@ begin
  if ioresult<>0 then errorhandler('data/boss1.dta',5);
  close(f);}
  pausemod;
- {$PUSH}
- {$HINTS OFF}
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(temppal,768,0);
- {$POP}
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
  while fastkeypressed do readkey;

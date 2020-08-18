@@ -757,11 +757,10 @@ var
    temppal   : paltype;
    px,dx,pdx : array[1..768] of shortint;
 begin
-   {$PUSH}
-   //{$HINTS OFF}
+   temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
    mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
-   fillchar(dx,768,48);
-   {$POP}
+   dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(dx,sizeof(dx),48);
    for j:=1 to 768 do
    begin
       px[j]:=colors[0,j] div 48;
@@ -796,11 +795,10 @@ var
 begin
    b:=tslice div 2;
 
-{$PUSH}
-{$HINTS OFF}
-   fillchar(temppal, 768, 0);
-   fillchar(dx, 768, 0);
-{$POP}
+   temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(temppal, sizeof(temppal), 0);
+   dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(dx, sizeof(dx), 0);
 
    for j:=1 to 768 do
    begin

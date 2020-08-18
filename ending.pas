@@ -104,10 +104,8 @@ procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- {$PUSH}
- //{$HINTS OFF}
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
- {$POP}
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -273,10 +271,8 @@ procedure halffading;
 var a,b: integer;
     temppal: paltype;
 begin
- {$PUSH}
- //{$HINTS OFF}
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
- {$POP}
  b:=tslice shr 2;
  for a:=63 downto 32 do
   begin
