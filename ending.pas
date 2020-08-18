@@ -105,7 +105,7 @@ var temppal: paltype;
     a: integer;
 begin
  {$PUSH}
- {$HINTS OFF}
+ //{$HINTS OFF}
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
  {$POP}
  for a:=31 downto 0 do
@@ -274,7 +274,7 @@ var a,b: integer;
     temppal: paltype;
 begin
  {$PUSH}
- {$HINTS OFF}
+ //{$HINTS OFF}
  mymove(colors,temppal,192);	// FIXME: why only 192?! colors/temppal are paltype: 256*3=768 bytes
  {$POP}
  b:=tslice shr 2;

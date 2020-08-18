@@ -1775,7 +1775,7 @@ begin
 end;
 
 procedure displaysystem(com: integer);
-var 
+var
     x,z,ang: real;
     s: string[7];
     str1: string[20];

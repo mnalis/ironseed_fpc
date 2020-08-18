@@ -472,7 +472,7 @@ end;
 
 {$IFNDEF DEMO}
 procedure easteregg2;
-var 
+var
     c,i,j: integer;
     portrait: ^portraittype;
 begin
@@ -558,7 +558,7 @@ begin
 end;
 
 procedure easteregg3;
-var 
+var
     j,c: integer;
     s: string[12];
     s2: string[3];

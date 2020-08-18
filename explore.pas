@@ -259,7 +259,7 @@ begin
  for j:=0 to 16 do
   begin
    amounts[j]:=temp^[j,tempplan^[curplan].state];
-   already[0]:=0;	// to turn off warnings, variables are actually correctly initialized by function below   
+   already[0]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(already,10,0);
    if temp^[j,tempplan^[curplan].state]>0 then
     for i:=1 to temp^[j,tempplan^[curplan].state] do
