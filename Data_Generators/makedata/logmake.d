@@ -121,7 +121,7 @@ void processlogs() {
 	char [][]output;
 	//printf ("Processing logs\n");
 	foreach(int i, Log log; loglist) {
-		printf("%d:%d:[%s]\n", log.id, log.title.length, log.title.toStringz);
+		//printf("%d:%d:[%s]\n", log.id, log.title.length, log.title.toStringz);
 		log.head = wraplines(log.head, 49);
 		//printf(".\n");
 		log.tail = wraplines(log.tail, 49);
@@ -136,7 +136,6 @@ void processlogs() {
 		} else {
 			output.length = 25 - (log.head.length + log.tail.length);
 			//printf (" head=>%s<\n output[%d]=%s\n tail=>%s<\n", to!string(log.head).toStringz, output.length, to!string(output).toStringz, to!string(log.tail).toStringz);
-			// FIXME -- what does this do ??? -- 
 			output[0..$] = cast(char[])"";
 			output = log.head ~ output ~ log.tail;
 			//printf("X\n");
@@ -150,7 +149,7 @@ void processlogs() {
 		}
 		log.output = output.dup;
 		//printf(".\n");
-		log.title = log.title ~ to!string(" ".repeat(49 - log.title.length));
+		log.title = log.title ~ " ".replicate(49 - log.title.length);
 		//printf(".\n");
 		loglist[i] = log;
 		//printf("\n");
@@ -159,7 +158,7 @@ void processlogs() {
 }
 
 void writefiles(char []titlefile, char []logfile) {
-	printf ("\nWriting files: titles=%s and logs=%s\n", titlefile.toStringz, logfile.toStringz);
+	//printf ("\nWriting files: titles=%s and logs=%s\n", titlefile.toStringz, logfile.toStringz);
 	auto fhtitles = File(titlefile, "wb");
 	auto fhlogs = File(logfile, "wb");
 	TitleRecord tr;
@@ -170,16 +169,17 @@ void writefiles(char []titlefile, char []logfile) {
 		tr.id = to!short(log.id);
 		tr.text(encodestring(log.title));
 		for(i = 0; i < 25; i++) {
-			printf("1> %d:[%s]\n", log.output[i].length, log.output[i].toStringz);
+			//printf("1> %d:[%s]\n", log.output[i].length, log.output[i].toStringz);
 			s = encodestring(log.output[i]);
-			printf("2> %d:[%s]\n", s.length, s.toStringz);
+			//printf("2> %d:[%s]\n", s.length, s.toStringz);
 			lr.text[i](s);
-			printf("3> %d:[%s]\n", lr.text[i].length, (cast(char [])lr.text[i]).toStringz);
+			//printf("3> %d:[%s]\n", lr.text[i].length, (cast(char [])lr.text[i]).toStringz);
 		}
 		fhtitles.rawWrite((&tr)[0..1]);
+		//printf ("title_%04d %d:[%s]\n\n", tr.id, tr.text.data.length, tr.text.data.toStringz);
 		fhlogs.rawWrite((&lr)[0..1]);
 	}
-	printf ("Done writing files.\n");
+	//printf ("Done writing files.\n");
 }
 
 
