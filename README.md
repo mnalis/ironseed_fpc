@@ -20,7 +20,10 @@ For compiling, you need:
 - gcc (GNU C Compiler, `apt-get install build-essential gcc`
 - SDL v1.2 (Simple DirectMedia Layer 1.2, `apt-get install libsdl1.2-dev libsdl-mixer1.2-dev`)
 - (optionally) OpenGL (`apt-get install mesa-common-dev`)
-- (optionally) D compiler (The Digital Mars D compiler is required to the conversation and log conversion tools, http://digitalmars.com/d/1.0/index.html)
+
+For making changes to game, you may also need:
+- (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get intsall gdc` or http://digitalmars.com/d/2.0/)
+- (optionally) perl (for screen convertsion utilities, `apt-get install perl`)
 
 Compilation
 ===========

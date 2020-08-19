@@ -1,8 +1,9 @@
-import std.stream;
 import std.stdio;
-import std.regexp;
+import std.ascii;
+import std.regex;
 import std.conv;
 import std.string;
+import std.algorithm;
 import data;
 
 align(1):
@@ -29,7 +30,7 @@ char []inputfile;
 
 int [char []]keywordlines;
 int [char []]keywordused;
-char responsekeywords[int][][];
+char[][][int] responsekeywords;
 
 int [char []]ignorewords;
 int [char []]rootwords;
@@ -39,93 +40,94 @@ int currentauto = 1000;
 
 void addignore(char []words) {
 	foreach(char []s; std.string.split(words)) {
-		//printf("ignore:%.*s\n", s);
-		ignorewords[s] = 0;
+		//printf("ignore:%s\n", s.toStringz);
+		ignorewords[to!string(s)] = 0;
 	}
 }
 void addignoremaybe(char []words) {
 	foreach(char []s; std.string.split(words)) {
 		if(s.length && s[0] == '@') {
-			//printf("ignore:%.*s\n", s);
-			ignorewords[s[1..length]] = 0;
+			//printf("ignore:%s\n", s.toStringz);
+			ignorewords[to!string(s[1..$])] = 0;
 		}
 	}
 }
 
 void addroot(char []words) {
-	foreach(char []s; std.string.split(toupper(words))) {
-		//printf("root:%.*s\n", s);
-		rootwords[s] = 0;
+	foreach(char []s; std.string.split(toUpper(words))) {
+		//printf("root:%s\n", s.toStringz);
+		rootwords[to!string(s)] = 0;
 	}
 }
 
 void addwordline(int line, char []words) {
-	foreach(char []s; std.string.split(toupper(words))) {
-		//printf("line:(%d)%.*s\n", s);
-		keywordlines[s] = line;
+	foreach(char []s; std.string.split(toUpper(words))) {
+		//printf("line:(%d)%s\n", line, s.toStringz);
+		keywordlines[to!string(s)] = line;
 	}
 }
 
 void parsefile(char []file) {
-	scope Stream fh = new File(file, FileMode.In);
+	auto fh = File(file, "r");
 	inputfile = file;
-	//RegExp convreg = new RegExp("^(-?\\d+)\\s+.*");
-	RegExp convreg = new RegExp("^(@)?(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(\\S.*)", "g");
-	RegExp respreg = new RegExp("^(-?\\d+)\\s+(\\S.*)$", "g");
-	RegExp stopreg = new RegExp("^-500\\s*$", "g");
-	RegExp emptyreg = new RegExp("^\\s*$","g");
-	RegExp ignorereg = new RegExp("^@(.*)$","g");
-	RegExp rootreg = new RegExp("^@\\s*\\^\\s*$", "g");
+	//auto convreg = regex("^(-?\\d+)\\s+.*");
+	auto convreg = regex("^(@)?(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)\\s+(\\S.*)", "g");
+	auto respreg = regex("^(-?\\d+)\\s+(\\S.*)$", "g");
+	auto stopreg = regex("^-500\\s*$", "g");
+	auto emptyreg = regex("^\\s*$","g");
+	auto ignorereg = regex("^@(.*)$","g");
+	auto rootreg = regex("^@\\s*\\^\\s*$", "g");
 	Converse c;
 	Response r;
 	int num = 0;
-	foreach(char line[]; fh) {
+	foreach(line; fh.byLine) {
 		num++;
-		line = expandtabs(line);
-		//printf("%.*s\n", line);
-		if(convreg.find(line) >= 0) {
-			//printf("conv: %.*s,%.*s,%.*s,%.*s,%.*s,%.*s\n", convreg.match(1), convreg.match(2), convreg.match(3), convreg.match(4), convreg.match(5), convreg.match(5));
+		line = detab(line);
+		//printf("%s\n", line.toStringz);
+		auto convreg_match=match(line, convreg);
+		if(convreg_match) {
+			//printf("conv: %s,%s,%s,%s,%s,%s\n", convreg_match.captures[1].toStringz, convreg_match.captures[2].toStringz, convreg_match.captures[3].toStringz, convreg_match.captures[4].toStringz, convreg_match.captures[5].toStringz, convreg_match.captures[6].toStringz);
 			c.linenum = num;
-			c.event = toShort(convreg.match(2));
-			c.runevent = toShort(convreg.match(3));
-			c.rcode = toShort(convreg.match(4));
-			c.index = toShort(convreg.match(5));
+			c.event = to!short(convreg_match.captures[2]);
+			c.runevent = to!short(convreg_match.captures[3]);
+			c.rcode = to!short(convreg_match.captures[4]);
+			c.index = to!short(convreg_match.captures[5]);
 			if(c.index < 0) {
 				if(lastauto == currentauto) {
 					lastauto++;
 				}
-				c.index = lastauto;
+				c.index = to!short(lastauto);
 			}
-			c.keyword = toupper(convreg.match(6).dup);
+			c.keyword = cast(char[])(convreg_match.captures[6].dup.toUpper);
 			addignoremaybe(c.keyword);
 			c.keyword = replace(c.keyword, "@", "");
 			addwordline(num, c.keyword);
-			if(convreg.match(1) == "@") {
+			if(convreg_match.captures[1] == "@") {
 				addroot(c.keyword);
 			}
 			conv ~= c;
-		} else if(respreg.find(line) >= 0) {
-			//printf("resp: %.*s,%.*s\n", respreg.match(1), respreg.match(2));
+		} else if(auto respreg_match=match(line, respreg)) {
+			//printf("resp: %s,%s\n", respreg_match.captures[1].toStringz, respreg_match.captures[2].toStringz);
 			r.linenum = num;
-			r.index = toShort(respreg.match(1));
+			r.index = to!short(respreg_match.captures[1]);
 			if(r.index < 0) {
 				if(lastauto != currentauto) {
 					currentauto++;
 				}
-				r.index = currentauto;
+				r.index = to!short(currentauto);
 			}
-			r.response = " " ~ respreg.match(2);
+			r.response = " " ~ respreg_match.captures[2];
 			resp ~= r;
-		} else if(stopreg.find(line) >= 0) {
-			//printf("stop: %.*s\n", stopreg.match(0));
-		} else if (emptyreg.find(line) >= 0) {
+		} else if(auto stopreg_match=match(line, stopreg)) {
+			//printf("stop: %s\n", stopreg_match.captures[0].toStringz);
+		} else if (match(line, emptyreg)) {
 			/*do nothing*/
-		} else if (rootreg.find(line) >= 0) {
+		} else if (match(line, rootreg)) {
 			addroot(c.keyword);
-		} else if (ignorereg.find(line) >= 0) {
-			addignore(ignorereg.match(1).dup);
+		} else if (auto ignorereg_match=match(line, ignorereg)) {
+			addignore(ignorereg_match.captures[1].dup);
 		} else {
-			printf("%.*s(%d): bad line: %.*s\n", inputfile, num, line);
+			printf("%s(%d): bad line: %s\n", inputfile.toStringz, num, line.toStringz);
 		}
 	}
 	
@@ -133,22 +135,22 @@ void parsefile(char []file) {
 }
 
 char []matchkeyword(char []instr, char [][]keywords) {
-	char []s = toupper(instr);
+	char []s = toUpper(instr);
 	foreach(char []m; keywords) {
 		if(m == s) {
 			return instr;
 		}
 	}
 	if(s in keywordused) {
-		keywordused[s] = 1;
+		keywordused[to!string(s)] = 1;
 		return "^" ~ instr ~ "^";
 	}
 	return instr;
 }
 
 char []dokeyword(char []instr, char [][]keywords) {
-	char []outstr = "";
-	char []s = "";
+	char []outstr = cast(char[])"";
+	char []s = cast(char[])"";
 	int suppress = 0;
 	foreach(int i, char c; instr) {
 		if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '\'') {
@@ -161,7 +163,7 @@ char []dokeyword(char []instr, char [][]keywords) {
 				} else {
 					outstr ~= matchkeyword(s, keywords);
 				}
-				s = "";
+				s = cast(char[])"";
 			}
 			if(c == '_') {
 				suppress = 1;
@@ -177,7 +179,7 @@ char []dokeyword(char []instr, char [][]keywords) {
 		} else {
 			outstr ~= matchkeyword(s, keywords);
 		}
-		s = "";
+		s = cast(char[])"";
 	}
 	return outstr;
 }
@@ -188,7 +190,7 @@ void processconv() {
 		kw = std.string.split(c.keyword);
 		responsekeywords[c.index] ~= kw;
 		foreach(char []w; kw) {
-			keywordused[w] = 0;
+			keywordused[to!string(w)] = 0;
 		}
 	}
 	foreach(int i, Response r; resp) {
@@ -204,30 +206,30 @@ void processconv() {
 }
 
 void checkall() {
-	foreach(char []kw; keywordused.keys.sort) {
+	foreach(kw; keywordused.keys.sort) {
 		if(keywordused[kw] == 0 && !(kw in rootwords) && !(kw in ignorewords)) {
-			printf("%.*s(%d):'%.*s' not used.\n", inputfile, keywordlines[kw], kw);
+			printf("%s(%d):'%s' not used.\n", inputfile.toStringz, keywordlines[kw], kw.toStringz);
 		}
 	}
 }
 
 void dumpall() {
 	foreach(Converse c; conv) {
-		printf("%d, %d, %d, %d, %.*s\n", c.event, c.runevent, c.rcode, c.index, c.keyword);
+		printf("%d, %d, %d, %d, %s\n", c.event, c.runevent, c.rcode, c.index, c.keyword.toStringz);
 	}
 	foreach(Response r; resp) {
-		printf("%d, %.*s, %d\n", r.index, r.response, r.response.length);
+		printf("%d, %s, %d\n", r.index, r.response.toStringz, r.response.length);
 	}
 }
 
 void writefiles(char []file) {
-	scope Stream fhind = new File(file ~ ".ind", FileMode.OutNew);
-	scope Stream fhdat = new File(file ~ ".dta", FileMode.OutNew);
+	auto fhind = File(file ~ ".ind", "wb");
+	auto fhdat = File(file ~ ".dta", "wb");
 	ConverseRecord cr;
 	ResponseRecord rr;
 	char []s;
-	cr.keyword[0..length] = 1;
-	rr.response[0..length] = 1;
+	cr.keyword[0..$] = 1;
+	rr.response[0..$] = 1;
 	foreach(Converse c; conv) {
 		cr.event = c.event;
 		cr.runevent = c.runevent;
@@ -235,23 +237,23 @@ void writefiles(char []file) {
 		cr.index = c.index;
 		s = encodestring(" " ~ c.keyword ~ " ");
 		if(s.length > cr.keyword.length) {
-			printf("%.*s(%d): keyword too long, truncated: %.*s\n", inputfile, c.linenum, c.keyword);
+			printf("%s(%d): keyword too long, truncated: %s\n", inputfile.toStringz, c.linenum, c.keyword.toStringz);
 			s.length = cr.keyword.length;
 		}
-		cr.keywordlength = s.length;
-		cr.keyword[0..s.length] = s[0..length];
-		fhind.writeExact(&cr, cr.sizeof);
+		cr.keywordlength = to!ubyte(s.length);
+		cr.keyword[0..s.length] = s[0..$];
+		fhind.rawWrite((&cr)[0..1]);
 	}
 	foreach(Response r; resp) {
 		rr.index = r.index;
 		s = encodestring(r.response);
 		if(s.length > rr.response.length) {
-			printf("%.*s(%d): response too long, truncated: %.*s\n", inputfile, r.linenum, r.response);
+			printf("%s(%d): response too long, truncated: %s\n", inputfile.toStringz, r.linenum, r.response.toStringz);
 			s.length = rr.response.length;
 		}
-		rr.responselength = s.length;
-		rr.response[0..s.length] = s[0..length];
-		fhdat.writeExact(&rr, rr.sizeof);
+		rr.responselength = to!ubyte(s.length);
+		rr.response[0..s.length] = s[0..$];
+		fhdat.rawWrite((&rr)[0..1]);
 	}
 	fhind.close();
 	fhdat.close();
