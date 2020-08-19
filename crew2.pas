@@ -1,4 +1,20 @@
 unit crew2;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Crew Manipulation unit 2 for IronSeed
@@ -27,7 +43,7 @@ const
 type
  bubblearray= array[0..maxbubbles,1..2] of integer;
 var
- psychemode,graphindex,a,crewindex,r,g,b,i,j: integer;
+ psychemode,graphindex,a,crewindex,i,j: integer;
  bubbles: ^bubblearray;
 
 procedure showportrait(n: integer);
@@ -175,7 +191,7 @@ end;
 
 procedure drawprimarystats(num : integer);
 var
-   a,b,c,d,y,i : integer;
+   a,b,c,d,y : integer;
    part,col,cs : real;
 begin
    a:=ship.crew[num].phy;
@@ -244,14 +260,13 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
  {d:=ship.crew[num].status;}
- ylast:=50;
  part:=34/100;
  {for i:=111 to 145 do
   fillchar(screen[i,299],3,0);
@@ -278,7 +293,6 @@ begin {120,37,294,112}
      5:i:=-round(c*part);
     end;
     lineto(j,i+145);
-    ylast:=i+145;
   end;
 end;
 

@@ -1,4 +1,20 @@
 unit comm2;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Communication unit #2 for IronSeed
@@ -392,7 +408,7 @@ begin
  close(f2);
  for j:=0 to 6 do
   for i:=0 to 15 do
-   mymove(screen[i+120,j*17+9],tmpm^[j,i],4);
+   move(screen[i+120,j*17+9],tmpm^[j,i],4*4);
  mousesetcursor(tmpm^[0]);
  for i:=15 to 170 do
   fillchar(screen[i,8],246,0);
@@ -868,7 +884,7 @@ begin
 end;
 
 procedure findleftmouse;
-var y,j: integer;
+var y: integer;
 begin
  y:=-3+((mouse.y-141) div 6);
  repeat
@@ -886,7 +902,7 @@ begin
 end;
 
 procedure findrightmouse;
-var y,j: integer;
+var y: integer;
 begin
  y:=-3+((mouse.y-141) div 6);
  repeat
@@ -1011,7 +1027,7 @@ begin
  done:=false;
  compressfile(tempdir+'/current3',backgr);
  loadscreen('data/trade',backgr);
- mymove(backgr^[111],screen[111],7200);
+ move(backgr^[111],screen[111],7200*4);
  loadscreen(tempdir+'/current3',backgr);
  mouseshow;
  trademode:=0;
@@ -1048,7 +1064,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current3',backgr);
  loadscreen(tempdir+'/current2',backgr);
- mymove(backgr^[111],screen[111],7200);
+ move(backgr^[111],screen[111],7200*4);
  loadscreen(tempdir+'/current3',backgr);
  bkcolor:=3;
 end;

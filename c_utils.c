@@ -113,10 +113,10 @@ static volatile int resize_y = 480;
 static volatile int wx0 = 0;
 static volatile int wy0 = 0;
 
-const uint16_t spec_keys[] = {SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_DELETE, SDLK_HOME, SDLK_END , SDLK_END, SDLK_PAGEUP, SDLK_PAGEDOWN, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	,0};
-const uint16_t spec_mod[] =  {0        , 0         , 0      , 0        , 0          , 0        , KMOD_CTRL, 0       , 0          , 0            , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
-const uint8_t  spec_null[] = {1        , 1         , 1      , 1        , 1          , 1        , 1        , 1       , 1          , 1            , 1         , 1      , 1      , 1      , 1      , 1      , 1      , 1        , 1       , 0           , 0            , 0        , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1    };
-const uint8_t  spec_map[] =  {75       , 77        , 72     , 80       , 83         , 71       , 117      , 79      , 73         , 81           , 84        , 59     , 60     , 61     , 62     , 63     , 64     , 103      , 16      , 43          , 45           , 10       , 16      , 45      , 120     , 121     , 122     , 123     , 126     , 129     , 49      , 25      , 48      , 31      , 22      , 23   };
+const uint16_t spec_keys[] = {SDLK_KP4, SDLK_LEFT, SDLK_KP6, SDLK_RIGHT, SDLK_KP8, SDLK_UP, SDLK_KP2, SDLK_DOWN, SDLK_DELETE, SDLK_KP7, SDLK_HOME, SDLK_END , SDLK_KP1, SDLK_END, SDLK_KP9, SDLK_PAGEUP, SDLK_KP3, SDLK_PAGEDOWN, SDLK_KP5, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	,0};
+const uint16_t spec_mod[] =  {0       , 0        , 0       , 0         , 0       , 0      , 0       , 0        , 0          , 0       , 0        , KMOD_CTRL, 0       , 0       , 0       , 0          , 0       , 0            , 0       , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
+const uint8_t  spec_null[] = {0       , 1        , 0       , 1         , 0       , 1      , 0       , 1        , 1          , 0       , 1        , 1        , 0       , 1       , 0       , 1          , 0       , 1            , 0       , 1         , 1      , 1      , 1      , 1      , 1      , 1      , 1        , 1       , 0           , 0            , 0        , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1    };
+const uint8_t  spec_map[] =  {52      , 75       , 54      , 77        , 56      , 72     , 50      , 80       , 83         , 55      , 71       , 117      , 49      , 79      , 57      , 73         , 51      , 81           , 53      , 84        , 59     , 60     , 61     , 62     , 63     , 64     , 103      , 16      , 43          , 45           , 10       , 16      , 45      , 120     , 121     , 122     , 123     , 126     , 129     , 49      , 25      , 48      , 31      , 22      , 23   };
 
 
 static inline void _nanosleep(long nsec)
@@ -654,7 +654,7 @@ void getrgb256_(const fpc_byte_t palnum, fpc_byte_t * r, fpc_byte_t * g, fpc_byt
 	*b = palette[palnum].b;
 }
 
-void set256colors(pal_color_type * pal)	// set all palette
+void set256colors(const pal_color_type * pal)	// set all palette
 {
 //      uint16_t i;
 //      for(i=0; i<256;i++)
@@ -951,7 +951,7 @@ void mouseshow(void)
 	showmouse = 1;
 }
 
-void mousesetcursor(uint8_t * icon)
+void mousesetcursor(const uint8_t * icon)
 {
 	memcpy(mouse_icon, icon, 16*16);
 }

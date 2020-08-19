@@ -1,4 +1,20 @@
 unit cargtool;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Cargo/Creation unit for IronSeed
@@ -21,7 +37,7 @@ function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
 
 implementation
 
-uses data, gmouse, utils, weird, utils2, saveload, modplay, journey, display, usecode,heapchk, utils_;
+uses data, gmouse, utils, weird, saveload, modplay, journey, display, usecode, heapchk, utils_;
 {$PACKRECORDS 1}
 type
  cargobuttontype= array[110..126,92..228] of byte;
@@ -247,7 +263,7 @@ begin
       for i:=20 to 130 do
 	 fillchar(screen[i,90],144,0);
       for i:=110 to 126 do
-	 mymove(cargobuttons^[i,92],screen[i,92],34);
+	 move(cargobuttons^[i,92],screen[i,92],34*4);
    end
    else
       for a:=0 to 109 do
@@ -255,9 +271,9 @@ begin
 	 fadestep(1);
 	 delay(tslice div 4);
 	 for i:=20 to 130-a do
-	    mymove(screen[i+1,90],screen[i,90],36);
+	    move(screen[i+1,90],screen[i,90],36*4);
 	 if ((131-a)<127) and ((131-a)>109) then
-	    mymove(cargobuttons^[131-a,92],screen[131-a,92],34);
+	    move(cargobuttons^[131-a,92],screen[131-a,92],34*4);
       end;
    plainfadearea(38,78,40,82,-12);
    plainfadearea(44,78,46,82,12);
@@ -276,7 +292,7 @@ begin
   begin
    delay(tslice div 4);
    for i:=20 to 20+a do
-    mymove(temp^[110-a+i,90],screen[i,90],36);
+    move(temp^[110-a+i,90],screen[i,90],36*4);
   end;
  dispose(temp);
  mouseshow;
@@ -341,7 +357,7 @@ begin
    new(cargobuttons);
    for i:=110 to 126 do
    begin
-      mymove(screen[i,92],cargobuttons^[i,92],34);
+      move(screen[i,92],cargobuttons^[i,92],34*4);
       fillchar(screen[i,94],133,0);
    end;
    plainfadearea(38,78,40,82,12);
@@ -611,7 +627,7 @@ begin
  mousehide;
  tcolor:=text;
  for i:=60 to 102 do
-  mymove(screen[i,74],tempscr^[i,74],43);
+  move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text-5;
  bkcolor:=35+alt;
  button(75,60,245,102,alt);
@@ -626,7 +642,7 @@ begin
  result:=mainloop2;
  mousehide;
  for i:=60 to 102 do
-  mymove(tempscr^[i,74],screen[i,74],43);
+  move(tempscr^[i,74],screen[i,74],43*4);
  dispose(tempscr);
  request:=result;
  bkcolor:=3;
@@ -713,7 +729,6 @@ begin
 end;
 
 procedure findmouse;
-var button: boolean;
 begin
  if not mouse.getstatus then exit;
  case mouse.x of
@@ -1029,7 +1044,8 @@ procedure opendoors2;
 var a,b: integer;
     temppal: paltype;
 begin
- fillchar(temppal,768,0);
+ temppal[0,1]:=0;             // to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(temppal,sizeof(paltype),0);
  for j:=112 to 159 do
   temppal[j]:=colors[j];
  set256colors(temppal);
@@ -1213,7 +1229,7 @@ begin
   end;
  if n<59 then readweaicon(n-1) else readweaicon(n-2);
  for i:=0 to 19 do
-  mymove(tempicon^[i],screen[9+i,210],5);
+  move(tempicon^[i],screen[9+i,210],5*4);
  bkcolor:=0;
 end;
 

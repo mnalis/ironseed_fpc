@@ -1,3 +1,15 @@
+v 0.1.3
+- code: remove mymove(), use sizeof() for buffer sizes
+v 0.1.2
+- code: remove unused modules, fix code warnings, smarter variable initialization
+v 0.1.1
+- update build and other docs
+v 0.1.0
+- code: apply (mostly non-functional) changes from v1.30.0001 ( https://github.com/karynax/ironseed )
+- code: use typed pointers for better checks
+- avoid double SDL initialization bugs
+- combat: fix shield (and no shield, and reflective hull) bugs
+- combat: add F1-F4, numpad, Z/X keyboard controls
 - fixes crash in combat with no shields
 - reenable biorithyms color from gray to pulsing red
 - implement keyboard shortcuts for entering x/y/z coord in Sector map

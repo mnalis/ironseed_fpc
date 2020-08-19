@@ -1,5 +1,22 @@
 unit usecode;
 {$I-}
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 {***************************
    Ship Display Initialization unit for IronSeed
 
@@ -39,22 +56,21 @@ procedure readybots;
 
 implementation
 
-uses utils_, data, gmouse, journey, explore, saveload, display, utils, cargtool, crewinfo, info, comm, utils2, crew2, weird, modplay, comm2,crewtick;
+uses utils_, data, gmouse, journey, explore, saveload, display, utils, cargtool, crewinfo, info, comm, utils2, crew2, weird, comm2, crewtick;
 
 const
- batmax= 32000;
  optbut: buttype = (21,20,12);
  shdbut: buttype = (9,12,12);
  logbut: buttype = (23,25,6);
  sysbut: buttype = (24,13,26);
  sys2but: buttype = (13,22,27);
- conbut: buttype = (10,7,12);
+ {conbut: buttype = (10,7,12);}
  botbut: buttype = (14,15,16);
  dmgbut: buttype = (17,18,19);
  nonebut: buttype = (12,12,12);
 
 var
- i,j,a,b,index: integer;
+ i,j,a,index: integer;
 
 procedure cleanright(erasepanel: boolean);
 begin
@@ -208,6 +224,7 @@ begin
       printxy(170,37+y*6,'No info available');
       exit;
    end;
+   ele[0]:=0; mat[0]:=0; cmp[0]:=0;  // to turn off warnings, variables are actually correctly initialized by function below
    getstuffamounts(tempplan^[curplan].state, ele, mat, cmp);
    total:=0;
    case viewindex2 of
@@ -454,8 +471,6 @@ begin
 end;
 
 procedure addlotstime(background, dayticks :Boolean; t: integer);
-var s: string[14];
-    j: integer;
 begin
    if ship.shield>1501 then
       ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy*ship.shieldlevel/100);
@@ -618,7 +633,7 @@ begin
  viewindex3:=135;
  randomize;
  for i:=18 to 123 do
-  mymove(screen[i,27],starmapscreen^[i,27],29);
+  move(screen[i,27],starmapscreen^[i,27],29*4);
  mouseshow;
  displaylongscan;
 end;
@@ -702,7 +717,8 @@ begin
    a:=colors[j,1]*0.30 + colors[j,2]*0.59 + colors[j,3]*0.11;
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
- mymove(colors,colors2,192);
+ colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,colors2,sizeof(paltype));
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do
@@ -723,7 +739,8 @@ begin
    a:=colors[j,1]*0.30 + colors[j,2]*0.59 + colors[j,3]*0.11;
    for i:=1 to 3 do temppal[j,i]:=round(a);
   end;
- mymove(temppal,colors2,192);
+ colors2[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
+ move(temppal,colors2,sizeof(paltype));
  for b:=1 to 15 do
   begin
    for j:=0 to 255 do
@@ -736,7 +753,6 @@ begin
 end;
 
 procedure lowershields;
-var temp: integer;
 begin
  if ship.shield<1502 then exit;
  println;
@@ -755,7 +771,6 @@ begin
 end;
 
 procedure raiseshields;
-var temp: integer;
 begin
  println;
  tcolor:=94;
@@ -798,7 +813,6 @@ begin
 end;
 
 procedure powerdownweapons;
-var temp: integer;
 begin
  if not ship.armed then exit;
  println;
@@ -970,8 +984,6 @@ begin
 end;
 
 procedure readyshipinfo;
-var str1,str2: string[5];
-    a: integer;
 begin
  mousehide;
  graybutton(15,25,279,115);
@@ -1587,7 +1599,7 @@ begin
        begin
         reloading:=true;
         quit:=true;
-        fillchar(colors,768,0);
+        fillchar(colors,sizeof(paltype),0);
         set256colors(colors);
        end;
   50: if ship.damages[5]>39 then lifesupportfailure

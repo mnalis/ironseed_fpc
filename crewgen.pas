@@ -1,4 +1,20 @@
 program crewgen;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Crew Generation unit for IronSeed
@@ -11,12 +27,13 @@ program crewgen;
 
 ***************************}
 
-uses data, gmouse, utils_, saveload, display, utils, modplay;
+uses data, gmouse, utils_, saveload, utils, modplay {$IFNDEF DEMO}, display{$ENDIF};
+
+var code:integer;
+{$IFNDEF DEMO}
 {$PACKRECORDS 1}
 
 type
- displaytype= array[0..193,0..93] of byte;
- shipdistype= array[0..57,0..74] of byte;
  shipdatatype= record
    guns,cargo: byte;
    maxfuel,mass,accel,hullmax:integer;
@@ -32,8 +49,8 @@ type
  oldsysarray= array[1..250] of oldsystype;
 {$PACKRECORDS DEFAULT}
 var
- i,i2,j,a,cursor,code,crewnum,inputlevel,anihandle: integer;
- quit,crewmode,toggle: boolean;
+ i,j,a,crewnum,inputlevel: integer;
+ quit,toggle: boolean;
  shipdata: shipdatatype;
  planets: ^planarray;
  oldsys: ^oldsysarray;
@@ -46,7 +63,6 @@ var
 procedure easteregg1;
 var c		  : integer;
    done		  : boolean;
-   ans		  : char;
    str1,str2,str3 : string[3];
    i, j, k, x, y  : Integer;
 begin
@@ -55,7 +71,7 @@ begin
    bkcolor:=5;
    fading;
    loadpal('data/main.pal');
-   fillchar(screen,64000,0);
+   fillchar(screen,sizeof(screen),0);
    for i:=0 to 199 do
       for j:=0 to 319 do
 	 screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -119,7 +135,6 @@ begin
    end;
    mouseshow;
    c:=0;
-   ans:=' ';
    done:=false;
    set256colors(colors);
    repeat
@@ -144,7 +159,7 @@ begin
 	 plainfadearea(80,146+12,240,160+12,-3);
 	 mouseshow;
       end;
-      if fastkeypressed then ans:=readkey;
+      if fastkeypressed then readkey;
       for i:=216 to 231 do
 	 colors[i]:=colors[random(16)];
       for i:=200 to 215 do
@@ -182,13 +197,12 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
- ylast:=50;
  part:=36/100;
  for i:=14 to 88 do
   fillchar(screen[i,121],175,0);
@@ -208,7 +222,6 @@ begin {120,37,294,112}
     5:i:=-round(c*part);
    end;
    lineto(j,i+51);
-   ylast:=i+51;
  end;
 end;
 
@@ -218,7 +231,7 @@ begin
  for j:=0 to 30 do
   begin
    for i:=0 to 34 do
-    mymove(ani^[j,i],screen[i+81,22],12);
+    move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -230,7 +243,7 @@ begin
  for j:=30 downto 0 do
   begin
    for i:=0 to 34 do
-    mymove(ani^[j,i],screen[i+81,22],12);
+    move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -502,13 +515,12 @@ begin
 end;
 
 procedure addcursor;
-var found,quit: boolean;
+var found: boolean;
 begin
  case inputlevel of
   0: addship;
   1..7: begin
          found:=false;
-         quit:=false;
          repeat
           inc(crewnum);
           while (crewnum<31) and (crewdata^[crewnum].jobtype and (1 shl (7-inputlevel))=0) do inc(crewnum);
@@ -573,7 +585,6 @@ begin
 end;
 
 procedure addlevel;
-var s: string[11];
 begin
  lowerball;
  mousehide;
@@ -647,7 +658,9 @@ begin
    plainfadearea(247,107,253,112,-144);
   end;
 end;
+{$ENDIF}
 
+{$IFNDEF DEMO}
 procedure findmouse;
 begin
  if not mouse.getstatus then exit;
@@ -680,6 +693,7 @@ begin
 end;
 
 procedure mainloop;
+var i2: integer;
 begin
  i2:=0;
  calculateship;
@@ -784,9 +798,7 @@ var curplan: integer;
     systfile: file of oldsystype;
 label planerror;
 begin
-   cursor:=0;
    quit:=false;
-   crewmode:=true;
    crewnum:=0;
    curplan:=0;
    inputlevel:=0;
@@ -969,10 +981,10 @@ begin
  if ioresult<>0 then errorhandler('charani.dta',5);
  close(anifile);
  for i:=0 to 34 do
-  mymove(ani^[30,i],screen[i+81,22],12);
+  move(ani^[30,i],screen[i+81,22],12*4);
  new(mcursor);
  for i:=131 to 146 do
-  mymove(screen[i,11],mcursor^[i-131],4);
+  move(screen[i,11],mcursor^[i-131],4*4);
  for i:=131 to 146 do
   fillchar(screen[i,11],16,0);
  mousesetcursor(mcursor^);
@@ -991,12 +1003,14 @@ begin
  fadein;
  mouseshow;
 end;
+{$ENDIF}
 
 procedure checkparams;
-var i,j: integer;
-    diskfreespace: longint;
-    curdir: string[60];
+var
+    //diskfreespace: longint;
+    curdir: string[255];	// NB: hopefully 255 is enough
 begin
+ curdir := '.';
  if (paramstr(1)<>'/makeseed') then
   begin
    closegraph();
@@ -1025,6 +1039,7 @@ begin
  if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
 end;
 
+{$IFDEF DEMO}
 procedure demostuff;
 var
  mode: word;
@@ -1096,7 +1111,7 @@ var
 begin
  mode:=0;
  done:=false;
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  playmod(true,'sound/CHARGEN.MOD');
  loadscreen('data/demoscr3',@screen);
@@ -1104,7 +1119,7 @@ begin
  fadein;
  mainloop;
 end;
-
+{$ENDIF}
 
 begin
  init_everything;
@@ -1125,8 +1140,8 @@ begin
 {$IFNDEF DEMO}
  dispose(ani);
  dispose(birdpic);
- halt(code);
 {$ELSE}
- halt(3);
+ code:=3;
 {$ENDIF}
+ halt(code);
 end.

@@ -1,5 +1,22 @@
 unit utils;
 {$I-}
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 {***************************
    General Utilities for IronSeed
 
@@ -54,17 +71,14 @@ procedure PopRand;
 
 implementation
 
-uses data, journey, gmouse, usecode, display, saveload, utils2, combat, weird, modplay, crewtick, utils_;
+uses data, journey, gmouse, saveload, crewtick, utils_ {$IFDEF DEMO}, modplay{$ENDIF};
 
-type
- scandatatype= array[0..11] of byte;
- scantype= array[0..16] of scandatatype;
 var
  a,b,j,i,index : integer;
    randsave    : longint;
 
 function chevent(n: integer): boolean;
-var i,j: integer;
+{var i,j: integer;}
 begin
    if (n<0) or (n>19999) then
    begin
@@ -179,7 +193,6 @@ end;
 
 procedure sprinkle2(x1,y1,x2,y2,seed: integer);
 var max: word;
-    dx,dy: integer;
 begin
  max:=(x2-x1)*(y2-y1);
  index:=0;
@@ -438,7 +451,7 @@ begin
 end;
 
 procedure removecargo(item: integer);
-var i,j: integer;
+var j: integer;
 begin
  j:=1;
  while (j<250) and (ship.cargo[j]<>item) do inc(j);
@@ -616,7 +629,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=50 to 102 do
-  mymove(screen[i,75],tempscr^[i,75],43);
+  move(screen[i,75],tempscr^[i,75],43*4);
  if colors[32,2]=63 then ofsc:=-26
   else if colors[32,1]=0 then ofsc:=0
   else ofsc:=74;
@@ -660,7 +673,7 @@ begin
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
-  mymove(tempscr^[i,75],screen[i,75],43);
+  move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  dispose(tempscr);
  tcolor:=oldt;
@@ -827,7 +840,7 @@ begin
    new(tempscr);
    mousehide;
    for i:=50 to 102 do
-      mymove(screen[i,70],tempscr^[i,70],45);
+      move(screen[i,70],tempscr^[i,70],45*4);
    if colors[32,2]=63 then ofsc:=-26
    else if colors[32,1]=0 then ofsc:=0
    else ofsc:=74;
@@ -872,7 +885,7 @@ begin
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
-      mymove(tempscr^[i,70],screen[i,70],45);
+      move(tempscr^[i,70],screen[i,70],45*4);
    mouseshow;
    dispose(tempscr);
    tcolor:=oldt;
@@ -1000,7 +1013,7 @@ begin
 end;
 
 function findfirstplanet(sys: integer): integer;
-var done: boolean;
+var
     j: integer;
 begin
  done:=false;

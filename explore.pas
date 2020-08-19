@@ -1,4 +1,20 @@
 unit explore;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Planet Exploration unit for IronSeed
@@ -20,7 +36,7 @@ procedure exploreplanet;
 
 implementation
 
-uses utils_, data, gmouse, usecode, journey, utils, utils2, weird, display, modplay, crewtick, heapchk;
+uses utils_, data, gmouse, journey, utils, utils2, weird, display, modplay, crewtick, heapchk;
 {$PACKRECORDS 1}
 
 type
@@ -243,6 +259,7 @@ begin
  for j:=0 to 16 do
   begin
    amounts[j]:=temp^[j,tempplan^[curplan].state];
+   already[0]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(already,10,0);
    if temp^[j,tempplan^[curplan].state]>0 then
     for i:=1 to temp^[j,tempplan^[curplan].state] do
@@ -366,12 +383,12 @@ begin
 end;
 
 procedure zoom1x(x1,y1: integer);
-var temp : shortint;
+var
    a	 : Integer;
 begin
  rectangle(x1+28,y1+13,x1+88,y1+73);
  for a:=1 to 60 do
-  mymove(landform^[x1+a,y1],zoomscr^[a,1],15);
+  move(landform^[x1+a,y1],zoomscr^[a,1],15*4);
 end;
 
 procedure undozoom;
@@ -456,7 +473,7 @@ begin
  setcolor(47);
  mousehide;
  for i:=1 to 60 do
-  mymove(tempzoom^[i],screen[i+138,206],15);
+  move(tempzoom^[i],screen[i+138,206],15*4);
  circle(236,169,8*zoommode);
  circle(236,169,4*zoommode);
  mouseshow;
@@ -507,8 +524,8 @@ procedure displaylandform;
 var part,part2 : real;
    {part:scales what is above the water level to 0 to 31}
    {part2:scales what is pelow the water level to 0 to 5}
-    index,max  : integer;
-   i, j	       : Integer;
+    index  : integer;
+    i, j   : Integer;
 begin
    part:=31/(255-water);
    if water>0 then part2:=5/water else part2:=0;
@@ -569,7 +586,7 @@ begin
    screen[cury+12,curx+27]:=90+random(6);
    a:=num*40-26;
    for i:=1 to 26 do
-    mymove(screen[cury-1+i,curx+11],screen[i+a,281],8);
+    move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
   end;
 end;
 
@@ -703,8 +720,6 @@ end;
 
 procedure printhigheststar;
 var
-   y	    : word;
-   angle    : real;
    hydrogen : word;
    helium   : word;
    other    : word;
@@ -944,7 +959,7 @@ begin
 end;
 
 procedure displayinfogathered;
-var strs: string[8];
+var
     a, j, i: integer;
 begin
    mousehide;
@@ -1036,7 +1051,7 @@ begin
 	   begin
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 mymove(probeicons^[4,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end;
@@ -1066,7 +1081,7 @@ begin
 	   begin {begin return to craft}
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 mymove(probeicons^[4,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end
@@ -1121,7 +1136,7 @@ begin
 	      end;*)
 	      screen[cury+12,curx+27]:=90+random(6);
 	      for i:=1 to 26 do
-		 mymove(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8);
+		 move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
 	      for b:=1 to 26 do
 		 for a:=1 to 31 do
 		    if probeicons^[1,b,a]<>0 then screen[j*40-26+b,280+a]:=probeicons^[1,b,a];
@@ -1209,7 +1224,7 @@ begin
 	   end;
         5: begin {returning}
 	      for i:=1 to 26 do
-		 mymove(probeicons^[3,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=40;
 	      status:=6;
 	   end;
@@ -1217,7 +1232,7 @@ begin
 	      status := 8;
 	      timeleft:=10;
 	      for i := 1 to 26 do
-		 mymove(probeicons^[2,i],screen[i+j*40-26,281],8);
+		 move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
 	      dirty := true;
 	      {if explorelevel = 0 then
 		 displayinfogathered;}
@@ -1680,7 +1695,7 @@ end;
 
 procedure findmouse;
 var
-   x, y, i, j : Integer;
+   y, i, j : Integer;
 begin
  if not mouse.getstatus then exit;
   case mouse.x of
@@ -1952,7 +1967,7 @@ begin
 end;
 
 procedure readydata;
-var vgafile : file of screentype;
+var
    i, j, a  : Integer;
 begin
  {dispose(backgr);}
@@ -2001,17 +2016,17 @@ begin
  if datagathered[5,2]>=1000 then doneano:=true;
  for j:=1 to 4 do
   for i:=1 to 26 do
-   mymove(screen[i+j*40-26,281],probeicons^[j,i],8);
+   move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
  for j:=1 to numprobes do
   for i:=1 to 26 do
-   mymove(probeicons^[2,i],screen[i+j*40-26,281],8);
+   move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
  if j<4 then
   for a:=j+1 to 4 do
    for i:=1 to 26 do
     fillchar(screen[i+a*40-26,281],31,0);
  for j:=1 to 7 do
   for i:=20 to 27 do
-   mymove(screen[i,j*20+10],msgs^[j,i-20],4);
+   move(screen[i,j*20+10],msgs^[j,i-20],4*4);
  que:=0;
  SetScan(0);
  for i:=13 to 133 do

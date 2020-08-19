@@ -1,4 +1,20 @@
 unit comm;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Communication unit for IronSeed
@@ -16,7 +32,7 @@ unit comm;
 
 interface
 
-uses data,amp, utils_;
+uses data, utils_;
 
 procedure conversewithcrew;
 procedure continuecontact(hail: boolean);
@@ -30,7 +46,7 @@ procedure gettechlevel(plan: integer);
 
 implementation
 
-uses gmouse, utils, combat, utils2, weird, modplay, comm2, journey, saveload, heapchk;
+uses gmouse, utils, utils2, weird, modplay, comm2, journey, saveload, heapchk;
 
 const
  numback= 19;
@@ -42,7 +58,7 @@ type
   end;
  eventarray= array[0..9] of eventtype;
 var
- commlevel,i,j,techlvl,eattype,contactindex,cursorx,index,indexa,indexb,indexc,oldcontactindex: integer;
+ i,j,techlvl,eattype,contactindex,cursorx,indexa,indexb,indexc,oldcontactindex: integer;
  brighter,infomode,shipflag,eventflag: boolean;
  str1, str2: ^string;
  question: string[20];
@@ -202,7 +218,7 @@ begin
 end;
 
 procedure addtofile;
-var confile,target: file of alientype;
+var confile: file of alientype;
     err,already: boolean;
     temp: alientype;
     index: integer;
@@ -343,8 +359,7 @@ begin
 end; { clearconvflags }
 
 procedure contactsequence(plan,com: integer);
-var a,b,index,contactmade: integer;
-    t: ^char;
+var contactmade: integer;
 begin
  mousehide;
  if plan=0 then techlvl:=alien.techmax
@@ -401,7 +416,6 @@ end;
 procedure loadconversation;
 var fc: file of converseindex;
     fr: file of responsetype;
-    s: string[2];
     str1: string[4];
 begin
    fillchar(r^,sizeof(responsearray),0);
@@ -772,6 +786,7 @@ function run21000event(n, p,q,s: integer) : Boolean;
 var result : boolean;
 begin
    run21000event := false;
+   assert ((p <> -1) and (q <> - 1));	{ just to get rid of warning, really not used }
    case n of
      21001 : begin {Phaedor Moch: Coolant + Radioactive}
 		if (incargo(4007) >= 1) and (incargo(4014) >= 1) then
@@ -1076,9 +1091,9 @@ begin
  str(((n-1) div 2)+1,str1);
  loadscreen('data/back'+str1,backgr);
  {new(p);}
- mymove(colors,p^,192);
+ move(colors,p^,sizeof(paltype));
  y:=(n-1) mod 2;
- if y=1 then mymove(backgr^[100],backgr^,8000);
+ if y=1 then move(backgr^[100],backgr^,8000*4);
  mousehide;
  for i:=11 to 110 do
   for j:=0 to 319 do
@@ -1223,7 +1238,7 @@ begin
    infomode:=false;
    mousehide;
    for i:=20 to 101 do
-    mymove(backgr^[i-11,222],screen[i,222],19);
+    move(backgr^[i-11,222],screen[i,222],19*4);
    mouseshow;
    exit;
   end;
@@ -1591,7 +1606,6 @@ end;
 procedure checkotherevents2;
 var t	 : ^eventarray;
     f	 : file of eventarray;
-    done : boolean;
     n,i	 : integer;
 
    procedure printstatement;
@@ -1678,7 +1692,7 @@ begin
    new(tmpm);
    for i:=0 to 15 do
    begin
-      mymove(screen[i+130,20],tmpm^[i],4);
+      move(screen[i+130,20],tmpm^[i],4*4);
       fillchar(screen[i+130,20],16,0);
    end;
    mousesetcursor(tmpm^);
@@ -1704,6 +1718,7 @@ begin
    new(p);
    {$IFDEF DEMO}
    contactindex:=-1;
+   if hail then;	// ignore warning if demo
    {$ELSE}
    if hail then getship
    else getlocals;

@@ -1,4 +1,21 @@
 program intro;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 //{$M 5500,436000,436000}
 //{$S-,D-}
 
@@ -13,7 +30,7 @@ program intro;
 
 ***************************}
 
-uses utils_,sysutils,gmouse,modplay,version,math;
+uses utils_, sysutils, gmouse, modplay, version, math;
 //var   sdl_scr: PSDL_Surface;
 {* begin
   SDL_Init(SDL_INIT_VIDEO); // Initialize the video SDL subsystem
@@ -24,12 +41,13 @@ uses utils_,sysutils,gmouse,modplay,version,math;
 
 const
  CPR_NONE=0;                    {   0 no compresion            }
- CPR_NOPAL=1;                   {   1 no palette, compressed   }
- CPR_PAL=2;                     {   2 palette, compressed      }
- CPR_HEADERINCL=3;              {   3 header included          }
+// CPR_NOPAL=1;                   {   1 no palette, compressed   }
+// CPR_PAL=2;                     {   2 palette, compressed      }
+// CPR_HEADERINCL=3;              {   3 header included          }
  CPR_ERROR=255;                 { global error                 }
- CPR_CURRENT=CPR_HEADERINCL;    { current version              }
+// CPR_CURRENT=CPR_HEADERINCL;    { current version              }
  CPR_BUFFSIZE=8192;             { adjustable buffer size       }
+
 {$PACKRECORDS 1}
 type
  CPR_HEADER=
@@ -41,21 +59,14 @@ type
   end;
  pCPR_HEADER= ^CPR_HEADER;
 type
-   configfile = 
-   record     
-      tslice,rate,soundcard,irq,dma,port,stereo,music : word;
-   end;	      
-type
 // paltype=array[0..255,1..3] of byte;
  fonttype= array[0..2] of byte;
  plantype= array[1..120,1..120] of byte;
  landtype= array[1..240,1..120] of byte;
  pscreentype= ^screentype;
- buftype= array[0..2047] of byte;
  bigfonttype= array[0..7] of byte;
 {$PACKRECORDS DEFAULT}
 const
- buffsize = 4096;
  font: array[1..84] of fonttype=
   ((0,0,0),(34,32,32),(85,0,0),(34,0,0),(36,68,32),
    (66,34,64),(9,105,0),(2,114,0),(0,2,36),(0,240,0),
@@ -97,10 +108,9 @@ const
    (0,130,130,130,130,124,0,0),(0,130,130,68,40,16,0,0),(0,130,130,146,170,68,0,0),(0,130,68,56,68,130,0,0),
    (0,130,130,126,2,252,0,0),(0,124,8,16,32,124,0,0));
 var
-   cf		    : configfile;
   tcolor,bkcolor,i,j,z,cursor,permx,permy,code,j2,m,index,alt,ecl,
   r2,c,radius,m1,m2,m3,m4,tslice,water,waterindex,x,ofsx,ofsy: integer;
- keymode,moderror: boolean;
+ keymode: boolean;
  key: char;
  modth,modtm,modts,curth,curtm,curts: byte;
  y,part,part2,c2: real;
@@ -314,12 +324,6 @@ end;
 
 
 
-function testbit(b,bit: byte) : boolean; // just test bit. Pascal sucks!
-begin
-    if ((1<<bit) and b)<>0 then testbit:=true
-    else testbit:=false;
-end;
-
 procedure printxy(x1,y1: integer; s: string);
 var letter,a,x,y,t: integer;
 begin
@@ -409,13 +413,6 @@ begin
  tcolor:=t;
 end;
 
-//{$F+}
-function testit : integer;
-begin
-    testit:=1;
-end;
-//{$F-}
-
 
 
 procedure readygraph;       // init video
@@ -431,8 +428,10 @@ var a,b: integer;
     temppal: paltype;
     px,dx,pdx: array[1..768] of shortint;
 begin
- mymove(colors,temppal,192);
- fillchar(dx,768,48);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
+ dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(dx,sizeof(paltype),48);
  for j:=1 to 768 do
   begin
    px[j]:=colors[0,j] div 48;
@@ -454,7 +453,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- fillchar(temppal,768,0);
+ fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
 end;
 
@@ -464,8 +463,10 @@ var a,b: integer;
     px,dx,pdx: array[1..768] of shortint;
 begin
  b:=tslice shr 2;
- fillchar(temppal,768,0);
- fillchar(dx,768,0);
+ temppal[0,1]:=0;       // to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(temppal,sizeof(paltype),0);
+ dx[1]:=0; 		// to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(dx,sizeof(paltype),0);
  for j:=1 to 768 do
   begin
    px[j]:=colors[0,j] div 48;
@@ -515,8 +516,7 @@ begin
  new(s2);
  new(s3);
  mousehide;
- //mymove(screen,s2^,16000);
- move(screen,s2^,16000*4);
+ move(screen,s2^,sizeof(screen));
  mouseshow;
  loadscreen('data/cloud',s1);
 end;
@@ -531,7 +531,7 @@ begin
       dispose(s3);
       fading;
       mousehide;
-      fillchar(screen,64000,0);
+      fillchar(screen,sizeof(screen),0);
       stopmod;
       runintro;
       playmod(true,'sound/INTRO2.MOD');
@@ -670,8 +670,7 @@ begin
 
 
   mousehide;
-  mymove(s3^,screen,16000);
-//  move(s3^,screen,16000*4);
+  move(s3^,screen,sizeof(screen));
   mouseshow;
   drawcursor;
   findmouse;
@@ -699,7 +698,7 @@ end;
 procedure showmars;
 var temp: pscreentype;
 begin
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  loadscreen('data/cloud',@screen);
  new(temp);
@@ -713,19 +712,20 @@ end;
 
 
 
-function timewait(t: integer): boolean;  // true if t sec. passed since gettime
+{function timewait(t: integer): boolean;  // true if t sec. passed since gettime
 var i:dword ;
 begin
     getcurtime;
     i:=abs(curth-modth)*3600+abs(curtm-modtm)*60+abs(curts-modts);
     if(i>=t) then timewait:=true else timewait:=false;
-end;
+end;}
 
 procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -749,7 +749,7 @@ begin
    set256colors(temppal);
    delay(tslice);
   end;
- mymove(temppal,colors,192);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -792,7 +792,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -817,6 +817,7 @@ begin
  dothefade;
 end;
 
+(*
 procedure domainscreen;
 var backgr: pscreentype;
 begin
@@ -857,7 +858,7 @@ begin
  loadscreen('data/cloud',backgr);
  set256colors(colors);
  for i:=1 to 120 do
-  mymove(planet^[i],backgr^[i+12,28],30);
+  move(planet^[i],backgr^[i+12,28],30*4);
  for y1:=0 to 4 do
   for b:=6 to 138 do
    for a:=10 to 303 do
@@ -877,14 +878,12 @@ begin
  dispose(backgr);
  dispose(temp);
 end;
+*)
 
 procedure powerupencodes;
-var a,b,t,sd,range: integer;
-    yadj,pfac,part,temp1,temp3: real;
+var a,b,t: integer;
+    part: real;
 begin
- sd:=500;
- range:=80;
- yadj:=1800/1920;
  setcolor(31);
  part:=31/36;
  //t:=tslice div 4;
@@ -911,6 +910,7 @@ begin
    end;
 end;
 
+(*
 procedure createplanet(xc,yc: integer);
 var x1,y1: integer;
     a: longint;
@@ -926,7 +926,7 @@ begin
    if landform^[x1,y1]<240 then landform^[x1,y1]:=landform^[x1,y1]+5;
   end;
 end;
-
+*)
 procedure generateplanet;
 var f: file of landtype;
 begin
@@ -1016,7 +1016,7 @@ begin
       end;
     end;
   for i:=1 to 120 do
-   mymove(planet^[i],screen[i+12,28],30);
+   move(planet^[i],screen[i+12,28],30*4);
 //  delay(tslice);
     delay(tslice*3);
 getcurtime;
@@ -1040,14 +1040,9 @@ end;
 procedure charcomstuff(t: integer);
 //var modth,modtm,modts,curth,curtm,b,curts: byte;
 var b:byte;
-    sd,range,y: integer;
-    pfac,yadj,temp1,temp3: real;
 begin
 gettime;
  b:=tslice div 2;
- sd:=500;
- range:=80;
- yadj:=1800/1920;
  repeat
   for i:=128 to 143 do
    colors[i]:=colors[random(22)];
@@ -1073,7 +1068,8 @@ var a,b: integer;
 begin
  index:=0;
  a:=24;
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  b:=tslice div 2;
  repeat
   inc(index);
@@ -1105,7 +1101,7 @@ label ending;
 begin
  new(t);
  tslice:=tslice div 2;
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  loadscreen('data/channel7',t);
  for i:=0 to 199 do
@@ -1162,7 +1158,8 @@ begin
  until index=75;
  index:=0;
  a:=24;
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  if fastkeypressed then goto ending;
  repeat
   inc(index);
@@ -1191,7 +1188,7 @@ begin
  exit;
 ending:
  dispose(t);
- fillchar(colors,768,0);
+ fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
 end;
 
@@ -1289,13 +1286,14 @@ var t: pscreentype;
     temppal: paltype;
 begin
     
- fillchar(temppal,768,0);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(temppal,sizeof(paltype),0);
  for i:=0 to 31 do
   temppal[i]:=colors[i];
  for i:=240 to 255 do
   temppal[i]:=colors[i];
  new(t);
-// fillchar(t^,64000,0);
+// fillchar(t^,sizeof(screen),0);
  if t=nil then writeln('Out of memory !!!');
  move(screen,t^,sizeof(t^));
  max:=25;
@@ -1310,11 +1308,11 @@ begin
    scale_img(10,0,200,106,startx,starty,round(partx),round(party),t^,screen);
   end;
  for i:=142 to 176 do
-  mymove(screen[i,234],t^[i,234],18);
+  move(screen[i,234],t^[i,234],18*4);
  set256colors(temppal);
  loadscreen('data/alien',@screen);
  for i:=142 to 176 do
-  mymove(t^[i,234],screen[i,234],18);
+  move(t^[i,234],screen[i,234],18*4);
  dispose(t);
 end;
 
@@ -1385,7 +1383,7 @@ begin
   for i:=0 to 199 do
    if screen[i,j]=255 then screen[i,j]:=backgr^[i,j];
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  radius:=400;
  c2:=1.30;
  r2:=round(sqrt(radius));
@@ -1404,8 +1402,6 @@ begin
 end;
 
 procedure is2wait(alt1,alt2,alt3,alt4: integer);
-var //modth,modtm,modts,curth,curtm,curts: byte;
-    x1,y1,x2,y2: integer;
 begin
  gettime;
  repeat
@@ -1435,6 +1431,7 @@ getcurtime;
  until i>1;
 end;
 
+(*
 procedure staticscreen;
 begin
  for i:=0 to 199 do
@@ -1455,11 +1452,12 @@ begin
   delay(tslice div 4);
  until fastkeypressed;
 end;
+*)
 
 procedure runintro;
-var total,a: integer;
+var a: integer;
     
-label continue,jumpto,skip,skip2;
+label continue,skip,skip2;
 begin
  bkcolor:=0;
  tcolor:=22;
@@ -1485,8 +1483,6 @@ begin
  generateplanet;
  if fastkeypressed then goto continue;
  playmod(true,'sound/INTRO1.MOD');
- ampsetpanning(0,Pan_Surround);
- ampsetpanning(1,Pan_Surround);
  mouse.setmousecursor(1);
 // goto skip2;
  if fastkeypressed then goto continue;
@@ -1527,7 +1523,7 @@ begin
  loadpalette('data/main.pal');
  loadscreen('data/cloud',@screen);
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  sleep(0);
  makeplanet(0,false);
  tcolor:=22;
@@ -1576,7 +1572,7 @@ begin
  bigprintxy(0,183,'crew some thousand years later and are');
  bigprintxy(0,191,'confronted by an alien horde...');
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  fadein;
  makeplanet(10,false);
@@ -1639,7 +1635,7 @@ skip2:
  spcindex[4]:=128;
  spcindex[5]:=129;
  for i:=1 to 120 do
-  mymove(screen[i+12,28],planet^[i],30);
+  move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  tcolor:=22;
  bkcolor:=255;
@@ -1668,7 +1664,7 @@ continue:
 
    while fastkeypressed do readkey;
 
-   fillchar(colors,768,0);
+   fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
    loadscreen('data/intro5',@screen);
@@ -1693,7 +1689,7 @@ begin
   end;
  if (paramstr(2)='/done') then
   begin
-   fillchar(colors,768,0);
+   fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
    loadscreen('data/intro5',@screen);

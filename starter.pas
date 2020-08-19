@@ -1,4 +1,20 @@
 unit starter;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Initialization for IronSeed
@@ -21,29 +37,33 @@ procedure readydata;
 
 implementation
 
-uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird, ending, heapchk;
+uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird {$IFNDEF DEMO}, ending{$ENDIF};
 
 procedure showcube;
-var i,j: integer;
+var i,j: word;
 begin
  setcolor(45);
  setwritemode(xorput);
  for j:=0 to 50 do
   for i:=0 to 44 do
    begin
-    line(240,167,j+215,i+145);
-    delay(tslice div 32);
-    line(240,167,j+215,i+145);
+    assert (j+215 < 320);
+    assert (i+145 < 200);
+    line(240,167,word(j+215),word(i+145));
+    assert (tslice > 0);
+    delay(word(tslice div 32));
+    line(240,167,word(j+215),word(i+145));
     screen[i+145,j+215]:=cubetar^[i,j];
    end;
  setwritemode(copyput);
 end;
 
 procedure checkparams;
-var i,j: integer;
-    curdir: string[60];
+var
+    curdir: string[255];	// NB: hopefully long enough
     diskfreespace: longint;
 begin
+ curdir := '.';
  if (paramstr(1)<>'/playseed') and (paramstr(1)<>'/killseed') then
   begin
    //textmode(co80);
@@ -186,8 +206,8 @@ procedure cleartextdisplay;
 var temp: linetype;
     i,j: integer;
 begin
- fillchar(temp[1],30,ord(' '));
  temp[0]:=chr(30);
+ fillchar(temp[1],30,ord(' '));
  for j:=0 to 30 do
   begin
    textdisplay^[j]:=temp;
@@ -205,7 +225,7 @@ begin
   for i:=145 to 189 do
    back4[j-266,i-145]:=screen[i,j];
  for i:=190 to 199 do
-  mymove(screen[i,215],back2[i-190],13);
+  move(screen[i,215],back2[i-190],13*4);
 end;
 
 procedure loaddata;
@@ -250,7 +270,7 @@ begin
 end;
 
 procedure checkpendingevent;
-var i,j,index: integer;
+var j,index: integer;
 begin
  index:=0;
  for j:=1 to nearbymax do
@@ -326,8 +346,6 @@ begin
 end;
 
 procedure journeyon;
-var
- i: word;
 label reload;
 begin
  new(landform);

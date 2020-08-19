@@ -1,4 +1,20 @@
 unit info;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Information unit for IronSeed
@@ -19,15 +35,15 @@ procedure sectorinfo;
 
 implementation
 
-uses utils_, data, gmouse, utils, display, utils2, usecode, modplay, weird, journey, heapchk, sysutils;
+uses utils_, data, gmouse, utils, usecode, modplay, weird, journey, heapchk, sysutils;
 
 type
  nearsectype= array[1..37] of nearbytype;
 var
- cenx,ceny,cenz,i,j,sector,index,shipsector,infoindex,sysindex,glowindex,
+ cenx,ceny,cenz,i,j,sector,index,infoindex,
   tarx,tary,tarz,rotatemode: integer;
  nearsec: ^nearsectype;
- tarxr,taryr,tarzr,n2: real;
+ tarxr,taryr,tarzr: real;
  engaging: boolean;
 
 procedure displaytargets;
@@ -229,7 +245,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  mymove(starmapscreen^[i],screen[i+25,27],29);
+  move(starmapscreen^[i],screen[i+25,27],29*4);
  x1:=tarxr;
  y1:=tarzr;
  if rotatemode=-1 then
@@ -815,7 +831,6 @@ begin
  if ship.posx>1250 then sector:=2 else sector:=1;
  if ship.posy>1250 then sector:=sector+2;
  if ship.posz>1250 then sector:=sector+4;
- shipsector:=sector;
  tarx:=ship.posx;
  tary:=ship.posy;
  tarz:=ship.posz;
@@ -1035,7 +1050,6 @@ begin
    {fadein;}
    new(nearsec);
    done:=false;
-   sysindex:=1;
    bkcolor:=0;
    tcolor:=31;
    oldt1:=t1;

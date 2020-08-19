@@ -1,4 +1,21 @@
 program ironseed;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 //{$M 2600,0,0}
 //{S-,D-,L-}
 
@@ -21,7 +38,7 @@ const
  s: array[0..2] of string[21]=
   ('Executable not found.','Insufficient memory.','General failure.');
 var
- code: integer;
+ code: word;
  str1: string[64];
 
 procedure getdoserror;
@@ -56,7 +73,7 @@ begin
    3: exec('intro',p[2]+p[4]+p[3]+str1);
    4:;
    5: exec('intro',p[2]+p[4]+str1);
-   49..56: exec('main',p[1]+p[4]+' '+chr(code)+' '+str1);
+   49..56: exec('main',p[1]+p[4]+' '+chr(Lo(code))+' '+str1);
    else
    begin
       str(code, str1);

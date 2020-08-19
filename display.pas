@@ -1,4 +1,20 @@
 unit display;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Ship Display Control unit for IronSeed
@@ -36,7 +52,7 @@ function checkloc(l: integer): boolean;
 
 implementation
 
-uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, weird, modplay;
+uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, modplay;
 
 const
  batmax=32000;
@@ -50,12 +66,8 @@ const
  botbut2: buttype= (11,16,12);
  logbut1: buttype= (23,25,12);
  logbut2: buttype= (23,25,6);
-type
- pbyte=^byte;
- undername= array[53..75,98..182] of byte;
 var
  a,b,i,j,index,c1,c2: integer;
- x3,y3: real;
 
 procedure displayoptions(com: integer);
 var s: string[5];
@@ -141,7 +153,7 @@ begin
 end;
 
 procedure displaydamagecontrol(com: integer);
-var s,s2: string[11];
+var s: string[11];
 begin
  mousehide;
  case com of
@@ -391,7 +403,7 @@ begin
      begin
       readweaicon(shd-1444);
       for i:=0 to 19 do
-       mymove(tempicon^[i],screen[89+i,172],5);
+       move(tempicon^[i],screen[89+i,172],5*4);
      end;
  end;
 end;
@@ -866,12 +878,11 @@ begin;
 end;
 
 procedure showweaponicon(x1,y1,weap,node: integer);
-var j: integer;
 begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  mymove(tempicon^[i],screen[y1+i,x1],5);
+  move(tempicon^[i],screen[y1+i,x1],5*4);
 end;
 
 procedure sideshowweaponicon(x1,y1,weap,node: integer);
@@ -895,12 +906,11 @@ begin
 end;
 
 procedure revshowweaponicon(x1,y1,weap,node: integer);
-var j: integer;
 begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  mymove(tempicon^[19-i],screen[y1+i,x1],5);
+  move(tempicon^[19-i],screen[y1+i,x1],5*4);
 end;
 
 procedure displayweaponinfo(com: integer);
@@ -1041,7 +1051,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  mymove(starmapscreen^[i,27],screen[i,27],29);
+  move(starmapscreen^[i,27],screen[i,27],29*4);
  if target>0 then
   begin
    if index<0 then index:=0;
@@ -1765,7 +1775,7 @@ begin
 end;
 
 procedure displaysystem(com: integer);
-var c: integer;
+var
     x,z,ang: real;
     s: string[7];
     str1: string[20];
@@ -1812,7 +1822,7 @@ begin
         removesystem(true);
         mousehide;
         compressfile(tempdir+'/current',@screen);
-        fillchar(screen,64000,0);
+        fillchar(screen,sizeof(screen),0);
         mouseshow;
         for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
         {fading;}
@@ -2077,7 +2087,6 @@ begin
 end;
 
 procedure displayship2(x1,y1: integer);
-var str1: string;
 begin
  loadshipdisplay2(ship.shiptype[1]-1,x1,y1);
  loadshipdisplay2(2+ship.shiptype[2],x1,y1);
@@ -2162,7 +2171,6 @@ begin
 end;
 
 function checkloc(l: integer): boolean;
-var j: integer;
 begin
  checkloc:=false;
  case l of
@@ -2896,7 +2904,7 @@ begin
 end;
 
 procedure displayshortscan;
-label error, error2;
+label error;
 begin
  if (ship.damages[7]>0) and (not checkscandamages) then exit;
  t1:=t1+0.02;
@@ -2994,7 +3002,7 @@ error:
 end;
 
 procedure computegraph;
-var dist,tech,signaly,signalx,noise,wave: integer;
+var dist,tech,signaly,signalx,noise: integer;
 begin
  if ship.wandering.alienid<16000 then
   begin
@@ -3026,7 +3034,7 @@ begin
  if (ship.damages[7]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
-  mymove(starmapscreen^[i,27],screen[i,27],29);
+  move(starmapscreen^[i,27],screen[i,27],29*4);
  computegraph;
  mouseshow;
  for i:=1 to 3 do

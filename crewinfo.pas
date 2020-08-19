@@ -1,4 +1,20 @@
 unit crewinfo;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Crew Manipulation unit for IronSeed
@@ -19,7 +35,7 @@ procedure crewstats;
 
 implementation
 
-uses data, utils_, gmouse, utils, utils2, weird, modplay;
+uses data, utils_, gmouse, utils2, weird, modplay;
 
 type
  hologramtype= array[35..63,84..120] of byte;
@@ -58,18 +74,17 @@ begin
 end;
 
 procedure drawstats(num: integer);
-var b,c,d,y,ylast: integer;
+var b,c,d: integer;
     part: real;
 begin {120,37,294,112}
  a:=ship.crew[num].phy;
  b:=ship.crew[num].men;
  c:=ship.crew[num].emo;
- ylast:=50;
  part:=36/100;
  for i:=14 to 88 do
   fillchar(screen[i,16],185,0);
  for i:=35 to 63 do
-  mymove(holo^[i,84],screen[i,84],9);
+  move(holo^[i,84],screen[i,84],9*4);
  moveto(16,50);
  for j:=17 to 200 do
  begin
@@ -86,7 +101,6 @@ begin {120,37,294,112}
     5:i:=-round(c*part);
    end;
    lineto(j,i+51);
-   ylast:=i+51;
  end;
 end;
 
@@ -107,7 +121,7 @@ begin
 end;
 
 procedure redraw;
-var c: integer;
+var
     s: string[20];
     crewfile: file of crewdatatype;
     crewdata: crewdatatype;
@@ -185,17 +199,17 @@ begin
  new(littlemsgs);
  for a:=0 to 8 do
   for i:=0 to 8 do
-   mymove(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10);
+   move(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10*4);
  for a:=0 to 7 do
   for i:=0 to 4 do
-   mymove(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4);
+   move(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4*4);
  for a:=0 to 6 do
   for i:=0 to 15 do
-   mymove(screen[i+180,10+a*17],mcursor^[a,i],4);
+   move(screen[i+180,10+a*17],mcursor^[a,i],4*4);
  for i:=130 to 196 do
   fillchar(screen[i,4],262,0);
  for i:=35 to 63 do
-  mymove(screen[i,84],holo^[i,84],9);
+  move(screen[i,84],holo^[i,84],9*4);
  graphindex:=1;
  adjustgraph;
  crewindex:=1;
@@ -252,7 +266,7 @@ begin
  a:=random(9);
  mousehide;
  for i:=0 to 8 do
-  mymove(msgs^[a,i],screen[122+i,273],10);
+  move(msgs^[a,i],screen[122+i,273],10*4);
  mouseshow;
 end;
 
@@ -263,12 +277,12 @@ begin
  if msgindex mod 2=0 then
   begin
    for i:=0 to 4 do
-    mymove(littlemsgs^[a,i],screen[133+i,273],4);
+    move(littlemsgs^[a,i],screen[133+i,273],4*4);
   end
  else
   begin
    for i:=0 to 4 do
-    mymove(littlemsgs^[a,i],screen[133+i,296],4);
+    move(littlemsgs^[a,i],screen[133+i,296],4*4);
   end;
  mouseshow;
 end;

@@ -1,17 +1,29 @@
 unit heapchk;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 interface
 procedure WriteHexWord(w: Word);
 procedure HeapStats;
-function HeapFunc (Size: Word): Integer; 
 function GetHeapStats:String;
 function GetHeapStats1:String;
 function GetHeapStats2:String;
 
-procedure HeapShow;
-
 implementation
-uses saveload;
 procedure WriteHexWord(w: Word);
 const
  hexChars: array [0..$F] of Char =
@@ -44,11 +56,4 @@ begin
    GetHeapStats := 'heap: TotalSize(' + '10050000' + ') MaxAvail(' + '1005000' + ') MemAvail(' + '1005000' + ')';
 end;
 
-function HeapFunc (Size: Word): Integer;
-begin
-end;
-procedure HeapShow;
-var s1,s2:string[11];
-begin
-end;
 end.

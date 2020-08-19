@@ -1,5 +1,22 @@
 unit data;
 {$I-}
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 {***************************
    Data unit for IronSeed
 
@@ -343,7 +360,7 @@ procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 
 implementation
 
-uses crt,  gmouse, utils,modplay,math;
+uses modplay, math;
 
 const                           { compression constants        }
  CPR_VER4=4;                    {   4 new header               }
@@ -482,7 +499,6 @@ end;
 
 procedure loadscreen(s: string; ts: pointer);
 var ftype: CPR_HEADER;
-    s2: string[30];
 begin
  uncompressfile(s+'.cpr',ts,@ftype);
  if ftype.version=CPR_ERROR then errorhandler(s,5);
@@ -728,7 +744,6 @@ end;
 
 
 procedure readygraph;
-var testdriver,driver,mode,errcode: integer;
 begin
  SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  SDL_init_video(screen);
@@ -742,8 +757,10 @@ var
    temppal   : paltype;
    px,dx,pdx : array[1..768] of shortint;
 begin
-   mymove(colors,temppal,192);
-   fillchar(dx,768,48);
+   temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+   move(colors,temppal,sizeof(paltype));
+   dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(dx,sizeof(dx),48);
    for j:=1 to 768 do
    begin
       px[j]:=colors[0,j] div 48;
@@ -765,7 +782,7 @@ begin
       set256colors(temppal);
       if not fastkeypressed then delay(b);
    end;
-   fillchar(temppal,768,0);
+   fillchar(temppal,sizeof(paltype),0);
    set256colors(temppal);
    fadelevel := 0;
 end;
@@ -777,8 +794,12 @@ var
    px,dx,pdx : array[1..768] of shortint;
 begin
    b:=tslice div 2;
-   fillchar(temppal,768,0);
-   fillchar(dx,768,0);
+
+   temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(temppal, sizeof(temppal), 0);
+   dx[1]:=0;			// to turn off warnings, variables are actually correctly initialized by function below
+   fillchar(dx, sizeof(dx), 0);
+
    for j:=1 to 768 do
    begin
       px[j]:=colors[0,j] div 48;
@@ -825,8 +846,6 @@ begin
 end;
 
 procedure fadefull(step, slice : Integer);
-var
-   i : integer;
 begin
    if step < 0 then
       while fadelevel > 0 do
@@ -843,8 +862,6 @@ begin
 end;
 
 procedure fadestopmod(step, slice : Integer);
-var
-   i : integer;
 begin
    step := -abs(step);
    while fadelevel > 0 do
@@ -905,7 +922,7 @@ begin
    initializecanary;
    readygraph;
    initializemod;
-   checkbreak:=false;
+   //checkbreak:=false;
    tcolor:=22;
    bkcolor:=0;
    new(planicons);
@@ -917,4 +934,6 @@ end;
 begin
    ship.options[9]:=64;
    ship.options[3]:=1;
+   assert (sizeof(colors) = 768);
+   assert (sizeof(screen) = 64000);
 end.

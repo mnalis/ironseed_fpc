@@ -13,6 +13,15 @@ Documentation
 - `Documents/old_todo.txt` is original developers historic (DOS) TODO file.
 - Current TODO is online at https://github.com/mnalis/ironseed_fpc/issues
 
+Prerequisites
+=============
+For compiling, you need:
+- fpc (Free pascal compiler, `apt-get install fpc`)
+- gcc (GNU C Compiler, `apt-get install build-essential gcc`
+- SDL v1.2 (Simple DirectMedia Layer 1.2, `apt-get install libsdl1.2-dev libsdl-mixer1.2-dev`)
+- (optionally) OpenGL (`apt-get install mesa-common-dev`)
+- (optionally) D compiler (The Digital Mars D compiler is required to the conversation and log conversion tools, http://digitalmars.com/d/1.0/index.html)
+
 Compilation
 ===========
 Just typing `make` will compile whichever developers think is currently the best.

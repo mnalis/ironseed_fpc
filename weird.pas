@@ -1,4 +1,20 @@
 unit weird;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    CatchAll unit for IronSeed
@@ -46,10 +62,12 @@ const
 
 function skillcheck(n: integer): boolean;
 procedure sanitycheck(n: integer);
+{$IFNDEF DEMO}
 procedure easteregg2;
 procedure easteregg3;
 procedure easteregg4;
 procedure easteregg5;
+{$ENDIF}
 procedure bossmode;
 procedure deathsequence(n: integer);
 procedure event(n: integer);
@@ -62,16 +80,19 @@ procedure blast(c1,c2,c3: integer);
 
 implementation
 
-uses utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay, utils2, ending, sysutils;
+uses utils_, data, utils, gmouse, journey, comm2, comm, combat, modplay, utils2, ending;
 
+{$IFNDEF DEMO}
 var
  done: boolean;
+{$ENDIF}
 
 procedure blast(c1,c2,c3: integer);
 var a,b,j: integer;
     temppal: paltype;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  b:=tslice*4;
  for a:=1 to 63 do
   begin
@@ -85,7 +106,7 @@ begin
    delay(b);
   end;
  set256colors(colors);
- mymove(temppal,colors,192);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure addpending(n, t : integer);
@@ -446,19 +467,17 @@ begin
   end;
 end;
 
+{$IFNDEF DEMO}
 procedure easteregg2;
-var ans: char;
+var
     c,i,j: integer;
     portrait: ^portraittype;
 begin
-{$IFDEF DEMO}
- exit;
-{$ENDIF}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -496,7 +515,6 @@ begin
  dispose(portrait);
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -520,7 +538,7 @@ begin
     plainfadearea(80,146,240,160,-3);
     mouseshow;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -537,14 +555,11 @@ begin
 end;
 
 procedure easteregg3;
-var ans: char;
+var
     j,c: integer;
     s: string[12];
     s2: string[3];
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current',@screen);
  tcolor:=92;
@@ -632,28 +647,23 @@ begin
      defaultsong:=s;
     end;
   end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
  until (done) and (c=1);
  fading;
  mousehide;
  loadscreen(tempdir+'/current',@screen);
  set256colors(colors);
  mouseshow;
-{$ENDIF}
 end;
 
 procedure easteregg4;
 var i,j,c: integer;
-    ans: char;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -677,7 +687,6 @@ begin
  printxy(169,104,'Recharge Battery');
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -712,7 +721,7 @@ begin
                100..115: ship.battery:=32000;
               end;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -726,21 +735,16 @@ begin
  set256colors(colors);
  bkcolor:=3;
  mouseshow;
-{$ENDIF}
 end;
 
 procedure easteregg5;
 var i,j,c: integer;
-    ans: char;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -764,7 +768,6 @@ begin
  printxy(179,104,'Add Material');
  mouseshow;
  c:=0;
- ans:=' ';
  set256colors(colors);
  repeat
   for i:=200 to 215 do
@@ -799,7 +802,7 @@ begin
                100..115: if incargo(4000)<16 then addcargo2(4000, true);
               end;
    end;
-  if fastkeypressed then ans:=readkey;
+  if fastkeypressed then readkey;
   for i:=216 to 231 do
    colors[i]:=colors[random(16)];
   for i:=200 to 215 do
@@ -813,15 +816,11 @@ begin
  set256colors(colors);
  bkcolor:=0;
  mouseshow;
-{$ENDIF}
 end;
 
 (* NO SPACE!!!
 procedure easteregg6;
 begin
-{$IFDEF DEMO}
- exit;
-{$ELSE}
  while fastkeypressed do readkey;
  fading;
  mousehide;
@@ -836,12 +835,12 @@ begin
  fading;
  closegraph;
  halt(3);
-{$ENDIF}
 end;*)
+{$ENDIF}
 
 procedure bossmode;
-type
- texttype= array[0..24,0..79] of integer;
+{type
+ texttype= array[0..24,0..79] of integer;}
 var
 { textscreen: texttype absolute $B800:0000;
  f: file of texttype;
@@ -868,7 +867,8 @@ begin
  if ioresult<>0 then errorhandler('data/boss1.dta',5);
  close(f);}
  pausemod;
- fillchar(temppal,768,0);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
  while fastkeypressed do readkey;
@@ -894,6 +894,7 @@ begin
  close(f);
 end;
 
+(*
 procedure loopscale(startx,starty,sizex,sizey,newx,newy: word; var s,t);
 var sety, py, pdy, px, pdx, dcx, dcy, ofsy: word;
 begin
@@ -1075,6 +1076,7 @@ begin
 //  pop ds
 // end;
 end;
+*)
 
 procedure screensaver;
 {var s,s2: pscreentype;
@@ -1093,7 +1095,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   mymove(screen,s^,16000);
+   move(screen,s^,sizeof(screen));
    max:=60;
    repeat
     for a:=5 to max do
@@ -1123,7 +1125,7 @@ begin
   end
  else if i=1 then
   begin
-   mymove(screen,s^,16000);
+   move(screen,s^,sizeof(screen));
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1147,7 +1149,7 @@ begin
     end;
    if not quit then
     begin
-     mymove(backgr^,screen,16000);
+     move(backgr^,screen,sizeof(screen));
      repeat
       for i:=32 to 63 do
        colors[i]:=colors[random(32)];
@@ -1166,7 +1168,7 @@ begin
   begin
    new(s2);
    loadscreen('data/saver',s2);
-   fillchar(screen,64000,0);
+   fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1213,7 +1215,7 @@ begin
     if (fastkeypressed) or (mouse.getstatus) then quit:=true;
     if not quit then
      begin
-      mymove(s^,backgr^,16000);
+      move(s^,backgr^,sizeof(screen));
       asm
        push es
        push ds
@@ -1232,7 +1234,7 @@ begin
        pop es
       end;
       if (fastkeypressed) or (mouse.getstatus) then quit:=true;
-      if not quit then mymove(backgr^[1],screen,15600);
+      if not quit then move(backgr^[1],screen,15600*4);
      end;
    until quit;
    dispose(s2);
@@ -1256,6 +1258,7 @@ end;
    
 procedure deathsequence(n: integer);
 begin
+ assert (n<2); { just to ignore warning, variable really not used }
  stopmod;
  blast(63,0,0);
  closegraph;

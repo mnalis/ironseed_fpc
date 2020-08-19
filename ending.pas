@@ -1,4 +1,21 @@
 unit ending;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 {***************************
 
   Endgame Sequence for IronSeed
@@ -47,7 +64,6 @@ const
 
 var
  i,j: integer;
- modth,modtm,modts,curth,curtm,curts: byte;
 procedure bigprintxy(x1,y1: integer; s: string);
 var letter,a,x,y,t: integer;
 begin
@@ -88,7 +104,8 @@ procedure dothefade;
 var temppal: paltype;
     a: integer;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  for a:=31 downto 0 do
   begin
    for j:=0 to 31 do
@@ -112,7 +129,7 @@ begin
    set256colors(temppal);
    delay(round(tslice*1.6));
   end;
- mymove(temppal,colors,192);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure printxy2(x1,y1,tcolor: integer; s: string);
@@ -155,7 +172,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -234,7 +251,7 @@ var t: pscreentype;
 begin
  new(t);
  loadscreen('data/end6',backgr);
- mymove(backgr^,screen,16000);
+ move(backgr^,screen,sizeof(screen));
  loadscreen('data/end5',t);
  fadein;
  k:=0;
@@ -243,8 +260,8 @@ begin
  repeat
   inc(k,80);
   inc(k2,320);
-  mymove(t^[0,64000-k2],screen,k);
-  mymove(backgr^,screen[0,k2],16000-k);
+  move(t^[0,64000-k2],screen,k*4);
+  move(backgr^,screen[0,k2],(16000-k)*4);
   delay(b);
  until k=16000;
  dispose(t);
@@ -254,7 +271,8 @@ procedure halffading;
 var a,b: integer;
     temppal: paltype;
 begin
- mymove(colors,temppal,192);
+ temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
+ move(colors,temppal,sizeof(paltype));
  b:=tslice shr 2;
  for a:=63 downto 32 do
   begin
@@ -262,7 +280,7 @@ begin
    set256colors(temppal);
    delay(b);
   end;
- mymove(temppal,colors,192);
+ move(temppal,colors,sizeof(paltype));
 end;
 
 procedure endgame;
@@ -272,7 +290,7 @@ begin
  bkcolor:=255;
  fading;
  mousehide;
- fillchar(screen,64000,0);
+ fillchar(screen,sizeof(screen),0);
 
  playmod(true,'sound/DIMENSIO.MOD');
  loadscreen('data/end1',@screen);

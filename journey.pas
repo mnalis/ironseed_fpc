@@ -1,5 +1,22 @@
 unit journey;
 {$I-}
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
 {***************************
    Main Control unit for IronSeed
 
@@ -102,9 +119,9 @@ asintab :array[0..1024] of byte =
 var
  alt, i,j,q,m,index,a,b,j2,ofsx,ofsy,clickcode: integer;
  part: real;
- y,part4: real;
+ part4: real;
  s: string[30];
- msg,pd1,pd2,pdx,oldcube: integer;
+ msg,oldcube: integer;
 
 procedure printstring(x1,y1: integer; snum: byte);
 var letter,x,y: integer;
@@ -290,6 +307,7 @@ end;
 
 procedure getcube(src,tar: byte);
 begin
+ assert ((src<=9*9) and (tar<=9*9));	// to turn off warnings, we don't really use those variables here
  move(cubetar^,cubesrc^,sizeof(cubetype));
  for a:=0 to 2 do
   for b:=0 to 2 do
@@ -376,7 +394,7 @@ begin  {215,145}
   end;
  mousehide;
  for i:=133 to 144 do
-  mymove(screen[i,215],back1[i-133],13);
+  move(screen[i,215],back1[i-133],13*4);
  b:=tslice div 4;
  for t:=1 to 20 do
   begin
@@ -401,16 +419,16 @@ begin  {215,145}
    end;
 skip1:
    for j:=133 to 145-m do
-    mymove(back1[j-133],screen[j,215],13);
+    move(back1[j-133],screen[j,215],13*4);
    for j:=190+m to 199 do
-    mymove(back2[j-190],screen[j,215],13);
+    move(back2[j-190],screen[j,215],13*4);
    mouseshow;
    delay(b);
    mousehide;
   end;
  for i:=0 to 44 do
   move(cubetar^[i],screen[i+145,215],51);
- mymove(back2,screen[190,215],13);
+ move(back2,screen[190,215],13*4);
  mouseshow;
  cube:=tar;
 end;
@@ -427,10 +445,9 @@ end;
 
 procedure rendersphere(xx, yy, radius : Integer; angle : Real; eclipse: Boolean; ecl : Real);
 var
-   xradius    : Integer;
    x, y	      : Integer;
    sx, sy     : Integer;
-   ax, ay     : Integer;
+   ax         : Integer;
    e1, e2, ed : Integer;
    radius2    : Integer;
    radius1    : Real;
@@ -534,7 +551,7 @@ endcheck:
   end;
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -652,7 +669,7 @@ procedure makesphere3;
 begin
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -692,7 +709,7 @@ endcheck:
    end;
  mousehide;
  for i:=1 to 120 do
-  mymove(planet^[i],screen[i+12,28],30);
+  move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -816,7 +833,9 @@ begin
                        if clickcode=3 then
                         begin
                          clickcode:=0;
+                         {$IFNDEF DEMO}
                          easteregg5;
+                         {$ENDIF}
                         end;
                       end;
              49..58: if viewmode<>1 then
@@ -1174,7 +1193,6 @@ procedure processkey;
 var temp : byte;
     ans	 : char;
    i	 : Integer;
-   s	 : string[4];
 begin
  idletime:=0;
  temp:=0;
@@ -1197,9 +1215,11 @@ begin
                     temp :=0;
                    end;
          #16,#45	 : if yesnorequest('Do you want to quit?',0,31) then quit:=true;
+{$IFNDEF DEMO}
          #117		 : easteregg4;
          #103		 : easteregg3;
          #126		 : easteregg2; {alt-7}
+{$ENDIF}
          #120..#123,#129: begin {alt-1 to 4 and alt-0}
 	    if showplanet then
 	    begin
@@ -1423,7 +1443,6 @@ begin
 end;
 
 procedure mainloop;
-label start;
 begin
  repeat
   fadestep(8);

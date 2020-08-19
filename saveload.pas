@@ -1,4 +1,20 @@
 unit saveload;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
 
 {***************************
    Save/Load Game and Utility Unit for IronSeed
@@ -27,7 +43,7 @@ procedure loadgame(num: integer);
 
 implementation
 
-uses utils_, gmouse, data, journey, usecode, utils, weird, modplay, version, crewtick;
+uses utils_, gmouse, data, utils, weird, version, crewtick;
 {$PACKRECORDS 1}
 type
  nametype= string[20];
@@ -426,7 +442,7 @@ begin
      if k>64000 then k:=k-64000;
     mousehide;
     for i:=40 to 140 do
-     mymove(screen[i,74],tempscr^[i,74],43);
+     move(screen[i,74],tempscr^[i,74],43*4);
     mouseshow;
 {    asm
      push es
@@ -454,7 +470,7 @@ begin
     move((p+64000-k)^,s^,k);
    
     for i:=40 to 140 do
-     mymove(tempscr^[i,74],s^[i,74],43);
+     move(tempscr^[i,74],s^[i,74],43*4);
     mousehide;
  {   asm
      push es
@@ -469,7 +485,7 @@ begin
      pop es
     end;
 }
-    move(s^,screen,64000);
+    move(s^,screen,sizeof(screen));
     mouseshow;
     delay(b);
    end;
@@ -487,7 +503,7 @@ begin
  tcolor:=26;
  mousehide;
  for i:=40 to 140 do
-  mymove(screen[i,74],tempscr^[i,74],43);
+  move(screen[i,74],tempscr^[i,74],43*4);
  button(75,40,244,140,0);
  for a:=1 to 8 do button(85,40+a*10,235,48+a*10,2);
  button(185,130,225,138,2);
@@ -499,11 +515,11 @@ begin
   begin
    new(s);
    for i:=40 to 140 do
-    mymove(screen[i,74],tempscr^[i,74],43);
+    move(screen[i,74],tempscr^[i,74],43*4);
    loadscreen('data/cloud',@screen);
-   mymove(screen,backgr^,16000);
+   move(screen,backgr^,sizeof(screen));
    for i:=40 to 140 do
-    mymove(tempscr^[i,74],screen[i,74],43);
+    move(tempscr^[i,74],screen[i,74],43*4);
   end;
  result:=mainloop(tofadein);
  if result=9 then loadgamedata:=false else
@@ -514,7 +530,7 @@ begin
  mousehide;
  if tofadein then dispose(s)
   else for i:=40 to 140 do
-   mymove(tempscr^[i,74],screen[i,74],43);
+   move(tempscr^[i,74],screen[i,74],43*4);
  mouseshow;
  dispose(tempscr);
  dispose(names);
@@ -590,7 +606,7 @@ begin
  new(names);
  mousehide;
  for i:=40 to 140 do
-  mymove(screen[i,74],tempscr^[i,74],43);
+  move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text;
  button(75,40,244,140,alt);
  for a:=1 to 8 do button(85,40+a*10,235,48+a*10,2+alt);
@@ -620,7 +636,7 @@ redo:
   end;
  mousehide;
  for i:=40 to 140 do
-  mymove(tempscr^[i,74],screen[i,74],43);
+  move(tempscr^[i,74],screen[i,74],43*4);
  dispose(names);
  dispose(tempscr);
  mouseshow;
@@ -718,7 +734,7 @@ begin
  mousehide;
  tcolor:=text;
  for i:=60 to 102 do
-  mymove(screen[i,74],tempscr^[i,74],43);
+  move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text-5;
  bkcolor:=35+alt;
  button(74,60,245,102,alt);
@@ -731,7 +747,7 @@ begin
  result:=mainloop2;
  mousehide;
  for i:=60 to 102 do
-  mymove(tempscr^[i,74],screen[i,74],43);
+  move(tempscr^[i,74],screen[i,74],43*4);
  dispose(tempscr);
  yesnorequest:=result;
  bkcolor:=3;
@@ -952,7 +968,6 @@ end;
 
 procedure showbotstuff(curplan: integer);
 var index,j,max,total: integer;
-    str1: string[10];
     amounts: array[0..16] of byte;
     temp: ^scantype;
     scanfile: file of scantype;
@@ -1002,7 +1017,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=85 to 105 do
-  mymove(screen[i,75],tempscr^[i,75],43);
+  move(screen[i,75],tempscr^[i,75],43*4);
  graybutton(75,85,245,105);
  revgraybutton(84,89,236,101);
  last:=0;
@@ -1177,7 +1192,7 @@ begin
  close(ft);
  dispose(tempscr);
  for i:=85 to 105 do
-  mymove(tempscr^[i,75],screen[i,75],43);
+  move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  if ioresult<>0 then printbox('Printer Error!');
 end;
@@ -1223,7 +1238,7 @@ begin
  mousehide;
  new(tempscr);
  for i:=85 to 105 do
-  mymove(screen[i,105],tempscr^[i,105],28);
+  move(screen[i,105],tempscr^[i,105],28*4);
  graybutton(105,85,215,105);
  tcolor:=191;
  i:=0;
@@ -1256,7 +1271,7 @@ begin
  close(ft);
  dispose(tempscr);
  for i:=85 to 105 do
-  mymove(tempscr^[i,105],screen[i,105],28);
+  move(tempscr^[i,105],screen[i,105],28*4);
  mouseshow;
  bkcolor:=3;
  if ioresult<>0 then printbox('Printer Error!');

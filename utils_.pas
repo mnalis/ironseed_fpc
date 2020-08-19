@@ -17,18 +17,17 @@ const
 
 
 
-procedure delay(MS:Word); cdecl ; external;
-procedure setcolor(Color: Word); cdecl ; external;
-procedure rectangle(x1: word; y1:word; x2: word; y2:word);cdecl ; external;
-procedure circle(x,y,r:word); cdecl ; external;
-procedure mymove(var src,tar; count: word); 
-procedure SDL_init_video(scr:screentype); cdecl ; external;
-procedure set256colors(pal : paltype); cdecl; external;
-procedure setrgb256(palnum,r,g,b: byte); cdecl ; external; // set palette
-procedure getrgb256(palnum: byte; var r,g,b:byte); // get palette 
+procedure delay(const MS:Word); cdecl ; external;
+procedure setcolor(const Color: Word); cdecl ; external;
+procedure rectangle(const x1: word; y1:word; x2: word; y2:word);cdecl ; external;
+procedure circle(const x,y,r:word); cdecl ; external;
+procedure SDL_init_video(var scr:screentype); cdecl ; external;
+procedure set256colors(var pal : paltype); cdecl; external;	// NB: pal is actually constref, but fpc still gives "Hint: (3187) C arrays are passed by reference" then in fpc 3.0.4+dfsg-22 :(
+procedure setrgb256(const palnum,r,g,b: byte); cdecl ; external; // set palette
+procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
 procedure stop_video_thread; cdecl ; external;
-procedure upscroll(img:screentype);cdecl ; external;
-procedure scale_img(x0s, y0s, widths, heights, x0d, y0d, widthd, heightd: word; s, d:screentype);cdecl ; external;
+procedure upscroll(var img:screentype);cdecl ; external;
+procedure scale_img(const x0s, y0s, widths, heights, x0d, y0d, widthd, heightd: word; var s, d:screentype);cdecl ; external;	// NB: s is actually constref
 function fastkeypressed: boolean;   // not so fast anymore
 function key_pressed : byte;cdecl ; external;
 function readkey : char;cdecl ; external;
@@ -36,19 +35,18 @@ function readkey_utf8 : char;cdecl ; external;
 function readkey_nomap : char;cdecl ; external;
 procedure all_done;cdecl ; external;
 procedure closegraph;   // close video
-procedure move_mouse(x,y:word);cdecl ; external;
-procedure setfillstyle(style:word;color:word);cdecl ; external;
-procedure bar(x1: word; y1:word; x2: word; y2:word);cdecl ; external;
-procedure line(x1: word; y1:word; x2: word; y2:word);cdecl ; external;
-procedure lineto(x1: word; y1:word);cdecl ; external;
-procedure moveto(x1: word; y1:word);cdecl ; external;
-procedure pieslice(x1,y1,phi0,phi1,r: word);cdecl ; external;
-procedure setwritemode(mode: byte); cdecl ; external;
+procedure move_mouse(const x,y:word);cdecl ; external;
+procedure setfillstyle(const style,color:word);cdecl ; external;
+procedure bar(const x1,y1,x2,y2:word);cdecl ; external;
+procedure line(const x1,y1,x2,y2:word);cdecl ; external;
+procedure lineto(const x1,y1:word);cdecl ; external;
+procedure moveto(const x1,y1:word);cdecl ; external;
+procedure pieslice(const x1,y1,phi0,phi1,r: word);cdecl ; external;
+procedure setwritemode(const mode: byte); cdecl ; external;
+
 implementation
 
-uses sysutils;
-
-procedure getrgb256_(palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette 
+procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
 
 procedure closegraph;   // close video
 begin
@@ -56,7 +54,7 @@ begin
 //    SDL_Quit();
     
 end;
-procedure getrgb256(palnum: byte; var r,g,b:byte); // get palette
+procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
 var rp,gp,bp:byte;
 begin
 	getrgb256_(palnum,@rp,@gp,@bp);
@@ -66,12 +64,6 @@ end;
 function fastkeypressed: boolean;   // not so fast anymore
 begin
  fastkeypressed:=boolean(key_pressed);
-end;
-
-
-procedure mymove(var src,tar; count: word);
-begin
-	move(src,tar,count*4);
 end;
 
 
