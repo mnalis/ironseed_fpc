@@ -39,3 +39,9 @@ build `demo_sdl`, which is original shareware demo restricted version.
 Running
 =======
 `./is`
+
+Debug
+=====
+For example, to debug savegame #2:
+
+`make debug_sdl && gdb -ex 'break fpc_raiseexception' -ex 'run' --args ./main /playseed 2`

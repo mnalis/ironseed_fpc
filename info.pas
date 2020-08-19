@@ -785,6 +785,11 @@ begin
   'X': editx;
   'Y': edity;
   'Z': editz;
+  'J': begin
+        engaging:=true;
+        done:=true;
+        targetready:=true;
+       end;
   '+': if infoindex<>0 then
         begin
          infoindex:=0;
