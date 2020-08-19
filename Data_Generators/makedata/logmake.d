@@ -1,8 +1,8 @@
-import std.stream;
 import std.stdio;
-import std.regexp;
+import std.regex;
 import std.conv;
 import std.string;
+import std.range;
 import data;
 
 char []inputfile;
@@ -19,35 +19,41 @@ struct Log {
 Log []loglist;
 
 void parsefile(char []file) {
-	scope Stream fh = new File(file, FileMode.In);
+	auto fh = File(file, "r");
 	inputfile = file;
 
-	RegExp titlereg = new RegExp("^@(-?\\d+)\\s+(.+)$", "g");
-	RegExp sepreg = new RegExp("##\\s*", "g");
+	auto titlereg = regex("^@(-?\\d+)\\s+(.+)$", "g");
+	auto sepreg = regex("##\\s*", "g");
 
 	Log log;
 	
+	//printf ("Parsing file %s\n", inputfile.toStringz);
 	int started = 0;
 	int head;
 	int num = 0;
-	foreach(char line[]; fh) {
+	foreach(line; fh.byLine) {
 		num++;
-		line = expandtabs(line.dup);
-		if(titlereg.find(line) >= 0) {
+		line = detab(line.dup);
+		//printf (" parsing line: %s\n", line.toStringz);
+		auto title_match = match(line, titlereg);
+		if(title_match) {
 			if(started) {
 				loglist ~= log;
 			} else {
 				started = 1;
 			}
 			head = 1;
-			log.id = toShort(titlereg.match(1));
+			log.id = to!short(title_match.captures[1]);
 			log.titleline = num;
-			log.title = titlereg.match(2).dup;
+			log.title = title_match.captures[2].dup;
 			log.head = [];//.length = 0;
 			log.tail = [];//.length = 0;
-		} else if(sepreg.find(line) >= 0) {
+			//printf ("  matched title: id=%d, line=%d, title=%s\n", log.id, log.titleline, log.title.toStringz);
+		} else if(match(line,sepreg)) {
 			head = 0;
+			//printf ("  matched separator: %s\n", line.toStringz);
 		} else {
+			//printf ("  continuation line: %s\n", line.toStringz);
 			if(started) {
 				if(head) {
 					log.head ~= line.dup;
@@ -55,15 +61,16 @@ void parsefile(char []file) {
 					log.tail ~= line.dup;
 				}
 			} else {
-				printf("%.*s(%d): text before first title!: %.*s\n", inputfile, num, line);
+				printf("%s(%d): text before first title!: %s\n", inputfile.toStringz, num, line.toStringz);
 			}
 		}
 	}
 	if(started) {
 		loglist ~= log;
 	} else {
-		printf("%.*s(%d): No log entries!\n", inputfile, num);
+		printf("%s(%d): No log entries!\n", inputfile.toStringz, num);
 	}
+	//printf ("Done parsing file.\n\n");
 }
 
 char [][]wraplines(char [][]text, int width) {
@@ -92,7 +99,7 @@ char [][]wraplines(char [][]text, int width) {
 				}
 			}
 			output ~= line[0..j + 1];
-			line = line[i + 1..length];
+			line = line[i + 1..$];
 		}
 		output ~= line;
 	}
@@ -102,18 +109,19 @@ char [][]wraplines(char [][]text, int width) {
 char [][]trimouterblanks(char [][]input) {
 	char [][]output = input;
 	while(output.length && strip(output[0]).length == 0) {
-		output = output[1..length];
+		output = output[1..$];
 	}
-	while(output.length && strip(output[length - 1]).length == 0) {
-		output = output[0..length - 1];
+	while(output.length && strip(output[$ - 1]).length == 0) {
+		output = output[0..$ - 1];
 	}
 	return output;
 }
 
 void processlogs() {
 	char [][]output;
+	//printf ("Processing logs\n");
 	foreach(int i, Log log; loglist) {
-		printf("%d:%d:[%.*s]\n", log.id, log.title.length, log.title);
+		printf("%d:%d:[%s]\n", log.id, log.title.length, log.title.toStringz);
 		log.head = wraplines(log.head, 49);
 		//printf(".\n");
 		log.tail = wraplines(log.tail, 49);
@@ -123,50 +131,55 @@ void processlogs() {
 		log.tail = trimouterblanks(log.tail);
 		//printf(".\n");
 		if(log.head.length + log.tail.length > 25) {
-			printf("%.*s(%d): Text is too long for the log!\n", inputfile, log.titleline);
+			printf("%s(%d): Text is too long for the log!\n", inputfile.toStringz, log.titleline);
 			output = (log.head ~ log.tail)[0..25];
 		} else {
 			output.length = 25 - (log.head.length + log.tail.length);
-			output[0..length] = "";
+			//printf (" head=>%s<\n output[%d]=%s\n tail=>%s<\n", to!string(log.head).toStringz, output.length, to!string(output).toStringz, to!string(log.tail).toStringz);
+			// FIXME -- what does this do ??? -- 
+			output[0..$] = cast(char[])"";
 			output = log.head ~ output ~ log.tail;
 			//printf("X\n");
 		}
 		int j;
 		for(j = 0; j < output.length; j++) {
-			printf("%d:[%.*s]\n", output[j].length, output[j]);
-			output[j] = output[j] ~ repeat(" ", 49 - output[j].length);
-			//printf("%d:[%.*s]\n", output[j].length, output[j]);
+			//printf("1> %d:[%s]\n", output[j].length, output[j].toStringz);
+			output[j] ~= " ".replicate(49 - output[j].length);
+			//printf("2> %d:[%s]\n", output[j].length, output[j].toStringz);
 			//printf("-\n");
 		}
 		log.output = output.dup;
 		//printf(".\n");
-		log.title = log.title ~ repeat(" ", 49 - log.title.length);
+		log.title = log.title ~ to!string(" ".repeat(49 - log.title.length));
 		//printf(".\n");
 		loglist[i] = log;
 		//printf("\n");
 	}
+	//printf ("Logs processed\n");
 }
 
 void writefiles(char []titlefile, char []logfile) {
-	scope Stream fhtitles = new File(titlefile, FileMode.OutNew);
-	scope Stream fhlogs = new File(logfile, FileMode.OutNew);
+	printf ("\nWriting files: titles=%s and logs=%s\n", titlefile.toStringz, logfile.toStringz);
+	auto fhtitles = File(titlefile, "wb");
+	auto fhlogs = File(logfile, "wb");
 	TitleRecord tr;
 	LogRecord lr;
 	char []s;
 	int i;
 	foreach(Log log; loglist) {
-		tr.id = log.id;
+		tr.id = to!short(log.id);
 		tr.text(encodestring(log.title));
 		for(i = 0; i < 25; i++) {
-			//printf("%d:[%.*s]\n", log.output[i].length, log.output[i]);
+			printf("1> %d:[%s]\n", log.output[i].length, log.output[i].toStringz);
 			s = encodestring(log.output[i]);
-			//printf("%d:[%.*s]\n", s.length, s);
+			printf("2> %d:[%s]\n", s.length, s.toStringz);
 			lr.text[i](s);
-			//printf("%d:[%.*s]\n", lr.text[i].length, cast(char [])lr.text[i]);
+			printf("3> %d:[%s]\n", lr.text[i].length, (cast(char [])lr.text[i]).toStringz);
 		}
-		fhtitles.writeExact(&tr, tr.sizeof);
-		fhlogs.writeExact(&lr, lr.sizeof);
+		fhtitles.rawWrite((&tr)[0..1]);
+		fhlogs.rawWrite((&lr)[0..1]);
 	}
+	printf ("Done writing files.\n");
 }
 
 
