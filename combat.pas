@@ -547,8 +547,27 @@ begin
    y:=round(ships^[j].rely/range*26.66);
    x:=round(ships^[j].relx/range*119);
    z:=round(ships^[j].relz/range*26);
+
+   //writeln ('displaymap ship',j, ' y=',y, ' x=',x, ' z=', z);
+
+   { worst case:
+   x=-118;	x+132-2=12 OK
+   x=118	x+132+2=252 OK
+
+   y=-25 z=-39	y+62=37,	y+62-z=76 +-2 OK
+   y=-25 z=39	y+62=37,	y+62-z=-2 BAD! 	y+62-z-2=-4 BAD!
+   y=25 z=-39	y+62=87,	y+62-z=126 +-2 OK
+   y=25 z=39	y+62=87,	y+62-z=48 +-2 OK
+   }
+
    if (abs(x)<119) and (abs(y)<26) and (abs(z)<40) then
     begin
+     assert (x+132+2 < 320, 'x too big');
+     assert (x+132-2 >= 0, 'x too small');
+     assert (y+62+2 < 200, 'y too big1');
+     assert (y+62-z+2 < 200, 'y too big2');
+     assert (y+62-2 >= 0, 'y too small1');
+     assert (y+62-z-2 >= 0, 'y too small2');
      if z<0 then
       for i:=y+62 to y+62-z do
        screen[i,x+132]:=screen[i,x+132] xor 6
@@ -795,6 +814,7 @@ begin
 	 begin
            displaymap;
            impact(j,maxweapons);	{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
+           //NB: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc...
            displaymap;
           end;
          charges[a]:=0;
