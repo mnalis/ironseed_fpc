@@ -2095,6 +2095,7 @@ end;
 
 procedure displayshipinfo;
 var str1,str2: string[5];
+    cargo_used: word;
 begin
  tcolor:=191;
  bkcolor:=5;
@@ -2116,7 +2117,7 @@ begin
  printxy(223,50,str1+'/'+str2);
  str(ship.battery:5,str1);
  printxy(218,56,str1+'/32000');
- a:=0;
+ cargo_used:=0;
  for j:=1 to 250 do
   begin
    if ship.cargo[j]>6000 then
@@ -2129,9 +2130,9 @@ begin
      i:=1;
      while cargo[i].index<>ship.cargo[j] do inc(i);
     end;
-   if i<=maxcargo then a:=a+cargo[i].size*ship.numcargo[j];
+   if i<=maxcargo then cargo_used:=cargo_used+cargo[i].size*ship.numcargo[j];
   end;
- str(a:5,str1);
+ str(cargo_used:5,str1);
  str(ship.cargomax:4,str2);
  printxy(218,62,str1+'/'+str2+'0');
 
