@@ -1,3 +1,5 @@
+v 0.1.4
+- fix crash when attempting to scroll empty Ship Logs list (for example Ship Logs: Cache)
 - docs: debug hints in Documents/debug_notes.md
 - fix scroll/display problem in Ship Logs in some cases
 - fix display problem with negative cargo space

@@ -1558,6 +1558,7 @@ var done: boolean;
 
  function testmode(index: word): boolean;
  begin
+  assert ((index>=1) and (index<=1000), 'testmode index out of range');
   testmode:=false;
   if (systems[index].visits=0) then exit;
   case viewindex3 of
@@ -1643,11 +1644,13 @@ begin
        viewindex2:=0;
        dec(viewindex);
        while (viewindex>0) and (not testmode(viewindex)) do dec(viewindex);
-       if viewindex=0 then
+       if viewindex<=0 then
         begin
          viewindex:=250;
          while (viewindex>0) and (not testmode(viewindex)) do dec(viewindex);
         end;
+        assert (viewindex>=0, 'viewindex has gone negative1');
+        assert (viewindex<251, 'viewindex is too big1');
       end else
       begin
        j:=findfirstplanet(viewindex);
@@ -1662,6 +1665,7 @@ begin
       begin
        viewindex2:=0;
        inc(viewindex);
+       assert (viewindex>=0, 'viewindex has gone negative2');
        while (viewindex<251) and (not testmode(viewindex)) do inc(viewindex);
        if viewindex>250 then
         begin
@@ -1670,6 +1674,7 @@ begin
          while (viewindex<251) and (not testmode(viewindex)) do inc(viewindex);
          if viewindex=251 then viewindex:=0;
         end;
+        assert (viewindex<251, 'viewindex is too big2');
        end
      else
       begin
@@ -1716,6 +1721,10 @@ begin
        end;
       end;
  end;
+
+ if viewindex = 0 then		{ scrolling through empty lists or some similar action has destroyed our position. Reset to current system so SOMETHING gets displayed }
+  if showplanet then viewindex:=tempplan^[curplan].system else viewindex:=1;
+
  case viewlevel of
   0: if viewindex>0 then	{ viewlevel=0 is a scrollable list of systems, filtered by testmode(index) using viewindex3 (0=no filter, 1=cache, 2=contacts, 3=scans) }
       begin			{ viewindex is index in systems[], of currently selected system in list, modified above by com=3(up)/4(down) }
