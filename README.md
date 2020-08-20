@@ -44,4 +44,4 @@ Debug
 =====
 For example, to debug savegame #2:
 
-`make debug_sdl && gdb -ex 'break fpc_raiseexception' -ex 'run' --args ./main /playseed 2`
+`make debug_sdl && gdb -ex 'break fpc_raiseexception' -ex 'set non-stop on' -ex 'run' --args ./main /playseed 2`

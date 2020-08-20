@@ -1,3 +1,4 @@
+- fix display problem when loading savegame with pending events
 - fix bug in Sector map when jumping to deep space near some planet
 - Sector map: keyboard shortcut 'J' to jump to selected coordinates
 - code: updates *.d to D version 2.0, so it can be compiled with modern ldc/gdc in Debian Buster

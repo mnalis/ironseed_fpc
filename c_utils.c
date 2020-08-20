@@ -57,7 +57,7 @@
 static const double ratio = 640.0 / 480;
 
 static SDL_Surface *sdl_screen;
-static SDL_Thread *events;
+static SDL_Thread *_sdl_events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
 
@@ -631,7 +631,7 @@ void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 
 	v_buf = vga_buf;
 	do_video_stop = 0;
 	is_video_finished = 0;
-	events = SDL_CreateThread(event_thread, NULL);
+	_sdl_events = SDL_CreateThread(event_thread, NULL);
 	while (!(is_video_initialized || is_video_finished))
 		SDL_Delay(100);
 }
