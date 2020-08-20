@@ -1728,6 +1728,7 @@ begin
          begin
           inc(y);
           if viewindex=index then bkcolor:=179 else bkcolor:=5;
+          assert ((index >=1) and (index <= 250), 'system index out of range1');
           printxy(163,31+y*6,systems[index].name)
          end;
          inc(index);
@@ -1742,6 +1743,7 @@ begin
          begin
           dec(y);
           if viewindex=index then bkcolor:=179 else bkcolor:=5;
+          assert ((index >=1) and (index <= 250), 'system index out of range2');
           printxy(163,31+y*6,systems[index].name)
          end;
          dec(index);
@@ -1763,6 +1765,7 @@ begin
        circle(222,75,tempplan^[j].orbit*6);
        inc(j);
        inc(i);
+       assert ((viewindex >=1) and (viewindex <= 250), 'system index out of range3');
       until i=systems[viewindex].numplanets;
      end;
   3: begin
