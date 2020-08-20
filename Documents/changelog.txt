@@ -1,3 +1,5 @@
+- docs: debug hints in Documents/debug_notes.md
+- fix scroll/display problem in Ship Logs in some cases
 - fix display problem with negative cargo space
 - fix display problem when loading savegame with pending events
 - fix bug in Sector map when jumping to deep space near some planet

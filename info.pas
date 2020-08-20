@@ -75,19 +75,6 @@ begin
  mouseshow;
 end;
 
-function countplanets(sys: integer): integer;
-var j,count: integer;
-begin
- count:=0;
- for j:=1 to 1000 do
-    if tempplan^[j].system=sys then
-    begin
-      inc(count);
-      //with tempplan^[j] do writeln ('   count of planet for system=', sys,' is now=', count, ' orbit=', orbit, ' psize=', psize, ' state=', state, ' mode=', mode, ' notes=', notes, ' bots=', bots, ' seed=', seed, ' age=', age, ' visits=', visits, ' water=', water, ' date=', datey,'/', datem );
-    end;
- countplanets:=count;
-end;
-
 procedure fixupcoord(sys: integer);
 type
  oldsystype= record
@@ -96,6 +83,20 @@ type
  oldsysarray= array[1..250] of oldsystype;
 var systfile: file of oldsystype;
     oldsys: ^oldsysarray;
+
+ function countplanets(sys: integer): integer;
+ var j,count: integer;
+ begin
+  count:=0;
+  for j:=1 to 1000 do
+     if tempplan^[j].system=sys then
+     begin
+       inc(count);
+       //with tempplan^[j] do writeln ('   count of planet for system=', sys,' is now=', count, ' orbit=', orbit, ' psize=', psize, ' state=', state, ' mode=', mode, ' notes=', notes, ' bots=', bots, ' seed=', seed, ' age=', age, ' visits=', visits, ' water=', water, ' date=', datey,'/', datem );
+     end;
+  countplanets:=count;
+ end;
+
 begin
    new(oldsys);
 

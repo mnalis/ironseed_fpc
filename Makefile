@@ -2,8 +2,8 @@ compiler:= fpc
 c_compiler:= gcc
 flags:= -Mtp -g -gl
 #-Aas -ap
-debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vewnhiq   -Sa -Sy -Sewnh -vm4049
-# -Cr -CR -Ct   -gh  -gc
+debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -gv -vewnhiq   -Sa -Sy -Sewnh -vm4049 -dTrace
+# -Cr -CR -Ct   -gh  -gc -dDEBUG
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
 cflags:= -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion
 includes=`sdl-config --cflags` -I /usr/X11R6/include

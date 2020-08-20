@@ -1561,8 +1561,8 @@ var done: boolean;
   testmode:=false;
   if (systems[index].visits=0) then exit;
   case viewindex3 of
-   0: testmode:=true;
-   1: begin
+   0: testmode:=true;					{ ALL Systems }
+   1: begin						{ with Cache ONLY }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
         for b:=1 to 7 do
@@ -1572,20 +1572,18 @@ var done: boolean;
            exit;
           end;
       end;
-   2: begin
+   2: begin						{ with Contacts ONLY }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
-        for b:=1 to 7 do
          if tempplan^[j+a].notes and 2>0 then
           begin
            testmode:=true;
            exit;
           end;
       end;
-   3: begin
+   3: begin						{ WITHOUT ALL completed Scans }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
-        for b:=1 to 7 do
          if (tempplan^[j+a].notes and 254=0) and (tempplan^[j+a].orbit<>0) then
           begin
            testmode:=true;
@@ -1719,12 +1717,13 @@ begin
       end;
  end;
  case viewlevel of
-  0: if viewindex>0 then
-      begin
+  0: if viewindex>0 then	{ viewlevel=0 is a scrollable list of systems, filtered by testmode(index) using viewindex3 (0=no filter, 1=cache, 2=contacts, 3=scans) }
+      begin			{ viewindex is index in systems[], of currently selected system in list, modified above by com=3(up)/4(down) }
+       { firstly, print all systems AFTER our selected system }
        index:=viewindex+1;
-       y:=7;
+       y:=7;			{ y is middle row on screen for printxy(163, 31+y*6, system[index].name) }
        repeat
-        if testmode(index) then
+        if (index <= 250) and testmode(index) then	{ if this is the system we need to display, eg. it matches filter }
          begin
           inc(y);
           if viewindex=index then bkcolor:=179 else bkcolor:=5;
@@ -1736,6 +1735,8 @@ begin
        if y<13 then
         for j:=38+y*6 to 116 do
          fillchar(screen[j,166],113,5);
+
+       { secondly, print our selected system (in different color), and all systems BEFORE it in normal color }
        index:=viewindex;
        y:=8;
        repeat

@@ -294,7 +294,6 @@ var
  screen: screentype; // !!!!
  canary_: array[0..MAXCANARY_] of qword;
  systems: systemarray;
- //dummys1: string[10];
  weapons: weaponarray;
  cargo: cargoarray;
  bldcargo: array[1..maxcargo] of word;     {build time of each item}
@@ -937,5 +936,4 @@ begin
    ship.options[3]:=1;
    assert (sizeof(colors) = 768);
    assert (sizeof(screen) = 64000);
-   //dummys1 := 'XXXXXXXXXX';
 end.
