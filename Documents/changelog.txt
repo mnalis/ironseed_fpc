@@ -1,3 +1,4 @@
+- check coordinates better in combat to avoid possible crash
 v 0.1.4
 - fix crash when attempting to scroll empty Ship Logs list (for example Ship Logs: Cache)
 - docs: debug hints in Documents/debug_notes.md
