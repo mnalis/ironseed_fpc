@@ -18,7 +18,7 @@ GDB bugs displaying RECORD
         type = PLANETTYPE = class
           public
             SYSTEM : BYTE;
-	    [...]
+            [...]
             CACHE : array [1..7] of WORD;
             AGE : LONGINT;
         end
@@ -31,26 +31,26 @@ Data structures
 ===============
 - system[index].notes
 
-	system.notes & 1 - known (visible on map)
+        system.notes & 1 - known (visible on map)
 
   When visiting new system, close enough neighbouring systems will become visible.
 
 - tempplan^[curplan].notes
 
-	planet.notes & 1   b0 - ALL scans (1-5) complete
-	planet.notes & 2   b1 - planet with contacts
-	planet.notes & 4   b2 - scan1 finished (land)
-	planet.notes & 8   b3 - scan2 finished (sea)
-	planet.notes & 16  b4 - scan3 finished (air)
-	planet.notes & 32  b5 - scan4 finished (life)
-	planet.notes & 64  b6 - scan5 finished (anomalies)
-	planet.notes & 128 b7 - (unused?)
+        planet.notes & 1   b0 - ALL scans (1-5) complete
+        planet.notes & 2   b1 - planet with contacts
+        planet.notes & 4   b2 - scan1 finished (land)
+        planet.notes & 8   b3 - scan2 finished (sea)
+        planet.notes & 16  b4 - scan3 finished (air)
+        planet.notes & 32  b5 - scan4 finished (life)
+        planet.notes & 64  b6 - scan5 finished (anomalies)
+        planet.notes & 128 b7 - (unused?)
 
-	                   b76543210
-	planet.notes & 125 (01111101) - special- does event() depening on the system index. which means we need at least one scan completed for system event to happen.
-	planet.notes & 254 (11111110) = 0  - "System: Scans". It actually shows planets NOT scanned completely!
-	&2 AND &32 - Race name (so only if it has LIFE and was CONTACTED)
+                           b76543210
+        planet.notes & 125 (01111101) - special- does event() depening on the system index. which means we need at least one scan completed for system event to happen.
+        planet.notes & 254 (11111110) = 0  - "System: Scans". It actually shows planets NOT scanned completely!
+        &2 AND &32 - Race name (so only if it has LIFE and was CONTACTED)
 
-        test: planet finished only land, sea, air has: tempplan^[curplan].notes = 28 (00011100), 
-        after all scans completed, it becomes 125 (01111101)
-	after we contact Void dwellers on planet, it becomes 127 (01111111)
+        - example : planet finished only land, sea, air has: tempplan^[curplan].notes = 28 (00011100), 
+        - after all scans completed, it becomes 125 (01111101)
+        - after we contact Void dwellers on planet, it becomes 127 (01111111)
