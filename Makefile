@@ -24,12 +24,14 @@ release_ogl: cleanbuild
 
 # SDL debug version
 debug_sdl:   clean debug_sdl1 cleantmp
+debug_sdl1:  tags
 debug_sdl1:  cflags += -O0 -DNO_OGL -Werror
 debug_sdl1:  flags  += $(debug)
 debug_sdl1:  build
 
 # OpenGL debug version
 debug_ogl:   clean debug_ogl1 cleantmp
+debug_ogl1:  tags
 debug_ogl1:  cflags += -O0 -Werror
 debug_ogl1:  flags  += $(debug)
 debug_ogl1:  p_link += -k-lGL -k-lGLU
@@ -74,4 +76,7 @@ cleantmp:
 clean: cleantmp
 	rm -f is intro crewgen  main *.o
 
-.PHONY: all build cleanbuild cleantmp clean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1
+tags: *.c *.pas
+	ctags $^
+
+.PHONY: all build cleanbuild cleantmp clean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1

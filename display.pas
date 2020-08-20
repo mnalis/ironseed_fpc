@@ -1601,7 +1601,7 @@ begin
  bkcolor:=5;
  case com of
   0:;
-  1: if (viewindex>0) and (viewlevel>0) then
+  1: if (viewindex>0) and (viewlevel>0) then	{ left }
       begin
        dec(viewlevel);
        if viewlevel=0 then
@@ -1624,7 +1624,7 @@ begin
        screen[75,279]:=2;
        screen[36,217]:=10;
       end;
-  2: if (viewindex>0) and (viewlevel<3) then
+  2: if (viewindex>0) and (viewlevel<3) then	{ right }
       begin
        if viewlevel=0 then
         begin
@@ -1640,7 +1640,7 @@ begin
        screen[75,279]:=2;
        screen[36,217]:=10;
       end;
-  3: if viewlevel<2 then
+  3: if viewlevel<2 then			{ up }
       begin
        viewindex2:=0;
        dec(viewindex);
@@ -1660,7 +1660,7 @@ begin
          if (tempplan^[j+i].orbit=viewindex2) and (tempplan^[j+i].system=viewindex) then done:=true;
        until done;
       end;
-  4: if viewlevel<2 then
+  4: if viewlevel<2 then			{ down }
       begin
        viewindex2:=0;
        inc(viewindex);
@@ -1688,7 +1688,7 @@ begin
       mouseshow;
       exit;
      end;
-  6: begin
+  6: begin					{ '1' }
       if (viewindex>0) and (viewlevel<>3) then
        begin
         if viewlevel=0 then
@@ -1706,8 +1706,8 @@ begin
        end;
       viewlevel:=3;
      end;
-  7: if showplanet then viewindex:=tempplan^[curplan].system;
-  8: if viewlevel=0 then
+  7: if showplanet then viewindex:=tempplan^[curplan].system;	{ '2' }
+  8: if viewlevel=0 then			{ '3' }
       begin
        if viewindex3<3 then inc(viewindex3) else viewindex3:=0;
        case viewindex3 of

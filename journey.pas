@@ -1201,11 +1201,11 @@ begin
    #0: begin
         ans:=readkey;
         case ans of
-         #72		 : command:=3;
-         #75		 : command:=1;
-         #77		 : command:=2;
-         #80		 : command:=4;
-         #59..#64: begin
+         #72		 : command:=3;	{ up }
+         #75		 : command:=1;	{ left }
+         #77		 : command:=2;	{ right }
+         #80		 : command:=4;	{ down }
+         #59..#64: begin		{ F1-F6 }
                     temp :=ord(ans)-59;
                     if cube<>temp then
                      begin
