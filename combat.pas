@@ -547,20 +547,8 @@ begin
    y:=round(ships^[j].rely/range*26.66);
    x:=round(ships^[j].relx/range*119);
    z:=round(ships^[j].relz/range*26);
-
    //writeln ('displaymap ship',j, ' y=',y, ' x=',x, ' z=', z);
-
-   { worst case:
-   x=-118;	x+132-2=12 OK
-   x=118	x+132+2=252 OK
-
-   y=-25 z=-39	y+62=37,	y+62-z=76 +-2 OK
-   y=-25 z=39	y+62=37,	y+62-z=-2 BAD! 	y+62-z-2=-4 BAD!
-   y=25 z=-39	y+62=87,	y+62-z=126 +-2 OK
-   y=25 z=39	y+62=87,	y+62-z=48 +-2 OK
-   }
-
-   if (abs(x)<119) and (abs(y)<26) and (abs(z)<40) then
+   if (abs(x)<119) and (abs(y)<26) and (abs(z)<35) then
     begin
      assert (x+132+2 < 320, 'x too big');
      assert (x+132-2 >= 0, 'x too small');
