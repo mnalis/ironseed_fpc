@@ -1,16 +1,17 @@
-
+import std.conv;
 
 template PString(int L){
 	align(1) struct ps {
 		ubyte length;
 		char[L] data;
-		const int maxlength = L;
 		void opCall(char []s) {
+			const int maxlength = L;
+			assert (maxlength < 255);
 			if(s.length > maxlength) {
-				this.length = maxlength;
+				this.length = to!ubyte(maxlength);
 				data[0..this.length] = s[0..this.length];
 			} else {
-				this.length = s.length;
+				this.length = to!ubyte(s.length);
 				data[0..s.length] = s[0..s.length];
 			}
 		}
@@ -26,12 +27,12 @@ struct ConverseRecord {
 	short rcode;
 	short index;
 	ubyte keywordlength;
-	char keyword[75];
+	char[75] keyword;
 };
 struct ResponseRecord {
 	short index;
 	ubyte responselength;
-	char response[255];
+	char[255] response;
 };
 
 
@@ -41,7 +42,7 @@ struct TitleRecord {
 };
 
 struct LogRecord {
-	PString!(49).ps text[25];
+	PString!(49).ps[25] text;
 }
 
 
@@ -60,7 +61,7 @@ int encodechar(char c) {
 }
 
 char []encodestring(char []instr) {
-	char s[];
+	char[] s;
 	int ec;
 	foreach(char c; instr) {
 		ec = encodechar(c);

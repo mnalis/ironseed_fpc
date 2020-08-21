@@ -392,7 +392,6 @@ reload:
    {fadein;}
   end;
  showcube;
- readystatus;
  tcolor:=45;
  bkcolor:=0;
  printxy(208,128,cubefaces[cube]);
@@ -400,6 +399,7 @@ reload:
  mouseshow;
  if not showplanet then readystarmap(1);
  checkpendingevent;
+ readystatus;
  mainloop;
  if reloading then goto reload;
  //textmode(co80);
