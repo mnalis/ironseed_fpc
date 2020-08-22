@@ -130,7 +130,7 @@ trade:
 	20 individual trade items to 20 different items with quantities
 
 psychometry:
-	fix colours of biorhythm chart
+	x fix colours of biorhythm chart
 
 410,045
 409,949
