@@ -89,7 +89,7 @@ begin
  reset(f2);
  read(f2,cr^);
  close(f2);
- assign(ft,'other/itemdata.txt');
+ assign(ft,'Data_Generators/other/itemdata.txt');
  rewrite(ft);
  writeln(ft,'    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS            ');
  writeln(ft,'------------------ ------------------- ------------------- ------------------- ----- ------------------');

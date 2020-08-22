@@ -41,7 +41,7 @@ begin
  reset(f);
  assign(f2,'data/sysset.dta');
  reset(f2);
- assign(ft,'other/sysdata.txt');
+ assign(ft,'Data_Generators/other/sysdata.txt');
  rewrite(ft);
  for a:=1 to 250 do
   begin
