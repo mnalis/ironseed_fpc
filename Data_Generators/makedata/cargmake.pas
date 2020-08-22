@@ -28,7 +28,7 @@ var
  cargo: cargotype;
  f: file of cargotype;
  ft: text;
- index,j,i: integer;
+ j,i: integer;
  c: char;
 
 begin

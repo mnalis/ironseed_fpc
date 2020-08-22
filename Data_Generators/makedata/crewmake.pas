@@ -30,9 +30,9 @@ var
  ft: file of crewtype;
  i,j,a,b: integer;
  crew: crewtype;
- buffer: array[1..640] of char;
  done: boolean;
  c: char;
+{ buffer: array[1..640] of char;
 
 procedure breakupbuffer(size: integer);
 var head,tail,index: integer;
@@ -50,7 +50,7 @@ begin
    head:=tail+1;
   end;
 end;
-
+}
 begin
  assign(fs,'Data_Generators/makedata/crew.txt');
  reset(fs);

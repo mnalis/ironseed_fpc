@@ -107,7 +107,7 @@ Data_Generators/makedata/shipmake: Data_Generators/makedata/shipmake.pas
 Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
 $(DATA_TOOLS_P):
-	$(fpc_compiler) $(fpc_flags) $<
+	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $<
 
 data/log.dta  data/titles.dta: Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt
 	Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt data/titles.dta data/log.dta
@@ -116,7 +116,7 @@ CREWCONVS=data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dt
 RACECONVS=data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS=data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta
 
-DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS)
+DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta data/creation.dta data/cargo.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta
 
 data/conv%.dta:
 	Data_Generators/makedata/convmake $< $(subst .dta,,$@)
@@ -168,7 +168,7 @@ data/event.dta: Data_Generators/makedata/eventmak Data_Generators/makedata/event
 
 
 data_destroy:
-	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
+	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind
 
 data_build:   $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
 	echo FIXME

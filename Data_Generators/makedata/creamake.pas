@@ -41,7 +41,7 @@ var
  f: file of creationtype;
  create: creationtype;
  ft: text;
- index,j,total: integer;
+ j,total: integer;
  c: char;
  ca: ^createarraytype;
  cr: ^cargoarray;
@@ -76,7 +76,7 @@ end;
 procedure getlist;
 var f: file of createarraytype;
     f2: file of cargoarray;
-    j,i,a,b: integer;
+    j,i,a: integer;
     ft: text;
 begin
  new(ca);

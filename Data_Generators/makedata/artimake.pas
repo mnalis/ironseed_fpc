@@ -22,7 +22,7 @@ var
  f: file of artifacttype;
  temp: artifacttype;
  ft: text;
- j,i: integer;
+ i: integer;
 
 begin
  assign(ft,'Data_Generators/makedata/anom.txt');

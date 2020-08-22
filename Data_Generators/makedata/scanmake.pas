@@ -17,18 +17,11 @@ program generatecargodata;
 ********************************************************************)
 
 type
- cargotype=
-  record
-   name: string[20];
-   size,index: integer;
-  end;
  scantype= array[1..12] of byte;
 var
- cargo: cargotype;
  f: file of scantype;
  ft: text;
- index,j,i: integer;
- c: char;
+ j,i: integer;
  scan: scantype;
 
 begin

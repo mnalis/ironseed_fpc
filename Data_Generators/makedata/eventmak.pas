@@ -24,7 +24,6 @@ type
    want,give: integer;
    msg: string[255];
   end;
- pstring= ^string;
 var
  t: eventtype;
  ft: text;

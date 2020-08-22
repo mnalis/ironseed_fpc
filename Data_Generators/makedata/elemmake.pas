@@ -17,14 +17,8 @@ program generatecargodata;
 ********************************************************************)
 
 type
- cargotype=
-  record
-   name: string[20];
-   size,index: integer;
-  end;
  elemtype= string[24];
 var
- cargo: cargotype;
  f: file of elemtype;
  ft: text;
  index,j,i: integer;

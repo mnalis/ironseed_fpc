@@ -17,7 +17,7 @@ program makenames;
 ********************************************************************)
 
 var
- i,j,a,b: integer;
+ j,a,b: integer;
  name: string[13];
  last: char;
 
