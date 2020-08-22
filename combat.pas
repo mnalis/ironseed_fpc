@@ -686,7 +686,8 @@ begin
          yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25 
 
          ANSWER: Ah, it seems to because real alian weapons are not implemented, and we always do impact(j,maxweapons=72) in moveships().
-         But alians ships^[j].gunnodes has 5 positions, so this just simulates as all 5 weapons of type 72 fired all at once with same chances to hit.
+         But aliens ships^[j].gunnodes has 5 positions, so this just simulates as all 5 weapons of type 72 fired all at once with same chances to hit.
+         We could call it 5 times from there, but then we'd have 5 times as much sound effects in takedamage() unless we accounted for it.
        }
    i:=round(i/100*(100-ships^[s].damages[3])); { damages[3] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
    writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
