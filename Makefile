@@ -114,12 +114,15 @@ data/log.dta  data/titles.dta: Data_Generators/makedata/logmake Data_Generators/
 
 CREWCONVS=data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS=data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
-SPECCONVS=data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta
+SPECCONVS=data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
 
-DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta data/creation.dta data/cargo.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta
+DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta
 
 data/conv%.dta:
 	Data_Generators/makedata/convmake $< $(subst .dta,,$@)
+
+data/conv1000.dta:
+	touch data/conv1000.dta data/conv1000.ind
 
 data/conv0001.dta: Data_Generators/makedata/crewcon1.txt Data_Generators/makedata/convmake
 data/conv0002.dta: Data_Generators/makedata/crewcon2.txt Data_Generators/makedata/convmake
@@ -147,24 +150,28 @@ data/conv1103.dta: Data_Generators/makedata/tek5con1.txt Data_Generators/makedat
 
 data/iteminfo.dta: Data_Generators/makedata/itemmake Data_Generators/makedata/iteminfo.txt
 	Data_Generators/makedata/itemmake
-data/creation.dta: Data_Generators/makedata/creamake Data_Generators/makedata/creation.txt
+data/creation.dta: Data_Generators/makedata/creamake Data_Generators/makedata/creation.txt  data/cargo.dta
 	Data_Generators/makedata/creamake
-data/cargo.dta: Data_Generators/makedata/cargmake Data_Generators/makedata/cargo.txt
+data/cargo.dta:    Data_Generators/makedata/cargmake Data_Generators/makedata/cargo.txt
 	Data_Generators/makedata/cargmake
-data/scan.dta: Data_Generators/makedata/scanmake Data_Generators/makedata/scandata.txt
+data/scan.dta:     Data_Generators/makedata/scanmake Data_Generators/makedata/scandata.txt
 	Data_Generators/makedata/scanmake
-data/sysname.dta: Data_Generators/makedata/sysmake Data_Generators/makedata/names.txt
+data/sysname.dta:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt data/sysset.dta
 	Data_Generators/makedata/sysmake
 data/contact0.dta: Data_Generators/makedata/aliemake Data_Generators/makedata/contact.txt
 	Data_Generators/makedata/aliemake
-data/crew.dta: Data_Generators/makedata/crewmake Data_Generators/makedata/crew.txt
+data/crew.dta:     Data_Generators/makedata/crewmake Data_Generators/makedata/crew.txt
 	Data_Generators/makedata/crewmake
 data/artifact.dta: Data_Generators/makedata/artimake Data_Generators/makedata/anom.txt
 	Data_Generators/makedata/artimake
 data/elements.dta: Data_Generators/makedata/elemmake Data_Generators/makedata/element.txt
 	Data_Generators/makedata/elemmake
-data/event.dta: Data_Generators/makedata/eventmak Data_Generators/makedata/event.txt
+data/event.dta:    Data_Generators/makedata/eventmak Data_Generators/makedata/event.txt
 	Data_Generators/makedata/eventmak
+data/weapon.dta:   Data_Generators/makedata/weapmake Data_Generators/makedata/weapon.txt
+	Data_Generators/makedata/weapmake
+data/FIXME.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/alienship.txt
+	Data_Generators/makedata/shipmake
 
 
 data_destroy:
