@@ -25,9 +25,9 @@ var
  j,i: integer;
 
 begin
- assign(ft,'makedata\anom.txt');
+ assign(ft,'Data_Generators/makedata/anom.txt');
  reset(ft);
- assign(f,'data\artifact.dta');
+ assign(f,'data/artifact.dta');
  rewrite(f);
  for i:=1 to 60 do
   begin

@@ -74,7 +74,7 @@ end;
 
 
 begin
- assign(ft,'makedata/names.txt');
+ assign(ft,'Data_Generators/makedata/names.txt');
  reset(ft);
  assign(f,'data/sysname.dta');
  rewrite(f);

@@ -32,13 +32,13 @@ var
  scan: scantype;
 
 begin
- {assign(f,'\ironseed\data\scan.dta');
+ {assign(f,'data/scan.dta');
  reset(f);
- assign(ft,'\ironseed\makedata\scandata.txt');
+ assign(ft,'Data_Generators/makedata/scandata.txt');
  reset(ft);}
  assign(f,'data/scan.dta');
  rewrite(f);
- assign(ft,'makedata/scandata.txt');
+ assign(ft,'Data_Generators/makedata/scandata.txt');
  reset(ft);
  for i:=1 to 17 do
   begin

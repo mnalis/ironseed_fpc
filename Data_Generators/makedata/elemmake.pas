@@ -32,9 +32,9 @@ var
  elem: elemtype;
 
 begin
- assign(f,'\ironseed\data\elements.dta');
+ assign(f,'data/elements.dta');
  rewrite(f);
- assign(ft,'\ironseed\makedata\element.txt');
+ assign(ft,'Data_Generators/makedata/element.txt');
  reset(ft);
  read(ft,index);
  repeat

@@ -34,15 +34,15 @@ begin
  new(w);
  set256colors(colors);
  new(s);
- loadscreen('makedata\planicon',s);
+ loadscreen('Data_Generators/makedata/planicon',s);
 
- assign(ft,'data\planicon.dta');
+ assign(ft,'data/planicon.dta');
  rewrite(ft);
  move(s^,t^,sizeof(smallbuffer));
  write(ft,t^);
  close(ft);
 
- assign(fw,'data\weapicon.dta');
+ assign(fw,'data/weapicon.dta');
  rewrite(fw);
  for a:=0 to 80 do
   begin

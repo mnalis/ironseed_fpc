@@ -31,7 +31,7 @@ var
  i,j: integer;
 
 begin
- assign(ft,'makedata\alienship.txt');
+ assign(ft,'Data_Generators/makedata/alienship.txt');
  reset(ft);
  readln(ft);
  readln(ft);

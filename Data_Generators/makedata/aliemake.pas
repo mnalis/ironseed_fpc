@@ -30,9 +30,9 @@ var
  f: file of alientype;
 
 begin
- assign(f,'data\contact0.dta');
+ assign(f,'data/contact0.dta');
  rewrite(f);
- assign(ft,'makedata\contact.txt');
+ assign(ft,'Data_Generators/makedata/contact.txt');
  reset(ft);
  readln(ft);
  for j:=1 to 11 do

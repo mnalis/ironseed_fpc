@@ -34,7 +34,7 @@ var
 begin
  assign(f,'data/cargo.dta');
  rewrite(f);
- assign(ft,'makedata/cargo.txt');
+ assign(ft,'Data_Generators/makedata/cargo.txt');
  reset(ft);
  readln(ft);
  for i:=1 to maxcargo do

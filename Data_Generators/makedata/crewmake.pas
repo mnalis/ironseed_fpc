@@ -52,9 +52,9 @@ begin
 end;
 
 begin
- assign(fs,'makedata\crew.txt');
+ assign(fs,'Data_Generators/makedata/crew.txt');
  reset(fs);
- assign(ft,'data\crew.dta');
+ assign(ft,'data/crew.dta');
  rewrite(ft);
  clrscr;
  for a:=1 to 30 do

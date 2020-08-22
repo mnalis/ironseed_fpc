@@ -34,9 +34,9 @@ var
  dummy: string[20];
 
 begin
- assign(f,'\ironseed\data\weapon.dta');
+ assign(f,'data/weapon.dta');
  rewrite(f);
- assign(ft,'\ironseed\makedata\weapon.txt');
+ assign(ft,'Data_Generators/makedata/weapon.txt');
  reset(ft);
  readln(ft);
  read(ft,index);
