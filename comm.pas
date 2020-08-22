@@ -1199,7 +1199,7 @@ begin
     11: s:='VOID.MOD';
    else s:='';
    end;
-   {if ioresult<>0 then printxy(217,20,'sound\'+s);}
+   {if ioresult<>0 then printxy(217,20,'sound/'+s);}
    if s<>'' then playmod(true,'sound/'+s);
    {if checkerror then printxy(217,20,'checkerror');
    if not playing then printxy(217,20,'not playing');

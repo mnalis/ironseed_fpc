@@ -1036,7 +1036,7 @@ begin
   end;
  chdir(curdir);
  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
 end;
 
 {$IFDEF DEMO}

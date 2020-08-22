@@ -80,7 +80,7 @@ begin
   end;
 {$ENDIF}
  tempdir:=getenv('TEMP');
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
  if tempdir='' then tempdir:='TEMP';
  getdir(0,curdir);
  chdir(tempdir);
@@ -99,7 +99,7 @@ begin
   end;
  chdir(curdir);
  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
 end;
 
 procedure readybuildtimes;

@@ -810,7 +810,7 @@ end;
 
 {procedure messagebox(s : String; shadow : Boolean);
 begin
-   quicksavescreen(tempdir+'\message',@screen, false);
+   quicksavescreen(tempdir+'/message',@screen, false);
    if shadow then
    begin
       shadowprintln;
