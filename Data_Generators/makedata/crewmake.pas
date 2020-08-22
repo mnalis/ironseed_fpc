@@ -101,4 +101,5 @@ begin
   end;
  close(fs);
  close(ft);
+ halt(0);
 end.

@@ -178,7 +178,6 @@ data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind
 
 data_build:   $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
-	echo FIXME
 
 data_rebuild: data_destroy data_build
 
