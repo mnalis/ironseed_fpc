@@ -15,6 +15,7 @@ program generatecargodata;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 uses crt;
 
