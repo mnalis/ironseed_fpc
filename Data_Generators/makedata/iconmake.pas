@@ -17,7 +17,7 @@ program convertplanicons;
 ********************************************************************)
 {$PACKRECORDS 1}
 
-uses crt, data;
+uses crt, data, utils_;
 
 type
  weaponicontype= array[0..19,0..19] of byte;
@@ -28,7 +28,7 @@ var
  t: ^smallbuffer;
  s: pscreentype;
  w: ^weaponicontype;
- i,j,a: integer;
+ i,a: integer;
 
 begin
  new(t);
