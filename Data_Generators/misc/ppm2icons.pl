@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 # Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/08
-# converts standard binary P6 ppm(5) image to  TEMP/*.scr + TEMP/*.pal format used by quickloadscreen() 
+# converts standard binary P6 ppm(5) image to data/icons.vga + data/main.pal format used by Ironseed game
+# FIXME: while it does work, note that main.pal created isn't the same the game expect for other parts! should modify code to use specified pallete file, instead of creating new one
 
 use strict;
 use warnings;
@@ -10,16 +11,19 @@ my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
 
 my $basename = $ARGV[0];
 my $ppm_name = $basename;
+my $want_width = $ENV{WIDTH} || 15;
+my $want_height = $ENV{HEIGHT} || 17;
+my $want_icon_count = $ENV{COUNT} || 81;
 
 if (!defined $ppm_name) {
   print "Usage: $0 <BASENAME.ppm>\n";
-  print "Converts PPM file to Ironseed 320x200 BASENAME.scr and BASENAME.pal files\n";
+  print "Converts PPM file to Ironseed 81 icons of 17x15 icons.vga and main.pal files\n";
 }
 
 die "$basename does not look like .ppm file" unless $basename =~ s{\.ppm$}{}i;
 
 my $pal_final = $basename . '.pal';
-my $scr_final = $basename . '.scr';
+my $scr_final = $basename . '.vga';
 my $pal_tmp = $pal_final . '.tmp';
 my $scr_tmp = $scr_final . '.tmp';
 
@@ -29,8 +33,8 @@ open my $ppm_fd, '<', $ppm_name;
 # FIXME: should support PPM comments, different whitespace etc. see ppm(5)
 my $format = <$ppm_fd>; chomp $format;
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
-my ($width, height) = split ' ', <$ppm_fd>;
-die "ERROR: not 320x200 PPM file" unless $width==320 and height==200;
+my ($width, $height) = split ' ', <$ppm_fd>;
+die "ERROR: not $want_icon_count icons of ${want_width}x${want_height} but ${width}x${height} PPM file" unless $height==$want_height*$want_icon_count and $width==$want_width;
 my $bpp = <$ppm_fd>; chomp($bpp);
 die "ERROR: must have 255 colors" unless $bpp==255;
 
@@ -42,7 +46,7 @@ my $pal_used = 0;
 open my $pal_fd, '>', $pal_tmp;
 open my $scr_fd, '>', $scr_tmp;
 
-for (my $i = 0; $i < $width * height * 3; $i+=3) {
+for (my $i = 0; $i < $height * $width * 3; $i+=3) {
   my $r = int($SCR[$i] / $COLOR_FACTOR);
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);
