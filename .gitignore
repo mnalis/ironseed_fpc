@@ -29,3 +29,4 @@ Data_Generators/makedata/convmake
 Data_Generators/makedata/logmake
 Data_Generators/makedata/iconmake
 Data_Generators/makedata/getfont
+Data_Generators/makedata/namemake

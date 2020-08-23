@@ -48,12 +48,12 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -77,14 +77,16 @@ test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
 
 
 cleantmp:
-	find . -iname "*.ppu" -o -iname "*.s" -delete
+	find . -iname "*.ppu" -print0 | xargs -0r rm -f
+	find . -iname "*.s" -print0 | xargs -0r rm -f
 
 clean: cleantmp
 	rm -f $(PROG_FILES)
-	find . -iname "*.o" -delete
+	rm -f link.res
+	find . -iname "*.o" -print0 | xargs -0r rm -f
 
 cleanbak:
-	find . -iname "*~" -delete
+	find . -iname "*~" -print0 | xargs -0r rm -f
 
 reallyclean: clean cleanbak
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags
@@ -116,7 +118,8 @@ Data_Generators/makedata/scanmake: Data_Generators/makedata/scanmake.pas
 Data_Generators/makedata/shipmake: Data_Generators/makedata/shipmake.pas
 Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
-Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o
+Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o data.pas utils_.pas
+Data_Generators/makedata/namemake: Data_Generators/makedata/namemake.pas
 
 Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
@@ -184,6 +187,8 @@ data/ships.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/al
 	Data_Generators/makedata/shipmake
 data/weapicon.dta data/planicon.dta: Data_Generators/makedata/iconmake Data_Generators/makedata/planicon.cpr Data_Generators/makedata/planicon.pal
 	Data_Generators/makedata/iconmake
+data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/newnames.txt
+	Data_Generators/makedata/namemake
 
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind
