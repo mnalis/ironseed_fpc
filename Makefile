@@ -78,7 +78,9 @@ clean: cleantmp
 	rm -f $(PROG_FILES) *.o
 
 reallyclean: clean
-	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) 
+	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags
+
+mrproper: reallyclean data_destroy
 
 tags: *.c *.pas
 	ctags $^
@@ -115,7 +117,7 @@ CREWCONVS=data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dt
 RACECONVS=data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS=data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
 
-DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta
+DATA_FILES = data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta
 
 data/conv%.dta:
 	Data_Generators/makedata/convmake $< $(subst .dta,,$@)
@@ -169,10 +171,8 @@ data/event.dta:    Data_Generators/makedata/eventmak Data_Generators/makedata/ev
 	Data_Generators/makedata/eventmak
 data/weapon.dta:   Data_Generators/makedata/weapmake Data_Generators/makedata/weapon.txt
 	Data_Generators/makedata/weapmake
-
-data/FIXME.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/alienship.txt
+data/ships.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/alienshp.txt
 	Data_Generators/makedata/shipmake
-
 data/weapicon.dta data/planicon.dta: Data_Generators/makedata/iconmake Data_Generators/makedata/planicon.cpr Data_Generators/makedata/planicon.pal
 	Data_Generators/makedata/iconmake
 

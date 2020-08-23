@@ -15,6 +15,7 @@ program makeship;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 type
  alienshiptype=
@@ -34,9 +35,9 @@ var
 
 procedure display;
 begin
- assign(f,'data\ships.dta');
+ assign(f,'data/ships.dta');
  reset(f);
- assign(ft,'shipdata.txt');
+ assign(ft,'Data_Generators/other/shipdata.txt');
  rewrite(ft);
  for b:=0 to 10 do
   begin
@@ -56,13 +57,10 @@ begin
 end;
 
 begin
- display;
- exit;
-
- assign(ft,'makedata\alienshp.txt');
+ assign(ft,'Data_Generators/makedata/alienshp.txt');
  reset(ft);
- assign(f,'data\ships.dta');
- reset(f);
+ assign(f,'data/ships.dta');
+ rewrite(f);
  readln(ft);
  readln(ft);
  readln(ft);
@@ -99,4 +97,7 @@ begin
   end;
  close(ft);
  close(f);
+
+ display;
+
 end.
