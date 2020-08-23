@@ -35,7 +35,7 @@ release_sdl: cleanbuild
 
 # SDL debug version
 debug_sdl1 demo_sdl1: tags
-debug_sdl1 demo_sdl1: cflags += -O0 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build: cflags += -O0 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
 debug_sdl1:  fpc_flags  += $(fpc_debug)
@@ -103,7 +103,7 @@ Data_Generators/makedata/scanmake: Data_Generators/makedata/scanmake.pas
 Data_Generators/makedata/shipmake: Data_Generators/makedata/shipmake.pas
 Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
-Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas
+Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o
 
 $(DATA_TOOLS_P):
 	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $(p_link)  $<
