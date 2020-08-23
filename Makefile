@@ -48,7 +48,7 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
@@ -77,15 +77,21 @@ test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
 
 
 cleantmp:
-	rm -f *.ppu *.s
+	find . -iname "*.ppu" -o -iname "*.s" -delete
 
 clean: cleantmp
-	rm -f $(PROG_FILES) *.o
+	rm -f $(PROG_FILES)
+	find . -iname "*.o" -delete
 
-reallyclean: clean
+cleanbak:
+	find . -iname "*~" -delete
+
+reallyclean: clean cleanbak
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags
+	rm -f test/test_0_c test/test_0_pas test/testdiv0 test/testkey1 test/testsize test/test_write test/filename
 
 mrproper: reallyclean data_destroy
+	rm -f LPT1 TEMP/*
 
 tags: *.c *.pas
 	ctags $^
@@ -111,6 +117,9 @@ Data_Generators/makedata/shipmake: Data_Generators/makedata/shipmake.pas
 Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
 Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o
+
+Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
+Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
 	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $(p_link)  $<
@@ -183,4 +192,4 @@ data_build:   $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
 
 data_rebuild: data_destroy data_build
 
-.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild
+.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper
