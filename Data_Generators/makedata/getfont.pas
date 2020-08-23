@@ -17,7 +17,7 @@ program getfontfromfile;
 ********************************************************************)
 {$PACKRECORDS 1}
 
-uses crt,graftool;
+uses crt, data, utils_;
 
 var
  ft: text;
@@ -70,6 +70,7 @@ begin
    if a<28 then x:=a*9
     else if a<56 then x:=(a-28)*9
     else x:=(a-56)*9;
+   d[0] := 0;	// just to get rid of warnings, fillchar will initialize it
    fillchar(d,8,0);
    for i:=0 to 7 do
     for j:=0 to 7 do
@@ -84,7 +85,7 @@ begin
 end;
 
 begin
- setvidmode($13);
+ //setvidmode($13);
  loadscreen('font0',@screen);
  set256colors(colors);
  assign(ft,'fontdata');
@@ -100,5 +101,5 @@ begin
  getfont2(90);
  close(ft);
  readkey;
- setvidmode($03);
+ //setvidmode($03);
 end.
