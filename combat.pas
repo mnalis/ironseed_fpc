@@ -547,8 +547,15 @@ begin
    y:=round(ships^[j].rely/range*26.66);
    x:=round(ships^[j].relx/range*119);
    z:=round(ships^[j].relz/range*26);
-   if (abs(x)<119) and (abs(y)<26) and (abs(z)<40) then
+   //writeln ('displaymap ship',j, ' y=',y, ' x=',x, ' z=', z);
+   if (abs(x)<119) and (abs(y)<26) and (abs(z)<35) then
     begin
+     assert (x+132+2 < 320, 'x too big');
+     assert (x+132-2 >= 0, 'x too small');
+     assert (y+62+2 < 200, 'y too big1');
+     assert (y+62-z+2 < 200, 'y too big2');
+     assert (y+62-2 >= 0, 'y too small1');
+     assert (y+62-z-2 >= 0, 'y too small2');
      if z<0 then
       for i:=y+62 to y+62-z do
        screen[i,x+132]:=screen[i,x+132] xor 6
@@ -595,7 +602,7 @@ begin
  delay(tslice div 2);
  if d<1 then d:=1;
  case n of
- // FIXME: there is no check if damages goes over 100%
+ // FIXME: there is no check here if damages goes over 100% ? maybe somewhere else?
   1: inc(ship.damages[5],d);		{ n=1 Psionioc inflicts damage to damages[5] = Lifesupport }
   2: dec(ship.hulldamage,d);		{ n=2 Particle damage damages hull }
   3: dec(ship.hulldamage,d div 2);	{ n=3 Intertial damage damages hull more slowly }
@@ -660,7 +667,7 @@ begin
    {quit:=true;}
   end;
  if ship.shield=1501 then 		{ shield=1501 is reflective hull }
-  begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[2])? otherwise we could have shield which has level higher than damaged subsystem!
+  begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[2])? otherwise we could have shield which has level higher than damaged subsystem allows!
      ship.shieldlevel := 100 - ship.damages[2]; { damages[2] is shield subsystem, drop shield level immedately if reflective hull }
      writeln ('      reflective hull damage sets shieldlevel to ', ship.shieldlevel);
   end;
@@ -674,17 +681,16 @@ begin
  for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
-       { FIXME: why *5 ?!
+       { NB: why *5 ?!
          if some weapon has damage potential of 50GJ and 20% is for 'j' damage type, it should be 10GJ damage for this damage type, isn't it so?)
          yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25 
 
-         Looks like a bug. It might've been some kind of game balance factor; it takes too long to die without it...
-         But then, it should have simply changed weapon72 to have 5 times as much damage dealing in datafile, instead of kludging it in the code!
-
-         Also, it make reflective hull useless - fist hit 
+         ANSWER: Ah, it seems to because real alian weapons are not implemented, and we always do impact(j,maxweapons=72) in moveships().
+         But aliens ships^[j].gunnodes has 5 positions, so this just simulates as all 5 weapons of type 72 fired all at once with same chances to hit.
+         We could call it 5 times from there, but then we'd have 5 times as much sound effects in takedamage() unless we accounted for it.
        }
    i:=round(i/100*(100-ships^[s].damages[3])); { damages[3] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
-   writeln ('impact: attacker weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
+   writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
 
    if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)	{ if no shield installed, take full damage }
    else
@@ -795,6 +801,7 @@ begin
 	 begin
            displaymap;
            impact(j,maxweapons);	{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
+           //NB: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc...
            displaymap;
           end;
          charges[a]:=0;

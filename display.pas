@@ -1558,11 +1558,12 @@ var done: boolean;
 
  function testmode(index: word): boolean;
  begin
+  assert ((index>=1) and (index<=1000), 'testmode index out of range');
   testmode:=false;
   if (systems[index].visits=0) then exit;
   case viewindex3 of
-   0: testmode:=true;
-   1: begin
+   0: testmode:=true;					{ ALL Systems }
+   1: begin						{ with Cache ONLY }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
         for b:=1 to 7 do
@@ -1572,20 +1573,18 @@ var done: boolean;
            exit;
           end;
       end;
-   2: begin
+   2: begin						{ with Contacts ONLY }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
-        for b:=1 to 7 do
          if tempplan^[j+a].notes and 2>0 then
           begin
            testmode:=true;
            exit;
           end;
       end;
-   3: begin
+   3: begin						{ WITHOUT ALL completed Scans }
        a:=findfirstplanet(index);
        for j:=1 to systems[index].numplanets do
-        for b:=1 to 7 do
          if (tempplan^[j+a].notes and 254=0) and (tempplan^[j+a].orbit<>0) then
           begin
            testmode:=true;
@@ -1601,7 +1600,7 @@ begin
  bkcolor:=5;
  case com of
   0:;
-  1: if (viewindex>0) and (viewlevel>0) then
+  1: if (viewindex>0) and (viewlevel>0) then	{ left }
       begin
        dec(viewlevel);
        if viewlevel=0 then
@@ -1624,7 +1623,7 @@ begin
        screen[75,279]:=2;
        screen[36,217]:=10;
       end;
-  2: if (viewindex>0) and (viewlevel<3) then
+  2: if (viewindex>0) and (viewlevel<3) then	{ right }
       begin
        if viewlevel=0 then
         begin
@@ -1640,16 +1639,18 @@ begin
        screen[75,279]:=2;
        screen[36,217]:=10;
       end;
-  3: if viewlevel<2 then
+  3: if viewlevel<2 then			{ up }
       begin
        viewindex2:=0;
        dec(viewindex);
        while (viewindex>0) and (not testmode(viewindex)) do dec(viewindex);
-       if viewindex=0 then
+       if viewindex<=0 then
         begin
          viewindex:=250;
          while (viewindex>0) and (not testmode(viewindex)) do dec(viewindex);
         end;
+        assert (viewindex>=0, 'viewindex has gone negative1');
+        assert (viewindex<251, 'viewindex is too big1');
       end else
       begin
        j:=findfirstplanet(viewindex);
@@ -1660,10 +1661,11 @@ begin
          if (tempplan^[j+i].orbit=viewindex2) and (tempplan^[j+i].system=viewindex) then done:=true;
        until done;
       end;
-  4: if viewlevel<2 then
+  4: if viewlevel<2 then			{ down }
       begin
        viewindex2:=0;
        inc(viewindex);
+       assert (viewindex>=0, 'viewindex has gone negative2');
        while (viewindex<251) and (not testmode(viewindex)) do inc(viewindex);
        if viewindex>250 then
         begin
@@ -1672,6 +1674,7 @@ begin
          while (viewindex<251) and (not testmode(viewindex)) do inc(viewindex);
          if viewindex=251 then viewindex:=0;
         end;
+        assert (viewindex<251, 'viewindex is too big2');
        end
      else
       begin
@@ -1688,7 +1691,7 @@ begin
       mouseshow;
       exit;
      end;
-  6: begin
+  6: begin					{ '1' }
       if (viewindex>0) and (viewlevel<>3) then
        begin
         if viewlevel=0 then
@@ -1706,8 +1709,8 @@ begin
        end;
       viewlevel:=3;
      end;
-  7: if showplanet then viewindex:=tempplan^[curplan].system;
-  8: if viewlevel=0 then
+  7: if showplanet then viewindex:=tempplan^[curplan].system;	{ '2' }
+  8: if viewlevel=0 then			{ '3' }
       begin
        if viewindex3<3 then inc(viewindex3) else viewindex3:=0;
        case viewindex3 of
@@ -1718,16 +1721,22 @@ begin
        end;
       end;
  end;
+
+ if viewindex = 0 then		{ scrolling through empty lists or some similar action has destroyed our position. Reset to current system so SOMETHING gets displayed }
+  if showplanet then viewindex:=tempplan^[curplan].system else viewindex:=1;
+
  case viewlevel of
-  0: if viewindex>0 then
-      begin
+  0: if viewindex>0 then	{ viewlevel=0 is a scrollable list of systems, filtered by testmode(index) using viewindex3 (0=no filter, 1=cache, 2=contacts, 3=scans) }
+      begin			{ viewindex is index in systems[], of currently selected system in list, modified above by com=3(up)/4(down) }
+       { firstly, print all systems AFTER our selected system }
        index:=viewindex+1;
-       y:=7;
+       y:=7;			{ y is middle row on screen for printxy(163, 31+y*6, system[index].name) }
        repeat
-        if testmode(index) then
+        if (index <= 250) and testmode(index) then	{ if this is the system we need to display, eg. it matches filter }
          begin
           inc(y);
           if viewindex=index then bkcolor:=179 else bkcolor:=5;
+          assert ((index >=1) and (index <= 250), 'system index out of range1');
           printxy(163,31+y*6,systems[index].name)
          end;
          inc(index);
@@ -1735,6 +1744,8 @@ begin
        if y<13 then
         for j:=38+y*6 to 116 do
          fillchar(screen[j,166],113,5);
+
+       { secondly, print our selected system (in different color), and all systems BEFORE it in normal color }
        index:=viewindex;
        y:=8;
        repeat
@@ -1742,6 +1753,7 @@ begin
          begin
           dec(y);
           if viewindex=index then bkcolor:=179 else bkcolor:=5;
+          assert ((index >=1) and (index <= 250), 'system index out of range2');
           printxy(163,31+y*6,systems[index].name)
          end;
          dec(index);
@@ -1763,6 +1775,7 @@ begin
        circle(222,75,tempplan^[j].orbit*6);
        inc(j);
        inc(i);
+       assert ((viewindex >=1) and (viewindex <= 250), 'system index out of range3');
       until i=systems[viewindex].numplanets;
      end;
   3: begin
