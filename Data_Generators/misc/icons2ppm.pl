@@ -29,18 +29,32 @@ if (defined $pal) {
   @PALLETE = unpack "C*", <$pal_fd>;
 }
 
-my $max=$height * $icon_count;
-print "P3\n$width $max\n255\n"; 	# see ppm(5)
+print "P3\n";			# see ppm(5)
+print $height * $icon_count . "\n";
+print $width . "\n";
+print "255\n";
 
 open my $scr_fd, '<', $scr;
 
+my @icons=();
 foreach my $b (unpack "C*", <$scr_fd>) {
-  if (@PALLETE) {
-     my $c1 = $PALLETE[$b*3] * $COLOR_FACTOR;
-     my $c2 = $PALLETE[$b*3+1] * $COLOR_FACTOR;
-     my $c3 = $PALLETE[$b*3+2] * $COLOR_FACTOR;
-     print "$c1 $c2 $c3\n";
-  } else {			# grayscale
-     print "$b $b $b\n";
+  push @icons, $b;
+}
+
+print STDERR "burek\n";
+for my $x (0 .. $width-1) {
+  for my $icon (0 .. $icon_count-1) {
+     for my $y (0 .. $height-1) {
+        my $idx = ($icon * $width * $height) + ($y * $width) + $x;
+        my $b = $icons[$idx];
+        if (@PALLETE) {
+           my $c1 = $PALLETE[$b*3] * $COLOR_FACTOR;
+           my $c2 = $PALLETE[$b*3+1] * $COLOR_FACTOR;
+           my $c3 = $PALLETE[$b*3+2] * $COLOR_FACTOR;
+           print "$c1 $c2 $c3\n";
+        } else {			# grayscale
+           print "$b $b $b\n";
+        }
+     }
   }
 }
