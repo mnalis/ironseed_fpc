@@ -489,7 +489,7 @@ begin
    if b<1000 then b:=b div 100
    else b:=((b-1000) div 1600) + 9;
    printxy(4,126,shipclass[b]+' '+chr(64+targetindex));
-   b:=round(hulldamage/maxhull*49);
+   b:=round(hulldamage/maxhull*49);	{ hull integrity }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
@@ -497,7 +497,7 @@ begin
    if b<49 then
     for i:=b+1 to 49 do
      fillchar(screen[i+138,8],8,0);
-   b:=round((100-damages[5])/100*49);
+   b:=round((100-damages[5])/100*49);	{ life support }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
@@ -505,7 +505,7 @@ begin
    if b<49 then
     for i:=b+1 to 49 do
      fillchar(screen[i+138,23],8,0);
-   b:=round(battery/32000*49);
+   b:=round(battery/32000*49);		{ power / batt level }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
@@ -513,7 +513,7 @@ begin
    if b<49 then
     for i:=b+1 to 49 do
      fillchar(screen[i+138,38],9,0);
-   b:=round(shieldlevel/100*49);
+   b:=round(shieldlevel/100*49);	{ shield level }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
@@ -521,7 +521,7 @@ begin
    if b<49 then
     for i:=b+1 to 49 do
      fillchar(screen[i+138,54],8,0);
-   for j:=1 to 7 do
+   for j:=1 to 7 do			{ subsystem integrity: 1=power, 2=shield, 3=weapons, 4=engines, 5=life support, 6=comm, 7=cpu }
     begin
      b:=round((100-damages[j])/100*49);
      if b<=0 then b:=1;
@@ -689,7 +689,7 @@ begin
          We could call it 5 times from there, but then we'd have 5 times as much sound effects in takedamage() unless we accounted for it.
        }
    i:=round(i/100*(100-ships^[s].damages[3])); { damages[3] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
-   writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
+   writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ, batt=', ships^[s].battery);
 
    if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)	{ if no shield installed, or it is down, take full damage }
    else
@@ -799,8 +799,9 @@ begin
 	 if not SkillTest(True, 4, skill + (ord(scanning) * 20), learnchance) then
 	 begin
            displaymap;
-           if (ships^[j].damages[3] < 100) then	{ enemy ship can only fire if it's weapons subsystem is not completely destroyed }
-             impact(j,maxweapons);		{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
+           if (ships^[j].damages[3] < 100) and	{ enemy ship can only fire if it's weapons subsystem is not completely destroyed }
+              (ships^[j].battery > 0) then	{ and it's battery is not completely deplated }
+             impact(j,maxweapons);		{ j=enemyship, second param is weapon: currently always 72 "Alien weapon - debug" }
            //FIXME: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc... 
            // and would produce 5 times as much sound effects.
            displaymap;
