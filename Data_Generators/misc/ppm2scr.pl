@@ -14,6 +14,7 @@ my $ppm_name = $basename;
 if (!defined $ppm_name) {
   print "Usage: $0 <BASENAME.ppm>\n";
   print "Converts PPM file to Ironseed 320x200 BASENAME.scr and BASENAME.pal files\n";
+  exit 1;
 }
 
 die "$basename does not look like .ppm file" unless $basename =~ s{\.ppm$}{}i;

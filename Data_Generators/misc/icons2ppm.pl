@@ -15,7 +15,7 @@ my $height = $ENV{HEIGHT} || 17;
 my $icon_count = $ENV{COUNT} || 81;
 
 if (!defined $scr) {
-  print "Usage: $0 <file.vga> [file.pal]\n";
+  print "Usage: $0 <icons.vga> [main.pal]\n";
   print "Converts Ironseed icons.vga 81 17x15 icons file to PPM on stdout\n";
   print "Display with: $0 data/icons.vga data/main.pal | xli -zoom 200 -gamma 1 -dispgamma 1 stdin\n";
   exit 1;
@@ -35,13 +35,9 @@ print $width . "\n";
 print "255\n";
 
 open my $scr_fd, '<', $scr;
+my @icons = unpack "C*", <$scr_fd>;
+close $scr_fd;
 
-my @icons=();
-foreach my $b (unpack "C*", <$scr_fd>) {
-  push @icons, $b;
-}
-
-print STDERR "burek\n";
 for my $x (0 .. $width-1) {
   for my $icon (0 .. $icon_count-1) {
      for my $y (0 .. $height-1) {
@@ -53,7 +49,7 @@ for my $x (0 .. $width-1) {
            my $c3 = $PALLETE[$b*3+2] * $COLOR_FACTOR;
            print "$c1 $c2 $c3\n";
         } else {			# grayscale
-           print "$b $b $b\n";
+           print "$b $b $b\n"; # idx=$idx icon=$icon y=$y x=$x\n";
         }
      }
   }

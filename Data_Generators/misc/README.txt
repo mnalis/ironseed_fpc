@@ -1,7 +1,7 @@
 Image conversion programs for Ironseed:
 
 - .scr and .pal
-  TEMP/*.scr + TEMP/*.pal (uncompressed 320x200 256-color pallete images)
+  TEMP/*.scr + TEMP/*.pal (uncompressed 320x200 256-color images, with pallete files)
   created/loaded by quicksavescreen() and quickloadscreen()
 
 - .cpr 
@@ -10,7 +10,8 @@ Image conversion programs for Ironseed:
 - .ppm
   standard interchanged format, can be P6 (binary) or P3 (ASCII) - see ppm(5) manual page for more info
 
-
+- icons.vga and main.pal
+  81 icons of 17x15 pixels
 
 Quick HOWTO:
 
@@ -23,3 +24,6 @@ Quick HOWTO:
   convert barbaz.png barbaz.ppm			# creates barbaz.ppm in P6 PPM binary format from barbaz.png
   ppm2scr.pl barbaz.ppm				# creates barbaz.scr and barbaz.pal from barbaz.ppm
   scr2cpr barbaz				# creates barbaz.cpr from barbaz.scr and barbaz.pal
+
+- convert "icons.vga" and "main.pal" to icons.png
+  icons2ppm.pl data/icons.vga data/main.pal | convert - Graphics_Assets/icons.png
