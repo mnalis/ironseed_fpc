@@ -980,7 +980,7 @@ begin
                case job of
                    0: timeleft:=0;
                 1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-                   8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+                   8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
                end;
              end;
            end;
@@ -1399,14 +1399,14 @@ begin
       begin
 	 for i := 1 to 7 do
 	    damages[i] := ship.damages[i];
-	 hull := ship.hulldamage;
+	 hull := ship.hullintegrity;
       end;
       initiatecombat;
       if ship.wandering.alienid = 1013 then
       begin
 	 for i := 1 to 7 do
 	    ship.damages[i] := damages[i];
-	 ship.hulldamage := hull;
+	 ship.hullintegrity := hull;
       end;
      ship.armed:=true;
      setalertmode(1);

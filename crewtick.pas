@@ -444,10 +444,10 @@ var
 			  nexttime := 0;
 			  for i := 1 to 8 do
 			  begin
-			     if (i = 8) and (ship.hulldamage < ship.hullmax) then
+			     if (i = 8) and (ship.hullintegrity < ship.hullmax) then
 			     begin
 				nextjob := 8;
-				nexttime := (ship.hullmax - ship.hulldamage) * 30;
+				nexttime := (ship.hullmax - ship.hullintegrity) * 30;
 			     end
 			     else
 				if ship.damages[i] > 0 then
@@ -475,12 +475,12 @@ var
 		    {if random(8)=0 then}
 		    if (random(2) = 0) and SkillTest(background, 2, 40, 10) and SkillTest(background, 2, 40, 10) then
 		    begin
-		       if ship.hulldamage<ship.hullmax then
+		       if ship.hullintegrity<ship.hullmax then
 		       begin
-			  inc(ship.hulldamage);
+			  inc(ship.hullintegrity);
 			  if timeleft>5 then dec(timeleft,5);
 		       end;
-		       if ship.hulldamage=ship.hullmax then
+		       if ship.hullintegrity=ship.hullmax then
 		       begin
 			  nextjob := 0;
 			  nexttime := 0;

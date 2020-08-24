@@ -713,7 +713,7 @@ begin
   if done then
    case mouse.x of
      56..156: case mouse.y of
-                 80..95: ship.hulldamage:=ship.hullmax;
+                 80..95: ship.hullintegrity:=ship.hullmax;
                100..115: ship.fuel:=ship.fuelmax;
               end;
     163..263: case mouse.y of

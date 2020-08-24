@@ -162,7 +162,7 @@ type
    encodes: array[1..6] of crewtype;
    gunnodes: array[1..10] of byte;      {installation positions}
    armed: boolean;
-   fuel,fuelmax,battery,hulldamage: integer;
+   fuel,fuelmax,battery,hullintegrity: integer;
    cargomax: word;
    hullmax,accelmax,gunmax,shieldlevel,shield,posx,posy,posz,orbiting: integer;                  {kilograms, gigawatts}
    cargo: array[1..250] of integer;     {items => m3}
@@ -202,7 +202,7 @@ type
  alienshiptype=
   record
    relx,rely,relz,range: int32;
-   techlevel,skill,shield,battery,shieldlevel,hulldamage,
+   techlevel,skill,shield,battery,shieldlevel,hullintegrity,
     dx,dy,dz,maxhull,accelmax,regen,picx: SmallInt;
    damages: array[1..7] of byte;
    gunnodes: array[1..5] of byte;

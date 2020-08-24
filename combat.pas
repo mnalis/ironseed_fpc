@@ -85,7 +85,7 @@ var i: integer;
 begin
  if done_ then exit;
  mousehide;
- part:=102/ship.hullmax*ship.hulldamage;
+ part:=102/ship.hullmax*ship.hullintegrity;
  if round(part)<>stats[1] then
   begin
    for i:=0 to 1 do
@@ -192,8 +192,8 @@ begin
   begin
    case n of
     1: inc(damages[DMG_LIFESUPPORT],d);
-    2: dec(hulldamage,d);
-    3: dec(hulldamage,d div 2);
+    2: dec(hullintegrity,d);
+    3: dec(hullintegrity,d div 2);
     4: case random(8) of
         0: inc(damages[DMG_POWER],d);
         1: inc(damages[DMG_SHIELD],d);
@@ -201,15 +201,15 @@ begin
         3: inc(damages[DMG_ENGINES],d);
         4: inc(damages[DMG_COMM],d);
         5: inc(damages[DMG_CPU],d);
-        6,7: dec(hulldamage,d);
+        6,7: dec(hullintegrity,d);
        end;
     5: inc(damages[DMG_SHIELD],d);
    end;
-   if hulldamage<0 then hulldamage:=0;
+   if hullintegrity<0 then hullintegrity:=0;
    for j:=1 to 7 do if damages[j]>100 then damages[j]:=100;
    if shieldlevel<0 then shieldlevel:=0;
    if shield=1501 then shieldlevel:=damages[DMG_SHIELD];
-   if damages[DMG_LIFESUPPORT]=100 then hulldamage:=0;
+   if damages[DMG_LIFESUPPORT]=100 then hullintegrity:=0;
   end;
 end;
 
@@ -273,13 +273,13 @@ begin
       end;
     end;
   end;
- if ships^[targetindex].hulldamage=0 then
+ if ships^[targetindex].hullintegrity=0 then
   begin
-   ships^[targetindex].hulldamage:=1;
+   ships^[targetindex].hullintegrity:=1;
    displaymap;
-   ships^[targetindex].hulldamage:=0;
+   ships^[targetindex].hullintegrity:=0;
    targetindex:=1;
-   while (targetindex<=nships) and (ships^[targetindex].hulldamage=0) do inc(targetindex);
+   while (targetindex<=nships) and (ships^[targetindex].hullintegrity=0) do inc(targetindex);
    if targetindex>nships then
    begin
      done_:=true;
@@ -450,7 +450,7 @@ begin
  ship.battery:=ship.battery+i;
  if ship.battery<0 then ship.battery:=0
   else if ship.battery>32000 then ship.battery:=32000;
- for j:=1 to nships do if ships^[j].hulldamage>0 then
+ for j:=1 to nships do if ships^[j].hullintegrity>0 then
   with ships^[j] do
    begin
     if shield>1501 then dec(battery,round(weapons[shield-1442].energy/100*shieldlevel));
@@ -489,7 +489,7 @@ begin
    if b<1000 then b:=b div 100
    else b:=((b-1000) div 1600) + 9;
    printxy(4,126,shipclass[b]+' '+chr(64+targetindex));
-   b:=round(hulldamage/maxhull*49);	{ hull integrity }
+   b:=round(hullintegrity/maxhull*49);	{ hull integrity }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
@@ -563,7 +563,7 @@ begin
       for i:=y+62 downto y+62-z do
        screen[i,x+132]:=screen[i,x+132] xor 6;
      screen[y+62,x+132]:=screen[y+62,x+132] xor 85;
-     if ships^[j].hulldamage=0 then i:=12 else i:=31;
+     if ships^[j].hullintegrity=0 then i:=12 else i:=31;
      screen[y+62-z,x+132]:=screen[y+62-z,x+132] xor i;
      if j=targetindex then
       begin
@@ -603,8 +603,8 @@ begin
  if d<1 then d:=1;
  case n of
   1: inc(ship.damages[DMG_LIFESUPPORT],d);		{ n=1 Psionioc inflicts damage to damages[DMG_LIFESUPPORT] = Lifesupport }
-  2: dec(ship.hulldamage,d);		{ n=2 Particle damage damages hull }
-  3: dec(ship.hulldamage,d div 2);	{ n=3 Intertial damage damages hull more slowly }
+  2: dec(ship.hullintegrity,d);		{ n=2 Particle damage damages hull }
+  3: dec(ship.hullintegrity,d div 2);	{ n=3 Intertial damage damages hull more slowly }
   4: case random(8) of			{ n=4 Energy damage }
       0: inc(ship.damages[DMG_POWER],d);	{ damages[DMG_POWER] = Power subsystem }
       1: begin
@@ -630,14 +630,14 @@ begin
          end;
       4: inc(ship.damages[DMG_COMM],d);	{ damages[DMG_COMM] = Communications subsystem }
       5: inc(ship.damages[DMG_CPU],d);	{ damages[DMG_CPU] = CPU subsystem }
-      6,7: dec(ship.hulldamage,d);	{ hulldamages should've been called hullintegrity, as it is confusing that extra damage does "dec(hulldamage)" }
+      6,7: dec(ship.hullintegrity,d);
      end;
   5: inc(ship.damages[DMG_SHIELD],d);		{ damages[DMG_SHIELD] = Shield subsystem }
  end;
  for j:=1 to 7 do if ship.damages[j]>100 then ship.damages[j]:=100;
- if ship.hulldamage<0 then ship.hulldamage:=0;
+ if ship.hullintegrity<0 then ship.hullintegrity:=0;
  displaydamage;
- if ship.hulldamage=0 then		{ hull breach - we're dead }
+ if ship.hullintegrity=0 then		{ hull breach - we're dead }
   begin
     if ship.wandering.alienid = 1013 then
     begin
@@ -750,7 +750,7 @@ begin
  for j:=1 to nships do
   with ships^[j] do
   begin
-   if (moveindex=5) and (hulldamage>0) and (damages[DMG_ENGINES]<90) then
+   if (moveindex=5) and (hullintegrity>0) and (damages[DMG_ENGINES]<90) then
     begin
      if (relx<5000) and (relx>0) and (dx<-3000) then inc(dx,accelmax)
       else if (relx>-5000) and (relx<0) and (dx>3000) then dec(dx,accelmax)
@@ -765,7 +765,7 @@ begin
       else if (relz>0) and (dz>-1000) then dec(dz,accelmax)
       else if (relz<0) and (dz<1000) then inc(dz,accelmax);
     end;
-   if (moveindex=5) and (hulldamage>0) and (damages[DMG_ENGINES]>90) then
+   if (moveindex=5) and (hullintegrity>0) and (damages[DMG_ENGINES]>90) then
    begin
       dx := round(dx * 0.9);
       dy := round(dy * 0.9);
@@ -788,7 +788,7 @@ begin
    if shipdir2=1 then relz:=relz-a
     else if shipdir2=2 then relz:=relz+a;
    part:=ships^[j].range;
-   if hulldamage>0 then
+   if hullintegrity>0 then
     for a:=1 to 20 do
      if (charges[a]=100) then
       begin
@@ -811,12 +811,12 @@ begin
       end;
    if (abs(r)>1200000) then
    begin
-    hulldamage:=0;
+    hullintegrity:=0;
    end;
-   if (hulldamage=0) and (targetindex=j) then
+   if (hullintegrity=0) and (targetindex=j) then
     begin
      targetindex:=1;
-     while (targetindex<=nships) and (ships^[targetindex].hulldamage=0) do inc(targetindex);
+     while (targetindex<=nships) and (ships^[targetindex].hullintegrity=0) do inc(targetindex);
      if targetindex>nships then
      begin
       done_:=true;
@@ -830,11 +830,11 @@ procedure previoustarget;
 begin
  displaymap;
  dec(targetindex);
- while (targetindex>0) and (ships^[targetindex].hulldamage=0) do dec(targetindex);
+ while (targetindex>0) and (ships^[targetindex].hullintegrity=0) do dec(targetindex);
  if (targetindex=0) then
   begin
    targetindex:=nships;
-   while (targetindex>0) and (ships^[targetindex].hulldamage=0) do dec(targetindex);
+   while (targetindex>0) and (ships^[targetindex].hullintegrity=0) do dec(targetindex);
   end;
  displaymap;
 end;
@@ -843,11 +843,11 @@ procedure nexttarget;
 begin
  displaymap;
  inc(targetindex);
- while (targetindex<=nships) and (ships^[targetindex].hulldamage=0) do inc(targetindex);
- if (targetindex>nships) or (ships^[targetindex].hulldamage=0) then
+ while (targetindex<=nships) and (ships^[targetindex].hullintegrity=0) do inc(targetindex);
+ if (targetindex>nships) or (ships^[targetindex].hullintegrity=0) then
   begin
    targetindex:=1;
-   while (targetindex<nships) and (ships^[targetindex].hulldamage=0) do inc(targetindex);
+   while (targetindex<nships) and (ships^[targetindex].hullintegrity=0) do inc(targetindex);
   end;
  displaymap;
 end;
@@ -898,7 +898,7 @@ begin
    z:=round(ships^[j].relz/range*26);
    y:=62+round(ships^[j].rely/range*26.66)-z;
    x:=132+round(ships^[j].relx/range*119);
-   if (abs(mouse.x-x)<5) and (abs(mouse.y-y)<5) and (ships^[j].hulldamage>0) then
+   if (abs(mouse.x-x)<5) and (abs(mouse.y-y)<5) and (ships^[j].hullintegrity>0) then
     begin
      displaymap;
      targetindex:=j;

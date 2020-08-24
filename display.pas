@@ -180,7 +180,7 @@ begin
          case job of
              0:;
           1..7: if ship.damages[job]=0 then job:=0;
-             8: if ship.hulldamage=ship.hullmax then job:=0;
+             8: if ship.hullintegrity=ship.hullmax then job:=0;
          end;
          if job=0 then timeleft:=0;
         end;
@@ -228,7 +228,7 @@ begin
         case job of
             0: timeleft:=0;
          1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-            8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+            8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
         end;
       end;
   4: if viewlevel=1 then
@@ -246,7 +246,7 @@ begin
         case job of
             0: timeleft:=0;
          1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-            8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+            8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
         end;
       end;
   5: begin
@@ -293,7 +293,7 @@ begin
               case job of
                   0:;
                1..7: if ship.damages[job]=0 then job:=0;
-                  8: if ship.hulldamage=ship.hullmax then job:=0;
+                  8: if ship.hullintegrity=ship.hullmax then job:=0;
               end;
               if job=0 then timeleft:=0;
              end;
@@ -373,7 +373,7 @@ begin
        end;
       if ship.engrteam[viewindex].job=8 then bkcolor:=179 else
        bkcolor:=5;
-      str(ship.hullmax-ship.hulldamage:4,s);
+      str(ship.hullmax-ship.hullintegrity:4,s);
       printxy(186,102,teamdata[8]);
       printxy(253,102,s);
       for i:=46 to 114 do
@@ -1074,7 +1074,7 @@ begin
  oldt:=tcolor;
  tcolor:=191;
  bkcolor:=255;
- a:=round(ship.hulldamage/ship.hullmax*98);
+ a:=round(ship.hullintegrity/ship.hullmax*98);
  mousehide;
  if a=0 then part:=0 else part:=31/a;
  for j:=0 to a do
@@ -1086,7 +1086,7 @@ begin
  if a<98 then
   for i:=46 to 54 do
    fillchar(screen[i,174+a],98-a,0);
- str(ship.hulldamage,str1);
+ str(ship.hullintegrity,str1);
  printxy(219-round(length(str1)*2.5),47,str1);
  a:=round(ship.fuel/ship.fuelmax*98);
  if a=0 then part:=0 else part:=31/a;
@@ -1368,8 +1368,8 @@ begin
    for j:=1 to 7 do if ship.damages[j]<>0 then i:=1;
    setalertmode(i);
   end;
- if ship.hulldamage<250 then tc:=80
-  else if ship.hulldamage<500 then tc:=112
+ if ship.hullintegrity<250 then tc:=80
+  else if ship.hullintegrity<500 then tc:=112
   else tc:=48;
  if statcolors[1]<>tc then colorarea(300,29,313,39,tc,1);
  a:=round(ship.fuel/ship.fuelmax*100);
@@ -2122,7 +2122,7 @@ begin
  ar:=ship.posz/10;
  str(ar:5:1,str1);
  printxy(228,38,str1);
- str(ship.hulldamage:4,str1);
+ str(ship.hullintegrity:4,str1);
  str(ship.hullmax:4,str2);
  printxy(223,44,str1+'/'+str2);
  str(ship.fuel:4,str1);

@@ -285,7 +285,7 @@ begin
       battery:=0;
       hullmax:=shipdata.hullmax;
       cargomax:=shipdata.cargo*10;
-      hulldamage:=round(ship.hullmax*0.9);
+      hullintegrity:=round(ship.hullmax*0.9);
    end;
    for j:=1 to 6 do
       with ship.crew[j] do
