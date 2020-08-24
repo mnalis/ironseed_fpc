@@ -100,6 +100,11 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
+      DMGTYP_PSIONIC = 1;
+      DMGTYP_PARTICLE = 2;
+      DMGTYP_INERTIAL = 3;
+      DMGTYP_ENERGY = 4;
+
 type
    buttontype = record
 		   x, y, w, h : Integer;

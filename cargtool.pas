@@ -1213,7 +1213,7 @@ begin
  printxy(127,23,'Damage:'+str1+' GJ');
  printxy(230,5, 'PSION');
  printxy(230,11,'PRTCL');
- printxy(230,17,'INTRL');
+ printxy(230,17,'INRTL');
  printxy(230,23,'ENRGY');
  for j:=1 to 4 do
   begin

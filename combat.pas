@@ -219,8 +219,8 @@ procedure firingweapon(n: integer);
 var j,i,a,b,c,d: integer;
 begin
  c:=ship.gunnodes[n];
- case weapons[c].dmgtypes[4] of
-   0..23: if weapons[c].dmgtypes[2]>weapons[c].dmgtypes[3] then soundeffect('gun4.sam',7000)
+ case weapons[c].dmgtypes[DMGTYP_ENERGY] of
+   0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect('gun4.sam',7000)
            else soundeffect('gun1.sam',7000);
    24..34: soundeffect('laser1.sam',7000);
    35..45: soundeffect('laser2.sam',7000);
