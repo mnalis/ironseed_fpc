@@ -87,7 +87,7 @@ begin
 	    for a:=7 downto 4 do
 	    begin
 	       inc(x);
-	       if font[ship.options[7],ord(s[j]),i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	       if font[ship.options[OPT_FONT],ord(s[j]),i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	       else if bkcolor<255 then screen[y,x]:=bkcolor;
 	    end;
 	    dec(tcolor,2);
@@ -97,7 +97,7 @@ begin
 	    for a:=3 downto 0 do
 	    begin
 	       inc(x);
-	       if font[ship.options[7],ord(s[j]),i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	       if font[ship.options[OPT_FONT],ord(s[j]),i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	       else if bkcolor<255 then screen[y,x]:=bkcolor;
 	    end;
 	    dec(tcolor,2);

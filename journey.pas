@@ -149,7 +149,7 @@ begin
     for a:=7 downto 4 do
      begin
       inc(x);
-      if font[ship.options[7],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
+      if font[ship.options[OPT_FONT],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
        else if bkcolor<255 then screen2^[y,x]:=bkcolor;
      end;
     inc(y);
@@ -159,7 +159,7 @@ begin
     for a:=3 downto 0 do
      begin
       inc(x);
-      if font[ship.options[7],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
+      if font[ship.options[OPT_FONT],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
        else if bkcolor<255 then screen2^[y,x]:=bkcolor;
      end;
     dec(tcolor,2);
@@ -320,7 +320,7 @@ procedure rotatecube2(src,tar: byte; fkey: boolean);
 label skip1;
 begin  {215,145}
  getcube(src,tar);
- if (ship.options[6]=0) or (fkey) then
+ if (ship.options[OPT_ANIMATION]=0) or (fkey) then
   begin
    mousehide;
    for i:=0 to 44 do
@@ -383,7 +383,7 @@ begin  {215,145}
    exit;
   end;
  getcube(src,tar);
- if (ship.options[6]=0) or (fkey) then
+ if (ship.options[OPT_ANIMATION]=0) or (fkey) then
   begin
    mousehide;
    for i:=0 to 44 do
@@ -1453,8 +1453,8 @@ begin
   if idletime=2*maxidle then screensaver;
   if ship.wandering.alienid<16000 then movewandering;
   case viewmode2 of
-   0: if (showplanet) and (ship.options[6]=1) and (ship.orbiting=0) and ((viewmode<8) or (viewmode>10)) then makestar
-       else if (showplanet) and (ship.options[6]=1) and ((viewmode<8) or (viewmode>10)) then
+   0: if (showplanet) and (ship.options[OPT_ANIMATION]=1) and (ship.orbiting=0) and ((viewmode<8) or (viewmode>10)) then makestar
+       else if (showplanet) and (ship.options[OPT_ANIMATION]=1) and ((viewmode<8) or (viewmode>10)) then
         case sphere of
          1: case glowindex of
 	     {1: rendersphere(60, 60, spherei, c * 360.0 / 240, true, ecl * 360.0 / 240);}

@@ -636,7 +636,7 @@ begin
      for a:=7 downto 4 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
      inc(i);
@@ -645,7 +645,7 @@ begin
      for a:=3 downto 0 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
     end;
@@ -1175,7 +1175,7 @@ begin
 		 SetScan(0);
 		 {dec(datagathered[que,1]);}
 	      end;
-	      if (ship.options[4]=0) and (que<>0) then tempplan^[curplan].notes:=tempplan^[curplan].notes or (1 shl (abs(que)+1));
+	      if (ship.options[OPT_DIFFICULTY]=0) and (que<>0) then tempplan^[curplan].notes:=tempplan^[curplan].notes or (1 shl (abs(que)+1));
 	      if datagathered[abs(que),2] >= 1000 then
 	      begin
 		 createano;

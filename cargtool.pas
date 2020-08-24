@@ -257,7 +257,7 @@ end; { HistoryPop }
 
 procedure opendoors;
 begin
-   if ship.options[6]=0 then
+   if ship.options[OPT_ANIMATION]=0 then
    begin
       fadestep(1);
       for i:=20 to 130 do
@@ -282,7 +282,7 @@ end;
 procedure closedoors;
 var temp: pscreentype;
 begin
- if ship.options[6]=0 then exit;
+ if ship.options[OPT_ANIMATION]=0 then exit;
  mousehide;
  new(temp);
  loadscreen('data/cargo',temp);
@@ -658,18 +658,18 @@ begin
    if (cargoindex=0) or (cargoindex=251) then exit;
    if (ship.cargo[cargoindex]=1056) or (ship.cargo[cargoindex]>6899) then
    begin
-      a:=ship.options[5];
-      ship.options[5]:=2;
+      a:=ship.options[OPT_MSGS];
+      ship.options[OPT_MSGS]:=2;
       printbigbox('That item is too vital','to jettison!');
-      ship.options[5]:=a;
+      ship.options[OPT_MSGS]:=a;
       exit;
    end;
    if rescargo[cargoindex] >= ship.numcargo[cargoindex] then
    begin
-      a:=ship.options[5];
-      ship.options[5]:=2;
+      a:=ship.options[OPT_MSGS];
+      ship.options[OPT_MSGS]:=2;
       printbigbox('Can''t jettison that!','It''s needed for building.');
-      ship.options[5]:=a;
+      ship.options[OPT_MSGS]:=a;
       exit;
    end;
    j:=1;
@@ -1112,7 +1112,7 @@ begin
 	 end;
    if colorcode then fillchar(screen[125,69],4,63);
    viewteam:=0;
-   {if ship.options[6]=1 then opendoors2 else fadein;}
+   {if ship.options[OPT_ANIMATION]=1 then opendoors2 else fadein;}
    inccursor;
    mouseshow;
 end;

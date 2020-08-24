@@ -76,6 +76,18 @@ const
    '  Target   ','History Map',' Research  ','Local Info ',
    '  Options  ',' Save Game ','  Encode   ','Time Burst ',' Load Game ',
    '  Decode   ','Clear Scrn ',' Research  ','Quit to DOS');
+
+const OPT_SCREENSAVER = 1;
+      OPT_TIMESLICE = 2;
+      OPT_SOUND = 3;
+      OPT_DIFFICULTY = 4;
+      OPT_MSGS = 5;
+      OPT_ANIMATION = 6;
+      OPT_FONT = 7;
+      OPT_AUTOSAVE = 8;
+      OPT_VOLUME = 9;
+      OPT_UNUSED1 = 10;
+
 type
    buttontype = record
 		   x, y, w, h : Integer;
@@ -100,7 +112,7 @@ type
   end;
  planarray= array[1..1000] of planettype;
  fonttype= array[0..2] of byte;
- colortype= array[1..3] of byte;
+// colortype= array[1..3] of byte;
 // paltype= array[0..255] of colortype;
 // screentype= array[0..199,0..319] of byte;
  icontype= array[0..16,0..14] of byte;
@@ -150,7 +162,7 @@ type
    engrteam: array[1..3] of teamtype;
    damages: array[1..7] of byte;        {0=none, 100=destroyed}
    shieldopt: array[1..3] of byte;
-   options: array[1..10] of byte;
+   options: array[1..10] of byte;	{ OPT_* constants }
    research: byte;
    shiptype: array[1..3] of byte;
    events: array[0..64] of byte;        {event bits }
@@ -210,7 +222,6 @@ type
  responsearray= array[1..maxconverse] of responsetype;
  linetype= string[30];
  linetype2= array[1..30] of byte;
- startype= array[1..4] of integer;
  colordisplaytype= array[0..30] of linetype2;
  textdisplaytype= array[0..30] of linetype;
  displaytype= array[0..192,0..93] of byte;
@@ -699,7 +710,7 @@ begin
      for a:=7 downto 4 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
      dec(tcolor,2);
@@ -709,7 +720,7 @@ begin
      for a:=3 downto 0 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
         else if bkcolor<255 then screen[y,x]:=bkcolor;
       end;
      dec(tcolor,2);
@@ -867,7 +878,7 @@ begin
    while fadelevel > 0 do
    begin
       fadestep(step);
-      setmodvolumeto((fadelevel * ship.options[9]) shr 6);
+      setmodvolumeto((fadelevel * ship.options[OPT_VOLUME]) shr 6);
       delay(slice);
    end;
    haltmod;
@@ -932,8 +943,8 @@ begin
 end;
 
 begin
-   ship.options[9]:=64;
-   ship.options[3]:=1;
+   ship.options[OPT_VOLUME]:=64;
+   ship.options[OPT_SOUND]:=1;
    assert (sizeof(colors) = 768);
    assert (sizeof(screen) = 64000);
 end.

@@ -74,8 +74,8 @@ begin
 {$IFNDEF DEMO}
  if paramstr(1)='/killseed' then
   begin
-   ship.options[3]:=1;
-   ship.options[9]:=63;
+   ship.options[OPT_SOUND]:=1;
+   ship.options[OPT_VOLUME]:=63;
    endgame;
   end;
 {$ENDIF}

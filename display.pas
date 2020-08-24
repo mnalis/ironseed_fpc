@@ -76,30 +76,30 @@ begin
   0:;
   1,6: case viewindex of
         2: begin
-            if ship.options[2]>1 then dec(ship.options[2]);
-            tslice:=ship.options[2];
+            if ship.options[OPT_TIMESLICE]>1 then dec(ship.options[OPT_TIMESLICE]);
+            tslice:=ship.options[OPT_TIMESLICE];
            end;
         3: begin
-            ship.options[3]:=0;
+            ship.options[OPT_SOUND]:=0;
             stopmod;
            end;
         9: begin
-            if ship.options[9]>1 then dec(ship.options[9]);
+            if ship.options[OPT_VOLUME]>1 then dec(ship.options[OPT_VOLUME]);
             setmodvolume;
            end;
         else if ship.options[viewindex]>0 then dec(ship.options[viewindex]);
        end;
   2,7: case viewindex of
-      1: if ship.options[1]<1 then inc(ship.options[1]);
+      1: if ship.options[OPT_SCREENSAVER]<1 then inc(ship.options[OPT_SCREENSAVER]);
       2: begin
-          if ship.options[2]<250 then inc(ship.options[2]);
-          tslice:=ship.options[2];
+          if ship.options[OPT_TIMESLICE]<250 then inc(ship.options[OPT_TIMESLICE]);
+          tslice:=ship.options[OPT_TIMESLICE];
          end;
-      4: if ship.options[4]<2 then inc(ship.options[4]);
-      5: if ship.options[5]<2 then inc(ship.options[5]);
-      7: if ship.options[7]<2 then inc(ship.options[7]);
+      4: if ship.options[OPT_DIFFICULTY]<2 then inc(ship.options[OPT_DIFFICULTY]);
+      5: if ship.options[OPT_MSGS]<2 then inc(ship.options[OPT_MSGS]);
+      7: if ship.options[OPT_FONT]<2 then inc(ship.options[OPT_FONT]);
       9: begin
-          if ship.options[9]<64 then inc(ship.options[9]);
+          if ship.options[OPT_VOLUME]<64 then inc(ship.options[OPT_VOLUME]);
           setmodvolume;
          end;
       else if ship.options[viewindex]=0 then ship.options[viewindex]:=1;
@@ -114,38 +114,38 @@ begin
  tcolor:=191;
  mousehide;
  if viewindex=1 then bkcolor:=179 else bkcolor:=5;
- if ship.options[1]=0 then printxy(251,37,'Off') else printxy(251,37,' On');
+ if ship.options[OPT_SCREENSAVER]=0 then printxy(251,37,'Off') else printxy(251,37,' On');
  if viewindex=2 then bkcolor:=179 else bkcolor:=5;
- str(ship.options[2]:3,s);
+ str(ship.options[OPT_TIMESLICE]:3,s);
  printxy(251,46,s);
  if viewindex=3 then bkcolor:=179 else bkcolor:=5;
- if ship.options[3]=1 then printxy(251,55,' On') else printxy(251,55,'Off');
+ if ship.options[OPT_SOUND]=1 then printxy(251,55,' On') else printxy(251,55,'Off');
  if viewindex=4 then bkcolor:=179 else bkcolor:=5;
- case ship.options[4] of
+ case ship.options[OPT_DIFFICULTY] of
   0: s:='Min';
   1: s:='Avg';
   2: s:='Max';
  end;
  printxy(251,64,s);
  if viewindex=5 then bkcolor:=179 else bkcolor:=5;
- case ship.options[5] of
+ case ship.options[OPT_MSGS] of
   2: s:=' All';
   1: s:='Some';
   0: s:='None';
  end;
  printxy(246,73,s);
  if viewindex=6 then bkcolor:=179 else bkcolor:=5;
- if ship.options[6]=1 then printxy(251,82,' On') else printxy(251,82,'Off');
+ if ship.options[OPT_ANIMATION]=1 then printxy(251,82,' On') else printxy(251,82,'Off');
  if viewindex=7 then bkcolor:=179 else bkcolor:=5;
- case ship.options[7] of
+ case ship.options[OPT_FONT] of
   0: s:=' Iron';
   1: s:='Clean';
   2: s:='Block';
  end;
  printxy(241,91,s);
  if viewindex=8 then bkcolor:=179 else bkcolor:=5;
- if ship.options[8]=1 then printxy(251,100,' On') else printxy(251,100,'Off');
- str(ship.options[9]:3,s);
+ if ship.options[OPT_AUTOSAVE]=1 then printxy(251,100,' On') else printxy(251,100,'Off');
+ str(ship.options[OPT_VOLUME]:3,s);
  if viewindex=9 then bkcolor:=179 else bkcolor:=5;
  printxy(251,109,s);
  mouseshow;

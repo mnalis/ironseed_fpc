@@ -616,13 +616,13 @@ var tempscr: ^scrtype2;
     done: boolean;
     ans: char;
 begin
- if ship.options[5]=0 then exit;
+ if ship.options[OPT_MSGS]=0 then exit;
  oldt:=tcolor;
  tcolor:=31;
  shadowprintln;
  shadowprint(s);
  tcolor:=oldt;
- if ship.options[5]=1 then exit;
+ if ship.options[OPT_MSGS]=1 then exit;
  if (colors[31,3]=63) or (colors[32,2]=63) then t:=26
   else if colors[32,1]=0 then t:=197
   else t:=182;
@@ -828,12 +828,12 @@ var
    ans		 : char;
 begin		 
    oldt:=tcolor;
-   if ship.options[5]=0 then exit;
+   if ship.options[OPT_MSGS]=0 then exit;
    tcolor:=31;
    shadowprintln;
    shadowprint(s1+' '+s2);
    tcolor:=oldt;
-   if ship.options[5]=1 then exit;
+   if ship.options[OPT_MSGS]=1 then exit;
    if (colors[31,3]=63) or (colors[32,2]=63) then t:=26
    else if colors[32,1]=0 then t:=197
    else t:=182;
@@ -902,7 +902,7 @@ var oldt,t,c,ofsc: integer;
     s2: string[100];
 begin
  oldt:=tcolor;
- if ship.options[5]=0 then exit;
+ if ship.options[OPT_MSGS]=0 then exit;
  tcolor:=31;
  shadowprintln;
  case n of
@@ -925,7 +925,7 @@ begin
   end
  else s2:='';
  tcolor:=oldt;
- if ship.options[5]=1 then exit;
+ if ship.options[OPT_MSGS]=1 then exit;
  mousehide;
  compressfile(tempdir+'/current3',@screen);
  if (colors[31,3]=63) or (colors[32,2]=63) then t:=26

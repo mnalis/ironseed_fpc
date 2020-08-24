@@ -40,12 +40,12 @@ uses strings, data, utils_;
 procedure playmod(const looping: boolean; const s: string);  // load & play mod
 Var p : Pchar;
 begin
-    if ship.options[3]=0 then exit;
+    if ship.options[OPT_SOUND]=0 then exit;
     p:=StrAlloc (length(s)+1);
     StrPCopy (P,s);
     play_mod(byte(looping),P);
     StrDispose(P);
-    setmodvolumeto(ship.options[9]);
+    setmodvolumeto(ship.options[OPT_VOLUME]);
 end;
 
 	
@@ -58,7 +58,7 @@ end;
 procedure stopmod;       // stop music + unload
 var i: word;
 begin
- for i:=ship.options[9] downto 0 do
+ for i:=ship.options[OPT_VOLUME] downto 0 do
   begin
    setmodvolumeto(i);
    delay(10);
@@ -72,7 +72,7 @@ end;
 procedure soundeffect(const s: string; const rate: word);
 Var p : Pchar;
 begin
-    if ship.options[3]=0 then exit;
+    if ship.options[OPT_SOUND]=0 then exit;
     
     p:=StrAlloc (length(s)+1);
     StrPCopy (P,s);
@@ -83,7 +83,7 @@ end;
 procedure setmodvolume;
 begin
 	//if (not playing) then exit;
-	setmodvolumeto(ship.options[9])
+	setmodvolumeto(ship.options[OPT_VOLUME])
 end;
 
 end.

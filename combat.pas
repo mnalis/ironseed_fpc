@@ -794,7 +794,7 @@ begin
       begin
        if part>=r then
         begin
-         i:=random(120)-15*ship.options[4];
+         i:=random(120)-15*ship.options[OPT_DIFFICULTY];
          {if (i<skill) or ((scanning) and (random(100)<20)) then}
 	 if not SkillTest(True, 4, skill + (ord(scanning) * 20), learnchance) then
 	 begin
@@ -914,7 +914,7 @@ var
  s: string[3];
 begin
  tcolor:=63;
- str(ship.options[2]:3,s);
+ str(ship.options[OPT_TIMESLICE]:3,s);
  mousehide;
  printxy(277,2,s);
  mouseshow;
@@ -1162,18 +1162,18 @@ begin
              else findtarget;
             end;
   261..263: if (mouse.y>184) and (mouse.y<193) then nexttarget else findtarget;
-  271..279: if (mouse.y<10) and (ship.options[2]>1) then
+  271..279: if (mouse.y<10) and (ship.options[OPT_TIMESLICE]>1) then
              begin
-              dec(ship.options[2]);
-              tslice:=ship.options[2];
+              dec(ship.options[OPT_TIMESLICE]);
+              tslice:=ship.options[OPT_TIMESLICE];
               displaytimedelay;
              end;
   291..312: case mouse.y of
              11..117: displayshieldpic(round((117-mouse.y)*100/102));
-             1..9: if (mouse.x>299) and (mouse.x<309) and (ship.options[2]<255) then
+             1..9: if (mouse.x>299) and (mouse.x<309) and (ship.options[OPT_TIMESLICE]<255) then
                     begin
-                     inc(ship.options[2]);
-                     tslice:=ship.options[2];
+                     inc(ship.options[OPT_TIMESLICE]);
+                     tslice:=ship.options[OPT_TIMESLICE];
                      displaytimedelay;
                     end;
             end;
@@ -1369,7 +1369,7 @@ begin
  begin
     learnchance := 5;
    t.name:='Drone';
-   t.victory:=(ship.options[4]+1)*10;
+   t.victory:=(ship.options[OPT_DIFFICULTY]+1)*10;
   end
  else
   begin
@@ -1453,7 +1453,7 @@ begin
    bkcolor:=0;
    oldt1:=t1;
    targetindex:=1;
-   if ship.options[4]=0 then
+   if ship.options[OPT_DIFFICULTY]=0 then
    begin
       autofire:=true;
       scanning:=true;

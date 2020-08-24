@@ -1086,7 +1086,7 @@ procedure screensaver;
     debug: string[6];
     quit: boolean;}
 begin
-{ if (ship.options[1]=0) or (memavail<74000) or (ship.options[6]=0) then exit;
+{ if (ship.options[OPT_SCREENSAVER]=0) or (memavail<74000) or (ship.options[OPT_ANIMATION]=0) then exit;
  mousehide;
  compressfile(tempdir+'/current3',@screen);
  if memavail<140000 then i:=random(2) else i:=random(3);

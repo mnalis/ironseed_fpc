@@ -154,7 +154,7 @@ begin
      for a:=7 downto 4 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor;
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor;
       end;
      x:=x1;
      inc(y);
@@ -162,7 +162,7 @@ begin
      for a:=3 downto 0 do
       begin
        inc(x);
-       if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor;
+       if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor;
       end;
     end;
    x1:=x1+5;
