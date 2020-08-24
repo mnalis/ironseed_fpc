@@ -528,7 +528,7 @@ begin
    event(26);
    event(27);
    if (tempplan^[curplan].system=33) then event(25);
-   if ship.damages[4]>25 then
+   if ship.damages[DMG_ENGINES]>25 then
    begin
       tcolor:=94;
       println;
@@ -779,17 +779,17 @@ begin
    print('SECURITY: No shield to raise.');
    exit;
   end;
- if ship.damages[2]>59 then
+ if ship.damages[DMG_SHIELD]>59 then
   begin
    print('Shield integrity compromised...needs repair.');
    ship.shieldlevel:=0;
    if viewmode=1 then displaystatus else checkstats;
    exit;
   end
- else if ship.damages[2]>25 then
+ else if ship.damages[DMG_SHIELD]>25 then
   begin
    print('SECURITY: Shield unstable...');
-   if (random(40)+20)<ship.damages[2] then
+   if (random(40)+20)<ship.damages[DMG_SHIELD] then
     begin
      print('Failed to raise shield.');
      ship.shieldlevel:=0;
@@ -838,17 +838,17 @@ procedure armweapons;
 begin
  tcolor:=94;
  println;
- if ship.damages[3]>59 then
+ if ship.damages[DMG_WEAPONS]>59 then
   begin
    print('Weapon control compromised...needs repair');
    ship.armed:=false;
    if viewmode=1 then displaystatus else checkstats;
    exit;
   end
- else if ship.damages[3]>25 then
+ else if ship.damages[DMG_WEAPONS]>25 then
   begin
    print('SECURITY: Weapon control unstable...');
-   if (random(40)+20)<ship.damages[2] then
+   if (random(40)+20)<ship.damages[DMG_SHIELD] then
     begin
      print('Failed to arm weapons.');
      ship.armed:=false;
@@ -1379,9 +1379,9 @@ begin
  case face of
    {psy}
    0,3: psyche;
-   1,2: if ship.damages[6]>39 then contactfailure
+   1,2: if ship.damages[DMG_COMM]>39 then contactfailure
          else continuecontact(false);
-   4,5: if ship.damages[6]>39 then contactfailure
+   4,5: if ship.damages[DMG_COMM]>39 then contactfailure
          else continuecontact(true);
    6: crewstats;
    7: ToggleResearch(1);
@@ -1592,7 +1592,7 @@ begin
         readyoptions;
        end;
   46: savegamedata(0,31);
-  47: if ship.damages[5]>39 then lifesupportfailure
+  47: if ship.damages[DMG_LIFESUPPORT]>39 then lifesupportfailure
        else encodecrew(26);
   48:  if yesnorequest('Initiate Time Burst?',0,31) then restcrew;
   49: if loadgamedata(false) then
@@ -1602,7 +1602,7 @@ begin
         fillchar(colors,sizeof(paltype),0);
         set256colors(colors);
        end;
-  50: if ship.damages[5]>39 then lifesupportfailure
+  50: if ship.damages[DMG_LIFESUPPORT]>39 then lifesupportfailure
        else decodecrew;
   51: begin
        if viewmode2>0 then removestarmap;

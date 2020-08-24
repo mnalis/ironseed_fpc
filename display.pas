@@ -450,9 +450,9 @@ begin
  tcolor:=31;
  if shd>0 then printxy(174,45,cargo[shd-1442].name)
   else printxy(174,45,'None                ');
- if ship.damages[2]>0 then
+ if ship.damages[DMG_SHIELD]>0 then
   begin
-   str(ship.damages[2]:5,str1);
+   str(ship.damages[DMG_SHIELD]:5,str1);
    printxy(218,54,str1+'%   ');
   end
  else printxy(218,54,'      None');
@@ -534,7 +534,7 @@ begin
  bkcolor:=5;
  mousehide;
  if ship.shield=1501 then
-  for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[2];
+  for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[DMG_SHIELD];
  case com of
   0:;
   1: if viewlevel=0 then
@@ -686,7 +686,7 @@ begin
       if ship.shield>0 then printxy(174,45,cargo[ship.shield-1442].name)
        else printxy(174,45,'None                ');
       tcolor:=191;
-      str(ship.damages[2]:3,str1);
+      str(ship.damages[DMG_SHIELD]:3,str1);
       printxy(163,53,'System Damage:'+str1+'%');
       if viewindex=1 then bkcolor:=179 else bkcolor:=5;
       printxy(163,61,'Rest Mode');
@@ -749,12 +749,12 @@ begin
  mouseshow;
  bkcolor:=3;
  if (ship.shield<60) or (alert=2) then exit;
- if ship.damages[2]>25 then
+ if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
    println;
    ship.shieldlevel:=0;
-   if ship.damages[2]>59 then
+   if ship.damages[DMG_SHIELD]>59 then
     begin
      print('COMPUTER: Shield integrity compromised...needs repair.');
      exit;
@@ -762,7 +762,7 @@ begin
    else
     begin
      print('Shield unstable...');
-     if (random(40)+20)<ship.damages[2] then
+     if (random(40)+20)<ship.damages[DMG_SHIELD] then
       begin
        print('COMPUTER: Failed to adjust shield.');
        exit;
@@ -988,7 +988,7 @@ end;
 
 function checkscandamages: boolean;
 begin
- if ship.damages[7]>59 then
+ if ship.damages[DMG_CPU]>59 then
   begin
    mousehide;
    a:=glowindex mod 2;
@@ -1001,7 +1001,7 @@ begin
    mouseshow;
    checkscandamages:=false;
   end
- else if ship.damages[7]>(20+random(40)) then
+ else if ship.damages[DMG_CPU]>(20+random(40)) then
   begin
    mousehide;
    a:=glowindex mod 2;
@@ -1019,7 +1019,7 @@ end;
 
 procedure displaystarmap;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  fillchar(starmapscreen^,sizeof(templatetype2),5);
  if t1<0 then t1:=0;
  t1:=t1+0.049;
@@ -2869,7 +2869,7 @@ end;
 
 procedure displayhistorymap;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  if index<0 then index:=0;
  if index>7 then index:=0 else inc(index);
  if t1<0 then t1:=0;
@@ -2920,7 +2920,7 @@ end;
 procedure displayshortscan;
 label error;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  t1:=t1+0.02;
  if t1>6.28 then t1:=0;
  mousehide;
@@ -3045,7 +3045,7 @@ end;
 procedure displaylongscan;
 label error;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
   move(starmapscreen^[i,27],screen[i,27],29*4);

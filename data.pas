@@ -88,6 +88,14 @@ const OPT_SCREENSAVER = 1;
       OPT_VOLUME = 9;
       OPT_UNUSED1 = 10;
 
+      DMG_POWER = 1;
+      DMG_SHIELD = 2;
+      DMG_WEAPONS = 3;
+      DMG_ENGINES = 4;
+      DMG_LIFESUPPORT = 5;
+      DMG_COMM = 6;
+      DMG_CPU = 7;
+
 type
    buttontype = record
 		   x, y, w, h : Integer;

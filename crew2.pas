@@ -563,7 +563,7 @@ begin
     case mouse.y of
     22..60: if (mouse.x<20) and (mouse.x>11) then
              begin
-              if ship.damages[5]>39 then lifesupportfailure
+              if ship.damages[DMG_LIFESUPPORT]>39 then lifesupportfailure
                else encodecrew(181);
              end;
  end;

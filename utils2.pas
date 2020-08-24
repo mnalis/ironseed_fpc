@@ -674,7 +674,7 @@ begin
  dist:=dist + sqr((y-ship.posy)/10);
  dist:=dist + sqr((z-ship.posz)/10);
  dist:=sqrt(dist);
- if (random(85)+15)<ship.damages[4] then
+ if (random(85)+15)<ship.damages[DMG_ENGINES] then
   begin
    tcolor:=94;
    println;

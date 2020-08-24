@@ -1162,12 +1162,12 @@ begin
  plainfadearea(0,184,7,199,new-alt);
  alert:=mode;
  if alert=2 then exit;
- if ship.damages[2]>25 then
+ if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
    println;
    ship.shieldlevel:=0;
-   if ship.damages[2]>59 then
+   if ship.damages[DMG_SHIELD]>59 then
     begin
      print('SECURITY: Shield integrity compromised...needs repair');
      exit;
@@ -1175,7 +1175,7 @@ begin
    else
     begin
      print('SECURITY: Shield unstable...');
-     if (random(40)+20)<ship.damages[2] then
+     if (random(40)+20)<ship.damages[DMG_SHIELD] then
       begin
        print('Failed to adjust shield.');
        exit;
@@ -1432,8 +1432,8 @@ procedure movewandering;
 begin
  case action of
   0:;
-  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[4])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[4])/100));
+  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
  end;
  case ship.wandering.orders of
   0: if action=3 then adjustwanderer(30) else adjustwanderer(2);

@@ -793,8 +793,8 @@ procedure movewandering;
 begin
  case action of
   0:;
-  1: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[4])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[4])/100));
+  1: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
  end;
  case ship.wandering.orders of
   0: if action=3 then adjustwanderer(30) else adjustwanderer(2);

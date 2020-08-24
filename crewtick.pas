@@ -239,7 +239,7 @@ var
    begin
       if ship.shield>1501 then
 	 ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy/100*ship.shieldlevel);
-      if ship.battery<31980 then ship.battery:=ship.battery+round((100-ship.damages[1])/4)
+      if ship.battery<31980 then ship.battery:=ship.battery+round((100-ship.damages[DMG_POWER])/4)
       else ship.battery:=32000;
       if ship.battery<0 then
       begin
@@ -538,7 +538,7 @@ var
 			     ship.shieldopt[2]:=40;
 			     ship.shieldopt[1]:=10;
 			  end
-			  else for a:=1 to 3 do ship.shieldopt[a]:=100-ship.damages[2];
+			  else for a:=1 to 3 do ship.shieldopt[a]:=100-ship.damages[DMG_SHIELD];
 		       end;
 		       job:=0;
 		       jobtype:=0;

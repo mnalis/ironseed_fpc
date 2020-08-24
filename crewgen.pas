@@ -828,16 +828,16 @@ begin
       fillchar(cargo,500,0);
       fillchar(numcargo,500,0);
       fillchar(engrteam,sizeof(teamtype)*3,0);
-      damages[1]:=25;
-      damages[2]:=15;
-      damages[3]:=2;
-      damages[4]:=3;
-      damages[5]:=16;
-      damages[6]:=55;
-      damages[7]:=22;
+      damages[DMG_POWER]:=25;
+      damages[DMG_SHIELD]:=15;
+      damages[DMG_WEAPONS]:=2;
+      damages[DMG_ENGINES]:=3;
+      damages[DMG_LIFESUPPORT]:=16;
+      damages[DMG_COMM]:=55;
+      damages[DMG_CPU]:=22;
       with engrteam[1] do
       begin
-	 timeleft:=ship.damages[7]*70+random(30);
+	 timeleft:=ship.damages[DMG_CPU]*70+random(30);
 	 job:=7;
 	 jobtype:=0;
       end;
