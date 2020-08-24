@@ -602,7 +602,6 @@ begin
  delay(tslice div 2);
  if d<1 then d:=1;
  case n of
- // FIXME: there is no check here if damages goes over 100% ? maybe somewhere else?
   1: inc(ship.damages[5],d);		{ n=1 Psionioc inflicts damage to damages[5] = Lifesupport }
   2: dec(ship.hulldamage,d);		{ n=2 Particle damage damages hull }
   3: dec(ship.hulldamage,d div 2);	{ n=3 Intertial damage damages hull more slowly }
@@ -681,7 +680,7 @@ begin
  for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
-       { NB: why *5 ?!
+       { FIXME: why *5 ?!
          if some weapon has damage potential of 50GJ and 20% is for 'j' damage type, it should be 10GJ damage for this damage type, isn't it so?)
          yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25 
 
@@ -692,7 +691,7 @@ begin
    i:=round(i/100*(100-ships^[s].damages[3])); { damages[3] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
    writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[3], '%   ; their attack total i=', i, 'GJ');
 
-   if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)	{ if no shield installed, take full damage }
+   if (ship.shieldlevel=0) or (ship.shield=0) then takedamage(j,i)	{ if no shield installed, or it is down, take full damage }
    else
     begin		{ some shield is installed }
      a:=round(weapons[b].dmgtypes[j]/100 * weapons[b].damage * ship.shieldlevel/100); { a=how much damage will we resist in GJ = pct. for that dmgtype * total max shield protection * current shield level percentage }
@@ -709,9 +708,9 @@ begin
      else
       begin		{ we've taken LESS damage than our shield can handle }
        a:=round((i/(ship.shieldlevel/100 *weapons[b].damage)*100));	{ pct current shield level * total shield protection in GJ }
-       { FIXME: what are we actually calculating here in a?! looks strange, but seems to work in practice...
+       { what are we actually calculating here in a?! looks strange, but seems to work in practice...
 
-        current_shield_protection = ship.shieldlevel/100 *weapons[b].damage;	// pct current shield level * total shield protection in GJ. FIXME but does not take into account damagetype? because it just wants to move our shield slider which is one type only 0-100%?
+        current_shield_protection = ship.shieldlevel/100 *weapons[b].damage;	// pct current shield level * total shield protection in GJ. But it does not take into account damagetype? because it just wants to move our shield slider which is one type only 0-100%?
         a := round (attacking_damage_in_GJ / current_shield_protection_in_GJ * 100 )
         a is by how much would shield level in PCT be reduced
        }
@@ -800,8 +799,10 @@ begin
 	 if not SkillTest(True, 4, skill + (ord(scanning) * 20), learnchance) then
 	 begin
            displaymap;
-           impact(j,maxweapons);	{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
-           //NB: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc...
+           if (ships^[j].damages[3] < 100) then	{ enemy ship can only fire if it's weapons subsystem is not completely destroyed }
+             impact(j,maxweapons);		{ j=enemyship, second param is weapon, currently always 72 "Alien weapon - debug" }
+           //FIXME: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc... 
+           // and would produce 5 times as much sound effects.
            displaymap;
           end;
          charges[a]:=0;

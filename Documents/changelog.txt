@@ -1,3 +1,4 @@
+- combat: enemy can only fire if their weapons subsystem is not destroyed.
 - update most of the tools to correctly rebuild binary files in data/
 - check coordinates better in combat to avoid possible crash
 v 0.1.4
