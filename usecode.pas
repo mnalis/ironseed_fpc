@@ -472,8 +472,8 @@ end;
 
 procedure addlotstime(background, dayticks :Boolean; t: integer);
 begin
-   if ship.shield>1501 then
-      ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy*ship.shieldlevel/100);
+   if ship.shield>ID_REFLECTIVEHULL then
+      ship.battery:=ship.battery-round(weapons[ship.shield-ID_SHIELDS_OFFSET].energy*ship.shieldlevel/100);
    if ship.battery<31960 then ship.battery:=ship.battery+40 else ship.battery:=32000;
    if ship.battery<0 then
    begin
@@ -754,7 +754,7 @@ end;
 
 procedure lowershields;
 begin
- if ship.shield<1502 then exit;
+ if ship.shield<ID_QUARTER_SHIELDS then exit;
  println;
  tcolor:=63;
  print('SECURITY: Lowering shields...');
@@ -774,7 +774,7 @@ procedure raiseshields;
 begin
  println;
  tcolor:=94;
- if ship.shield<1502 then
+ if ship.shield<ID_QUARTER_SHIELDS then
   begin
    print('SECURITY: No shield to raise.');
    exit;

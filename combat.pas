@@ -208,7 +208,7 @@ begin
    if hullintegrity<0 then hullintegrity:=0;
    for j:=1 to 7 do if damages[j]>100 then damages[j]:=100;
    if shieldlevel<0 then shieldlevel:=0;
-   if shield=1501 then shieldlevel:=damages[DMG_SHIELD];
+   if shield=ID_REFLECTIVEHULL then shieldlevel:=damages[DMG_SHIELD];
    if damages[DMG_LIFESUPPORT]=100 then hullintegrity:=0;
   end;
 end;
@@ -235,7 +235,7 @@ begin
  {if (skillcheck(4)) or ((scanning) and (random(100)<20)) then}
  if SkillTest(True, 4, ships^[targetindex].skill - (ord(scanning) * 20), learnchance) then
   begin
-   b:=ships^[targetindex].shield-1442;
+   b:=ships^[targetindex].shield-ID_SHIELDS_OFFSET;
    for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then
     begin
      i:=round(weapons[c].dmgtypes[j]/100*weapons[c].damage*5);
@@ -247,7 +247,7 @@ begin
         begin
          givedamage(j,i-a);
          ships^[targetindex].shieldlevel:=1;
-         if ships^[targetindex].shield=1501 then ships^[targetindex].damages[DMG_SHIELD]:=100;
+         if ships^[targetindex].shield=ID_REFLECTIVEHULL then ships^[targetindex].damages[DMG_SHIELD]:=100;
         end
        else
         begin
@@ -259,14 +259,14 @@ begin
          if d<0 then
           begin
            givedamage(5,random(4)+1);
-           if ships^[targetindex].shield=1501 then
+           if ships^[targetindex].shield=ID_REFLECTIVEHULL then
             ships^[targetindex].damages[DMG_SHIELD]:=100;
            ships^[targetindex].shieldlevel:=1;
           end
          else
           begin
            ships^[targetindex].shieldlevel:=d;
-           if ships^[targetindex].shield=1501 then
+           if ships^[targetindex].shield=ID_REFLECTIVEHULL then
             ships^[targetindex].damages[DMG_SHIELD]:=100-d;
           end;
         end;
@@ -334,13 +334,13 @@ begin
  for j:=1 to nships do
   with ships^[j] do
    begin
-    if shield>1501 then
+    if shield>ID_REFLECTIVEHULL then
      begin
       r:=sqr(relx/10);
       r:=r+sqr(rely/10);
       r:=r+sqr(relz/10);
       r:=sqrt(r)*100;
-      i:=round(weapons[shield-1442].energy*shieldlevel/100);
+      i:=round(weapons[shield-ID_SHIELDS_OFFSET].energy*shieldlevel/100);
       if (battery>0) and (abs(r)<390000) and (shieldlevel<(100-damages[DMG_SHIELD])) then inc(shieldlevel)
        else if ((battery=0) or (abs(r)>400000)) and (shieldlevel>0) then dec(shieldlevel)
        else if shieldlevel>(100-damages[DMG_SHIELD]) then dec(shieldlevel);
@@ -443,8 +443,8 @@ procedure suckpower;
 var
    j : Integer;
 begin
- if ship.shield>1501 then
-  ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy/100*ship.shieldlevel);
+ if ship.shield>ID_REFLECTIVEHULL then
+  ship.battery:=ship.battery-round(weapons[ship.shield-ID_SHIELDS_OFFSET].energy/100*ship.shieldlevel);
  i:=round((100-ship.damages[DMG_POWER])/4);
  if i=0 then i:=1;
  ship.battery:=ship.battery+i;
@@ -453,11 +453,11 @@ begin
  for j:=1 to nships do if ships^[j].hullintegrity>0 then
   with ships^[j] do
    begin
-    if shield>1501 then dec(battery,round(weapons[shield-1442].energy/100*shieldlevel));
+    if shield>ID_REFLECTIVEHULL then dec(battery,round(weapons[shield-ID_SHIELDS_OFFSET].energy/100*shieldlevel));
     inc(battery,round(regen*(100-damages[DMG_POWER])/100));
     if battery<0 then battery:=0
      else if battery>32000 then battery:=32000;
-    if (battery=0) and (shield>1501) and (damages[DMG_SHIELD]<99) then inc(damages[DMG_SHIELD],2);
+    if (battery=0) and (shield>ID_REFLECTIVEHULL) and (damages[DMG_SHIELD]<99) then inc(damages[DMG_SHIELD],2);
    end;
 end;
 
@@ -628,8 +628,8 @@ begin
            end;
           inc(ship.damages[DMG_WEAPONS],d);	{ damages[DMG_WEAPONS] = Weapons subsystem }
          end;
-      4: inc(ship.damages[DMG_COMM],d);	{ damages[DMG_COMM] = Communications subsystem }
-      5: inc(ship.damages[DMG_CPU],d);	{ damages[DMG_CPU] = CPU subsystem }
+      4: inc(ship.damages[DMG_COMM],d);		{ damages[DMG_COMM] = Communications subsystem }
+      5: inc(ship.damages[DMG_CPU],d);		{ damages[DMG_CPU] = CPU subsystem }
       6,7: dec(ship.hullintegrity,d);
      end;
   5: inc(ship.damages[DMG_SHIELD],d);		{ damages[DMG_SHIELD] = Shield subsystem }
@@ -665,7 +665,7 @@ begin
    dead:=true;
    {quit:=true;}
   end;
- if ship.shield=1501 then 		{ shield=1501 is reflective hull }
+ if ship.shield=ID_REFLECTIVEHULL then 		{ shield=ID_REFLECTIVEHULL is reflective hull }
   begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[DMG_SHIELD])? otherwise we could have shield which has level higher than damaged subsystem allows!
      ship.shieldlevel := 100 - ship.damages[DMG_SHIELD]; { damages[DMG_SHIELD] is shield subsystem, drop shield level immedately if reflective hull }
      writeln ('      reflective hull damage sets shieldlevel to ', ship.shieldlevel);
@@ -676,7 +676,7 @@ end;
 procedure impact(s,n: integer);
 var a,b,c,j,i: integer;
 begin
- b:=ship.shield-1442;	{ weapons[b]=our shield, weapons[n]=attacker's weapon; weapons[] array is generic for some type and readonly }
+ b:=ship.shield-ID_SHIELDS_OFFSET;	{ weapons[b]=our shield, weapons[n]=attacker's weapon; weapons[] array is generic for some type and readonly }
  for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
@@ -695,13 +695,13 @@ begin
    else
     begin		{ some shield is installed }
      a:=round(weapons[b].dmgtypes[j]/100 * weapons[b].damage * ship.shieldlevel/100); { a=how much damage will we resist in GJ = pct. for that dmgtype * total max shield protection * current shield level percentage }
-     writeln ('  shield', ship.shield, ' resist for dmgtype',j, '=', weapons[b].dmgtypes[j], '% of total shield damage absorption=', weapons[b].damage, 'GJ; OUR CURRENT shield subsystem damage=',ship.damages[DMG_SHIELD],'% current shield level=', ship.shieldlevel,'%   ; our defense total a=', a, 'GJ');
+     writeln ('  shield', ship.shield, ' resist for dmgtype',j, '=', weapons[b].dmgtypes[j], '% of total shield damage absorption=', weapons[b].damage, 'GJ; OUR CURRENT shield subsystem damage=',ship.damages[DMG_SHIELD],'% current shield level=', ship.shieldlevel,'% (wanted:',ship.shieldopt[SHLD_COMBAT_WANT],')  ; our defense total a=', a, 'GJ');
      if a<i then
       begin		{ we've taken MORE damage than our shield can handle }
        writeln ('    a<i: shield overload; taking residual damage for dmgtype',j,' = ', i-a, 'GJ');
        takedamage(j,i-a); {if weapon deals 90GJ of damage, and our shield absorbs 80GJ of damage, there will be 10GJ of pass-through damage }
        ship.shieldlevel:=0; { we've taken more damage than shields can handle, so set current level to zero (as it can't be negative). It will automatically slowly recover up to 100% or less if shield subsystem is damaged }
-       if (ship.shield=1501) and (j>1) then ship.damages[DMG_SHIELD]:=100;	{ damages[DMG_SHIELD] is as shield subsystem; shield=1501 is reflective hull (50GJ, no psionic defence, about 33% for each of the rest; but it does not use energy }
+       if (ship.shield=ID_REFLECTIVEHULL) and (j>1) then ship.damages[DMG_SHIELD]:=100;	{ damages[DMG_SHIELD] is as shield subsystem; shield=ID_REFLECTIVEHULL is reflective hull (50GJ, no psionic defence, about 33% for each of the rest; but it does not use energy }
           { psionic damage just passes through reflective hull and inflict damage, but if any of the other damage types physically damages the reflective hull to zero or below, whole reflective hull collapses }
        displaydamage;
       end
@@ -720,7 +720,7 @@ begin
         begin		{ shield would be reduced below zero }
          writeln ('    Shield taking damage afterall (total shield malfunction if reflective hull)');
          takedamage(5,random(3)+1);	{ shield subsystem takes 1-3 damage }
-         if ship.shield=1501 then	{ shield=1501 is reflective hull }
+         if ship.shield=ID_REFLECTIVEHULL then	{ shield=ID_REFLECTIVEHULL is reflective hull }
           begin
            ship.damages[DMG_SHIELD]:=100;
            displaydamage;
@@ -730,7 +730,7 @@ begin
        else
         begin		{ shield stays in positive }
          ship.shieldlevel:=c;
-         if ship.shield=1501 then	{ shield=1501 is reflective hull }
+         if ship.shield=ID_REFLECTIVEHULL then	{ shield=ID_REFLECTIVEHULL is reflective hull }
           begin
            writeln ('    Shield stays above zero; reflective hull damage shield subsystem set to', 100-c);
            ship.damages[DMG_SHIELD]:=100-c;
@@ -1411,7 +1411,7 @@ begin
     relx:=basex+formation[form,index,1];
     rely:=basey+formation[form,index,2];
     relz:=basez+formation[form,index,3];
-    if (shield<1502) then shieldlevel:=100;
+    if (shield<ID_QUARTER_SHIELDS) then shieldlevel:=100;
    end;
  until (nships=maxships) or (a=0);
 end;

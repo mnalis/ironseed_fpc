@@ -943,7 +943,7 @@ begin
             if viewindex2<1 then
              begin
               viewindex2:=1;
-              while (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) do inc(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do inc(viewindex2);
              end;
            end
           else if i>0 then
@@ -955,7 +955,7 @@ begin
             if viewindex2>250 then
              begin
               viewindex2:=250;
-              while (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) do dec(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do dec(viewindex2);
              end;
            end;
         end;
@@ -1182,7 +1182,7 @@ begin
       end;
     end;
   end;
- if ship.shield<1501 then ship.shieldlevel:=0
+ if ship.shield<ID_REFLECTIVEHULL then ship.shieldlevel:=0
  else if alert=0 then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then

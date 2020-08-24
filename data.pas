@@ -100,6 +100,11 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
+      ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
+      ID_NOSHIELD = 1500;		{ no shield installed }
+      ID_REFLECTIVEHULL = 1501;
+      ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
+
       DMGTYP_PSIONIC = 1;
       DMGTYP_PARTICLE = 2;
       DMGTYP_INERTIAL = 3;

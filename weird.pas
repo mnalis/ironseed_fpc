@@ -795,7 +795,7 @@ begin
    case mouse.x of
      56..156: case mouse.y of
                  80..95: if incargo(1000)<5 then addcargo2(1000, true);
-               100..115: if incargo(1501)<5 then addcargo2(1501, true);
+               100..115: if incargo(ID_REFLECTIVEHULL)<5 then addcargo2(ID_REFLECTIVEHULL, true);
               end;
     163..263: case mouse.y of
                  80..95: if incargo(3000)<16 then addcargo2(3000, true);

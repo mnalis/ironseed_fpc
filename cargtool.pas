@@ -310,7 +310,7 @@ begin
   inc(cargoindex);
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true;
-   1500..1999: if filters2[2]=1 then finished:=true;
+   ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true;
    2000..3999: if filters2[4]=1 then finished:=true;
    4000..5999: if filters2[3]=1 then finished:=true;
    6000..6999: if filters2[4]=1 then finished:=true;
@@ -328,7 +328,7 @@ begin
   dec(cargoindex);
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true else dec(cargoindex);
-   1500..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
+   ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
    2000..3999,6000..6999: if filters2[4]=1 then finished:=true else dec(cargoindex);
    4000..5999: if filters2[3]=1 then finished:=true else dec(cargoindex);
   end;
@@ -390,7 +390,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   1500..1999: if filters2[2]=1 then
+   ID_NOSHIELD..1999: if filters2[2]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -477,7 +477,7 @@ begin
   draw:=false;
   case ship.cargo[x] of
    1000..1499: if filters2[1]=1 then draw:=true;
-   1500..1999: if filters2[2]=1 then draw:=true;
+   ID_NOSHIELD..1999: if filters2[2]=1 then draw:=true;
    2000..3999,6000..6999: if filters2[4]=1 then draw:=true;
    4000..5999: if filters2[3]=1 then draw:=true;
   end;
@@ -498,7 +498,7 @@ begin
     if y>0 then bkcolor:=0;
     case ship.cargo[x] of
      1000..1499: s:='Weapon   ';
-     1500..1999: s:='Shield   ';
+     ID_NOSHIELD..1999: s:='Shield   ';
      2000..2999: s:='Device   ';
      3000..3999: s:='Component';
      4000..5999: s:='Material ';
@@ -1314,8 +1314,8 @@ begin
      {str(GetBuildTime(index),s);
      printxy(5,5,s);}
   end;
- if (index>999) and (index<1500) then weaponinfo(index-999)
-  else if (index>1499) and (index<2000) then weaponinfo(index-1442)
+ if (index>999) and (index<ID_NOSHIELD) then weaponinfo(index-999)
+  else if (index>1499) and (index<2000) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
         fillchar(screen[i,132],180,1);
  mouseshow;

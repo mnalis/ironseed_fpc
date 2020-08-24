@@ -237,8 +237,8 @@ var
 
    procedure ShipTick(background : Boolean);
    begin
-      if ship.shield>1501 then
-	 ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy/100*ship.shieldlevel);
+      if ship.shield>ID_REFLECTIVEHULL then
+	 ship.battery:=ship.battery-round(weapons[ship.shield-ID_SHIELDS_OFFSET].energy/100*ship.shieldlevel);
       if ship.battery<31980 then ship.battery:=ship.battery+round((100-ship.damages[DMG_POWER])/4)
       else ship.battery:=32000;
       if ship.battery<0 then
@@ -532,7 +532,7 @@ var
 		       else
 		       begin
 			  CrewMessage(background, 31, 2,'Shield installed, sir!');
-			  if job>1501 then
+			  if job>ID_REFLECTIVEHULL then
 			  begin
 			     ship.shieldopt[SHLD_COMBAT_WANT]:=100;
 			     ship.shieldopt[SHLD_ALERT_WANT]:=40;

@@ -332,7 +332,7 @@ begin
            case job of
                 0..100: i:=job;
             1000..1499: i:=10;
-            1501..1999: i:=9;
+            ID_REFLECTIVEHULL..1999: i:=9;
             2000..2999: i:=11;
             3000..3999: i:=12;
             4000..4999: i:=13;
@@ -399,7 +399,7 @@ begin
       for i:=0 to 19 do
        fillchar(screen[89+i,172],20,0);
      end;
-  1501..1519:
+  ID_REFLECTIVEHULL..1519:
      begin
       readweaicon(shd-1444);
       for i:=0 to 19 do
@@ -448,7 +448,7 @@ procedure displayshieldinfo(shd: integer);
 var str1: string[5];
 begin
  tcolor:=31;
- if shd>0 then printxy(174,45,cargo[shd-1442].name)
+ if shd>0 then printxy(174,45,cargo[shd-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
  if ship.damages[DMG_SHIELD]>0 then
   begin
@@ -458,13 +458,13 @@ begin
  else printxy(218,54,'      None');
  if shd>0 then
   begin
-   str(weapons[shd-1442].energy:5,str1);
+   str(weapons[shd-ID_SHIELDS_OFFSET].energy:5,str1);
    printxy(218,61,str1+' GW   ');
-   str(weapons[shd-1442].damage:5,str1);
+   str(weapons[shd-ID_SHIELDS_OFFSET].damage:5,str1);
    printxy(218,68,str1+' GJ   ');
    for j:=1 to 4 do
     begin
-     y:=round(weapons[shd-1442].dmgtypes[j]*0.66);
+     y:=round(weapons[shd-ID_SHIELDS_OFFSET].dmgtypes[j]*0.66);
      for i:=-2 to 3 do
       begin
        if i>0 then x:=100-i
@@ -482,7 +482,7 @@ begin
    for i:=87 to 110 do
     fillchar(screen[i,205],65,2);
   end;
- if shd>1501 then
+ if shd>ID_REFLECTIVEHULL then
   begin
    j:=1;
    while cargo[j].index<>shd
@@ -511,7 +511,7 @@ begin
  setcolor(184);
  line(168,44,232,44);
  tcolor:=31;
- if ship.shield>0 then printxy(174,45,cargo[ship.shield-1442].name)
+ if ship.shield>0 then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
  tcolor:=191;
  for j:=1 to 3 do
@@ -533,14 +533,14 @@ begin
  tcolor:=191;
  bkcolor:=5;
  mousehide;
- if ship.shield=1501 then
+ if ship.shield=ID_REFLECTIVEHULL then
   for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[DMG_SHIELD];
  case com of
   0:;
   1: if viewlevel=0 then
       begin
-       if (ship.shield>1501) and (ship.shieldopt[viewindex]>5) then dec(ship.shieldopt[viewindex],5)
-        else if ship.shield=1500 then ship.shieldopt[viewindex]:=0;
+       if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]>5) then dec(ship.shieldopt[viewindex],5)
+        else if ship.shield=ID_NOSHIELD then ship.shieldopt[viewindex]:=0;
       end
      else if viewlevel=3 then
       begin
@@ -556,9 +556,9 @@ begin
       end;
   2: if viewlevel=0 then
       begin
-       if (ship.shield>1501) and (ship.shieldopt[viewindex]<95) then inc(ship.shieldopt[viewindex],5)
-        else if (ship.shield>1501) then ship.shieldopt[viewindex]:=100
-        else if ship.shield=1500 then ship.shieldopt[viewindex]:=0;
+       if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]<95) then inc(ship.shieldopt[viewindex],5)
+        else if (ship.shield>ID_REFLECTIVEHULL) then ship.shieldopt[viewindex]:=100
+        else if ship.shield=ID_NOSHIELD then ship.shieldopt[viewindex]:=0;
        end
      else if (viewlevel=2) and (viewindex2>0) then
       begin
@@ -568,18 +568,18 @@ begin
   3: if viewlevel>1 then
        begin
         dec(viewindex2);
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
         if viewindex2=0 then viewindex2:=250;
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
      else if viewindex=1 then viewindex:=3 else dec(viewindex);
   4: if viewlevel>1 then
        begin
         inc(viewindex2);
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=1;
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=0;
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
@@ -603,7 +603,7 @@ begin
          end;
      end;
   7: begin
-      if (viewlevel=1) and (ship.shield>1501) then
+      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then
        begin
         mouseshow;
         if yesnorequest('Remove this shield?',0,31) then
@@ -622,7 +622,7 @@ begin
             ship.engrteam[j].job:=ship.shield;
             ship.engrteam[j].jobtype:=2;
             ship.engrteam[j].timeleft:=1000;
-            ship.shield:=1501;
+            ship.shield:=ID_REFLECTIVEHULL;
             mousehide;
             showshdicon(ship.shield);
             mouseshow;
@@ -631,7 +631,7 @@ begin
          end;
         mousehide;
        end
-      else if (viewlevel>1) and (ship.shield<1502) and (viewindex2>0) then
+      else if (viewlevel>1) and (ship.shield<ID_QUARTER_SHIELDS) and (viewindex2>0) then
        begin
         mouseshow;
         if yesnorequest('Install this shield?',0,31) then
@@ -676,14 +676,14 @@ begin
        screen[83,279]:=2;
        printxy(170,27,'Installable Shields');
        viewindex2:=1;
-       while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+       while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
        if viewindex2=251 then viewindex2:=0;
       end;
  end;
  case viewlevel of
   0: begin
       tcolor:=31;
-      if ship.shield>0 then printxy(174,45,cargo[ship.shield-1442].name)
+      if ship.shield>0 then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
        else printxy(174,45,'None                ');
       tcolor:=191;
       str(ship.damages[DMG_SHIELD]:3,str1);
@@ -708,16 +708,16 @@ begin
      end;
   1: displayshieldinfo(ship.shield);
   2: begin
-      if (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999)) then
+      if (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999)) then
        displayshieldopts(4);
       x:=viewindex2+1;
       y:=7;
       repeat
-       while (x<251) and ((ship.cargo[x]<1500) or (ship.cargo[x]>1599)) do inc(x);
+       while (x<251) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do inc(x);
        if x<251 then
         begin
          inc(y);
-         printxy(167,31+y*6,cargo[ship.cargo[x]-1442].name);
+         printxy(167,31+y*6,cargo[ship.cargo[x]-ID_SHIELDS_OFFSET].name);
         end;
        inc(x);
       until (y=13) or (x>250);
@@ -727,12 +727,12 @@ begin
       x:=viewindex2;
       y:=8;
       repeat
-       while (x>0) and ((ship.cargo[x]<1500) or (ship.cargo[x]>1599)) do dec(x);
+       while (x>0) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do dec(x);
        if x=viewindex2 then bkcolor:=179 else bkcolor:=5;
        if x>0 then
         begin
          dec(y);
-         printxy(167,31+y*6,cargo[ship.cargo[x]-1442].name);
+         printxy(167,31+y*6,cargo[ship.cargo[x]-ID_SHIELDS_OFFSET].name);
         end;
        dec(x);
       until (y=1) or (x<1);
@@ -741,7 +741,7 @@ begin
         fillchar(screen[j,166],113,5);
      end;
   3: begin
-      if (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) then
+      if (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) then
        displayshieldopts(4);
       if viewindex2>0 then displayshieldinfo(ship.cargo[viewindex2]);
      end;
