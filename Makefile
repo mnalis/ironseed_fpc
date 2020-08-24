@@ -53,7 +53,7 @@ DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artima
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -189,6 +189,8 @@ data/weapicon.dta data/planicon.dta: Data_Generators/makedata/iconmake Data_Gene
 	Data_Generators/makedata/iconmake
 data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/newnames.txt
 	Data_Generators/makedata/namemake
+data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
+	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
 
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind
