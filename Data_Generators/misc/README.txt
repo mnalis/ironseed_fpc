@@ -10,7 +10,7 @@ Image conversion programs for Ironseed:
 - .ppm
   standard interchanged format, can be P6 (binary) or P3 (ASCII) - see ppm(5) manual page for more info
 
-- icons.vga and main.pal
+- icons.vga (and main.pal PALLETE)
   81 icons of 17x15 pixels
 
 Quick HOWTO:
@@ -25,5 +25,8 @@ Quick HOWTO:
   ppm2scr.pl barbaz.ppm				# creates barbaz.scr and barbaz.pal from barbaz.ppm
   scr2cpr barbaz				# creates barbaz.cpr from barbaz.scr and barbaz.pal
 
-- convert "icons.vga" and "main.pal" to icons.png
+- convert "icons.vga" and "main.pal" to "icons.png"
   icons2ppm.pl data/icons.vga data/main.pal | convert - Graphics_Assets/icons.png
+
+- convert "icons.png" to "icons.vga" using aux. "main.pal"
+  convert Graphics_Assets/icons.png ppm:- | Data_Generators/misc/ppm2icons.pl data/main.pal > data/icons.vga

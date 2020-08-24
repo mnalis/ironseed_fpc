@@ -9,34 +9,25 @@ use autodie qw/:all/;
 
 my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
 
-my $basename = $ARGV[0];
-my $pal_name = $ARGV[1];
-my $ppm_name = $basename;
+my $pal_name = $ARGV[0];
 my $want_width = $ENV{WIDTH} || 17;
 my $want_height = $ENV{HEIGHT} || 15;
 my $want_icon_count = $ENV{COUNT} || 81;
 
-if (!defined $ppm_name or !defined $pal_name) {
-  print "Usage: $0 <BASENAME.ppm> <main.pal>\n";
-  print "Converts PPM file to Ironseed 81 icons of 17x15 icons.vga file using main.pal\n";
+if (!defined $pal_name) {
+  print "Usage: $0 <main.pal>\n";
+  print "Converts PPM file from STDIN (using specified main.pal) to Ironseed 81 icons of 17x15 icons.vga on STDOUT\n";
   exit 1;
 }
 
-die "$basename does not look like .ppm file" unless $basename =~ s{\.ppm$}{}i;
-
-my $vga_final = $basename . '.vga';
-my $vga_tmp = $vga_final . '.tmp';
-
-
-
-open my $ppm_fd, '<', $ppm_name;
+die "cowardly refusing to write binary file to TTY" if (-t STDOUT);
 
 # FIXME: should support PPM comments, different whitespace etc. see ppm(5)
-my $format = <$ppm_fd>; chomp $format;
+my $format = <STDIN>; chomp $format;
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
-my ($width, $height) = split ' ', <$ppm_fd>;
+my ($width, $height) = split ' ', <STDIN>;
 die "ERROR: not $want_icon_count icons of ${want_width}x${want_height} but ${width}x${height} PPM file" unless $height==$want_height and $width==$want_width*$want_icon_count ;
-my $bpp = <$ppm_fd>; chomp($bpp);
+my $bpp = <STDIN>; chomp($bpp);
 die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
@@ -57,7 +48,7 @@ for (my $pal_used=0; $pal_used < 768; $pal_used+=3) {
 }
 
 # map image colors to pallete, store result in @vga_image
-my @image = unpack "C*", <$ppm_fd>;
+my @image = unpack "C*", <STDIN>;
 my @vga_image=();
 
 for (my $i = 0; $i < $height * $width * 3; $i+=3) {
@@ -77,21 +68,14 @@ for (my $i = 0; $i < $height * $width * 3; $i+=3) {
   $vga_image[$vga_idx] = $val;
 }
 
-# sort @vga_image and write to icons.vga file
-open my $vga_fd, '>', $vga_tmp;
-
+# sort @vga_image and write to icons.vga file on STDOUT
 for my $icon (0 .. $want_icon_count-1) {
   for my $x (0 .. $want_width-1) {
      for my $y (0 .. $want_height-1) {
         my $idx = ($icon * $want_width) + ($y * $want_width * $want_icon_count) + $x;
         my $val = $vga_image[$idx];
-        #printf "icon=$icon x=$x y=$y (idx=$idx, val:     \t%02X)\n", $val;
-        print $vga_fd chr($val);
+        #printf STDERR "icon=$icon x=$x y=$y (idx=$idx, val:     \t%02X)\n", $val;
+        print chr($val);
      }
   }
 }
-
-close $vga_fd;
-rename $vga_tmp, $vga_final;
-
-print "Done, written: $vga_final.\n";
