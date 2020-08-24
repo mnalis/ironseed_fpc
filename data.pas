@@ -96,6 +96,10 @@ const OPT_SCREENSAVER = 1;
       DMG_COMM = 6;
       DMG_CPU = 7;
 
+      SHLD_LOWERED_WANT = 1;
+      SHLD_ALERT_WANT = 2;
+      SHLD_COMBAT_WANT = 3;
+
 type
    buttontype = record
 		   x, y, w, h : Integer;

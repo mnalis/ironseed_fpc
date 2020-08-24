@@ -3,6 +3,7 @@ TEMP/
 *.s
 *.o
 *~
+*.bak
 tags
 LPT1
 crewgen
