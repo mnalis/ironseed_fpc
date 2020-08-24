@@ -763,7 +763,7 @@ begin
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
- if ship.shieldlevel=ship.shieldopt[2] then
+ if ship.shieldlevel=ship.shieldopt[SHLD_ALERT_WANT] then
   begin
    tcolor:=63;
    print('Complete.');
@@ -800,7 +800,7 @@ begin
  print('SECURITY: Raising shields...');
  graypalin;
  setalertmode(2);
- ship.shieldlevel:=ship.shieldopt[3];
+ ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
@@ -820,7 +820,7 @@ begin
  tcolor:=63;
  print('SECURITY: Powering down weapons...');
  graypalin;
- if (ship.shieldlevel<>ship.shieldopt[3]) or (ship.shieldopt[3]<=ship.shieldopt[1])
+ if (ship.shieldlevel<>ship.shieldopt[SHLD_COMBAT_WANT]) or (ship.shieldopt[SHLD_COMBAT_WANT]<=ship.shieldopt[SHLD_LOWERED_WANT])
   then setalertmode(1);
  for j:=1 to 10 do
   if ship.gunnodes[j]>0 then
@@ -1524,7 +1524,7 @@ begin
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  30: if (ship.shieldlevel=ship.shieldopt[3]) and (alert=2) then lowershields
+  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=2) then lowershields
        else raiseshields;
   31: if (ship.wandering.alienid<16000) and (action<>3) and
        ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or

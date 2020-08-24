@@ -87,6 +87,7 @@ clean: cleantmp
 
 cleanbak:
 	find . -iname "*~" -print0 | xargs -0r rm -f
+	find . -iname "*.bak" -print0 | xargs -0r rm -f
 
 reallyclean: clean cleanbak
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags

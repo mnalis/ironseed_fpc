@@ -913,19 +913,19 @@ begin
              70..74: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=1;
-                       ship.shieldopt[1]:=mouse.x-173;
+                       ship.shieldopt[SHLD_LOWERED_WANT]:=mouse.x-173;
                       end;
              79..86: viewindex:=2;
              88..92: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=2;
-                       ship.shieldopt[2]:=mouse.x-173;
+                       ship.shieldopt[SHLD_ALERT_WANT]:=mouse.x-173;
                       end;
             97..104: viewindex:=3;
            106..110: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=3;
-                       ship.shieldopt[3]:=mouse.x-173;
+                       ship.shieldopt[SHLD_COMBAT_WANT]:=mouse.x-173;
                       end;
           end;
          end
@@ -1184,9 +1184,9 @@ begin
   end;
  if ship.shield<1501 then ship.shieldlevel:=0
  else if alert=0 then
-  ship.shieldlevel:=ship.shieldopt[1]
+  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[2];
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
 procedure processkey;

@@ -534,9 +534,9 @@ var
 			  CrewMessage(background, 31, 2,'Shield installed, sir!');
 			  if job>1501 then
 			  begin
-			     ship.shieldopt[3]:=100;
-			     ship.shieldopt[2]:=40;
-			     ship.shieldopt[1]:=10;
+			     ship.shieldopt[SHLD_COMBAT_WANT]:=100;
+			     ship.shieldopt[SHLD_ALERT_WANT]:=40;
+			     ship.shieldopt[SHLD_LOWERED_WANT]:=10;
 			  end
 			  else for a:=1 to 3 do ship.shieldopt[a]:=100-ship.damages[DMG_SHIELD];
 		       end;

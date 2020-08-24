@@ -320,11 +320,11 @@ begin
  action:=0;
  tcolor:=31;
  alert:=2;
- if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[3]) and (ship.shieldopt[3]>ship.shieldopt[1])) then setalertmode(2)
+ if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)
   else setalertmode(0);
  bkcolor:=3;
  if ship.shield<60 then ship.shieldlevel:=0
-  else ship.shieldlevel:=ship.shieldopt[1];
+  else ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
  showresearchlights;
 end;
 

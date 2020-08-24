@@ -770,9 +770,9 @@ begin
     end;
   end;
  if alert=0 then
-  ship.shieldlevel:=ship.shieldopt[1]
+  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[2];
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
 procedure setupweaponinfo;

@@ -126,12 +126,12 @@ begin
     n := 0;
     part := 0;
   end;
- part:=102/100*ship.shieldopt[3];
+ part:=102/100*ship.shieldopt[SHLD_COMBAT_WANT];
  for i:=0 to 6 do
   fillchar(screen[114-round(part)+i,312],4,0);
  if n>100-ship.damages[DMG_SHIELD] then n:=100-ship.damages[DMG_SHIELD];
- ship.shieldopt[3]:=n;
- part:=102/100*ship.shieldopt[3];
+ ship.shieldopt[SHLD_COMBAT_WANT]:=n;
+ part:=102/100*ship.shieldopt[SHLD_COMBAT_WANT];
  for i:=0 to 6 do
   move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
  mouseshow;
@@ -328,9 +328,9 @@ begin
      mouseshow;
      if (part>=r) and ((autofire) or (fireweapon=j)) then firingweapon(j);
    end;
- if (ship.battery>0) and (ship.shieldlevel<ship.shieldopt[3]) then inc(ship.shieldlevel)
+ if (ship.battery>0) and (ship.shieldlevel<ship.shieldopt[SHLD_COMBAT_WANT]) then inc(ship.shieldlevel)
   else if (ship.battery=0) and (ship.shieldlevel>0) then dec(ship.shieldlevel)
-  else if (Ship.shieldlevel>ship.shieldopt[3]) then dec(ship.shieldlevel);
+  else if (Ship.shieldlevel>ship.shieldopt[SHLD_COMBAT_WANT]) then dec(ship.shieldlevel);
  for j:=1 to nships do
   with ships^[j] do
    begin
@@ -426,7 +426,7 @@ begin
      fillchar(screen[a*9+128,268+b],49-b,0);
     end;
   end;
- if 100-ship.damages[DMG_SHIELD]<ship.shieldopt[3] then displayshieldpic(100-ship.damages[DMG_SHIELD]);
+ if 100-ship.damages[DMG_SHIELD]<ship.shieldopt[SHLD_COMBAT_WANT] then displayshieldpic(100-ship.damages[DMG_SHIELD]);
  part:=114-(102/100*(100-ship.damages[DMG_SHIELD]));
  if round(part)<>oldshddmg then
   begin
@@ -1268,8 +1268,8 @@ begin
   '1': setdir(7);
   '2': setdir(8);
   '3': setdir(9);
-  'Z': displayshieldpic(max(0, ship.shieldopt[3] - 10));	{ 'Z' - shield level down }
-  'X': displayshieldpic(min(100, ship.shieldopt[3] + 10));	{ 'X' - shield level up }
+  'Z': displayshieldpic(max(0, ship.shieldopt[SHLD_COMBAT_WANT] - 10));	{ 'Z' - shield level down }
+  'X': displayshieldpic(min(100, ship.shieldopt[SHLD_COMBAT_WANT] + 10));	{ 'X' - shield level up }
   ' ': switchalienmode;
   '<',',': previoustarget;
   '>','.': nexttarget;
@@ -1503,7 +1503,7 @@ begin
    displaystats;
    displaydamage;
    drawdirection(63);
-   displayshieldpic(ship.shieldopt[3]);
+   displayshieldpic(ship.shieldopt[SHLD_COMBAT_WANT]);
    readyships;
    displaytargetinfo;
    mouseshow;
