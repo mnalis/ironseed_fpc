@@ -698,7 +698,7 @@ begin
    i:=round(i/100*(100-ships^[s].damages[DMG_WEAPONS])); { damages[DMG_WEAPONS] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
    writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[DMG_WEAPONS], '%   ; their attack total i=', i, 'GJ, batt=', ships^[s].battery);
    writeln ('  our shield', ship.shield, ' has level=', ship.shieldlevel);
-   if (ship.shieldlevel=0) or (ship.shield<=ID_NOSHIELD) then takedamage(j,i)	{ if no shield installed, or it is down, take full damage }
+   if (ship.shieldlevel=0) or (ship.shield<=ID_NOSHIELD) or (weapons[b].dmgtypes[j]=0) then takedamage(j,i)	{ if no shield installed, or it is down, or that shield does not protect against that damagetype at all (like psi) - take full damage without affecting the shield}
    else
     begin		{ some shield is installed }
      a:=round(weapons[b].dmgtypes[j]/100 * weapons[b].damage * ship.shieldlevel/100); { a=how much damage will we resist in GJ = pct. for that dmgtype * total max shield protection * current shield level percentage }
