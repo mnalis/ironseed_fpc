@@ -315,7 +315,7 @@ begin
    
    curfilenum:=num;
    loadplanetinfo;
-   tslice:=ship.options[2];
+   tslice:=ship.options[OPT_TIMESLICE];
    RebuildCargoReserve;
    ResetCrew;
 end;

@@ -15,9 +15,10 @@ program makenames;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 var
- i,j,a,b: integer;
+ j,a,b: integer;
  name: string[13];
  last: char;
 

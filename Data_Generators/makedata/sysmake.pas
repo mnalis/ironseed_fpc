@@ -15,6 +15,7 @@ program displaysystems;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 
 uses crt;
@@ -41,7 +42,7 @@ begin
  reset(f);
  assign(f2,'data/sysset.dta');
  reset(f2);
- assign(ft,'other/sysdata.txt');
+ assign(ft,'Data_Generators/other/sysdata.txt');
  rewrite(ft);
  for a:=1 to 250 do
   begin
@@ -74,7 +75,7 @@ end;
 
 
 begin
- assign(ft,'makedata/names.txt');
+ assign(ft,'Data_Generators/makedata/names.txt');
  reset(ft);
  assign(f,'data/sysname.dta');
  rewrite(f);

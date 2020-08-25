@@ -571,7 +571,7 @@ begin
 	 tcolor := n
       else
       {if (brighter) then
-      case ship.options[4] of
+      case ship.options[OPT_DIFFICULTY] of
       0: tcolor:=m;
       1: tcolor:=n;
       2: tcolor:=o;
@@ -587,7 +587,7 @@ begin
 	 for a:=7 downto 4 do
 	 begin
 	    inc(x);
-	    if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	    if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	    else if bkcolor<255 then screen[y,x]:=bkcolor;
 	 end;
 	 dec(tcolor,1);
@@ -597,7 +597,7 @@ begin
 	 for a:=3 downto 0 do
 	 begin
 	    inc(x);
-	    if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	    if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	    else if bkcolor<255 then screen[y,x]:=bkcolor;
 	 end;
 	 dec(tcolor,2);
@@ -609,7 +609,7 @@ begin
 	 tcolor := n
       else
       {   if (brighter) then
-      case ship.options[4] of
+      case ship.options[OPT_DIFFICULTY] of
       0: tcolor:=m;
       1: tcolor:=n;
       2: tcolor:=o;
@@ -623,7 +623,7 @@ begin
 	 for a:=7 downto 4 do
 	 begin
 	    inc(x);
-	    if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	    if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	    else if bkcolor<255 then screen[y,x]:=bkcolor;
 	 end;
 	 dec(tcolor,1);
@@ -633,7 +633,7 @@ begin
 	 for a:=3 downto 0 do
 	 begin
 	    inc(x);
-	    if font[ship.options[7],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
+	    if font[ship.options[OPT_FONT],letter,i div 2] and (1 shl a)>0 then screen[y,x]:=tcolor
 	    else if bkcolor<255 then screen[y,x]:=bkcolor;
 	 end;
 	 dec(tcolor,2);
@@ -1199,7 +1199,7 @@ begin
     11: s:='VOID.MOD';
    else s:='';
    end;
-   {if ioresult<>0 then printxy(217,20,'sound\'+s);}
+   {if ioresult<>0 then printxy(217,20,'sound/'+s);}
    if s<>'' then playmod(true,'sound/'+s);
    {if checkerror then printxy(217,20,'checkerror');
    if not playing then printxy(217,20,'not playing');

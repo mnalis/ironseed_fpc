@@ -52,7 +52,7 @@ function checkloc(l: integer): boolean;
 
 implementation
 
-uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, modplay;
+uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, modplay, math;
 
 const
  batmax=32000;
@@ -76,30 +76,30 @@ begin
   0:;
   1,6: case viewindex of
         2: begin
-            if ship.options[2]>1 then dec(ship.options[2]);
-            tslice:=ship.options[2];
+            if ship.options[OPT_TIMESLICE]>1 then dec(ship.options[OPT_TIMESLICE]);
+            tslice:=ship.options[OPT_TIMESLICE];
            end;
         3: begin
-            ship.options[3]:=0;
+            ship.options[OPT_SOUND]:=0;
             stopmod;
            end;
         9: begin
-            if ship.options[9]>1 then dec(ship.options[9]);
+            if ship.options[OPT_VOLUME]>1 then dec(ship.options[OPT_VOLUME]);
             setmodvolume;
            end;
         else if ship.options[viewindex]>0 then dec(ship.options[viewindex]);
        end;
   2,7: case viewindex of
-      1: if ship.options[1]<1 then inc(ship.options[1]);
+      1: if ship.options[OPT_SCREENSAVER]<1 then inc(ship.options[OPT_SCREENSAVER]);
       2: begin
-          if ship.options[2]<250 then inc(ship.options[2]);
-          tslice:=ship.options[2];
+          if ship.options[OPT_TIMESLICE]<250 then inc(ship.options[OPT_TIMESLICE]);
+          tslice:=ship.options[OPT_TIMESLICE];
          end;
-      4: if ship.options[4]<2 then inc(ship.options[4]);
-      5: if ship.options[5]<2 then inc(ship.options[5]);
-      7: if ship.options[7]<2 then inc(ship.options[7]);
+      4: if ship.options[OPT_DIFFICULTY]<2 then inc(ship.options[OPT_DIFFICULTY]);
+      5: if ship.options[OPT_MSGS]<2 then inc(ship.options[OPT_MSGS]);
+      7: if ship.options[OPT_FONT]<2 then inc(ship.options[OPT_FONT]);
       9: begin
-          if ship.options[9]<64 then inc(ship.options[9]);
+          if ship.options[OPT_VOLUME]<64 then inc(ship.options[OPT_VOLUME]);
           setmodvolume;
          end;
       else if ship.options[viewindex]=0 then ship.options[viewindex]:=1;
@@ -114,38 +114,38 @@ begin
  tcolor:=191;
  mousehide;
  if viewindex=1 then bkcolor:=179 else bkcolor:=5;
- if ship.options[1]=0 then printxy(251,37,'Off') else printxy(251,37,' On');
+ if ship.options[OPT_SCREENSAVER]=0 then printxy(251,37,'Off') else printxy(251,37,' On');
  if viewindex=2 then bkcolor:=179 else bkcolor:=5;
- str(ship.options[2]:3,s);
+ str(ship.options[OPT_TIMESLICE]:3,s);
  printxy(251,46,s);
  if viewindex=3 then bkcolor:=179 else bkcolor:=5;
- if ship.options[3]=1 then printxy(251,55,' On') else printxy(251,55,'Off');
+ if ship.options[OPT_SOUND]=1 then printxy(251,55,' On') else printxy(251,55,'Off');
  if viewindex=4 then bkcolor:=179 else bkcolor:=5;
- case ship.options[4] of
+ case ship.options[OPT_DIFFICULTY] of
   0: s:='Min';
   1: s:='Avg';
   2: s:='Max';
  end;
  printxy(251,64,s);
  if viewindex=5 then bkcolor:=179 else bkcolor:=5;
- case ship.options[5] of
+ case ship.options[OPT_MSGS] of
   2: s:=' All';
   1: s:='Some';
   0: s:='None';
  end;
  printxy(246,73,s);
  if viewindex=6 then bkcolor:=179 else bkcolor:=5;
- if ship.options[6]=1 then printxy(251,82,' On') else printxy(251,82,'Off');
+ if ship.options[OPT_ANIMATION]=1 then printxy(251,82,' On') else printxy(251,82,'Off');
  if viewindex=7 then bkcolor:=179 else bkcolor:=5;
- case ship.options[7] of
+ case ship.options[OPT_FONT] of
   0: s:=' Iron';
   1: s:='Clean';
   2: s:='Block';
  end;
  printxy(241,91,s);
  if viewindex=8 then bkcolor:=179 else bkcolor:=5;
- if ship.options[8]=1 then printxy(251,100,' On') else printxy(251,100,'Off');
- str(ship.options[9]:3,s);
+ if ship.options[OPT_AUTOSAVE]=1 then printxy(251,100,' On') else printxy(251,100,'Off');
+ str(ship.options[OPT_VOLUME]:3,s);
  if viewindex=9 then bkcolor:=179 else bkcolor:=5;
  printxy(251,109,s);
  mouseshow;
@@ -180,7 +180,7 @@ begin
          case job of
              0:;
           1..7: if ship.damages[job]=0 then job:=0;
-             8: if ship.hulldamage=ship.hullmax then job:=0;
+             8: if ship.hullintegrity=ship.hullmax then job:=0;
          end;
          if job=0 then timeleft:=0;
         end;
@@ -228,7 +228,7 @@ begin
         case job of
             0: timeleft:=0;
          1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-            8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+            8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
         end;
       end;
   4: if viewlevel=1 then
@@ -246,7 +246,7 @@ begin
         case job of
             0: timeleft:=0;
          1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-            8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+            8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
         end;
       end;
   5: begin
@@ -293,7 +293,7 @@ begin
               case job of
                   0:;
                1..7: if ship.damages[job]=0 then job:=0;
-                  8: if ship.hulldamage=ship.hullmax then job:=0;
+                  8: if ship.hullintegrity=ship.hullmax then job:=0;
               end;
               if job=0 then timeleft:=0;
              end;
@@ -332,7 +332,7 @@ begin
            case job of
                 0..100: i:=job;
             1000..1499: i:=10;
-            1501..1999: i:=9;
+            ID_REFLECTIVEHULL..1999: i:=9;
             2000..2999: i:=11;
             3000..3999: i:=12;
             4000..4999: i:=13;
@@ -373,7 +373,7 @@ begin
        end;
       if ship.engrteam[viewindex].job=8 then bkcolor:=179 else
        bkcolor:=5;
-      str(ship.hullmax-ship.hulldamage:4,s);
+      str(ship.hullmax-ship.hullintegrity:4,s);
       printxy(186,102,teamdata[8]);
       printxy(253,102,s);
       for i:=46 to 114 do
@@ -394,14 +394,15 @@ end;
 
 procedure showshdicon(shd: integer);
 begin
+ assert (shd >= ID_NOSHIELD);
  case shd of
-  0: begin
+  ID_NOSHIELD: begin
       for i:=0 to 19 do
        fillchar(screen[89+i,172],20,0);
      end;
-  1501..1519:
+  ID_REFLECTIVEHULL..1519:
      begin
-      readweaicon(shd-1444);
+      readweaicon(shd-ID_SHIELDS_OFFSET-2);	{ NOSHIELD / noweapon do not have icons, so -2  }
       for i:=0 to 19 do
        move(tempicon^[i],screen[89+i,172],5*4);
      end;
@@ -410,6 +411,7 @@ end;
 
 procedure setupshieldinfo(shd: integer);
 begin
+ assert (shd >= ID_NOSHIELD);
  for i:=37 to 114 do
   fillchar(screen[i,166],113,5);
  setcolor(184);
@@ -448,23 +450,25 @@ procedure displayshieldinfo(shd: integer);
 var str1: string[5];
 begin
  tcolor:=31;
- if shd>0 then printxy(174,45,cargo[shd-1442].name)
+ if shd>ID_NOSHIELD then printxy(174,45,cargo[shd-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
- if ship.damages[2]>0 then
+
+ if ship.damages[DMG_SHIELD]>0 then
   begin
-   str(ship.damages[2]:5,str1);
+   str(ship.damages[DMG_SHIELD]:5,str1);
    printxy(218,54,str1+'%   ');
   end
  else printxy(218,54,'      None');
- if shd>0 then
+
+ if shd>ID_NOSHIELD then
   begin
-   str(weapons[shd-1442].energy:5,str1);
+   str(weapons[shd-ID_SHIELDS_OFFSET].energy:5,str1);
    printxy(218,61,str1+' GW   ');
-   str(weapons[shd-1442].damage:5,str1);
+   str(weapons[shd-ID_SHIELDS_OFFSET].damage:5,str1);
    printxy(218,68,str1+' GJ   ');
    for j:=1 to 4 do
     begin
-     y:=round(weapons[shd-1442].dmgtypes[j]*0.66);
+     y:=round(weapons[shd-ID_SHIELDS_OFFSET].dmgtypes[j]*0.66);
      for i:=-2 to 3 do
       begin
        if i>0 then x:=100-i
@@ -482,7 +486,8 @@ begin
    for i:=87 to 110 do
     fillchar(screen[i,205],65,2);
   end;
- if shd>1501 then
+
+ if shd>ID_REFLECTIVEHULL then	{ some energy&space-using shield installed }
   begin
    j:=1;
    while cargo[j].index<>shd
@@ -511,7 +516,7 @@ begin
  setcolor(184);
  line(168,44,232,44);
  tcolor:=31;
- if ship.shield>0 then printxy(174,45,cargo[ship.shield-1442].name)
+ if ship.shield>ID_NOSHIELD then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
  tcolor:=191;
  for j:=1 to 3 do
@@ -533,14 +538,16 @@ begin
  tcolor:=191;
  bkcolor:=5;
  mousehide;
- if ship.shield=1501 then
-  for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[2];
+ if ship.shield=ID_REFLECTIVEHULL then
+  for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[DMG_SHIELD];
+ if ship.shield<=ID_NOSHIELD then
+  for i:=1 to 3 do ship.shieldopt[i]:=0;
+
  case com of
   0:;
-  1: if viewlevel=0 then
+  1: if viewlevel=0 then	{ left }
       begin
-       if (ship.shield>1501) and (ship.shieldopt[viewindex]>5) then dec(ship.shieldopt[viewindex],5)
-        else if ship.shield=1500 then ship.shieldopt[viewindex]:=0;
+       if ship.shield>ID_REFLECTIVEHULL then dec(ship.shieldopt[viewindex],min(5, ship.shieldopt[viewindex]))
       end
      else if viewlevel=3 then
       begin
@@ -554,32 +561,30 @@ begin
        screen[83,279]:=2;
        printxy(170,27,'Installable Shields');
       end;
-  2: if viewlevel=0 then
+  2: if viewlevel=0 then	{ right }
       begin
-       if (ship.shield>1501) and (ship.shieldopt[viewindex]<95) then inc(ship.shieldopt[viewindex],5)
-        else if (ship.shield>1501) then ship.shieldopt[viewindex]:=100
-        else if ship.shield=1500 then ship.shieldopt[viewindex]:=0;
-       end
+       if ship.shield>ID_REFLECTIVEHULL then inc(ship.shieldopt[viewindex],min(5, 100-ship.shieldopt[viewindex]))
+      end
      else if (viewlevel=2) and (viewindex2>0) then
       begin
        viewlevel:=3;
        setupshieldinfo(ship.cargo[viewindex2]);
       end;
-  3: if viewlevel>1 then
+  3: if viewlevel>1 then	{ up }
        begin
         dec(viewindex2);
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
         if viewindex2=0 then viewindex2:=250;
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
      else if viewindex=1 then viewindex:=3 else dec(viewindex);
-  4: if viewlevel>1 then
+  4: if viewlevel>1 then	{ down }
        begin
         inc(viewindex2);
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=1;
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=0;
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
@@ -603,7 +608,7 @@ begin
          end;
      end;
   7: begin
-      if (viewlevel=1) and (ship.shield>1501) then
+      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ can't remove reflective hull }
        begin
         mouseshow;
         if yesnorequest('Remove this shield?',0,31) then
@@ -616,13 +621,13 @@ begin
             tcolor:=94;
             print('ENGINEERING: No team available.');
            end
-          else
+          else		{ there is engineering team available }
            begin
             addcargo(ship.shield, true);
             ship.engrteam[j].job:=ship.shield;
             ship.engrteam[j].jobtype:=2;
             ship.engrteam[j].timeleft:=1000;
-            ship.shield:=1501;
+            ship.shield:=ID_REFLECTIVEHULL;	// NB not fair but simple - we get reflective hull even if didn't have it before, if we remove any other shield... oh well..
             mousehide;
             showshdicon(ship.shield);
             mouseshow;
@@ -631,7 +636,7 @@ begin
          end;
         mousehide;
        end
-      else if (viewlevel>1) and (ship.shield<1502) and (viewindex2>0) then
+      else if (viewlevel>1) and (ship.shield<=ID_REFLECTIVEHULL) and (viewindex2>0) then
        begin
         mouseshow;
         if yesnorequest('Install this shield?',0,31) then
@@ -676,17 +681,17 @@ begin
        screen[83,279]:=2;
        printxy(170,27,'Installable Shields');
        viewindex2:=1;
-       while (viewindex2<251) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+       while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
        if viewindex2=251 then viewindex2:=0;
       end;
  end;
  case viewlevel of
   0: begin
       tcolor:=31;
-      if ship.shield>0 then printxy(174,45,cargo[ship.shield-1442].name)
+      if ship.shield>ID_NOSHIELD then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
        else printxy(174,45,'None                ');
       tcolor:=191;
-      str(ship.damages[2]:3,str1);
+      str(ship.damages[DMG_SHIELD]:3,str1);
       printxy(163,53,'System Damage:'+str1+'%');
       if viewindex=1 then bkcolor:=179 else bkcolor:=5;
       printxy(163,61,'Rest Mode');
@@ -704,20 +709,20 @@ begin
       setfillstyle(1,2);
       for j:=1 to 3 do
        if ship.shieldopt[j]<100 then
-        bar(174+ship.shieldopt[j],52+j*18,273,56+j*18);
+        bar(174+ship.shieldopt[j],52+j*18,274,57+j*18);
      end;
   1: displayshieldinfo(ship.shield);
   2: begin
-      if (viewindex2>0) and ((ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999)) then
+      if (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999)) then
        displayshieldopts(4);
       x:=viewindex2+1;
       y:=7;
       repeat
-       while (x<251) and ((ship.cargo[x]<1500) or (ship.cargo[x]>1599)) do inc(x);
+       while (x<251) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do inc(x);
        if x<251 then
         begin
          inc(y);
-         printxy(167,31+y*6,cargo[ship.cargo[x]-1442].name);
+         printxy(167,31+y*6,cargo[ship.cargo[x]-ID_SHIELDS_OFFSET].name);
         end;
        inc(x);
       until (y=13) or (x>250);
@@ -727,12 +732,12 @@ begin
       x:=viewindex2;
       y:=8;
       repeat
-       while (x>0) and ((ship.cargo[x]<1500) or (ship.cargo[x]>1599)) do dec(x);
+       while (x>0) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do dec(x);
        if x=viewindex2 then bkcolor:=179 else bkcolor:=5;
        if x>0 then
         begin
          dec(y);
-         printxy(167,31+y*6,cargo[ship.cargo[x]-1442].name);
+         printxy(167,31+y*6,cargo[ship.cargo[x]-ID_SHIELDS_OFFSET].name);
         end;
        dec(x);
       until (y=1) or (x<1);
@@ -741,20 +746,20 @@ begin
         fillchar(screen[j,166],113,5);
      end;
   3: begin
-      if (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) then
+      if (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) then
        displayshieldopts(4);
       if viewindex2>0 then displayshieldinfo(ship.cargo[viewindex2]);
      end;
  end;
  mouseshow;
  bkcolor:=3;
- if (ship.shield<60) or (alert=2) then exit;
- if ship.damages[2]>25 then
+ if (ship.shield<=ID_REFLECTIVEHULL) or (alert=2) then exit;
+ if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
    println;
    ship.shieldlevel:=0;
-   if ship.damages[2]>59 then
+   if ship.damages[DMG_SHIELD]>59 then
     begin
      print('COMPUTER: Shield integrity compromised...needs repair.');
      exit;
@@ -762,7 +767,7 @@ begin
    else
     begin
      print('Shield unstable...');
-     if (random(40)+20)<ship.damages[2] then
+     if (random(40)+20)<ship.damages[DMG_SHIELD] then
       begin
        print('COMPUTER: Failed to adjust shield.');
        exit;
@@ -770,9 +775,9 @@ begin
     end;
   end;
  if alert=0 then
-  ship.shieldlevel:=ship.shieldopt[1]
+  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[2];
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
 procedure setupweaponinfo;
@@ -988,7 +993,7 @@ end;
 
 function checkscandamages: boolean;
 begin
- if ship.damages[7]>59 then
+ if ship.damages[DMG_CPU]>59 then
   begin
    mousehide;
    a:=glowindex mod 2;
@@ -1001,7 +1006,7 @@ begin
    mouseshow;
    checkscandamages:=false;
   end
- else if ship.damages[7]>(20+random(40)) then
+ else if ship.damages[DMG_CPU]>(20+random(40)) then
   begin
    mousehide;
    a:=glowindex mod 2;
@@ -1019,7 +1024,7 @@ end;
 
 procedure displaystarmap;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  fillchar(starmapscreen^,sizeof(templatetype2),5);
  if t1<0 then t1:=0;
  t1:=t1+0.049;
@@ -1074,7 +1079,7 @@ begin
  oldt:=tcolor;
  tcolor:=191;
  bkcolor:=255;
- a:=round(ship.hulldamage/ship.hullmax*98);
+ a:=round(ship.hullintegrity/ship.hullmax*98);
  mousehide;
  if a=0 then part:=0 else part:=31/a;
  for j:=0 to a do
@@ -1086,7 +1091,7 @@ begin
  if a<98 then
   for i:=46 to 54 do
    fillchar(screen[i,174+a],98-a,0);
- str(ship.hulldamage,str1);
+ str(ship.hullintegrity,str1);
  printxy(219-round(length(str1)*2.5),47,str1);
  a:=round(ship.fuel/ship.fuelmax*98);
  if a=0 then part:=0 else part:=31/a;
@@ -1368,8 +1373,8 @@ begin
    for j:=1 to 7 do if ship.damages[j]<>0 then i:=1;
    setalertmode(i);
   end;
- if ship.hulldamage<250 then tc:=80
-  else if ship.hulldamage<500 then tc:=112
+ if ship.hullintegrity<250 then tc:=80
+  else if ship.hullintegrity<500 then tc:=112
   else tc:=48;
  if statcolors[1]<>tc then colorarea(300,29,313,39,tc,1);
  a:=round(ship.fuel/ship.fuelmax*100);
@@ -2122,7 +2127,7 @@ begin
  ar:=ship.posz/10;
  str(ar:5:1,str1);
  printxy(228,38,str1);
- str(ship.hulldamage:4,str1);
+ str(ship.hullintegrity:4,str1);
  str(ship.hullmax:4,str2);
  printxy(223,44,str1+'/'+str2);
  str(ship.fuel:4,str1);
@@ -2869,7 +2874,7 @@ end;
 
 procedure displayhistorymap;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  if index<0 then index:=0;
  if index>7 then index:=0 else inc(index);
  if t1<0 then t1:=0;
@@ -2920,7 +2925,7 @@ end;
 procedure displayshortscan;
 label error;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  t1:=t1+0.02;
  if t1>6.28 then t1:=0;
  mousehide;
@@ -3045,7 +3050,7 @@ end;
 procedure displaylongscan;
 label error;
 begin
- if (ship.damages[7]>0) and (not checkscandamages) then exit;
+ if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
   move(starmapscreen^[i,27],screen[i,27],29*4);

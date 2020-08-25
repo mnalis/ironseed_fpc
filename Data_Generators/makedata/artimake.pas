@@ -15,6 +15,7 @@ program makeartifact;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 type
  artifacttype=string[10];
@@ -22,12 +23,12 @@ var
  f: file of artifacttype;
  temp: artifacttype;
  ft: text;
- j,i: integer;
+ i: integer;
 
 begin
- assign(ft,'makedata\anom.txt');
+ assign(ft,'Data_Generators/makedata/anom.txt');
  reset(ft);
- assign(f,'data\artifact.dta');
+ assign(f,'data/artifact.dta');
  rewrite(f);
  for i:=1 to 60 do
   begin

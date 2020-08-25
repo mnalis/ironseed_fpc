@@ -14,6 +14,7 @@ my $ppm_name = $basename;
 if (!defined $ppm_name) {
   print "Usage: $0 <BASENAME.ppm>\n";
   print "Converts PPM file to Ironseed 320x200 BASENAME.scr and BASENAME.pal files\n";
+  exit 1;
 }
 
 die "$basename does not look like .ppm file" unless $basename =~ s{\.ppm$}{}i;
@@ -29,8 +30,8 @@ open my $ppm_fd, '<', $ppm_name;
 # FIXME: should support PPM comments, different whitespace etc. see ppm(5)
 my $format = <$ppm_fd>; chomp $format;
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
-my ($height, $width) = split ' ', <$ppm_fd>;
-die "ERROR: not 320x200 PPM file" unless $height==320 and $width==200;
+my ($width, height) = split ' ', <$ppm_fd>;
+die "ERROR: not 320x200 PPM file" unless $width==320 and height==200;
 my $bpp = <$ppm_fd>; chomp($bpp);
 die "ERROR: must have 255 colors" unless $bpp==255;
 
@@ -42,7 +43,7 @@ my $pal_used = 0;
 open my $pal_fd, '>', $pal_tmp;
 open my $scr_fd, '>', $scr_tmp;
 
-for (my $i = 0; $i < $height * $width * 3; $i+=3) {
+for (my $i = 0; $i < $width * height * 3; $i+=3) {
   my $r = int($SCR[$i] / $COLOR_FACTOR);
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);

@@ -15,8 +15,9 @@ program convertplanicons;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
-uses crt, data;
+uses crt, data, utils_;
 
 type
  weaponicontype= array[0..19,0..19] of byte;
@@ -27,22 +28,22 @@ var
  t: ^smallbuffer;
  s: pscreentype;
  w: ^weaponicontype;
- i,j,a: integer;
+ i,a: integer;
 
 begin
  new(t);
  new(w);
  set256colors(colors);
  new(s);
- loadscreen('makedata\planicon',s);
+ loadscreen('Data_Generators/makedata/planicon',s);
 
- assign(ft,'data\planicon.dta');
+ assign(ft,'data/planicon.dta');
  rewrite(ft);
  move(s^,t^,sizeof(smallbuffer));
  write(ft,t^);
  close(ft);
 
- assign(fw,'data\weapicon.dta');
+ assign(fw,'data/weapicon.dta');
  rewrite(fw);
  for a:=0 to 80 do
   begin

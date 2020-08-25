@@ -15,6 +15,7 @@ program eventmake;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 uses crt;
 
@@ -24,7 +25,6 @@ type
    want,give: integer;
    msg: string[255];
   end;
- pstring= ^string;
 var
  t: eventtype;
  ft: text;
@@ -32,26 +32,11 @@ var
  j,i: integer;
  ans: char;
 
-procedure upcasestring(s: pstring);
-var i: integer;
-begin
- i:=length(s^);
- asm
-  push ds
-  lds dx, s
-  inc dx
-  mov cx, [i]
-  mov ax, 6521h
-   int 21h
-  pop ds
- end
-end;
-
 begin
  clrscr;
- assign(ft,'makedata\event.txt');
+ assign(ft,'Data_Generators/makedata/event.txt');
  reset(ft);
- assign(f,'data\event.dta');
+ assign(f,'data/event.dta');
  rewrite(f);
  for j:=0 to 10 do
   begin
@@ -66,7 +51,7 @@ begin
        read(ft,ans);
        read(ft,ans);
        readln(ft,t.msg);
-       upcasestring(@t.msg);
+       t.msg := UpCase(t.msg);
       end
      else
       begin

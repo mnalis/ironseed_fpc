@@ -15,6 +15,7 @@ program getiteminfostuff;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 type
  iteminfotype=
@@ -29,9 +30,9 @@ var
  i,j,count: integer;
 
 begin
- assign(ft,'makedata\iteminfo.txt');
+ assign(ft,'Data_Generators/makedata/iteminfo.txt');
  reset(ft);
- assign(f,'data\iteminfo.dta');
+ assign(f,'data/iteminfo.dta');
  rewrite(f);
  readln(ft,iteminfo.index);
  count:=0;

@@ -190,7 +190,7 @@ end;
 procedure displaysector;
 begin
  checkcanary;
- if ship.damages[7]>59 then
+ if ship.damages[DMG_CPU]>59 then
   begin
    mousehide;
    index:=glowindex mod 2;
@@ -203,7 +203,7 @@ begin
    mouseshow;
    exit;
   end
- else if ship.damages[7]>(20+random(40)) then
+ else if ship.damages[DMG_CPU]>(20+random(40)) then
   begin
    mousehide;
    index:=glowindex mod 2;

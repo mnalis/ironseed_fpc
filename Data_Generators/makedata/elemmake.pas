@@ -15,16 +15,11 @@ program generatecargodata;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 type
- cargotype=
-  record
-   name: string[20];
-   size,index: integer;
-  end;
  elemtype= string[24];
 var
- cargo: cargotype;
  f: file of elemtype;
  ft: text;
  index,j,i: integer;
@@ -32,9 +27,9 @@ var
  elem: elemtype;
 
 begin
- assign(f,'\ironseed\data\elements.dta');
+ assign(f,'data/elements.dta');
  rewrite(f);
- assign(ft,'\ironseed\makedata\element.txt');
+ assign(ft,'Data_Generators/makedata/element.txt');
  reset(ft);
  read(ft,index);
  repeat

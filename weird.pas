@@ -713,7 +713,7 @@ begin
   if done then
    case mouse.x of
      56..156: case mouse.y of
-                 80..95: ship.hulldamage:=ship.hullmax;
+                 80..95: ship.hullintegrity:=ship.hullmax;
                100..115: ship.fuel:=ship.fuelmax;
               end;
     163..263: case mouse.y of
@@ -795,7 +795,7 @@ begin
    case mouse.x of
      56..156: case mouse.y of
                  80..95: if incargo(1000)<5 then addcargo2(1000, true);
-               100..115: if incargo(1501)<5 then addcargo2(1501, true);
+               100..115: if incargo(ID_REFLECTIVEHULL)<5 then addcargo2(ID_REFLECTIVEHULL, true);
               end;
     163..263: case mouse.y of
                  80..95: if incargo(3000)<16 then addcargo2(3000, true);
@@ -1086,7 +1086,7 @@ procedure screensaver;
     debug: string[6];
     quit: boolean;}
 begin
-{ if (ship.options[1]=0) or (memavail<74000) or (ship.options[6]=0) then exit;
+{ if (ship.options[OPT_SCREENSAVER]=0) or (memavail<74000) or (ship.options[OPT_ANIMATION]=0) then exit;
  mousehide;
  compressfile(tempdir+'/current3',@screen);
  if memavail<140000 then i:=random(2) else i:=random(3);

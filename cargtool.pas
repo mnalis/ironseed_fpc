@@ -257,7 +257,7 @@ end; { HistoryPop }
 
 procedure opendoors;
 begin
-   if ship.options[6]=0 then
+   if ship.options[OPT_ANIMATION]=0 then
    begin
       fadestep(1);
       for i:=20 to 130 do
@@ -282,7 +282,7 @@ end;
 procedure closedoors;
 var temp: pscreentype;
 begin
- if ship.options[6]=0 then exit;
+ if ship.options[OPT_ANIMATION]=0 then exit;
  mousehide;
  new(temp);
  loadscreen('data/cargo',temp);
@@ -310,7 +310,7 @@ begin
   inc(cargoindex);
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true;
-   1500..1999: if filters2[2]=1 then finished:=true;
+   ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true;
    2000..3999: if filters2[4]=1 then finished:=true;
    4000..5999: if filters2[3]=1 then finished:=true;
    6000..6999: if filters2[4]=1 then finished:=true;
@@ -328,7 +328,7 @@ begin
   dec(cargoindex);
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true else dec(cargoindex);
-   1500..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
+   ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
    2000..3999,6000..6999: if filters2[4]=1 then finished:=true else dec(cargoindex);
    4000..5999: if filters2[3]=1 then finished:=true else dec(cargoindex);
   end;
@@ -390,7 +390,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   1500..1999: if filters2[2]=1 then
+   ID_NOSHIELD..1999: if filters2[2]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -477,7 +477,7 @@ begin
   draw:=false;
   case ship.cargo[x] of
    1000..1499: if filters2[1]=1 then draw:=true;
-   1500..1999: if filters2[2]=1 then draw:=true;
+   ID_NOSHIELD..1999: if filters2[2]=1 then draw:=true;
    2000..3999,6000..6999: if filters2[4]=1 then draw:=true;
    4000..5999: if filters2[3]=1 then draw:=true;
   end;
@@ -498,7 +498,7 @@ begin
     if y>0 then bkcolor:=0;
     case ship.cargo[x] of
      1000..1499: s:='Weapon   ';
-     1500..1999: s:='Shield   ';
+     ID_NOSHIELD..1999: s:='Shield   ';
      2000..2999: s:='Device   ';
      3000..3999: s:='Component';
      4000..5999: s:='Material ';
@@ -658,18 +658,18 @@ begin
    if (cargoindex=0) or (cargoindex=251) then exit;
    if (ship.cargo[cargoindex]=1056) or (ship.cargo[cargoindex]>6899) then
    begin
-      a:=ship.options[5];
-      ship.options[5]:=2;
+      a:=ship.options[OPT_MSGS];
+      ship.options[OPT_MSGS]:=2;
       printbigbox('That item is too vital','to jettison!');
-      ship.options[5]:=a;
+      ship.options[OPT_MSGS]:=a;
       exit;
    end;
    if rescargo[cargoindex] >= ship.numcargo[cargoindex] then
    begin
-      a:=ship.options[5];
-      ship.options[5]:=2;
+      a:=ship.options[OPT_MSGS];
+      ship.options[OPT_MSGS]:=2;
       printbigbox('Can''t jettison that!','It''s needed for building.');
-      ship.options[5]:=a;
+      ship.options[OPT_MSGS]:=a;
       exit;
    end;
    j:=1;
@@ -1112,7 +1112,7 @@ begin
 	 end;
    if colorcode then fillchar(screen[125,69],4,63);
    viewteam:=0;
-   {if ship.options[6]=1 then opendoors2 else fadein;}
+   {if ship.options[OPT_ANIMATION]=1 then opendoors2 else fadein;}
    inccursor;
    mouseshow;
 end;
@@ -1213,7 +1213,7 @@ begin
  printxy(127,23,'Damage:'+str1+' GJ');
  printxy(230,5, 'PSION');
  printxy(230,11,'PRTCL');
- printxy(230,17,'INTRL');
+ printxy(230,17,'INRTL');
  printxy(230,23,'ENRGY');
  for j:=1 to 4 do
   begin
@@ -1314,8 +1314,8 @@ begin
      {str(GetBuildTime(index),s);
      printxy(5,5,s);}
   end;
- if (index>999) and (index<1500) then weaponinfo(index-999)
-  else if (index>1499) and (index<2000) then weaponinfo(index-1442)
+ if (index>999) and (index<ID_NOSHIELD) then weaponinfo(index-999)
+  else if (index>1499) and (index<2000) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
         fillchar(screen[i,132],180,1);
  mouseshow;

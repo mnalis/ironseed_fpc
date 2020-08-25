@@ -1,4 +1,4 @@
-program generateweapondata;
+program namemake;
 (********************************************************************
     This file is part of Ironseed.
 
@@ -17,44 +17,30 @@ program generateweapondata;
 ********************************************************************)
 {$PACKRECORDS 1}
 
-uses crt;
 
 type
- weapontype=
-  record
-   damage,energy: integer;
-   cents: array[1..4] of byte;
-   range: longint;
-  end;
+ nametype= string[15];
 var
- weapons: weapontype;
- f: file of weapontype;
+ i,j: integer;
+ name: nametype;
  ft: text;
- index,j: integer;
- c: char;
- dummy: string[20];
+ f: file of nametype;
 
 begin
- assign(f,'data/weapon.dta');
- rewrite(f);
- assign(ft,'Data_Generators/makedata/weapon.txt');
+ assign(ft,'Data_Generators/makedata/newnames.txt');
  reset(ft);
- readln(ft);
- read(ft,index);
- repeat
-  for j:=1 to 12 do read(ft,c);
-  read(ft,dummy);
-{  read(ft,weapons.name);
-  for j:=1 to 20 do weapons.name[j]:=upcase(weapons.name[j]);}
-  read(ft,weapons.energy);
-  read(ft,weapons.damage);
-  for j:=1 to 4 do read(ft,weapons.cents[j]);
-  readln(ft,weapons.range);
-  read(ft,index);
-  write(f,weapons);
-  writeln(dummy,'/',weapons.energy,'/',weapons.damage,'/',weapons.cents[1],'/',weapons.cents[2],
-   '/',weapons.cents[3],'/',weapons.cents[4],':',weapons.range);
- until index=0;
- close(f);
+ assign(f,'data/planname.txt');
+ rewrite(f);
+ for i:=1 to 750 do
+  begin
+   readln(ft,name);
+   if length(name)<15 then
+    for j:=length(name)+1 to 15 do name[j]:=' ';
+   name[0]:=#12;
+   write(f,name);
+   writeln(name);
+  end;
  close(ft);
+ close(f);
 end.
+

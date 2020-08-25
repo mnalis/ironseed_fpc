@@ -674,7 +674,7 @@ begin
  dist:=dist + sqr((y-ship.posy)/10);
  dist:=dist + sqr((z-ship.posz)/10);
  dist:=sqrt(dist);
- if (random(85)+15)<ship.damages[4] then
+ if (random(85)+15)<ship.damages[DMG_ENGINES] then
   begin
    tcolor:=94;
    println;
@@ -766,7 +766,7 @@ begin
    fadein;
   end;
  mouseshow;
- if ship.options[8]=1 then savegamedata(0,31);
+ if ship.options[OPT_AUTOSAVE]=1 then savegamedata(0,31);
  target:=0;
  for j:=1 to random(4)+1 do
   begin
@@ -1588,32 +1588,32 @@ begin
              addcargo(6900, true);
              viewmode:=0;
              viewmode2:=0;
-             n:=ship.options[8];
-             ship.options[8]:=0;
+             n:=ship.options[OPT_AUTOSAVE];
+             ship.options[OPT_AUTOSAVE]:=0;
              redoscreen(random(2500),random(2500),random(2500));
-             ship.options[8]:=n;
-             n:=ship.options[5];
-             ship.options[5]:=2;
+             ship.options[OPT_AUTOSAVE]:=n;
+             n:=ship.options[OPT_MSGS];
+             ship.options[OPT_MSGS]:=2;
              showchar(2,'Whoops! Didn''t know the Shunt Drive would do that!');
-             ship.options[5]:=n;
+             ship.options[OPT_MSGS]:=n;
              event(36);
             end;
           end;
     6905: begin   { thermal plating tapes }
-           n:=ship.options[5];
-           ship.options[5]:=2;
+           n:=ship.options[OPT_MSGS];
+           ship.options[OPT_MSGS]:=2;
            showchar(2,'We can create Thermal ThermoPlast!');
-           ship.options[5]:=n;
+           ship.options[OPT_MSGS]:=n;
            event(18);
           end;
     6906: event(30); {ermigen data tapes }
     else if n>6900 then
           begin
            addcargo(n,true);
-           i:=ship.options[5];
-           ship.options[5]:=2;
+           i:=ship.options[OPT_MSGS];
+           ship.options[OPT_MSGS]:=2;
            showchar(2,'No new information from the artifact.');
-           ship.options[5]:=i;
+           ship.options[OPT_MSGS]:=i;
           end;
    end;
   end;

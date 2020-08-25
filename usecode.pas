@@ -472,8 +472,8 @@ end;
 
 procedure addlotstime(background, dayticks :Boolean; t: integer);
 begin
-   if ship.shield>1501 then
-      ship.battery:=ship.battery-round(weapons[ship.shield-1442].energy*ship.shieldlevel/100);
+   if ship.shield>ID_REFLECTIVEHULL then
+      ship.battery:=ship.battery-round(weapons[ship.shield-ID_SHIELDS_OFFSET].energy*ship.shieldlevel/100);
    if ship.battery<31960 then ship.battery:=ship.battery+40 else ship.battery:=32000;
    if ship.battery<0 then
    begin
@@ -528,7 +528,7 @@ begin
    event(26);
    event(27);
    if (tempplan^[curplan].system=33) then event(25);
-   if ship.damages[4]>25 then
+   if ship.damages[DMG_ENGINES]>25 then
    begin
       tcolor:=94;
       println;
@@ -754,7 +754,7 @@ end;
 
 procedure lowershields;
 begin
- if ship.shield<1502 then exit;
+ if ship.shield<=ID_REFLECTIVEHULL then exit;
  println;
  tcolor:=63;
  print('SECURITY: Lowering shields...');
@@ -763,7 +763,7 @@ begin
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
- if ship.shieldlevel=ship.shieldopt[2] then
+ if ship.shieldlevel=ship.shieldopt[SHLD_ALERT_WANT] then
   begin
    tcolor:=63;
    print('Complete.');
@@ -774,22 +774,22 @@ procedure raiseshields;
 begin
  println;
  tcolor:=94;
- if ship.shield<1502 then
+ if ship.shield<=ID_REFLECTIVEHULL then
   begin
    print('SECURITY: No shield to raise.');
    exit;
   end;
- if ship.damages[2]>59 then
+ if ship.damages[DMG_SHIELD]>59 then
   begin
    print('Shield integrity compromised...needs repair.');
    ship.shieldlevel:=0;
    if viewmode=1 then displaystatus else checkstats;
    exit;
   end
- else if ship.damages[2]>25 then
+ else if ship.damages[DMG_SHIELD]>25 then
   begin
    print('SECURITY: Shield unstable...');
-   if (random(40)+20)<ship.damages[2] then
+   if (random(40)+20)<ship.damages[DMG_SHIELD] then
     begin
      print('Failed to raise shield.');
      ship.shieldlevel:=0;
@@ -800,7 +800,7 @@ begin
  print('SECURITY: Raising shields...');
  graypalin;
  setalertmode(2);
- ship.shieldlevel:=ship.shieldopt[3];
+ ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
@@ -820,7 +820,7 @@ begin
  tcolor:=63;
  print('SECURITY: Powering down weapons...');
  graypalin;
- if (ship.shieldlevel<>ship.shieldopt[3]) or (ship.shieldopt[3]<=ship.shieldopt[1])
+ if (ship.shieldlevel<>ship.shieldopt[SHLD_COMBAT_WANT]) or (ship.shieldopt[SHLD_COMBAT_WANT]<=ship.shieldopt[SHLD_LOWERED_WANT])
   then setalertmode(1);
  for j:=1 to 10 do
   if ship.gunnodes[j]>0 then
@@ -838,17 +838,17 @@ procedure armweapons;
 begin
  tcolor:=94;
  println;
- if ship.damages[3]>59 then
+ if ship.damages[DMG_WEAPONS]>59 then
   begin
    print('Weapon control compromised...needs repair');
    ship.armed:=false;
    if viewmode=1 then displaystatus else checkstats;
    exit;
   end
- else if ship.damages[3]>25 then
+ else if ship.damages[DMG_WEAPONS]>25 then
   begin
    print('SECURITY: Weapon control unstable...');
-   if (random(40)+20)<ship.damages[2] then
+   if (random(40)+20)<ship.damages[DMG_SHIELD] then
     begin
      print('Failed to arm weapons.');
      ship.armed:=false;
@@ -1379,9 +1379,9 @@ begin
  case face of
    {psy}
    0,3: psyche;
-   1,2: if ship.damages[6]>39 then contactfailure
+   1,2: if ship.damages[DMG_COMM]>39 then contactfailure
          else continuecontact(false);
-   4,5: if ship.damages[6]>39 then contactfailure
+   4,5: if ship.damages[DMG_COMM]>39 then contactfailure
          else continuecontact(true);
    6: crewstats;
    7: ToggleResearch(1);
@@ -1524,7 +1524,7 @@ begin
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  30: if (ship.shieldlevel=ship.shieldopt[3]) and (alert=2) then lowershields
+  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=2) then lowershields
        else raiseshields;
   31: if (ship.wandering.alienid<16000) and (action<>3) and
        ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or
@@ -1592,7 +1592,7 @@ begin
         readyoptions;
        end;
   46: savegamedata(0,31);
-  47: if ship.damages[5]>39 then lifesupportfailure
+  47: if ship.damages[DMG_LIFESUPPORT]>39 then lifesupportfailure
        else encodecrew(26);
   48:  if yesnorequest('Initiate Time Burst?',0,31) then restcrew;
   49: if loadgamedata(false) then
@@ -1602,7 +1602,7 @@ begin
         fillchar(colors,sizeof(paltype),0);
         set256colors(colors);
        end;
-  50: if ship.damages[5]>39 then lifesupportfailure
+  50: if ship.damages[DMG_LIFESUPPORT]>39 then lifesupportfailure
        else decodecrew;
   51: begin
        if viewmode2>0 then removestarmap;

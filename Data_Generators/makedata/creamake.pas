@@ -15,6 +15,7 @@ program generatecargodata;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 uses crt;
 
@@ -41,7 +42,7 @@ var
  f: file of creationtype;
  create: creationtype;
  ft: text;
- index,j,total: integer;
+ j,total: integer;
  c: char;
  ca: ^createarraytype;
  cr: ^cargoarray;
@@ -60,7 +61,8 @@ begin
   1500..1599: begin i:=1; worth:=6; end;
   2000..2999: begin i:=1; worth:=4; end;
   3001..3999: begin i:=1; worth:=3; end;
-  4000..4999: begin i:=1; worth:=2; end;
+  4001..4019: begin i:=1; worth:=2; end;
+  4021..4999: begin i:=1; worth:=2; end;
  end;
  if i=1 then
   begin
@@ -75,20 +77,20 @@ end;
 procedure getlist;
 var f: file of createarraytype;
     f2: file of cargoarray;
-    j,i,a,b: integer;
+    j,i,a: integer;
     ft: text;
 begin
  new(ca);
  new(cr);
- assign(f,'data\creation.dta');
+ assign(f,'data/creation.dta');
  reset(f);
  read(f,ca^);
  close(f);
- assign(f2,'data\cargo.dta');
+ assign(f2,'data/cargo.dta');
  reset(f2);
  read(f2,cr^);
  close(f2);
- assign(ft,'other\itemdata.txt');
+ assign(ft,'Data_Generators/other/itemdata.txt');
  rewrite(ft);
  writeln(ft,'    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS            ');
  writeln(ft,'------------------ ------------------- ------------------- ------------------- ----- ------------------');
@@ -118,9 +120,9 @@ begin
 end;
 
 begin
- assign(f,'data\creation.dta');
+ assign(f,'data/creation.dta');
  rewrite(f);
- assign(ft,'makedata\creation.txt');
+ assign(ft,'Data_Generators/makedata/creation.txt');
  reset(ft);
  total:=0;
  repeat

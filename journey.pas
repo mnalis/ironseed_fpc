@@ -149,7 +149,7 @@ begin
     for a:=7 downto 4 do
      begin
       inc(x);
-      if font[ship.options[7],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
+      if font[ship.options[OPT_FONT],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
        else if bkcolor<255 then screen2^[y,x]:=bkcolor;
      end;
     inc(y);
@@ -159,7 +159,7 @@ begin
     for a:=3 downto 0 do
      begin
       inc(x);
-      if font[ship.options[7],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
+      if font[ship.options[OPT_FONT],letter,i shr 1] and (1 shl a)>0 then screen2^[y,x]:=tcolor
        else if bkcolor<255 then screen2^[y,x]:=bkcolor;
      end;
     dec(tcolor,2);
@@ -320,7 +320,7 @@ procedure rotatecube2(src,tar: byte; fkey: boolean);
 label skip1;
 begin  {215,145}
  getcube(src,tar);
- if (ship.options[6]=0) or (fkey) then
+ if (ship.options[OPT_ANIMATION]=0) or (fkey) then
   begin
    mousehide;
    for i:=0 to 44 do
@@ -383,7 +383,7 @@ begin  {215,145}
    exit;
   end;
  getcube(src,tar);
- if (ship.options[6]=0) or (fkey) then
+ if (ship.options[OPT_ANIMATION]=0) or (fkey) then
   begin
    mousehide;
    for i:=0 to 44 do
@@ -913,19 +913,19 @@ begin
              70..74: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=1;
-                       ship.shieldopt[1]:=mouse.x-173;
+                       ship.shieldopt[SHLD_LOWERED_WANT]:=mouse.x-173;
                       end;
              79..86: viewindex:=2;
              88..92: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=2;
-                       ship.shieldopt[2]:=mouse.x-173;
+                       ship.shieldopt[SHLD_ALERT_WANT]:=mouse.x-173;
                       end;
             97..104: viewindex:=3;
            106..110: if (mouse.x>172) and (mouse.x<274) then
                       begin
                        viewindex:=3;
-                       ship.shieldopt[3]:=mouse.x-173;
+                       ship.shieldopt[SHLD_COMBAT_WANT]:=mouse.x-173;
                       end;
           end;
          end
@@ -943,7 +943,7 @@ begin
             if viewindex2<1 then
              begin
               viewindex2:=1;
-              while (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) do inc(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do inc(viewindex2);
              end;
            end
           else if i>0 then
@@ -955,7 +955,7 @@ begin
             if viewindex2>250 then
              begin
               viewindex2:=250;
-              while (ship.cargo[viewindex2]<1500) or (ship.cargo[viewindex2]>1999) do dec(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do dec(viewindex2);
              end;
            end;
         end;
@@ -980,7 +980,7 @@ begin
                case job of
                    0: timeleft:=0;
                 1..7: if ship.damages[job]>0 then timeleft:=ship.damages[job]*70+random(30);
-                   8: if ship.hulldamage<ship.hullmax then timeleft:=(ship.hullmax-ship.hulldamage)*30+random(40);
+                   8: if ship.hullintegrity<ship.hullmax then timeleft:=(ship.hullmax-ship.hullintegrity)*30+random(40);
                end;
              end;
            end;
@@ -1162,12 +1162,12 @@ begin
  plainfadearea(0,184,7,199,new-alt);
  alert:=mode;
  if alert=2 then exit;
- if ship.damages[2]>25 then
+ if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
    println;
    ship.shieldlevel:=0;
-   if ship.damages[2]>59 then
+   if ship.damages[DMG_SHIELD]>59 then
     begin
      print('SECURITY: Shield integrity compromised...needs repair');
      exit;
@@ -1175,18 +1175,18 @@ begin
    else
     begin
      print('SECURITY: Shield unstable...');
-     if (random(40)+20)<ship.damages[2] then
+     if (random(40)+20)<ship.damages[DMG_SHIELD] then
       begin
        print('Failed to adjust shield.');
        exit;
       end;
     end;
   end;
- if ship.shield<1501 then ship.shieldlevel:=0
+ if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
  else if alert=0 then
-  ship.shieldlevel:=ship.shieldopt[1]
+  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[2];
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
 procedure processkey;
@@ -1399,14 +1399,14 @@ begin
       begin
 	 for i := 1 to 7 do
 	    damages[i] := ship.damages[i];
-	 hull := ship.hulldamage;
+	 hull := ship.hullintegrity;
       end;
       initiatecombat;
       if ship.wandering.alienid = 1013 then
       begin
 	 for i := 1 to 7 do
 	    ship.damages[i] := damages[i];
-	 ship.hulldamage := hull;
+	 ship.hullintegrity := hull;
       end;
      ship.armed:=true;
      setalertmode(1);
@@ -1432,8 +1432,8 @@ procedure movewandering;
 begin
  case action of
   0:;
-  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[4])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[4])/100));
+  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
  end;
  case ship.wandering.orders of
   0: if action=3 then adjustwanderer(30) else adjustwanderer(2);
@@ -1453,8 +1453,8 @@ begin
   if idletime=2*maxidle then screensaver;
   if ship.wandering.alienid<16000 then movewandering;
   case viewmode2 of
-   0: if (showplanet) and (ship.options[6]=1) and (ship.orbiting=0) and ((viewmode<8) or (viewmode>10)) then makestar
-       else if (showplanet) and (ship.options[6]=1) and ((viewmode<8) or (viewmode>10)) then
+   0: if (showplanet) and (ship.options[OPT_ANIMATION]=1) and (ship.orbiting=0) and ((viewmode<8) or (viewmode>10)) then makestar
+       else if (showplanet) and (ship.options[OPT_ANIMATION]=1) and ((viewmode<8) or (viewmode>10)) then
         case sphere of
          1: case glowindex of
 	     {1: rendersphere(60, 60, spherei, c * 360.0 / 240, true, ecl * 360.0 / 240);}

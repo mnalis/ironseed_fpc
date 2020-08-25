@@ -285,7 +285,7 @@ begin
       battery:=0;
       hullmax:=shipdata.hullmax;
       cargomax:=shipdata.cargo*10;
-      hulldamage:=round(ship.hullmax*0.9);
+      hullintegrity:=round(ship.hullmax*0.9);
    end;
    for j:=1 to 6 do
       with ship.crew[j] do
@@ -828,16 +828,16 @@ begin
       fillchar(cargo,500,0);
       fillchar(numcargo,500,0);
       fillchar(engrteam,sizeof(teamtype)*3,0);
-      damages[1]:=25;
-      damages[2]:=15;
-      damages[3]:=2;
-      damages[4]:=3;
-      damages[5]:=16;
-      damages[6]:=55;
-      damages[7]:=22;
+      damages[DMG_POWER]:=25;
+      damages[DMG_SHIELD]:=15;
+      damages[DMG_WEAPONS]:=2;
+      damages[DMG_ENGINES]:=3;
+      damages[DMG_LIFESUPPORT]:=16;
+      damages[DMG_COMM]:=55;
+      damages[DMG_CPU]:=22;
       with engrteam[1] do
       begin
-	 timeleft:=ship.damages[7]*70+random(30);
+	 timeleft:=ship.damages[DMG_CPU]*70+random(30);
 	 job:=7;
 	 jobtype:=0;
       end;
@@ -852,22 +852,22 @@ begin
       numcargo[3]:=1;
       cargo[4]:=1000;
       numcargo[4]:=1;
-      options[1]:=1;
-      options[2]:=20;
-      options[3]:=1;
-      options[4]:=1;
-      options[5]:=2;
-      options[6]:=1;
-      options[7]:=0;
-      options[8]:=1;
-      options[9]:=64;
-      options[10]:=0; {nothing yet!!}
+      options[OPT_SCREENSAVER]:=1;
+      options[OPT_TIMESLICE]:=20;
+      options[OPT_SOUND]:=1;
+      options[OPT_DIFFICULTY]:=1;
+      options[OPT_MSGS]:=2;
+      options[OPT_ANIMATION]:=1;
+      options[OPT_FONT]:=0;
+      options[OPT_AUTOSAVE]:=1;
+      options[OPT_VOLUME]:=64;
+      options[OPT_UNUSED1]:=0; {nothing yet!!}
       posx:=166;
       posy:=226;
       posz:=33;
       orbiting:=1;
       shieldlevel:=15;
-      shield:=0;
+      shield:=ID_NOSHIELD;
       stardate[3]:=3784;
       stardate[1]:=2;
       stardate[2]:=3;
@@ -1036,7 +1036,7 @@ begin
   end;
  chdir(curdir);
  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
 end;
 
 {$IFDEF DEMO}

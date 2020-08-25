@@ -15,6 +15,7 @@ program generatecargodata;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 const
  maxcargo= 145;
@@ -28,13 +29,13 @@ var
  cargo: cargotype;
  f: file of cargotype;
  ft: text;
- index,j,i: integer;
+ j,i: integer;
  c: char;
 
 begin
  assign(f,'data/cargo.dta');
  rewrite(f);
- assign(ft,'makedata/cargo.txt');
+ assign(ft,'Data_Generators/makedata/cargo.txt');
  reset(ft);
  readln(ft);
  for i:=1 to maxcargo do

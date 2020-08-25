@@ -74,13 +74,13 @@ begin
 {$IFNDEF DEMO}
  if paramstr(1)='/killseed' then
   begin
-   ship.options[3]:=1;
-   ship.options[9]:=63;
+   ship.options[OPT_SOUND]:=1;
+   ship.options[OPT_VOLUME]:=63;
    endgame;
   end;
 {$ENDIF}
  tempdir:=getenv('TEMP');
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
  if tempdir='' then tempdir:='TEMP';
  getdir(0,curdir);
  chdir(tempdir);
@@ -99,7 +99,7 @@ begin
   end;
  chdir(curdir);
  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='\' then dec(tempdir[0]);
+ if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
 end;
 
 procedure readybuildtimes;
@@ -320,11 +320,17 @@ begin
  action:=0;
  tcolor:=31;
  alert:=2;
- if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[3]) and (ship.shieldopt[3]>ship.shieldopt[1])) then setalertmode(2)
+ if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)
   else setalertmode(0);
  bkcolor:=3;
- if ship.shield<60 then ship.shieldlevel:=0
-  else ship.shieldlevel:=ship.shieldopt[1];
+ if (ship.shield=0) then
+  begin
+    writeln('FIXUP shield from 0 to ID_NOSHIELD');
+    ship.shield:=ID_NOSHIELD;
+  end;
+ ship.shieldlevel:=0;
+ if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100
+  else if ship.shield>ID_REFLECTIVEHULL then ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
  showresearchlights;
 end;
 

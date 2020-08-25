@@ -15,6 +15,7 @@ program makecrew;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+{$PACKRECORDS 1}
 
 uses crt;
 
@@ -30,9 +31,9 @@ var
  ft: file of crewtype;
  i,j,a,b: integer;
  crew: crewtype;
- buffer: array[1..640] of char;
  done: boolean;
  c: char;
+{ buffer: array[1..640] of char;
 
 procedure breakupbuffer(size: integer);
 var head,tail,index: integer;
@@ -50,11 +51,11 @@ begin
    head:=tail+1;
   end;
 end;
-
+}
 begin
- assign(fs,'makedata\crew.txt');
+ assign(fs,'Data_Generators/makedata/crew.txt');
  reset(fs);
- assign(ft,'data\crew.dta');
+ assign(ft,'data/crew.dta');
  rewrite(ft);
  clrscr;
  for a:=1 to 30 do
@@ -100,4 +101,5 @@ begin
   end;
  close(fs);
  close(ft);
+ halt(0);
 end.
