@@ -867,7 +867,7 @@ begin
       posz:=33;
       orbiting:=1;
       shieldlevel:=15;
-      shield:=0;
+      shield:=ID_NOSHIELD;
       stardate[3]:=3784;
       stardate[1]:=2;
       stardate[2]:=3;

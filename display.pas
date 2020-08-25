@@ -394,14 +394,15 @@ end;
 
 procedure showshdicon(shd: integer);
 begin
+ assert (shd >= ID_NOSHIELD);
  case shd of
-  0: begin
+  ID_NOSHIELD: begin
       for i:=0 to 19 do
        fillchar(screen[89+i,172],20,0);
      end;
   ID_REFLECTIVEHULL..1519:
      begin
-      readweaicon(shd-1444);
+      readweaicon(shd-ID_SHIELDS_OFFSET-2);	{ NOSHIELD / noweapon do not have icons, so -2  }
       for i:=0 to 19 do
        move(tempicon^[i],screen[89+i,172],5*4);
      end;
@@ -410,6 +411,7 @@ end;
 
 procedure setupshieldinfo(shd: integer);
 begin
+ assert (shd >= ID_NOSHIELD);
  for i:=37 to 114 do
   fillchar(screen[i,166],113,5);
  setcolor(184);
@@ -448,15 +450,17 @@ procedure displayshieldinfo(shd: integer);
 var str1: string[5];
 begin
  tcolor:=31;
- if shd>0 then printxy(174,45,cargo[shd-ID_SHIELDS_OFFSET].name)
+ if shd>ID_NOSHIELD then printxy(174,45,cargo[shd-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
+
  if ship.damages[DMG_SHIELD]>0 then
   begin
    str(ship.damages[DMG_SHIELD]:5,str1);
    printxy(218,54,str1+'%   ');
   end
  else printxy(218,54,'      None');
- if shd>0 then
+
+ if shd>ID_NOSHIELD then
   begin
    str(weapons[shd-ID_SHIELDS_OFFSET].energy:5,str1);
    printxy(218,61,str1+' GW   ');
@@ -482,7 +486,8 @@ begin
    for i:=87 to 110 do
     fillchar(screen[i,205],65,2);
   end;
- if shd>ID_REFLECTIVEHULL then
+
+ if shd>ID_REFLECTIVEHULL then	{ some energy&space-using shield installed }
   begin
    j:=1;
    while cargo[j].index<>shd
@@ -511,7 +516,7 @@ begin
  setcolor(184);
  line(168,44,232,44);
  tcolor:=31;
- if ship.shield>0 then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
+ if ship.shield>ID_NOSHIELD then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
   else printxy(174,45,'None                ');
  tcolor:=191;
  for j:=1 to 3 do
@@ -535,12 +540,13 @@ begin
  mousehide;
  if ship.shield=ID_REFLECTIVEHULL then
   for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[DMG_SHIELD];
+
  case com of
   0:;
   1: if viewlevel=0 then
       begin
        if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]>5) then dec(ship.shieldopt[viewindex],5)
-        else if ship.shield=ID_NOSHIELD then ship.shieldopt[viewindex]:=0;
+        else if (ship.shield<=ID_NOSHIELD) then ship.shieldopt[viewindex]:=0;
       end
      else if viewlevel=3 then
       begin
@@ -557,8 +563,7 @@ begin
   2: if viewlevel=0 then
       begin
        if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]<95) then inc(ship.shieldopt[viewindex],5)
-        else if (ship.shield>ID_REFLECTIVEHULL) then ship.shieldopt[viewindex]:=100
-        else if ship.shield=ID_NOSHIELD then ship.shieldopt[viewindex]:=0;
+        else if (ship.shield<=ID_NOSHIELD) then ship.shieldopt[viewindex]:=0;
        end
      else if (viewlevel=2) and (viewindex2>0) then
       begin
@@ -603,7 +608,7 @@ begin
          end;
      end;
   7: begin
-      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then
+      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ can't remove reflective hull }
        begin
         mouseshow;
         if yesnorequest('Remove this shield?',0,31) then
@@ -616,13 +621,13 @@ begin
             tcolor:=94;
             print('ENGINEERING: No team available.');
            end
-          else
+          else		{ there is engineering team available }
            begin
             addcargo(ship.shield, true);
             ship.engrteam[j].job:=ship.shield;
             ship.engrteam[j].jobtype:=2;
             ship.engrteam[j].timeleft:=1000;
-            ship.shield:=ID_REFLECTIVEHULL;
+            ship.shield:=ID_REFLECTIVEHULL;	// NB not fair but simple - we get reflective hull even if didn't have it before, if we remove any other shield... oh well..
             mousehide;
             showshdicon(ship.shield);
             mouseshow;
@@ -631,7 +636,7 @@ begin
          end;
         mousehide;
        end
-      else if (viewlevel>1) and (ship.shield<ID_QUARTER_SHIELDS) and (viewindex2>0) then
+      else if (viewlevel>1) and (ship.shield<=ID_REFLECTIVEHULL) and (viewindex2>0) then
        begin
         mouseshow;
         if yesnorequest('Install this shield?',0,31) then
@@ -683,7 +688,7 @@ begin
  case viewlevel of
   0: begin
       tcolor:=31;
-      if ship.shield>0 then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
+      if ship.shield>ID_NOSHIELD then printxy(174,45,cargo[ship.shield-ID_SHIELDS_OFFSET].name)
        else printxy(174,45,'None                ');
       tcolor:=191;
       str(ship.damages[DMG_SHIELD]:3,str1);
@@ -748,7 +753,7 @@ begin
  end;
  mouseshow;
  bkcolor:=3;
- if (ship.shield<60) or (alert=2) then exit;
+ if (ship.shield<=ID_REFLECTIVEHULL) or (alert=2) then exit;
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;

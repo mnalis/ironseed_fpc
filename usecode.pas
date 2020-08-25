@@ -754,7 +754,7 @@ end;
 
 procedure lowershields;
 begin
- if ship.shield<ID_QUARTER_SHIELDS then exit;
+ if ship.shield<=ID_REFLECTIVEHULL then exit;
  println;
  tcolor:=63;
  print('SECURITY: Lowering shields...');
@@ -774,7 +774,7 @@ procedure raiseshields;
 begin
  println;
  tcolor:=94;
- if ship.shield<ID_QUARTER_SHIELDS then
+ if ship.shield<=ID_REFLECTIVEHULL then
   begin
    print('SECURITY: No shield to raise.');
    exit;

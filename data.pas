@@ -101,7 +101,7 @@ const OPT_SCREENSAVER = 1;
       SHLD_COMBAT_WANT = 3;
 
       ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
-      ID_NOSHIELD = 1500;		{ no shield installed }
+      ID_NOSHIELD = 1500;		{ no shield installed. WARNING: some version of the code used "0", so always check if (ship.shield <= ID_NOSHIELD) }
       ID_REFLECTIVEHULL = 1501;
       ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
 
@@ -109,6 +109,7 @@ const OPT_SCREENSAVER = 1;
       DMGTYP_PARTICLE = 2;
       DMGTYP_INERTIAL = 3;
       DMGTYP_ENERGY = 4;
+      DMGTYP_FAKE_SHLD = 5;		{ fake damagetype which only hits shields }
 
 type
    buttontype = record

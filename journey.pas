@@ -1182,7 +1182,7 @@ begin
       end;
     end;
   end;
- if ship.shield<ID_REFLECTIVEHULL then ship.shieldlevel:=0
+ if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
  else if alert=0 then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=1 then

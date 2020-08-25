@@ -323,8 +323,14 @@ begin
  if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)
   else setalertmode(0);
  bkcolor:=3;
- if ship.shield<60 then ship.shieldlevel:=0
-  else ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
+ if (ship.shield=0) then
+  begin
+    writeln('FIXUP shield from 0 to ID_NOSHIELD');
+    ship.shield:=ID_NOSHIELD;
+  end;
+ ship.shieldlevel:=0;
+ if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100
+  else if ship.shield>ID_REFLECTIVEHULL then ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
  showresearchlights;
 end;
 
