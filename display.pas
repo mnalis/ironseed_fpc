@@ -52,7 +52,7 @@ function checkloc(l: integer): boolean;
 
 implementation
 
-uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, modplay;
+uses utils_, data, gmouse, journey, utils, usecode, saveload, utils2, comm, modplay, math;
 
 const
  batmax=32000;
@@ -540,13 +540,14 @@ begin
  mousehide;
  if ship.shield=ID_REFLECTIVEHULL then
   for i:=1 to 3 do ship.shieldopt[i]:=100-ship.damages[DMG_SHIELD];
+ if ship.shield<=ID_NOSHIELD then
+  for i:=1 to 3 do ship.shieldopt[i]:=0;
 
  case com of
   0:;
-  1: if viewlevel=0 then
+  1: if viewlevel=0 then	{ left }
       begin
-       if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]>5) then dec(ship.shieldopt[viewindex],5)
-        else if (ship.shield<=ID_NOSHIELD) then ship.shieldopt[viewindex]:=0;
+       if ship.shield>ID_REFLECTIVEHULL then dec(ship.shieldopt[viewindex],min(5, ship.shieldopt[viewindex]))
       end
      else if viewlevel=3 then
       begin
@@ -560,17 +561,16 @@ begin
        screen[83,279]:=2;
        printxy(170,27,'Installable Shields');
       end;
-  2: if viewlevel=0 then
+  2: if viewlevel=0 then	{ right }
       begin
-       if (ship.shield>ID_REFLECTIVEHULL) and (ship.shieldopt[viewindex]<95) then inc(ship.shieldopt[viewindex],5)
-        else if (ship.shield<=ID_NOSHIELD) then ship.shieldopt[viewindex]:=0;
-       end
+       if ship.shield>ID_REFLECTIVEHULL then inc(ship.shieldopt[viewindex],min(5, 100-ship.shieldopt[viewindex]))
+      end
      else if (viewlevel=2) and (viewindex2>0) then
       begin
        viewlevel:=3;
        setupshieldinfo(ship.cargo[viewindex2]);
       end;
-  3: if viewlevel>1 then
+  3: if viewlevel>1 then	{ up }
        begin
         dec(viewindex2);
         while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
@@ -579,7 +579,7 @@ begin
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
      else if viewindex=1 then viewindex:=3 else dec(viewindex);
-  4: if viewlevel>1 then
+  4: if viewlevel>1 then	{ down }
        begin
         inc(viewindex2);
         while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
@@ -709,7 +709,7 @@ begin
       setfillstyle(1,2);
       for j:=1 to 3 do
        if ship.shieldopt[j]<100 then
-        bar(174+ship.shieldopt[j],52+j*18,273,56+j*18);
+        bar(174+ship.shieldopt[j],52+j*18,274,57+j*18);
      end;
   1: displayshieldinfo(ship.shield);
   2: begin
