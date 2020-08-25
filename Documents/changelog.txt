@@ -1,3 +1,4 @@
+- combat: shield handling fixes
 - code: use constants instead of numbers for few types to improve readability
 - combat: enemy can only fire if their weapons subsystem is not destroyed and there is some power
 - update most of the tools to correctly rebuild binary files in data/

@@ -118,20 +118,23 @@ begin
  mouseshow;
 end;
 
+// set shield to n% (or to the maximum the shield subsystem damages allow, if n% is too much) and display levels
 procedure displayshieldpic(n: integer);
 begin
  mousehide;
  if ship.shield<=ID_NOSHIELD then { no shield is installed, do not allow moving it }
   begin
     n := 0;
-    part := 0;
-  end;
+    ship.shieldopt[SHLD_COMBAT_WANT] := 0;
+  end
+ else if ship.shield=ID_REFLECTIVEHULL then n:=100-ship.damages[DMG_SHIELD];	{ reflective hull always uses max the shield damages allow }
+
  part:=102/100*ship.shieldopt[SHLD_COMBAT_WANT];
  for i:=0 to 6 do
   fillchar(screen[114-round(part)+i,312],4,0);
  if n>100-ship.damages[DMG_SHIELD] then n:=100-ship.damages[DMG_SHIELD];
  ship.shieldopt[SHLD_COMBAT_WANT]:=n;
- part:=102/100*ship.shieldopt[SHLD_COMBAT_WANT];
+ part:=102/100*n;
  for i:=0 to 6 do
   move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
  mouseshow;
@@ -639,6 +642,7 @@ begin
  for j:=1 to 7 do if ship.damages[j]>100 then ship.damages[j]:=100;
  if ship.hullintegrity<0 then ship.hullintegrity:=0;
  displaydamage;
+ writeln ('      hull=', ship.hullintegrity, ' shieldid=', ship.shield, ' damages: power=', ship.damages[DMG_POWER], ' shield=', ship.damages[DMG_SHIELD], ' weapons=', ship.damages[DMG_WEAPONS], ' engines=', ship.damages[DMG_ENGINES], ' life=', ship.damages[DMG_LIFESUPPORT], ' comm=', ship.damages[DMG_COMM], ' cpu=', ship.damages[DMG_CPU]);
  if ship.hullintegrity=0 then		{ hull breach - we're dead }
   begin
     if ship.wandering.alienid = 1013 then
@@ -693,7 +697,7 @@ begin
        }
    i:=round(i/100*(100-ships^[s].damages[DMG_WEAPONS])); { damages[DMG_WEAPONS] is attacker weapons subsystem. If it is not damaged, 'i' remains as above, or is reduced appropriately }
    writeln ('impact: attacker',s,' weapon',n, ' for dmgtype',j, '=', weapons[n].dmgtypes[j],'% and its damage dealing=', weapons[n].damage, 'GJ; THEIR CURRENT weapon subsystem damage=', ships^[s].damages[DMG_WEAPONS], '%   ; their attack total i=', i, 'GJ, batt=', ships^[s].battery);
-
+   writeln ('  our shield', ship.shield, ' has level=', ship.shieldlevel);
    if (ship.shieldlevel=0) or (ship.shield<=ID_NOSHIELD) then takedamage(j,i)	{ if no shield installed, or it is down, take full damage }
    else
     begin		{ some shield is installed }
