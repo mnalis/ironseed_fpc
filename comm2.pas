@@ -535,7 +535,7 @@ begin
    x:=cargoindex;
    y:=2;
    repeat
-    if (ship.cargo[x]>0) and (ship.cargo[x]<6000) then
+    if (ship.cargo[x]>0) and (ship.cargo[x]<ID_ARTIFACT_OFFSET) then
      begin
       if x=cargoindex then bkcolor:=6 else bkcolor:=0;
       inc(y);
@@ -555,10 +555,10 @@ begin
    y:=3;
    bkcolor:=0;
    repeat
-    if (ship.cargo[x]>0) and (ship.cargo[x]<6000) and (x>0) then
+    if (ship.cargo[x]>0) and (ship.cargo[x]<ID_ARTIFACT_OFFSET) and (x>0) then
      begin
       dec(y);
-      if ship.cargo[x]>5999 then
+      if ship.cargo[x]>ID_LAST_ELEMENT then
        begin
         getartifactname(ship.cargo[x]);
         i:=maxcargo;
@@ -643,11 +643,11 @@ begin
  else
   begin
    dec(cargoindex);
-   while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do dec(cargoindex);
+   while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do dec(cargoindex);
    if cargoindex<1 then
     begin
      cargoindex:=1;
-     while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do inc(cargoindex);
+     while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do inc(cargoindex);
      if cargoindex>250 then cargoindex:=0;
     end;
   end;
@@ -683,11 +683,11 @@ begin
  else
   begin
    inc(cargoindex);
-   while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do inc(cargoindex);
+   while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do inc(cargoindex);
    if cargoindex>250 then
     begin
      cargoindex:=250;
-     while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do dec(cargoindex);
+     while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do dec(cargoindex);
     end;
   end;
  displayleftlist;
@@ -715,9 +715,9 @@ begin
  if item=ID_UNKNOWN_MATERIAL  then worth:=9;
  if item=ID_WORTHLESS_JUNK then  worth:=1;
  case item of
-  ID_SUBMATERIAL_OFFSET..5999: worth:=3;		{ sub-materials }
+  ID_FIRST_ELEMENT..ID_LAST_ELEMENT: worth:=3;	{ elements }
   ID_DIRK..1499: begin i:=1; worth:=4; end;		{ weapons }
-  ID_NOSHIELD..1599: begin i:=1; worth:=6; end;		{ shields }
+  ID_NOSHIELD..ID_LAST_SHIELD: begin i:=1; worth:=6; end;		{ shields }
   ID_NOTHING..2999: begin i:=1; worth:=4; end;		{ devices }
   3001..3999: begin i:=1; worth:=3; end; 		{ components }
   4001..4019,4021..4999: begin i:=1; worth:=2; end;	{ materials }
@@ -791,29 +791,29 @@ begin
  if (trademode=0) or (tradeworth<alienworth) or (tradeindex=0) then exit;
  case alienstuff^[tradeindex] of
   ID_REINFORCE_HULL: begin
-         addcargo(3012, true);
-         addcargo(3007, true);
-         addcargo(3018, true);
+         addcargo(ID_TORQUE_STANCHION, true);
+         addcargo(ID_METAL_WEAVE, true);
+         addcargo(ID_GUIDANCE_STRUT, true);
         end;
   ID_INCREASE_THRUST: begin
-         addcargo(1000, true);
-         addcargo(1000, true);
-         addcargo(3008, true);
+         addcargo(ID_DIRK, true);
+         addcargo(ID_DIRK, true);
+         addcargo(ID_PULSE_LOOM, true);
         end;
   ID_ADD_CARGO_SPACE: begin
-         addcargo(3018, true);
-         addcargo(3019, true);
-         addcargo(3012, true);
+         addcargo(ID_GUIDANCE_STRUT, true);
+         addcargo(ID_STRATAMOUNT, true);
+         addcargo(ID_TORQUE_STANCHION, true);
         end;
   ID_INSTALL_GUN_NODE: begin
-         addcargo(1506, true);
-         addcargo(1506, true);
-         addcargo(1034, true);
+         addcargo(ID_STASIS_GENERATOR, true);
+         addcargo(ID_STASIS_GENERATOR, true);
+         addcargo(ID_THYNNE_VORTEX, true);
         end;
   ID_MIND_ENHANCERS: begin
-         addcargo(3015, true);
-         addcargo(3003, true);
-         addcargo(3009, true);
+         addcargo(ID_PROTO_NUTRIENT, true);
+         addcargo(ID_CYBERPLASM, true);
+         addcargo(ID_BIOSYNTH, true);
         end;
   else addcargo(alienstuff^[tradeindex], true);
  end;

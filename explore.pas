@@ -89,8 +89,8 @@ begin
 	 tempplan^[curplan].cache[3]:=1043;
 	 tempplan^[curplan].cache[4]:=1035;
 	 tempplan^[curplan].cache[5]:=1035;
-	 tempplan^[curplan].cache[6]:=1034;
-	 tempplan^[curplan].cache[7]:=1034;
+	 tempplan^[curplan].cache[6]:=ID_THYNNE_VORTEX;
+	 tempplan^[curplan].cache[7]:=ID_THYNNE_VORTEX;
 	 exit;
       end;
       {printxy(160,182,'Anom!');}
@@ -1163,14 +1163,14 @@ begin
 	      {if tempplan^[curplan].orbit=0 then
 	      begin
 		 status:=7;
-		 removecargo(2001);
+		 removecargo(ID_NOTHING+1);
 		 que := -abs(que);
 		 SetScan(0);
 	      end;}
 	      if ((techlvl>=4) and (random(100)<25)) or ((techlvl=3) and (random(100)<5)) then
 	      begin
 		 status:=7;
-		 removecargo(2001);
+		 removecargo(ID_NOTHING+1);
 		 que := -abs(que);
 		 SetScan(0);
 		 {dec(datagathered[que,1]);}
@@ -1507,7 +1507,7 @@ begin
    for j:=1 to 7 do if tempplan^[curplan].cache[j]>0 then
    begin
       a:=tempplan^[curplan].cache[j];
-      if a>6000 then
+      if a>ID_ARTIFACT_OFFSET then
       begin
 	 getartifactname(a);
 	 i:=maxcargo;
@@ -1982,9 +1982,9 @@ begin
  bkcolor:=0;
  batindex:=0;
  if tempplan^[curplan].state <> 7 then
-    numprobes:=incargo(2001)
+    numprobes:=incargo(ID_PROBOT)
  else
-    numprobes:=incargo(2009);
+    numprobes:=incargo(ID_STARDIVER);
    
  if numprobes>4 then numprobes:=4;
  compressfile(tempdir+'/current',@screen);

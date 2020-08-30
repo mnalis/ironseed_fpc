@@ -211,11 +211,11 @@ begin
    y := 0;
    if tempplan^[curplan].state <> 7 then
    begin
-      if incargo(2002)>0 then inc(y);
-      if incargo(2003)>0 then inc(y);
-      if incargo(2005)>0 then inc(y);
+      if incargo(ID_MINEBOT)>0 then inc(y);
+      if incargo(ID_MANUFACTORY)>0 then inc(y);
+      if incargo(ID_FABRICATOR)>0 then inc(y);
    end else begin
-      if incargo(2006)>0 then inc(y);
+      if incargo(ID_STARMINER)>0 then inc(y);
    end;
    for i:=37 +1 + y * 6 to 114 do
       fillchar(screen[i,166],113,5);
@@ -331,13 +331,13 @@ begin
    if tempplan^[curplan].notes and 1=0 then
    begin
       y:=0;
-      if incargo(2002)>0 then
+      if incargo(ID_MINEBOT)>0 then
       begin
 	 printxy(170,43+y*6,'No info available');
 	 y:=6;
       end;
       if viewindex2=2 then bkcolor:=179 else bkcolor:=5;
-      if incargo(2003)>0 then printxy(170,43+y*6,'No info available');
+      if incargo(ID_MANUFACTORY)>0 then printxy(170,43+y*6,'No info available');
       exit;
    end;
    y:=0;
@@ -349,7 +349,7 @@ begin
    if ioresult<>0 then errorhandler('scan.dta',5);
    close(scanfile);
    for j:=0 to 16 do amounts[j]:=temp^[j,tempplan^[curplan].state];
-   if incargo(2002)>0 then
+   if incargo(ID_MINEBOT)>0 then
    begin
       cargindex:=1;
       while (cargo[cargindex].index<5000) do inc(cargindex);
@@ -374,7 +374,7 @@ begin
       until y=4;
       y:=6;
    end;
-   if incargo(2003)>0 then
+   if incargo(ID_MANUFACTORY)>0 then
    begin
       new(tempcreate);
       assign(creafile,'data/creation.dta');
@@ -1426,7 +1426,7 @@ begin
        begin
 	  if (tempplan^[curplan].state <> 7) then
 	  begin
-	     if (incargo(2001)>0) then
+	     if (incargo(ID_PROBOT)>0) then
 		exploreplanet
 	     else begin
 		tcolor:=94;
@@ -1434,7 +1434,7 @@ begin
 		print('SCIENCE: We have no probots.');
 	     end;
 	  end else begin
-	     if (incargo(2009)>0) then
+	     if (incargo(ID_STARDIVER)>0) then
 		exploreplanet
 	     else begin
 		tcolor:=94;

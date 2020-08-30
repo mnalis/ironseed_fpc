@@ -100,27 +100,66 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
-       // FIXME search code for constants [1-7]000 (and +-1) and all others too (2015,2016,...)! and addcargo, cargo.*\.index, incargo, job, acceptoffer, alienstuff, cache
+       // FIXME search code for constants [1-7]000 (and +-1) and all others too (2015,2016,...)! and cargo.*\.index, job, acceptoffer, alienstuff, cache. grep all 4-digit numbers!
       ID_DIRK = 1000;			{ first weapon }
+      ID_BALLISTA = 1009;
+      ID_THYNNE_VORTEX = 1034;
+      ID_DOOM_GATE = 1044;
+      ID_THAUMATURGE = 1046;
 
       ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
       ID_NOSHIELD = 1500;		{ no shield installed. WARNING: some version of the code used "0", so always check if (ship.shield <= ID_NOSHIELD) }
       ID_REFLECTIVEHULL = 1501;
       ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
+      ID_STASIS_GENERATOR = 1506;
+      ID_LAST_SHIELD = 1599;
 
       ID_NOTHING = 2000;		{ we start with devices after all the shields }
+      ID_PROBOT = 2001;
+      ID_MINEBOT = 2002;
+      ID_MANUFACTORY = 2003;
       ID_FUEL_NODULES = 2004;
+      ID_FABRICATOR = 2005;
+      ID_STARMINER = 2006;
+      ID_STARDIVER = 2009;
       ID_REINFORCE_HULL = 2015;
       ID_INCREASE_THRUST = 2016;
       ID_ADD_CARGO_SPACE = 2017;
       ID_INSTALL_GUN_NODE = 2018;
       ID_MIND_ENHANCERS = 2019;
 
-      ID_UNKNOWN_COMPONENT = 3000;	{ first component }
-      ID_UNKNOWN_MATERIAL  = 4000;	{ first material }
+      ID_UNKNOWN_COMPONENT = 3000;	{ first component - need few of them to create device }
+      ID_CYBERPLASM = 3003;
+      ID_METAL_WEAVE = 3007;
+      ID_PULSE_LOOM = 3008;
+      ID_BIOSYNTH = 3009;
+      ID_TORQUE_STANCHION = 3012;
+      ID_PROTO_NUTRIENT = 3015;
+      ID_GUIDANCE_STRUT = 3018;
+      ID_STRATAMOUNT = 3019;
+
+      ID_UNKNOWN_MATERIAL  = 4000;	{ first material - need few of them to create component }
+      ID_COOLANTS = 4007;
+      ID_RADIOACTIVES = 4014;
       ID_WORTHLESS_JUNK = 4020;
-      ID_SUBMATERIAL_OFFSET = 5000;	{ first submaterial (protic liquid) - need few of them to create material ! }
+
+      ID_FIRST_ELEMENT = 5000;		{ first element (protic liquid) - need few of them to create material }
+      ID_LAST_ELEMENT = 5999;
+
       ID_ARTIFACT_OFFSET = 6000;
+      ID_ARTIFACT2_OFFSET = 6500;
+      ID_ART_SHUNT_DRIVE = 6900;
+      ID_ART_CHANNELER = 6901;
+      ID_ART_IRON_SEED = 6902;
+      ID_ART_HOMING_DEVICE = 6903;
+      ID_ART_DETONATOR = 6904;
+      ID_ART_THERMAL_PLATING = 6905;
+      ID_ART_ERMIGEN_DATA_TAPES = 6906;
+      ID_ART_GLYPTIC_SCYTHE = 6907;
+      ID_ART_MULTI_IMAGER = 6908;
+      ID_ART_YLINTH_MUTAGENICS = 6909;
+      ID_ART_GOOLAS = 6910;
+      ID_LAST_ARTIFACT = 6999;
 
       DMGTYP_PSIONIC = 1;
       DMGTYP_PARTICLE = 2;

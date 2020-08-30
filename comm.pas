@@ -789,7 +789,7 @@ begin
    assert ((p <> -1) and (q <> - 1));	{ just to get rid of warning, really not used }
    case n of
      21001 : begin {Phaedor Moch: Coolant + Radioactive}
-		if (incargo(4007) >= 1) and (incargo(4014) >= 1) then
+		if (incargo(ID_COOLANTS) >= 1) and (incargo(ID_RADIOACTIVES) >= 1) then
 		begin
 		   bkcolor := 0;
 		   tcolor := s;
@@ -799,9 +799,9 @@ begin
 		   mousehide;
 		   if result then
 		   begin
-		      removecargo(4007);
-		      removecargo(4014);
-		      addcargo(6907, true);
+		      removecargo(ID_COOLANTS);
+		      removecargo(ID_RADIOACTIVES);
+		      addcargo(ID_ART_GLYPTIC_SCYTHE, true);
 		      run21000event := true;
 		      addpending(1101, 0);
 		      event(500);
@@ -815,7 +815,7 @@ begin
 		end;
 	     end;
      21002 : begin {Aard: Stratamount}
-		if (incargo(3019) >= 1) then
+		if (incargo(ID_STRATAMOUNT) >= 1) then
 		begin
 		   printxy(12,135+(1)*6,'Give the Aard a stratamount?');
 		   mouseshow; 
@@ -823,8 +823,8 @@ begin
 		   mousehide;
 		   if result then
 		   begin
-		      removecargo(3019);
-		      addcargo(1009, true);
+		      removecargo(ID_STRATAMOUNT);
+		      addcargo(ID_BALLISTA, true);
 		      run21000event := true;
 		      addpending(1102, 0);
 		      event(500);

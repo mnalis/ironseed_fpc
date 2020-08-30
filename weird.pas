@@ -261,9 +261,9 @@ begin
    15	: addlog(15);      { planets dest }
    16	: addlog(16);      { monks        }
    17	: begin            { derelict     }
-	     addcargo(6905, true);
-	     for j:=0 to 3 do addcargo(3000, true);
-	     addcargo(4000, true);
+	     addcargo(ID_ART_THERMAL_PLATING, true);
+	     for j:=0 to 3 do addcargo(ID_UNKNOWN_COMPONENT, true);
+	     addcargo(ID_UNKNOWN_MATERIAL, true);
 	     addlog(17);
 	  end;
    18	: addlog(18);      { thermoplast  }
@@ -272,39 +272,39 @@ begin
 	     addlog(19);
 	  end;
    20	: begin            { shunt ship   }
-	     addcargo(6900, true);
+	     addcargo(ID_ART_SHUNT_DRIVE, true);
 	     addlog(20);
 	  end;
    21	: if chevent(36) then addlog(21); { malzatoir    }
    22	: if chevent(21) then addlog(22); { icon data    }
-   24	: if (incargo(6904)>0) and (chevent(42)) then
+   24	: if (incargo(ID_ART_DETONATOR)>0) and (chevent(42)) then
 	  begin           { in temple    }
-	     removecargo(6904);
-	     addcargo(6901, true);
-	     addcargo(6902, true);
-	     addcargo(6903, true);
+	     removecargo(ID_ART_DETONATOR);
+	     addcargo(ID_ART_CHANNELER, true);
+	     addcargo(ID_ART_IRON_SEED, true);
+	     addcargo(ID_ART_HOMING_DEVICE, true);
 	     addlog(24);
 	  end;
-   25	: if (incargo(6903)>0) and (chevent(24)) then
+   25	: if (incargo(ID_ART_HOMING_DEVICE)>0) and (chevent(24)) then
 	  begin          { pirate base }
-	     removecargo(1506);
-	     removecargo(6903);
-	     addcargo(6900, true);
+	     removecargo(ID_STASIS_GENERATOR);
+	     removecargo(ID_ART_HOMING_DEVICE);
+	     addcargo(ID_ART_SHUNT_DRIVE, true);
 	     for j:=1 to random(3) do
-		if random(2)=0 then addcargo(random(400)+6001, true)
-		else addcargo(random(100)+6501, true);
-	     for j:=1 to 3 do addcargo(3000, true);
+		if random(2)=0 then addcargo(random(400)+1+ID_ARTIFACT_OFFSET, true)
+		else addcargo(random(100)+1+ID_ARTIFACT2_OFFSET, true);
+	     for j:=1 to 3 do addcargo(ID_UNKNOWN_COMPONENT, true);
 	     addlog(25);
 	  end;
    26	: if chevent(24) then
 	  begin           { piracy       }
-	     removecargo(6900);
+	     removecargo(ID_ART_SHUNT_DRIVE);
 	     addlog(26);
 	  end;
    27	: if chevent(25) then addlog(27); { icon trans }
    28	: if chevent(30) then
 	  begin           { find ermigen data tapes }
-	     addcargo(6906, true);
+	     addcargo(ID_ART_ERMIGEN_DATA_TAPES, true);
 	     addlog(28);
 	     {erase notes on star}
 	     for i := 1 to 1000 do
@@ -313,40 +313,40 @@ begin
 	  end;
    29	: errorhandler('Log #29 ain''t suppose to happen!',7); { kill this! blank!!! }
    36	: begin            { research drv }
-	     addcargo(6900, true);
+	     addcargo(ID_ART_SHUNT_DRIVE, true);
 	     addlog(36);
 	  end;
    39	: begin
-	     addcargo(6904, true);
+	     addcargo(ID_ART_DETONATOR, true);
 	     addlog(39);
 	  end;
    40	: begin            { glyptic scythe }
-	     addcargo(6907, true);
+	     addcargo(ID_ART_GLYPTIC_SCYTHE, true);
 	     addlog(40);
 	  end;
    42	: addlog(42);      { temple found }
    43	: begin            { guild get genes }
-	     removecargo(6909);
+	     removecargo(ID_ART_YLINTH_MUTAGENICS);
 	     addlog(43);
 	  end;
    45	: begin            { doom gate    }
-	     addcargo(1044, true);
+	     addcargo(ID_DOOM_GATE, true);
 	     addlog(45);
 	  end;
    46	: begin            { thaumaturge  }
-	     addcargo(1046, true);
+	     addcargo(ID_THAUMATURGE, true);
 	     addlog(46);
 	  end;
    47	: begin            { titarian like shuntdrive }
-	     removecargo(6900);
+	     removecargo(ID_ART_SHUNT_DRIVE);
 	     addlog(47);
 	  end;
    48	: begin            { quai pa'loi join }
-	     addcargo(6908, true);
+	     addcargo(ID_ART_MULTI_IMAGER, true);
 	     addlog(48);
 	  end;
    49	: begin            { find genes }
-	     addcargo(6909, true);
+	     addcargo(ID_ART_YLINTH_MUTAGENICS, true);
 	     addlog(49);
 	  end;
    1103	: begin {Recovery of the Cargan (Ermigen flagship)}
@@ -365,7 +365,7 @@ begin
 		   println;
 		   print('SCIENCE: Perhaps we should initiate contact, Laird.');
 		end;
-   10001      : removecargo(6908); { remove multi-imager }
+   10001      : removecargo(ID_ART_MULTI_IMAGER); { remove multi-imager }
    10002      : begin              { scavenger armada }
 		   if (chevent(45)) and (chevent(46)) and (chevent(31))
 		      and ((chevent(34)) or (chevent(30)))

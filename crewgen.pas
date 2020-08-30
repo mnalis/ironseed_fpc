@@ -844,13 +844,13 @@ begin
       fillchar(events,50,255);
       fillchar(events[50],15,0);
       research:=0;
-      cargo[1]:=2001;
+      cargo[1]:=ID_PROBOT;
       numcargo[1]:=2;
-      ship.cargo[2]:=2002;
+      ship.cargo[2]:=ID_MINEBOT;
       numcargo[2]:=1;
-      cargo[3]:=2003;
+      cargo[3]:=ID_MANUFACTORY;
       numcargo[3]:=1;
-      cargo[4]:=1000;
+      cargo[4]:=ID_DIRK;
       numcargo[4]:=1;
       options[OPT_SCREENSAVER]:=1;
       options[OPT_TIMESLICE]:=20;

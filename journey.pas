@@ -938,24 +938,24 @@ begin
            begin
             repeat
              dec(viewindex2);
-             if (ship.cargo[viewindex2]>1499) and (ship.cargo[viewindex2]<1999) then inc(i);
+             if (ship.cargo[viewindex2]>=ID_NOSHIELD) and (ship.cargo[viewindex2]<ID_NOTHING-1) then inc(i);
             until (viewindex2<1) or (i=0);
             if viewindex2<1 then
              begin
               viewindex2:=1;
-              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do inc(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>=ID_NOTHING) do inc(viewindex2);
              end;
            end
           else if i>0 then
            begin
             repeat
              inc(viewindex2);
-             if (ship.cargo[viewindex2]>1499) and (ship.cargo[viewindex2]<1999) then dec(i);
+             if (ship.cargo[viewindex2]>=ID_NOSHIELD) and (ship.cargo[viewindex2]<ID_NOTHING-1) then dec(i);
             until (viewindex2>250) or (i=0);
             if viewindex2>250 then
              begin
               viewindex2:=250;
-              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) do dec(viewindex2);
+              while (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>=ID_NOTHING) do dec(viewindex2);
              end;
            end;
         end;
@@ -1028,12 +1028,12 @@ begin
            begin
             repeat
              dec(viewindex2);
-             if (ship.cargo[viewindex2]>999) and (ship.cargo[viewindex2]<1499) then inc(i);
+             if (ship.cargo[viewindex2]>=ID_DIRK) and (ship.cargo[viewindex2]<ID_NOSHIELD-1) then inc(i);
             until (viewindex2<1) or (i=0);
             if viewindex2<1 then
              begin
               viewindex2:=1;
-              while (viewindex2<251) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do inc(viewindex2);
+              while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do inc(viewindex2);
               if viewindex2=251 then viewindex2:=0;
              end;
            end
@@ -1041,12 +1041,12 @@ begin
            begin
             repeat
              inc(viewindex2);
-             if (ship.cargo[viewindex2]>999) and (ship.cargo[viewindex2]<1499) then dec(i);
+             if (ship.cargo[viewindex2]>=ID_DIRK) and (ship.cargo[viewindex2]<ID_NOSHIELD-1) then dec(i);
             until (viewindex2>250) or (i=0);
             if viewindex2>250 then
              begin
               viewindex2:=250;
-              while (viewindex2>0) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do dec(viewindex2);
+              while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do dec(viewindex2);
              end;
            end;
          end;
@@ -1099,26 +1099,26 @@ begin
 	     printxy(0,0,s);}
 	     if tempplan^[curplan].state <> 7 then
 	     begin
-		if incargo(2002) > 0 then
+		if incargo(ID_MINEBOT) > 0 then
 		   dec(y);
 		if y < 0 then begin
 		   viewindex2:=1;
 		   y:=99;
 		end;
-		if incargo(2003) > 0 then
+		if incargo(ID_MANUFACTORY) > 0 then
 		   dec(y);
 		if y < 0 then begin
 		   viewindex2:=2;
 		   y:=99;
 		end;
-		if incargo(2005) > 0 then
+		if incargo(ID_FABRICATOR) > 0 then
 		   dec(y);
 		if y < 0 then begin
 		   viewindex2:=4;
 		   y:=99;
 		end;
 	     end else begin
-		if incargo(2006) > 0 then
+		if incargo(ID_STARMINER) > 0 then
 		   dec(y);
 		if y < 0 then begin
 		   viewindex2:=5;
@@ -1133,9 +1133,9 @@ begin
 		showbotstuff;
 		mouseshow;
 	     end;
-            {if (mouse.y<74) and (incargo(2002)>0) then viewindex2:=1
+            {if (mouse.y<74) and (incargo(ID_MINEBOT)>0) then viewindex2:=1
              else if (mouse.y<74) then viewindex2:=2
-             else if (mouse.y>73) and (incargo(2003)>0) then viewindex2:=2;}
+             else if (mouse.y>73) and (incargo(ID_MANUFACTORY)>0) then viewindex2:=2;}
            end;
         end;
    end;
@@ -1259,9 +1259,9 @@ begin
 	  end;
 	  #22: begin {alt-u}
 	     event(42);
-	     addcargo(6904, true);
+	     addcargo(ID_ART_DETONATOR, true);
 	     event(24);
-	     addcargo(6903, true);
+	     addcargo(ID_ART_HOMING_DEVICE, true);
 	     event(25);
 	     event(27);
 	     event(30);
@@ -1272,8 +1272,8 @@ begin
 	     printxy(0,0,s);
 	  end;*)
           (*#22: begin {alt-u}
-	     addcargo(2009, true);
-	     addcargo(2006, true);
+	     addcargo(ID_STARDIVER, true);
+	     addcargo(ID_STARMINER, true);
 	  end;*)
           (*#23: begin {alt-i}
 	     if yesnorequest('Install fabricator?',0,31) then

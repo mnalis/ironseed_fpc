@@ -336,7 +336,7 @@ begin
             ID_NOTHING..2999: i:=11;		{ devices }
             ID_UNKNOWN_COMPONENT..3999: i:=12;	{ components }
             ID_UNKNOWN_MATERIAL..4999: i:=13;	{ materials }
-            6000..6999: i:=14;
+            ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: i:=14;
            end;
            printxy(169,22+j*27,s+teamdata[i]);
           end;
@@ -573,18 +573,18 @@ begin
   3: if viewlevel>1 then	{ up }
        begin
         dec(viewindex2);
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>ID_LAST_SHIELD)) do dec(viewindex2);
         if viewindex2=0 then viewindex2:=250;
-        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do dec(viewindex2);
+        while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>ID_LAST_SHIELD)) do dec(viewindex2);
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
      else if viewindex=1 then viewindex:=3 else dec(viewindex);
   4: if viewlevel>1 then	{ down }
        begin
         inc(viewindex2);
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>ID_LAST_SHIELD)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=1;
-        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+        while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>ID_LAST_SHIELD)) do inc(viewindex2);
         if viewindex2=251 then viewindex2:=0;
         if (viewindex2>0) and (viewlevel=3) then showshdicon(ship.cargo[viewindex2]);
        end
@@ -681,7 +681,7 @@ begin
        screen[83,279]:=2;
        printxy(170,27,'Installable Shields');
        viewindex2:=1;
-       while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1599)) do inc(viewindex2);
+       while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>ID_LAST_SHIELD)) do inc(viewindex2);
        if viewindex2=251 then viewindex2:=0;
       end;
  end;
@@ -713,12 +713,12 @@ begin
      end;
   1: displayshieldinfo(ship.shield);
   2: begin
-      if (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999)) then
+      if (viewindex2>0) and ((ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>=ID_NOTHING)) then
        displayshieldopts(4);
       x:=viewindex2+1;
       y:=7;
       repeat
-       while (x<251) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do inc(x);
+       while (x<251) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>ID_LAST_SHIELD)) do inc(x);
        if x<251 then
         begin
          inc(y);
@@ -732,7 +732,7 @@ begin
       x:=viewindex2;
       y:=8;
       repeat
-       while (x>0) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>1599)) do dec(x);
+       while (x>0) and ((ship.cargo[x]<ID_NOSHIELD) or (ship.cargo[x]>ID_LAST_SHIELD)) do dec(x);
        if x=viewindex2 then bkcolor:=179 else bkcolor:=5;
        if x>0 then
         begin
@@ -746,7 +746,7 @@ begin
         fillchar(screen[j,166],113,5);
      end;
   3: begin
-      if (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>1999) then
+      if (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>=ID_NOTHING) then
        displayshieldopts(4);
       if viewindex2>0 then displayshieldinfo(ship.cargo[viewindex2]);
      end;
@@ -865,7 +865,7 @@ var j: integer;
 begin;
  b:=-1;
  for j:=1 to 3 do
-  if (ship.engrteam[j].job>999) and (ship.engrteam[j].job<1499) and
+  if (ship.engrteam[j].job>=ID_DIRK) and (ship.engrteam[j].job<ID_NOSHIELD-1) and
     (ship.engrteam[j].jobtype=1) and ((ship.engrteam[j].extra and 15)=node) then
    begin
     for i:=0 to 19 do
@@ -2138,7 +2138,7 @@ begin
  cargo_used:=0;
  for j:=1 to 250 do
   begin
-   if ship.cargo[j]>6000 then
+   if ship.cargo[j]>ID_ARTIFACT_OFFSET then
     begin
      i:=maxcargo;
      getartifactname(ship.cargo[j]);
@@ -2261,11 +2261,11 @@ begin
      else
       begin
        dec(viewindex2);
-       while (viewindex2>0) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do dec(viewindex2);
+       while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do dec(viewindex2);
        if viewindex2<1 then
         begin
          viewindex2:=250;
-         while (viewindex2>0) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do dec(viewindex2);
+         while (viewindex2>0) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do dec(viewindex2);
         end;
       end;
   4: if viewlevel=0 then
@@ -2280,11 +2280,11 @@ begin
      else
       begin
        inc(viewindex2);
-       while (viewindex2<251) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do inc(viewindex2);
+       while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do inc(viewindex2);
        if viewindex2=251 then
         begin
          viewindex2:=1;
-         while (viewindex2<251) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do inc(viewindex2);
+         while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do inc(viewindex2);
          if viewindex2=251 then viewindex2:=0;
         end;
       end;
@@ -2326,12 +2326,12 @@ begin
        i:=0;
        for j:=1 to 3 do
         if ((ship.engrteam[j].extra and 15)=viewindex) and (ship.engrteam[j].jobtype=1)
-        and (ship.engrteam[j].job>999) and (ship.engrteam[j].job<1499) then i:=1;
+        and (ship.engrteam[j].job>=ID_DIRK) and (ship.engrteam[j].job<ID_NOSHIELD-1) then i:=1;
        if i=0 then
         begin
          viewlevel:=1;
          viewindex2:=1;
-         while (viewindex2<251) and ((ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499)) do inc(viewindex2);
+         while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do inc(viewindex2);
          if viewindex2=251 then viewindex2:=0;
          for i:=26 to 114 do
           fillchar(screen[i,16],263,5);
@@ -2451,7 +2451,7 @@ begin
      end;
    1: if viewindex2>0 then
       begin
-       if (ship.cargo[viewindex2]<1000) or (ship.cargo[viewindex2]>1499) then
+       if (ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD) then
         displayconfigure(4);
        if viewindex2>0 then
         begin
@@ -2466,7 +2466,7 @@ begin
        x:=viewindex2+1;
        y:=6;
        repeat
-        while (x<251) and ((ship.cargo[x]<1000) or (ship.cargo[x]>1499)) do inc(x);
+        while (x<251) and ((ship.cargo[x]<ID_DIRK) or (ship.cargo[x]>=ID_NOSHIELD)) do inc(x);
         if x=viewindex2 then bkcolor:=179 else bkcolor:=5;
         if x<251 then
          begin
@@ -2481,7 +2481,7 @@ begin
        x:=viewindex2;
        y:=7;
        repeat
-        while (x>0) and ((ship.cargo[x]<1000) or (ship.cargo[x]>1499)) do dec(x);
+        while (x>0) and ((ship.cargo[x]<ID_DIRK) or (ship.cargo[x]>=ID_NOSHIELD)) do dec(x);
         if x=viewindex2 then bkcolor:=179 else bkcolor:=5;
         if x>0 then
          begin
@@ -2525,20 +2525,20 @@ begin
 	begin
 	   case viewindex2 of
 	     1 : begin
-		    if (incargo(2005)>0) then viewindex2:=4
-		    else if (incargo(2003)>0) then viewindex2:=2;
+		    if (incargo(ID_FABRICATOR)>0) then viewindex2:=4
+		    else if (incargo(ID_MANUFACTORY)>0) then viewindex2:=2;
 		 end;
 	     2 : begin
-		    if (incargo(2002)>0) then viewindex2:=1
-		    else if (incargo(2005)>0) then viewindex2:=4;
+		    if (incargo(ID_MINEBOT)>0) then viewindex2:=1
+		    else if (incargo(ID_FABRICATOR)>0) then viewindex2:=4;
 		 end;
 	   else begin
-	      if (incargo(2003)>0) then viewindex2:=2
-	      else if (incargo(2002)>0) then viewindex2:=1;
+	      if (incargo(ID_MANUFACTORY)>0) then viewindex2:=2
+	      else if (incargo(ID_MINEBOT)>0) then viewindex2:=1;
 	   end;
 	   end;
 	end else begin
-	   if (incargo(2006)>0) then viewindex2:=5;
+	   if (incargo(ID_STARMINER)>0) then viewindex2:=5;
 	end;
 	showbotstuff;
      end
@@ -2568,20 +2568,20 @@ begin
 	begin
 	   case viewindex2 of
 	     1 : begin
-		     if (incargo(2003)>0) then viewindex2:=2
-		     else if (incargo(2005)>0) then viewindex2:=4;
+		     if (incargo(ID_MANUFACTORY)>0) then viewindex2:=2
+		     else if (incargo(ID_FABRICATOR)>0) then viewindex2:=4;
 		  end;
 	     2 : begin
-		     if (incargo(2005)>0) then viewindex2:=4
-		     else if (incargo(2002)>0) then viewindex2:=1;
+		     if (incargo(ID_FABRICATOR)>0) then viewindex2:=4
+		     else if (incargo(ID_MINEBOT)>0) then viewindex2:=1;
 		  end;
 	   else begin
-		    if (incargo(2002)>0) then viewindex2:=1
-		    else if (incargo(2003)>0) then viewindex2:=2;
+		    if (incargo(ID_MINEBOT)>0) then viewindex2:=1
+		    else if (incargo(ID_MANUFACTORY)>0) then viewindex2:=2;
 	   end;
 	   end;
 	end else begin
-	   if (incargo(2006)>0) then viewindex2:=5;
+	   if (incargo(ID_STARMINER)>0) then viewindex2:=5;
 	end;
        showbotstuff;
       end
@@ -2663,7 +2663,7 @@ begin
        for i:=37 to 115 do
         fillchar(screen[i,166],113,5);
        viewlevel:=0;
-       if ship.cargo[viewindex2]>6000 then
+       if ship.cargo[viewindex2]>ID_ARTIFACT_OFFSET then
         begin
          getartifactname(ship.cargo[viewindex2]);
          i:=maxcargo;
@@ -2689,7 +2689,7 @@ begin
        if yesnorequest('Send '+s+'?',0,31) then
        begin
 	  tempplan^[curplan].bots:=(tempplan^[curplan].bots and (255 - 7)) or viewindex2;
-	  removecargo(2001+viewindex2);
+	  removecargo(ID_NOTHING+1+viewindex2);
 	  for i:=37 to 115 do
 	     fillchar(screen[i,166],113,5);
 	  viewlevel:=0;
@@ -2703,13 +2703,13 @@ begin
       begin
 	if tempplan^[curplan].state <> 7 then
 	begin
-	   if (incargo(2002)>0) or (incargo(2003)>0) or (incargo(2005)>0)  then
+	   if (incargo(ID_MINEBOT)>0) or (incargo(ID_MANUFACTORY)>0) or (incargo(ID_FABRICATOR)>0)  then
 	   begin
 	      printxy(164,27,'       Bot Info      ');
 	      for i:=37 to 114 do
 		 fillchar(screen[i,166],113,5);
-	      if incargo(2002)>0 then viewindex2:=1
-	      else if incargo(2003)>0 then viewindex2:=2
+	      if incargo(ID_MINEBOT)>0 then viewindex2:=1
+	      else if incargo(ID_MANUFACTORY)>0 then viewindex2:=2
 	      else viewindex2:=4;
 	      viewlevel:=2;
 	      showbotstuff;
@@ -2723,7 +2723,7 @@ begin
 	      bkcolor:=5;
 	   end;
 	end else begin
-	   if (incargo(2006)>0) then
+	   if (incargo(ID_STARMINER)>0) then
 	   begin
 	      printxy(164,27,'       Bot Info      ');
 	      for i:=37 to 114 do
@@ -2767,7 +2767,7 @@ begin
         if tempplan^[curplan].cache[j]>0 then
          begin
           inc(y);
-          if tempplan^[curplan].cache[j]>6000 then
+          if tempplan^[curplan].cache[j]>ID_ARTIFACT_OFFSET then
            begin
             getartifactname(tempplan^[curplan].cache[j]);
             i:=maxcargo;
@@ -2793,7 +2793,7 @@ begin
        if x<251 then
         begin
          inc(y);
-         if ship.cargo[x]>6000 then
+         if ship.cargo[x]>ID_ARTIFACT_OFFSET then
           begin
            getartifactname(ship.cargo[x]);
            i:=maxcargo;
@@ -2818,7 +2818,7 @@ begin
        if x>0 then
         begin
          dec(y);
-         if ship.cargo[x]>6000 then
+         if ship.cargo[x]>ID_ARTIFACT_OFFSET then
           begin
            getartifactname(ship.cargo[x]);
            i:=maxcargo;
@@ -2841,26 +2841,26 @@ begin
 	y:=0;
 	if tempplan^[curplan].state <> 7 then
 	begin
-	   if incargo(2002)>0 then
+	   if incargo(ID_MINEBOT)>0 then
 	   begin
 	      if viewindex2=1 then bkcolor:=179 else bkcolor:=5;
 	      printxy(167,37+y*6,'Drop Minebot');
 	      inc(y);
 	   end;
-	   if incargo(2003)>0 then
+	   if incargo(ID_MANUFACTORY)>0 then
 	   begin
 	      if viewindex2=2 then bkcolor:=179 else bkcolor:=5;
 	      printxy(167,37+y*6,'Drop Manufactory');
 	      inc(y);
 	   end;
-	   if incargo(2005)>0 then
+	   if incargo(ID_FABRICATOR)>0 then
 	   begin
 	      if viewindex2=4 then bkcolor:=179 else bkcolor:=5;
 	      printxy(167,37+y*6,'Drop Fabricator');
 	      inc(y);
 	   end;
 	end else begin
-	   if incargo(2006)>0 then
+	   if incargo(ID_STARMINER)>0 then
 	   begin
 	      if viewindex2=5 then bkcolor:=179 else bkcolor:=5;
 	      printxy(167,37+y*6,'Drop Starmine');
