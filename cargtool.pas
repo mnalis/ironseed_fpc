@@ -93,7 +93,7 @@ begin
       StartBuild := 0;
       exit;
    end;
-   if (item = 3021) and (not chevent(18)) then {thermoplast can only be made after it's discovery}
+   if (item = ID_THERMOPLAST) and (not chevent(18)) then {thermoplast can only be made after it's discovery}
    begin
       StartBuild := -3;
       exit;
@@ -127,7 +127,7 @@ begin
       end;
    ship.engrteam[team].job := item;
    ship.engrteam[team].extra := root;
-   ship.engrteam[team].jobtype := 3;
+   ship.engrteam[team].jobtype := JOBTYPE_CREATE;
    ship.engrteam[team].timeleft := GetBuildTime(item);
    for j := 1 to 3 do
       RemoveCargo(prtcargo[i,j]);
@@ -1538,19 +1538,19 @@ begin
       teamjob := ship.engrteam[team].job;
    end;
    case ship.engrteam[team].jobtype of
-     0 : printxy(233,62,'Repairing');
-     1: printxy(231,62,'Installing');
-     2: printxy(236,62,'Removing');
-  5: printxy(236,62,'	Research');
+     JOBTYPE_REPAIR: printxy(233,62,'Repairing');
+     JOBTYPE_INSTALL: printxy(231,62,'Installing');
+     JOBTYPE_REMOVE: printxy(236,62,'Removing');
+     JOBTYPE_RESEARCH: printxy(236,62,'	Research');	// FIXME does it really need that <TAB> ?!
    end;
-   if ship.engrteam[team].jobtype<3 then
+   if ship.engrteam[team].jobtype<JOBTYPE_CREATE then
    begin
       for i:=77 to 80 do
 	 fillchar(screen[i,222],77,0);
       mouseshow;
       exit;
    end;
-   if ship.engrteam[team].jobtype<5 then displaybreakdown(ship.engrteam[team].job);
+   if ship.engrteam[team].jobtype<JOBTYPE_RESEARCH then displaybreakdown(ship.engrteam[team].job);
    b:=76-round(ship.engrteam[team].timeleft/GetBuildTime(ship.engrteam[team].job)*76);
    assert ((b>=0) and (b<=76), 'engineering team gradient progressbar out of bounds');
    {b:=round((ship.engrteam[team].extra shr 8) * 76/
@@ -1582,7 +1582,7 @@ begin
  with ship.engrteam[team] do
   begin
    job:=ship.cargo[cargoindex];
-   if job<ID_ARTIFACT_OFFSET then jobtype:=4 else jobtype:=5;
+   if job<ID_ARTIFACT_OFFSET then jobtype:=JOBTYPE_DECOMPOSE else jobtype:=JOBTYPE_RESEARCH;
    timeleft:=0;
    if job<ID_ARTIFACT_OFFSET then
     begin
@@ -1713,7 +1713,7 @@ begin
  {with ship.engrteam[team] do
   begin
    job:=createinfo^[cargoindex].index;
-   jobtype:=3;
+   jobtype:=JOBTYPE_CREATE;
    timeleft:=0;
    for j:=1 to 6 do timeleft:=timeleft+100*createinfo^[cargoindex].levels[j];
    for j:=1 to 6 do addxp(j,25*createinfo^[cargoindex].levels[j],0);

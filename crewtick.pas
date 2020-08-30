@@ -370,7 +370,7 @@ var
 		  addcargo(job, true);
 	       if not ((extra = 0) or (job = extra)) then
 	       begin
-		  jobtype := 0;
+		  jobtype := JOBTYPE_REPAIR;
 		  timeleft := 0;
 		  job := 0;
 		  RebuildCargoReserve;
@@ -384,7 +384,7 @@ var
 	       end
 	    end;
 	    end;
-	    jobtype:=0;
+	    jobtype:=JOBTYPE_REPAIR;
 	    timeleft:=0;
 	    if job<>ID_MIND_ENHANCERS then CrewMessage(background, 31, 2,'Synthesis of '+CargoName(job)+' completed, sir!');
 	    job:=0;
@@ -426,7 +426,7 @@ var
       for j:=1 to 3 do
 	 with ship.engrteam[j] do
 	    case jobtype of
-	      0	  : 
+	      JOBTYPE_REPAIR :
 		 if (job<8) and (job>0) then
 		 begin
 		    dec(timeleft, 5);
@@ -458,7 +458,7 @@ var
 				end;
 			  end;
 			  for i:=1 to 3 do
-			     if (i<>j) and (ship.engrteam[i].jobtype=0) and (ship.engrteam[i].job=job) then
+			     if (i<>j) and (ship.engrteam[i].jobtype=JOBTYPE_REPAIR) and (ship.engrteam[i].job=job) then
 			     begin
 				ship.engrteam[i].timeleft:=nexttime;
 				ship.engrteam[i].job:=nextjob;
@@ -494,7 +494,7 @@ var
 			     end;
 			  end;
 			  for i:=1 to 3 do
-			     if (i<>j) and (ship.engrteam[i].jobtype=0) and (ship.engrteam[i].job=job) then
+			     if (i<>j) and (ship.engrteam[i].jobtype=JOBTYPE_REPAIR) and (ship.engrteam[i].job=job) then
 			     begin
 				ship.engrteam[i].timeleft:=nexttime;
 				ship.engrteam[i].job:=nextjob;
@@ -505,7 +505,7 @@ var
 		       end;
 		    end;
 		 end;
-	      1,2 : 
+	      JOBTYPE_INSTALL, JOBTYPE_REMOVE :
 	         if job<ID_NOSHIELD then
 		 begin
 		    dec(timeleft,5);
@@ -515,11 +515,11 @@ var
 		    if extra >= 110 * 16 then
 		    begin
 		       timeleft:=0;
-		       if jobtype=1 then ship.gunnodes[extra and 15]:=job-ID_DIRK+1;
-		       if jobtype=2 then CrewMessage(background, 31, 2, 'Weapon removed, sir!')
+		       if jobtype=JOBTYPE_INSTALL then ship.gunnodes[extra and 15]:=job-ID_DIRK+1;
+		       if jobtype=JOBTYPE_REMOVE  then CrewMessage(background, 31, 2, 'Weapon removed, sir!')
 		       else CrewMessage(background, 31, 2,'weapon installed, sir!');
 		       job:=0;
-		       jobtype:=0;
+		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end
 		 else begin
@@ -527,8 +527,8 @@ var
 		    if random(220)=0 then
 		    begin
 		       timeleft:=0;
-		       if jobtype=1 then ship.shield:=job;
-		       if jobtype=2 then CrewMessage(background, 31, 2, 'Shield removed, sir!')
+		       if jobtype=JOBTYPE_INSTALL then ship.shield:=job;
+		       if jobtype=JOBTYPE_REMOVE then CrewMessage(background, 31, 2, 'Shield removed, sir!')
 		       else
 		       begin
 			  CrewMessage(background, 31, 2,'Shield installed, sir!');
@@ -541,12 +541,12 @@ var
 			  else for a:=1 to 3 do ship.shieldopt[a]:=100-ship.damages[DMG_SHIELD];
 		       end;
 		       job:=0;
-		       jobtype:=0;
+		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end;
-	      3	  : 
+	      JOBTYPE_CREATE	  :
 		   EngBuildFinish(background, j);
-	      4	  : begin
+	      JOBTYPE_DECOMPOSE	  : begin
 		       dec(timeleft,5);
 		       if SkillTest(background, 2, 40, 10) then
 			  if SkillTest(background, 2, 40, 10) then
@@ -561,11 +561,11 @@ var
 			  EngDisassembleFinish(background, job);
 			  timeleft:=0;
 			  job:=0;
-			  jobtype:=0;
+			  jobtype:=JOBTYPE_REPAIR;
 			  CrewMessage(background, 31, 2,'Disassmebling completed, sir!');
 		       end;
 		    end;
-	      5	  : begin
+	      JOBTYPE_RESEARCH	  : begin
 		       dec(timeleft,5);
 		       if SkillTest(background, 2, 40, 10) then
 			  if SkillTest(background, 2, 40, 10) then
@@ -579,7 +579,7 @@ var
 		       if (timeleft<1) and ((job<>ID_ART_SHUNT_DRIVE) or (not background)) then
 		       begin
 			  timeleft:=0;
-			  jobtype:=0;
+			  jobtype:=JOBTYPE_REPAIR;
 			  CrewMessage(background, 31, 2,'Artifact research completed, sir!');
 			  dothatartifactthing(job);
 			  job:=0;

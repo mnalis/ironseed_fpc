@@ -838,8 +838,8 @@ begin
       with engrteam[1] do
       begin
 	 timeleft:=ship.damages[DMG_CPU]*70+random(30);
-	 job:=7;
-	 jobtype:=0;
+	 job:=7;	{ 7 = Computer AI / CPU }
+	 jobtype:=JOBTYPE_REPAIR;
       end;
       fillchar(events,50,255);
       fillchar(events[50],15,0);

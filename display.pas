@@ -217,7 +217,7 @@ begin
        begin
         if viewindex=1 then viewindex:=3 else dec(viewindex);
        end
-     else if ship.engrteam[viewindex].jobtype=0 then
+     else if ship.engrteam[viewindex].jobtype=JOBTYPE_REPAIR then
       begin
        i:=ship.engrteam[viewindex].job;
        bkcolor:=5;
@@ -235,7 +235,7 @@ begin
       begin
        if viewindex=3 then viewindex:=1 else inc(viewindex);
       end
-     else if ship.engrteam[viewindex].jobtype=0 then
+     else if ship.engrteam[viewindex].jobtype=JOBTYPE_REPAIR then
       begin
        i:=ship.engrteam[viewindex].job;
        bkcolor:=5;
@@ -322,12 +322,12 @@ begin
          else
           begin
            case jobtype of
-            0: s:='Repair ';
-            1: s:='Install ';
-            2: s:='Remove ';
-            3: s:='Create ';
-            4: s:='Disjoin ';
-            5: s:='Research ';
+            JOBTYPE_REPAIR:	s:='Repair ';
+            JOBTYPE_INSTALL:	s:='Install ';
+            JOBTYPE_REMOVE:	s:='Remove ';
+            JOBTYPE_CREATE:	s:='Create ';
+            JOBTYPE_DECOMPOSE:	s:='Disjoin ';
+            JOBTYPE_RESEARCH:	s:='Research ';
            end;
            case job of
                 0..100: i:=job;
@@ -336,7 +336,7 @@ begin
             ID_NOTHING..2999: i:=11;		{ devices }
             ID_UNKNOWN_COMPONENT..3999: i:=12;	{ components }
             ID_UNKNOWN_MATERIAL..4999: i:=13;	{ materials }
-            ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: i:=14;
+            ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: i:=14;	{ artifacts }
            end;
            printxy(169,22+j*27,s+teamdata[i]);
           end;
@@ -380,7 +380,7 @@ begin
        fillchar(screen[i,170],17,5);
       for j:=1 to 3 do
        begin
-        if ship.engrteam[j].jobtype>0 then i:=9
+        if ship.engrteam[j].jobtype>JOBTYPE_REPAIR then i:=9
          else i:=ship.engrteam[j].job;
         tcolor:=61;
         bkcolor:=5;
@@ -625,7 +625,7 @@ begin
            begin
             addcargo(ship.shield, true);
             ship.engrteam[j].job:=ship.shield;
-            ship.engrteam[j].jobtype:=2;
+            ship.engrteam[j].jobtype:=JOBTYPE_REMOVE;
             ship.engrteam[j].timeleft:=1000;
             ship.shield:=ID_REFLECTIVEHULL;	// NB not fair but simple - we get reflective hull even if didn't have it before, if we remove any other shield... oh well..
             mousehide;
@@ -653,7 +653,7 @@ begin
            begin
             ship.engrteam[j].job:=ship.cargo[viewindex2];
             removecargo(ship.cargo[viewindex2]);
-            ship.engrteam[j].jobtype:=1;
+            ship.engrteam[j].jobtype:=JOBTYPE_INSTALL;
             ship.engrteam[j].timeleft:=1000;
            end;
          end;
@@ -866,7 +866,7 @@ begin;
  b:=-1;
  for j:=1 to 3 do
   if (ship.engrteam[j].job>=ID_DIRK) and (ship.engrteam[j].job<ID_NOSHIELD-1) and
-    (ship.engrteam[j].jobtype=1) and ((ship.engrteam[j].extra and 15)=node) then
+    (ship.engrteam[j].jobtype=JOBTYPE_INSTALL) and ((ship.engrteam[j].extra and 15)=node) then
    begin
     for i:=0 to 19 do
      fillchar(screen[y1+i,x1],20,84);
@@ -2325,7 +2325,7 @@ begin
       begin
        i:=0;
        for j:=1 to 3 do
-        if ((ship.engrteam[j].extra and 15)=viewindex) and (ship.engrteam[j].jobtype=1)
+        if ((ship.engrteam[j].extra and 15)=viewindex) and (ship.engrteam[j].jobtype=JOBTYPE_INSTALL)
         and (ship.engrteam[j].job>=ID_DIRK) and (ship.engrteam[j].job<ID_NOSHIELD-1) then i:=1;
        if i=0 then
         begin
@@ -2381,7 +2381,7 @@ begin
            begin
             addcargo(ship.gunnodes[viewindex]+ID_DIRK-1, true);
             ship.engrteam[j].job:=ship.gunnodes[viewindex]+ID_DIRK-1;
-            ship.engrteam[j].jobtype:=2;
+            ship.engrteam[j].jobtype:=JOBTYPE_REMOVE;
             ship.engrteam[j].timeleft:=1000;
             ship.gunnodes[viewindex]:=0;
            end;
@@ -2411,7 +2411,7 @@ begin
               ship.cargo[viewindex2]:=0;
               ship.numcargo[viewindex2]:=0;
              end;
-            ship.engrteam[j].jobtype:=1;
+            ship.engrteam[j].jobtype:=JOBTYPE_INSTALL;
             ship.engrteam[j].extra:=viewindex;
             ship.engrteam[j].timeleft:=1000;
             displayconfigure(6);

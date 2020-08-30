@@ -970,7 +970,7 @@ begin
           else if viewlevel=2 then
            begin
             i:=((mouse.y-46) div 7);
-            if (ship.engrteam[viewindex].jobtype=0) and (i<9) then
+            if (ship.engrteam[viewindex].jobtype=JOBTYPE_REPAIR) and (i<9) then
              begin
               j:=ship.engrteam[viewindex].job;
               bkcolor:=5;

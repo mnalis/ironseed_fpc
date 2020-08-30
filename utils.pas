@@ -501,7 +501,7 @@ begin
       rescargo[i] := 0;
    begin
    for i := 1 to 3 do
-      if (ship.engrteam[i].jobtype = 3) and not
+      if (ship.engrteam[i].jobtype = JOBTYPE_CREATE) and not
 	 ((ship.engrteam[i].job = ship.engrteam[i].extra) or (ship.engrteam[i].extra = 0)) then
       begin
 	 AddCargoReserves(ship.engrteam[i].extra, i, True);

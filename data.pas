@@ -141,6 +141,7 @@ const OPT_SCREENSAVER = 1;
       ID_PROTO_NUTRIENT = 3015;
       ID_GUIDANCE_STRUT = 3018;
       ID_STRATAMOUNT = 3019;
+      ID_THERMOPLAST = 3021;
 
       ID_UNKNOWN_MATERIAL  = 4000;	{ first material - need few of them to create component }
       ID_COOLANTS = 4007;
@@ -164,6 +165,13 @@ const OPT_SCREENSAVER = 1;
       ID_ART_YLINTH_MUTAGENICS = 6909;
       ID_ART_GOOLAS = 6910;
       ID_LAST_ARTIFACT = 6999;
+
+      JOBTYPE_REPAIR = 0;
+      JOBTYPE_INSTALL = 1;
+      JOBTYPE_REMOVE = 2;
+      JOBTYPE_CREATE = 3;
+      JOBTYPE_DECOMPOSE = 4;
+      JOBTYPE_RESEARCH = 5;
 
       DMGTYP_PSIONIC = 1;
       DMGTYP_PARTICLE = 2;
