@@ -668,8 +668,8 @@ begin
     mouseshow;
    end;
   if fastkeypressed then ans:=readkey;
-    delay(tslice);
-    fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_UTILS);
+  fadestep(FADESTEP_STEP);
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
@@ -880,8 +880,8 @@ begin
 	 mouseshow;
       end;
       if fastkeypressed then ans:=readkey;
-      delay(tslice);
-      fadestep(8);
+      delay(tslice*FADE_TSLICE_MUL_UTILS);
+      fadestep(FADESTEP_STEP);
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
@@ -985,8 +985,8 @@ begin
  ans:=' ';
  c:=0;
  repeat
-  delay(tslice);
-  fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_UTILS);
+  fadestep(FADESTEP_STEP);
   done:=mouse.getstatus;
   if (c=0) and (mouse.y>109) and (mouse.y<125) and (mouse.x>138) and (mouse.x<180) then
    begin

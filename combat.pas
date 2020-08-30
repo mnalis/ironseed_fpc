@@ -657,7 +657,7 @@ begin
     begin
        stopmod;
        blast(63,0,0);
-       fadestopmod(-8, 20);
+       fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
     end else begin
        deathsequence(0);
     end;
@@ -671,7 +671,7 @@ begin
     begin
        stopmod;
        blast(63,0,0);
-       fadestopmod(-8, 20);
+       fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
     end else begin
        deathsequence(1);
     end;
@@ -1306,7 +1306,7 @@ begin
  cindex:=0;
  displaymap;
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(index);
@@ -1328,7 +1328,7 @@ begin
      if cindex<31 then inc(cindex) else cindex:=0;
      if cindex<16 then i:=cindex+32 else i:=64-cindex;
      setrgb256(i,0,0,63);
-     delay(tslice*3);
+     delay(tslice*FADE_TSLICE_MUL_COMBAT);
   end;
  until done_;
    if not quit then
@@ -1435,7 +1435,7 @@ begin
    mousehide;
    compressfile(tempdir+'/current',@screen);
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/COMBAT.MOD');
    loadscreen('data/fight',@screen);
    loadscreen('data/cloud',backgr);

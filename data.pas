@@ -321,6 +321,26 @@ const
 const
    MAXCANARY_=8192;
    CANARY_QW=6148914691236517205; { 'UUUUUUUU' }
+   FADING_TSLICE_DIV=2;	// tslice divisor for delay, used by fadein() and fading()
+   FADEFULL_STEP=8;	// step (coarseness) used by fadefull() and fadestopmod()
+   FADEFULL_DELAY=20;	// delay() used by fadefull() and fadestopmod()
+
+   FADESTEP_STEP=8;	// step (coarseness) used by fadestep() in various mainloop()'s
+   // delay tslice multipliers, and fixed delays usead in loops around fadestep();
+   FADE_TSLICE_MUL_COMBAT=3;
+   FADE_TSLICE_MUL_CREW2=6;
+   FADE_TSLICE_MUL_CREWINFO=7;
+   FADE_TSLICE_MUL_EXPLORE=2;
+   FADE_TSLICE_MUL_INFO=8;
+   FADE_TSLICE_MUL_JOURNEY=2;
+   FADE_TSLICE_MUL_CARGTOOL=4;
+   FADE_TSLICE_MUL_CARGCREAT=2;
+   FADE_TSLICE_MUL_SAVELOAD=1;
+   FADE_TSLICE_MUL_UTILS=1;
+   FADE_TSLICE_MUL_COMM2=6;
+   FADE_TSLICE_MUL_COMM=5;
+   FADE_TSLICE_MUL_BLINK=8;
+   FADE_TSLICE_ALIENS=5;
 
 var
  colors: paltype;
@@ -800,7 +820,7 @@ begin
       px[j]:=colors[0,j] div 48;
       pdx[j]:=colors[0,j] mod 48;
    end;
-   b:=tslice div 2;
+   b:=tslice div FADING_TSLICE_DIV;
    for a:=47 downto 1 do
    begin
       for j:=1 to 768 do
@@ -827,7 +847,7 @@ var
    temppal   : paltype;
    px,dx,pdx : array[1..768] of shortint;
 begin
-   b:=tslice div 2;
+   b:=tslice div FADING_TSLICE_DIV;
 
    temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(temppal, sizeof(temppal), 0);

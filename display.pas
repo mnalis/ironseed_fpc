@@ -1844,7 +1844,7 @@ begin
         mouseshow;
         for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
         {fading;}
-	fadefull(-8, 20);
+	fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
         mousehide;
         loadscreen(tempdir+'/current',@screen);
         mouseshow;

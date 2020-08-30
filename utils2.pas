@@ -734,7 +734,7 @@ begin
  bkcolor:=3;
  tcolor:=31;
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mousehide;
  loadscreen(tempdir+'/current',@screen);
  showtime;
@@ -1530,7 +1530,7 @@ procedure removedata;
 begin
    mousehide;
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
    loadscreen(tempdir+'/current',@screen);
    showresearchlights;
@@ -1781,7 +1781,7 @@ begin
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mousehide;
    loadscreen(tempdir+'/current',@screen);
    mouseshow;

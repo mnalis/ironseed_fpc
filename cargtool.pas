@@ -351,7 +351,7 @@ begin
    {compressfile(tempdir+'/current',@screen);}
    quicksavescreen(tempdir+'/current',@screen, true);
    {fading;}
-   fadefull(-8, 20);
+   fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/CARGO.MOD');
    loadscreen('data/cargo',@screen);
    new(cargobuttons);
@@ -887,7 +887,7 @@ end;
 procedure mainloop;
 begin
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(idletime);
@@ -899,7 +899,7 @@ begin
     addtime2;
     if cargomode=0 then displaylist else displayinfo;
    end;
-  delay(tslice*4);
+  delay(tslice*FADE_TSLICE_MUL_CARGTOOL);
  until done;
 end;
 
@@ -907,8 +907,8 @@ procedure removedata;
 begin
    mousehide;
    {fading;}
-   {fadefull(-8, 20);}
-   fadestopmod(-8, 20);
+   {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
    {loadscreen(tempdir+'/current',@screen);}
    quickloadscreen(tempdir+'/current',@screen, true);
@@ -1073,8 +1073,8 @@ begin
    {compressfile(tempdir+'/current',@screen);}
    quicksavescreen(tempdir+'/current',@screen, true);
    {fading;}
-   {fadefull(-8, 20);}
-   fadestopmod(-8, 20);
+   {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/COMPONT.MOD');
    loadscreen('data/tech1',@screen);
    drawfilters2;
@@ -2081,7 +2081,7 @@ end;
 procedure maincreationloop;
 begin
    repeat
-      fadestep(8);
+      fadestep(FADESTEP_STEP);
       findcreationmouse;
       if fastkeypressed then processcreationkey;
       inc(idletime);
@@ -2097,7 +2097,7 @@ begin
       begin
 	 if cargomode=0 then displaydevices else displaycargo;
       end;
-      delay(tslice*2);
+      delay(tslice*FADE_TSLICE_MUL_CARGCREAT);
    until done=true;
 end;
 

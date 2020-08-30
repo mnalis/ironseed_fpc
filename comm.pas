@@ -701,13 +701,13 @@ begin
 	 i2:=47;
 	 mouseshow;
 	 repeat
-	    fadestep(8);
+	    fadestep(FADESTEP_STEP);
 	    tcolor:=i2;
 	    printxy(146,191,'MORE');
 	    dec(i2);
 	    if i2=41 then i2:=47;
 	    animatealien;
-	    delay(tslice*5);
+	    delay(tslice*FADE_TSLICE_MUL_COMM);
 	 until (fastkeypressed) or (mouse.getstatus);
 	 while fastkeypressed do readkey;
 	 mousehide;
@@ -1006,7 +1006,7 @@ end;
 procedure delay_blink;
 var c: Integer;
 begin
-   for c := 1 to 8 do
+   for c := 1 to FADE_TSLICE_MUL_BLINK do
    begin
       if fastkeypressed then exit;
       delay(tslice);
@@ -1016,7 +1016,7 @@ end;
 procedure mainloop2;
 begin
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   if fastkeypressed then
    begin
     processkey2;
@@ -1047,7 +1047,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWCOMM.MOD');
  loadscreen('data/charcom',@screen);
  oldt1:=t1;
@@ -1527,8 +1527,8 @@ end;
 
 procedure mainloop3;
 begin
-   repeat
-      fadestep(8);
+ repeat
+  fadestep(FADESTEP_STEP);
   findmouse3;
   if fastkeypressed then processkey3;
   if batindex<8 then inc(batindex) else
@@ -1686,7 +1686,7 @@ begin
    mousehide;
    compressfile(tempdir+'/current',@screen);
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    loadscreen('data/com',@screen);
    {fadein;}
    new(tmpm);
@@ -1749,9 +1749,9 @@ begin
 	    colors[i]:=colors[random(32)];
 	 fillchar(colors[96],96,0);
 	 palettedirty := true;
-	 fadestep(8);
+	 fadestep(FADESTEP_STEP);
 	 {set256colors(colors);}
-	 delay(5);
+	 delay(FADE_TSLICE_ALIENS);
 	 for i:=96 to 128 do
 	    colors[i]:=colors[random(32)];
 	 fillchar(colors[64],96,0);
@@ -1760,7 +1760,7 @@ begin
 	 {set256colors(colors);}
       until (fastkeypressed) or (done);
       while fastkeypressed do readkey;
-      fadestopmod(-8, 20);
+      fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
       done:=true;
    end
    else
@@ -1877,7 +1877,7 @@ begin
  dispose(p);
  {stopmod;}
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
 
  loadscreen('data/cloud',backgr);
  if showplanet then

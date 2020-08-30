@@ -357,8 +357,8 @@ end;
 
 procedure mainloop;
 begin
-   repeat
-      fadestep(8);
+ repeat
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(idletime);
@@ -368,7 +368,7 @@ begin
   mousehide;
   mousesetcursor(tmpm^[index]);
   mouseshow;
-  delay(tslice*6);
+  delay(tslice*FADE_TSLICE_MUL_COMM2);
  until done;
 end;
 
@@ -387,7 +387,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWEVAL.MOD');
  loadscreen('data/log',@screen);
  index:=0;
@@ -437,7 +437,7 @@ begin
  dispose(titles);
  mousehide;
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mouse.setmousecursor(random(3));
  loadscreen(tempdir+'/current2',@screen);
  bkcolor:=3;

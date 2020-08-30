@@ -1947,7 +1947,7 @@ begin
  mouseshow;
  displayinfogathered;
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   controlprobes;
@@ -1961,7 +1961,7 @@ begin
   setrgb256(235,0,green,0);
   showzoom;
   controlprobes;
-  delay(tslice*2);
+  delay(tslice*FADE_TSLICE_MUL_EXPLORE);
  until done;
  anychange:=true;
 end;
@@ -1989,7 +1989,7 @@ begin
  if numprobes>4 then numprobes:=4;
  compressfile(tempdir+'/current',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  loadscreen('data/landform',@screen);
  new(summarypic);
 // new(landcolors);
@@ -2060,7 +2060,7 @@ begin
  {if backgr <> nil then dispose(backgr);
  new(backgr);}
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  loadscreen('data/cloud',backgr);
  loadscreen(tempdir+'/current',@screen);
  if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield

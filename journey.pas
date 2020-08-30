@@ -1445,7 +1445,7 @@ end;
 procedure mainloop;
 begin
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   if not playing then playmod(true,'sound/'+defaultsong);
@@ -1500,7 +1500,7 @@ begin
     addtime;
    end;
   if glowindex<4 then inc(glowindex) else glowindex:=1;
-  delay(tslice*2);
+  delay(tslice*FADE_TSLICE_MUL_JOURNEY);
  until quit;
  stopmod;
 end;

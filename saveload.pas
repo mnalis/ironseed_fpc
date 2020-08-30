@@ -721,8 +721,8 @@ begin
  repeat
   findmouse2;
   if fastkeypressed then processkey2;
-    delay(tslice);
-    fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_SAVELOAD);
+  fadestep(FADESTEP_STEP);
  until done;
  if cursor=1 then mainloop2:=true else mainloop2:=false;
 end;
