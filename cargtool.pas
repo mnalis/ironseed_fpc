@@ -1315,7 +1315,7 @@ begin
      printxy(5,5,s);}
   end;
  if (index>=ID_DIRK) and (index<ID_NOSHIELD) then weaponinfo(index-ID_DIRK+1)
-  else if (index>) and (index<ID_NOTHING) then weaponinfo(index-ID_SHIELDS_OFFSET)
+  else if (index>=ID_NOSHIELD) and (index<ID_NOTHING) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
         fillchar(screen[i,132],180,1);
  mouseshow;
