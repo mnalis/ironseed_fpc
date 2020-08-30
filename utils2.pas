@@ -1628,21 +1628,21 @@ begin
  move(ship.gunnodes,old,10);
  with ship do
   begin
-   if shiptype[1]=3 then
+   if shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_STATEGIC{3} then
     begin
-     if shiptype[2]=3 then
+     if shiptype[SHPTYP_PURPOSE]=SHPTYPE_STORM{3} then
       begin
-       if shiptype[3]=3 then
+       if shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then
         begin
-         addcargo2(2018,true);
+         addcargo2(CARGO_GUNNODE,true);	{ we are at maximum 10 gunnodes already, cannot add more }
          exit;
         end
-       else inc(shiptype[3]);
+       else inc(shiptype[SHPTYP_VESSEL]);
       end
-     else inc(shiptype[2]);
+     else inc(shiptype[SHPTYP_PURPOSE]);
     end
-   else if shiptype[1]=2 then shiptype[1]:=1
-   else shiptype[1]:=3;
+   else if shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_LIGHT{2} then shiptype[SHPTYP_HEAVYNESS]:=SHPTYPE_HEAVY{1}
+   else shiptype[SHPTYP_HEAVYNESS]:=SHPTYPE_STATEGIC{3};
   end;
  fillchar(ship.gunnodes,10,0);
  j:=0;

@@ -377,43 +377,43 @@ begin
   begin
    cargo:=0;
    accel:=0;
-   case ship.shiptype[1] of
-    1:begin
+   case ship.shiptype[SHPTYP_HEAVYNESS] of
+    SHPTYPE_HEAVY:begin
          guns:=2;
          mass:=334;
          maxfuel:=200;
          hullmax:=200;
         end;
-    2:begin
+    SHPTYPE_LIGHT:begin
          guns:=1;
          mass:=334;
          maxfuel:=250;
          cargo:=cargo+50;
          hullmax:=150;
         end;
-    3:begin
+    SHPTYPE_STATEGIC:begin
          guns:=3;
          mass:=501;
          maxfuel:=200;
          hullmax:=100;
         end;
    end;
-   case ship.shiptype[2] of
-    1:begin
+   case ship.shiptype[SHPTYP_PURPOSE] of
+    SHPTYPE_SHUTTLE:begin
          guns:=guns+3;
          mass:=mass+501;
          maxfuel:=maxfuel+350;
          cargo:=cargo+50;
          hullmax:=hullmax+700;
         end;
-    2:begin
+    SHPTYPE_ASSAULT:begin
          guns:=guns+4;
          mass:=mass+668;
          maxfuel:=maxfuel+300;
          cargo:=cargo+100;
          hullmax:=hullmax+600;
         end;
-    3:begin
+    SHPTYPE_STORM:begin
          guns:=guns+5;
          mass:=mass+835;
          maxfuel:=maxfuel+300;
@@ -421,19 +421,19 @@ begin
          hullmax:=hullmax+600;
         end;
    end;
-   case ship.shiptype[3] of
-    1:begin
+   case ship.shiptype[SHPTYP_VESSEL] of
+    SHPTYPE_TRANSPORT:begin
          guns:=guns+0;
          hullmax:=hullmax+100;
          cargo:=cargo+100;
         end;
-    2:begin
+    SHPTYPE_FRIGATE:begin
          guns:=guns+1;
          mass:=mass+167;
          hullmax:=hullmax+100;
          cargo:=cargo+50;
         end;
-    3:begin
+    SHPTYPE_CRUISER:begin
          guns:=guns+2;
          mass:=mass+330;
          cargo:=cargo+50;
@@ -452,7 +452,7 @@ begin
   begin
    for i:=0 to 5 do
     fillchar(screen[i+122,30],231,0);
-   s:=shipnames[shiptype[1]-1]+' '+shipnames[shiptype[2]+2]+' '+shipnames[shiptype[3]+5];
+   s:=shipnames[shiptype[SHPTYP_HEAVYNESS]-1]+' '+shipnames[shiptype[SHPTYP_PURPOSE]+2]+' '+shipnames[shiptype[SHPTYP_VESSEL]+5];
    printxy(131-round(length(s)*2.5),122,s);
    str(shipdata.guns:2,strln);
    printxy(20,132,'Gun Emplacements');
@@ -480,14 +480,14 @@ procedure addship;
 begin
  with ship do
   begin
-   i:=(shiptype[1]-1)*9+(shiptype[2]-1)*3+shiptype[3]-1;
+   i:=(shiptype[SHPTYP_HEAVYNESS]-1)*9+(shiptype[SHPTYP_PURPOSE]-1)*3+shiptype[SHPTYP_VESSEL]-1;
    inc(i);
    if i>26 then i:=0;
-   shiptype[1]:=1+(i div 9);
-   i:=i-(shiptype[1]-1)*9;
-   shiptype[2]:=1+(i div 3);
-   i:=i-(shiptype[2]-1)*3;
-   shiptype[3]:=1+i;
+   shiptype[SHPTYP_HEAVYNESS]:=1+(i div 9);
+   i:=i-(shiptype[SHPTYP_HEAVYNESS]-1)*9;
+   shiptype[SHPTYP_PURPOSE]:=1+(i div 3);
+   i:=i-(shiptype[SHPTYP_PURPOSE]-1)*3;
+   shiptype[SHPTYP_VESSEL]:=1+i;
   end;
  drawship;
  mousehide;
@@ -499,14 +499,14 @@ procedure subship;
 begin
  with ship do
   begin
-   i:=(shiptype[1]-1)*9+(shiptype[2]-1)*3+shiptype[3]-1;
+   i:=(shiptype[SHPTYP_HEAVYNESS]-1)*9+(shiptype[SHPTYP_PURPOSE]-1)*3+shiptype[SHPTYP_VESSEL]-1;
    dec(i);
    if i<0 then i:=26;
-   shiptype[1]:=1+(i div 9);
-   i:=i-(shiptype[1]-1)*9;
-   shiptype[2]:=1+(i div 3);
-   i:=i-(shiptype[2]-1)*3;
-   shiptype[3]:=1+i;
+   shiptype[SHPTYP_HEAVYNESS]:=1+(i div 9);
+   i:=i-(shiptype[SHPTYP_HEAVYNESS]-1)*9;
+   shiptype[SHPTYP_PURPOSE]:=1+(i div 3);
+   i:=i-(shiptype[SHPTYP_PURPOSE]-1)*3;
+   shiptype[SHPTYP_VESSEL]:=1+i;
   end;
  drawship;
  mousehide;
@@ -821,9 +821,9 @@ begin
    end;
    with ship do
    begin
-      shiptype[1]:=1;
-      shiptype[2]:=1;
-      shiptype[3]:=1;
+      shiptype[SHPTYP_HEAVYNESS]:=SHPTYPE_HEAVY;
+      shiptype[SHPTYP_PURPOSE]:=SHPTYPE_SHUTTLE;
+      shiptype[SHPTYP_VESSEL]:=SHPTYPE_TRANSPORT;
       for j:=1 to 10 do gunnodes[j]:=0;
       fillchar(cargo,500,0);
       fillchar(numcargo,500,0);

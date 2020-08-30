@@ -111,6 +111,21 @@ const OPT_SCREENSAVER = 1;
       DMGTYP_ENERGY = 4;
       DMGTYP_FAKE_SHLD = 5;		{ fake damagetype which only hits shields }
 
+      SHPTYP_HEAVYNESS = 1;
+         SHPTYPE_HEAVY = 1;
+         SHPTYPE_LIGHT = 2;
+         SHPTYPE_STATEGIC = 3;
+      SHPTYP_PURPOSE = 2;
+         SHPTYPE_SHUTTLE = 1;
+         SHPTYPE_ASSAULT = 2;
+         SHPTYPE_STORM = 3;
+      SHPTYP_VESSEL = 3;
+         SHPTYPE_TRANSPORT = 1;
+         SHPTYPE_FRIGATE = 2;
+         SHPTYPE_CRUISER = 3;
+
+      CARGO_GUNNODE = 2018;
+
 type
    buttontype = record
 		   x, y, w, h : Integer;

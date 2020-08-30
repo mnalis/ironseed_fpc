@@ -2106,9 +2106,9 @@ end;
 
 procedure displayship2(x1,y1: integer);
 begin
- loadshipdisplay2(ship.shiptype[1]-1,x1,y1);
- loadshipdisplay2(2+ship.shiptype[2],x1,y1);
- loadshipdisplay2(5+ship.shiptype[3],x1,y1);
+ loadshipdisplay2(ship.shiptype[SHPTYP_HEAVYNESS]-1,x1,y1);
+ loadshipdisplay2(2+ship.shiptype[SHPTYP_PURPOSE],x1,y1);
+ loadshipdisplay2(5+ship.shiptype[SHPTYP_VESSEL],x1,y1);
 end;
 
 procedure displayshipinfo;
@@ -2189,17 +2189,18 @@ begin
  end;
 end;
 
+{ check if this gunnode location exists in our ship }
 function checkloc(l: integer): boolean;
 begin
  checkloc:=false;
  case l of
-   1: if ship.shiptype[1]<>1 then checkloc:=true;
-   2,3: if ship.shiptype[1]<>2 then checkloc:=true;
-   4,5: if ship.shiptype[2]<>1 then checkloc:=true;
+   1: if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_HEAVY{1} then checkloc:=true;
+   2,3: if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_LIGHT{2} then checkloc:=true;
+   4,5: if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_SHUTTLE{1} then checkloc:=true;
    6,7: checkloc:=true;
-   8: if ship.shiptype[2]<>2 then checkloc:=true;
-   9: if ship.shiptype[3]<>1 then checkloc:=true;
-  10: if ship.shiptype[3]=3 then checkloc:=true;
+   8: if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_ASSAULT{2} then checkloc:=true;
+   9: if ship.shiptype[SHPTYP_VESSEL]<>SHPTYPE_TRANSPORT{1} then checkloc:=true;
+  10: if ship.shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then checkloc:=true;
  end;
 end;
 
@@ -2292,7 +2293,7 @@ begin
       mouseshow;
       exit;
      end;
-  6: if viewlevel=1 then
+  6: if viewlevel=1 then					{ install weapon }
       begin
        viewlevel:=0;
        for i:=26 to 114 do
@@ -2303,22 +2304,22 @@ begin
        screen[115,165]:=2;
        showpanel(conbut);
        displayship2(60,33);
-       if ship.shiptype[1]<>1 then graybutton(29,59,50,80);
-       if ship.shiptype[1]<>2 then
+       if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_HEAVY{1} then graybutton(29,59,50,80);
+       if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_LIGHT{2} then
          begin
           graybutton(64,28,85,49);
           graybutton(64,90,85,111);
          end;
-       if ship.shiptype[2]<>1 then
+       if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_SHUTTLE{1} then
          begin
           graybutton(107,28,128,49);
           graybutton(107,90,128,111);
          end;
        graybutton(149,28,170,49);
        graybutton(149,90,170,111);
-       if ship.shiptype[2]<>2 then graybutton(127,59,148,80);
-       if ship.shiptype[3]<>1 then graybutton(230,28,251,49);
-       if ship.shiptype[3]=3 then graybutton(230,90,251,111);
+       if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_ASSAULT{2} then graybutton(127,59,148,80);
+       if ship.shiptype[SHPTYP_VESSEL]<>SHPTYPE_TRANSPORT{1} then graybutton(230,28,251,49);
+       if ship.shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then graybutton(230,90,251,111);
       end
      else if ship.gunnodes[viewindex]=0 then
       begin
@@ -2358,7 +2359,7 @@ begin
         println;
         print('ENGINEERING: We must remove the old weapon first.');
        end;
-  7: begin
+  7: begin							{ remove weapon }
       if (viewlevel=0) and (ship.gunnodes[viewindex]>0) then
        begin
         mouseshow;
@@ -2427,23 +2428,23 @@ begin
   0: for j:=1 to 10 do
       begin
        case j of
-         1: if ship.shiptype[1]<>1 then
+         1: if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_HEAVY{1} then
              sideshowweaponicon(30,60,ship.gunnodes[j],j);
-         2: if ship.shiptype[1]<>2 then
+         2: if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_LIGHT{2} then
              sideshowweaponicon(65,29,ship.gunnodes[j],j);
-         3: if ship.shiptype[1]<>2 then
+         3: if ship.shiptype[SHPTYP_HEAVYNESS]<>SHPTYPE_LIGHT{2} then
              sideshowweaponicon(65,91,ship.gunnodes[j],j);
-         4: if ship.shiptype[2]<>1 then
+         4: if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_SHUTTLE{1} then
              showweaponicon(108,29,ship.gunnodes[j],j);
-         5: if ship.shiptype[2]<>1 then
+         5: if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_SHUTTLE{1} then
              revshowweaponicon(108,91,ship.gunnodes[j],j);
          6: showweaponicon(150,29,ship.gunnodes[j],j);
          7: revshowweaponicon(150,91,ship.gunnodes[j],j);
-         8: if ship.shiptype[2]<>2 then
+         8: if ship.shiptype[SHPTYP_PURPOSE]<>SHPTYPE_ASSAULT{2} then
              sideshowweaponicon(128,60,ship.gunnodes[j],j);
-         9: if ship.shiptype[3]<>1 then
+         9: if ship.shiptype[SHPTYP_VESSEL]<>SHPTYPE_TRANSPORT{1} then
              backshowweaponicon(231,29,ship.gunnodes[j],j);
-        10: if ship.shiptype[3]=3 then
+        10: if ship.shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then
              backshowweaponicon(231,91,ship.gunnodes[j],j);
        end;
        configcursor;

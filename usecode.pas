@@ -193,7 +193,7 @@ begin
  mouseshow;
  viewlevel:=1;
  viewmode:=10;
- if ship.shiptype[1]=1 then viewindex:=2 else viewindex:=1;
+ if ship.shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_HEAVY{1} then viewindex:=2 else viewindex:=1;
  displayconfigure(6);
 end;
 
@@ -1002,8 +1002,8 @@ begin
  displayship2(17,27);
  tcolor:=191;
  bkcolor:=5;
- printxy(13,106,'Model:'+shipnames[ship.shiptype[1]-1]+' '+
-  shipnames[ship.shiptype[2]+2]+' '+shipnames[ship.shiptype[3]+5]);
+ printxy(13,106,'Model:'+shipnames[ship.shiptype[SHPTYP_HEAVYNESS]-1]+' '+
+  shipnames[ship.shiptype[SHPTYP_PURPOSE]+2]+' '+shipnames[ship.shiptype[SHPTYP_VESSEL]+5]);
  printxy(189,26,'X Loc');
  printxy(189,32,'Y Loc');
  printxy(189,38,'Z Loc');
