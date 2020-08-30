@@ -376,7 +376,7 @@ var
 		  RebuildCargoReserve;
 		  i := StartBuild(background, extra, extra, team);
 		  case i of
-		    0  : CrewMessage(background, 31, 2, 'Insufficent parts to coninue ' + CargoName(extra) + '.');
+		    0  : CrewMessage(background, 31, 2, 'Insufficent parts to continue ' + CargoName(extra) + '.');
 		    -1,-3 : CrewMessage(background, 31, 2, 'Insufficent expertise to finish ' + CargoName(extra) + '.');
 		    -2 : CrewMessage(background, 31, 2, 'Internal error trying to build: ' + CargoName(extra) + '.');
 		  end;
@@ -506,7 +506,7 @@ var
 		    end;
 		 end;
 	      1,2 : 
-	         if job<1500 then
+	         if job<ID_NOSHIELD then
 		 begin
 		    dec(timeleft,5);
 		    if (random(2) = 0) and SkillTest(background, 2, 40, 10) then
@@ -515,7 +515,7 @@ var
 		    if extra >= 110 * 16 then
 		    begin
 		       timeleft:=0;
-		       if jobtype=1 then ship.gunnodes[extra and 15]:=job-999;
+		       if jobtype=1 then ship.gunnodes[extra and 15]:=job-ID_DIRK+1;
 		       if jobtype=2 then CrewMessage(background, 31, 2, 'Weapon removed, sir!')
 		       else CrewMessage(background, 31, 2,'weapon installed, sir!');
 		       job:=0;

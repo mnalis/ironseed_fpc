@@ -656,7 +656,7 @@ procedure dropit;
 var s: string[20];
 begin
    if (cargoindex=0) or (cargoindex=251) then exit;
-   if (ship.cargo[cargoindex]=1056) or (ship.cargo[cargoindex]>6899) then
+   if (ship.cargo[cargoindex]=ID_MOBIUS_DEVICE) or (ship.cargo[cargoindex]>=ID_ART_SHUNT_DRIVE) then
    begin
       a:=ship.options[OPT_MSGS];
       ship.options[OPT_MSGS]:=2;
@@ -1864,7 +1864,7 @@ begin
    if (cargomode=1) or (cargoindex=0) or (lastinfo=0) then exit;
    i:=1;
    while (i<maxcreation) and (createinfo^[i].index<>lastinfo) do inc(i);
-   if createinfo^[i].parts[part]>4999 then exit;
+   if createinfo^[i].parts[part]>=ID_FIRST_ELEMENT then exit;
    HistoryPush(lastinfo);
    setpartcursor(createinfo^[i].parts[part])
  {j:=1;

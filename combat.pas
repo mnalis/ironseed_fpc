@@ -1345,7 +1345,7 @@ begin
  case ship.wandering.alienid of
      1..999: i:=0;
   1000..1007: i:=ship.wandering.alienid-1000;
-        ID_BALLISTA: i:=8;
+        1009: i:=8;
         1010: i:=9;
         1013: i:=10;  { drones }
   else errorhandler('Invalid alien ship ID.',6);

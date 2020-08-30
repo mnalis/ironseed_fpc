@@ -84,11 +84,11 @@ begin
    begin
       if (tempplan^[curplan].system = 45) and (tempplan^[curplan].orbit = 0) and chevent(28) then
       begin
-	 tempplan^[curplan].cache[1]:=1513;
-	 tempplan^[curplan].cache[2]:=1043;
-	 tempplan^[curplan].cache[3]:=1043;
-	 tempplan^[curplan].cache[4]:=1035;
-	 tempplan^[curplan].cache[5]:=1035;
+	 tempplan^[curplan].cache[1]:=ID_TEMPORAL_ANCHOR;
+	 tempplan^[curplan].cache[2]:=ID_HEAVY_CORSE_GRENADE;
+	 tempplan^[curplan].cache[3]:=ID_HEAVY_CORSE_GRENADE;
+	 tempplan^[curplan].cache[4]:=ID_SLING_OF_DAVID;
+	 tempplan^[curplan].cache[5]:=ID_SLING_OF_DAVID;
 	 tempplan^[curplan].cache[6]:=ID_THYNNE_VORTEX;
 	 tempplan^[curplan].cache[7]:=ID_THYNNE_VORTEX;
 	 exit;
@@ -662,7 +662,7 @@ var j,max,cargindex,total: integer;
 begin
  y:=0;
  cargindex:=1;
- while (cargo[cargindex].index<5000) do inc(cargindex);
+ while (cargo[cargindex].index<ID_FIRST_ELEMENT) do inc(cargindex);
  total:=0;
  angle:=0;
  amounts2:=amounts;

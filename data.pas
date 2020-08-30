@@ -100,18 +100,22 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
-       // FIXME search code for constants [1-7]000 (and +-1) and all others too (2015,2016,...)! and cargo.*\.index, job, acceptoffer, alienstuff, cache. grep all 4-digit numbers!
       ID_DIRK = 1000;			{ first weapon }
       ID_BALLISTA = 1009;
       ID_THYNNE_VORTEX = 1034;
+      ID_SLING_OF_DAVID = 1035;
+      ID_HEAVY_CORSE_GRENADE = 1043;
       ID_DOOM_GATE = 1044;
       ID_THAUMATURGE = 1046;
+      ID_MOBIUS_DEVICE = 1056;
 
       ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
       ID_NOSHIELD = 1500;		{ no shield installed. WARNING: some version of the code used "0", so always check if (ship.shield <= ID_NOSHIELD) }
       ID_REFLECTIVEHULL = 1501;
       ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
       ID_STASIS_GENERATOR = 1506;
+      ID_TEMPORAL_ANCHOR = 1513;
+
       ID_LAST_SHIELD = 1599;
 
       ID_NOTHING = 2000;		{ we start with devices after all the shields }

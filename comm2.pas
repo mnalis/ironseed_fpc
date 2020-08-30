@@ -726,7 +726,7 @@ begin
   begin
    while cr^[i].index<>item do inc(i);
    for j:=1 to 3 do
-    if cr^[i].parts[j]>4999 then inc(worth)
+    if cr^[i].parts[j]>=ID_FIRST_ELEMENT then inc(worth)
     else worth:=worth+getworth(cr^[i].parts[j]);
   end;
  getworth:=worth;

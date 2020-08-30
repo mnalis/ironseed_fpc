@@ -828,7 +828,7 @@ begin
    str(weapons[weap].damage:4,str1);
    printxy(223,68,str1+' GJ   ');
    j:=1;
-   while cargo[j].index<>(weap+999)
+   while cargo[j].index<>(weap+ID_DIRK-1)
     do inc(j);
    if j<114 then
     begin
@@ -2364,7 +2364,7 @@ begin
        begin
         mouseshow;
         i:=0;
-        while (i<maxcargo) and (cargo[i].index<>ship.gunnodes[viewindex]+999) do inc(i);
+        while (i<maxcargo) and (cargo[i].index<>ship.gunnodes[viewindex]+ID_DIRK-1) do inc(i);
         str1:=cargo[i].name;
         while str1[length(str1)]=' ' do dec(str1[0]);
         if yesnorequest('Remove '+str1+'?',0,31) then
@@ -2455,8 +2455,8 @@ begin
         displayconfigure(4);
        if viewindex2>0 then
         begin
-         displayweaponstats(ship.cargo[viewindex2]-999);
-         showweaponicon(172,89,ship.cargo[viewindex2]-999,0);
+         displayweaponstats(ship.cargo[viewindex2]-ID_DIRK+1);
+         showweaponicon(172,89,ship.cargo[viewindex2]-ID_DIRK+1,0);
         end
        else
         begin
@@ -2471,7 +2471,7 @@ begin
         if x<251 then
          begin
           inc(y);
-          printxy(30,31+y*6,cargo[ship.cargo[x]-999].name);
+          printxy(30,31+y*6,cargo[ship.cargo[x]-ID_DIRK+1].name);
          end;
         inc(x);
        until (y=12) or (x>250);
@@ -2486,7 +2486,7 @@ begin
         if x>0 then
          begin
           dec(y);
-          printxy(30,31+y*6,cargo[ship.cargo[x]-999].name);
+          printxy(30,31+y*6,cargo[ship.cargo[x]-ID_DIRK+1].name);
          end;
         dec(x);
        until (y=1) or (x<1);
