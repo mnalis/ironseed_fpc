@@ -608,8 +608,19 @@ begin
          end;
      end;
   7: begin
-      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ can't remove reflective hull }
-       begin
+     i:=0;
+     for j:=1 to 3 do
+      if ((ship.engrteam[j].jobtype>=JOBTYPE_INSTALL) and (ship.engrteam[j].jobtype<=JOBTYPE_REMOVE)
+      and (ship.engrteam[j].job>=ID_NOSHIELD) and (ship.engrteam[j].job<=ID_LAST_SHIELD)) then i:=1;
+     if i=1 then
+      begin
+       tcolor:=94;
+       bkcolor:=3;
+       println;
+       print('ENGINEERING: Already working on a shield.');
+      end
+     else if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ noshield and reflective hull can't be removed }
+       begin		{ want to remove shield }
         mouseshow;
         if yesnorequest('Remove this shield?',0,31) then
          begin
@@ -621,8 +632,8 @@ begin
             tcolor:=94;
             print('ENGINEERING: No team available.');
            end
-          else		{ there is engineering team available }
-           begin
+          else
+           begin	{ there is engineering team available, start removing shield }
             addcargo(ship.shield, true);
             ship.engrteam[j].job:=ship.shield;
             ship.engrteam[j].jobtype:=JOBTYPE_REMOVE;
@@ -637,7 +648,7 @@ begin
         mousehide;
        end
       else if (viewlevel>1) and (ship.shield<=ID_REFLECTIVEHULL) and (viewindex2>0) then
-       begin
+       begin		{ want to install shield }
         mouseshow;
         if yesnorequest('Install this shield?',0,31) then
          begin
@@ -650,7 +661,7 @@ begin
             print('ENGINEERING: No team available.');
            end
           else
-           begin
+           begin	{ there is engineering team available, start installing shield }
             ship.engrteam[j].job:=ship.cargo[viewindex2];
             removecargo(ship.cargo[viewindex2]);
             ship.engrteam[j].jobtype:=JOBTYPE_INSTALL;

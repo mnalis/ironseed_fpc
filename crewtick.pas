@@ -507,7 +507,7 @@ var
 		 end;
 	      JOBTYPE_INSTALL, JOBTYPE_REMOVE :
 	         if job<ID_NOSHIELD then
-		 begin
+		 begin		{ weapon }
 		    dec(timeleft,5);
 		    if (random(2) = 0) and SkillTest(background, 2, 40, 10) then
 		       inc(extra, 16);
@@ -522,7 +522,7 @@ var
 		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end
-		 else begin
+		 else begin	{ shield }
 		    dec(timeleft,5);
 		    if random(220)=0 then
 		    begin
