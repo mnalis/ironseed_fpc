@@ -1629,7 +1629,7 @@ begin
   end;
    
    case createinfo^[cargoindex].index of
-     ID_FUEL_NODULES, ID_REINFORCE_HULL..ID_ADD_CARGO_SPACE, 1019 {FIXME should be 2019 MIND ENHANCERS, not 1019 OCHRE EMBRYONS ??}, ID_UNKNOWN_COMPONENT..ID_LAST_ELEMENT : ;
+     ID_FUEL_NODULES, ID_REINFORCE_HULL..ID_ADD_CARGO_SPACE, ID_MIND_ENHANCERS, ID_UNKNOWN_COMPONENT..ID_LAST_ELEMENT : ;
    else
       if not checkweight(true) then exit;
    end;
