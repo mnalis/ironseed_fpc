@@ -282,48 +282,48 @@ var
 	 begin
 	    RebuildCargoReserve;
 	    case job of
-	      2004 : ship.fuel:=ship.fuelmax;
-	      2015 : begin
+	      ID_FUEL_NODULES : ship.fuel:=ship.fuelmax;
+	      ID_REINFORCE_HULL : begin
 			     i:=ship.hullmax+25;
 			     if i>5000 then
 				if background then
-				   addcargo2(2015, true)
+				   addcargo2(ID_REINFORCE_HULL, true)
 				else
-				   addcargo(2015, true)
+				   addcargo(ID_REINFORCE_HULL, true)
 			     else begin
 				inc(ship.hullmax,15);
 				CrewMessage(background, 31, 2,'	Hull reinforced.');
 			     end;
 			  end;
-	      2016 : begin
+	      ID_INCREASE_THRUST : begin
 			     i:=ship.accelmax+10;
 			     if i>1100 then
 				if background then
-				   addcargo2(2016, true)
+				   addcargo2(ID_INCREASE_THRUST, true)
 				else
-				   addcargo(2016, true)
+				   addcargo(ID_INCREASE_THRUST, true)
 			     else begin
 				inc(ship.accelmax,10);
 				CrewMessage(background, 31, 2,'Acceleration increased.');
 			     end;
 			  end;
-	      2017 : begin
+	      ID_ADD_CARGO_SPACE : begin
 			     i:=ship.cargomax+75;
 			if i>20000 then
 			   if background then
-			      addcargo2(2017, true)
+			      addcargo2(ID_ADD_CARGO_SPACE, true)
 			   else
-			      addcargo(2017, true)
+			      addcargo(ID_ADD_CARGO_SPACE, true)
 			else begin
 			   inc(ship.cargomax,75);
 			   CrewMessage(background, 31, 2,'Cargo space increased.');
 			end;
 		     end;
-	      2018 : begin
+	      ID_INSTALL_GUN_NODE : begin
 			addgunnode;
 			CrewMessage(background, 31, 2,'Weapon Node Assembled.');
 		     end;
-	      2019 : begin
+	      ID_MIND_ENHANCERS : begin
 			a:=ship.crew[1].men;
 			b:=1;
 			for i:=1 to 6 do
@@ -386,7 +386,7 @@ var
 	    end;
 	    jobtype:=0;
 	    timeleft:=0;
-	    if job<>2019 then CrewMessage(background, 31, 2,'Synthesis of '+CargoName(job)+' completed, sir!');
+	    if job<>ID_MIND_ENHANCERS then CrewMessage(background, 31, 2,'Synthesis of '+CargoName(job)+' completed, sir!');
 	    job:=0;
 	 end
 	 else if timeleft=0 then timeleft:=5;
@@ -409,7 +409,7 @@ var
       while (temp^[i].index<>item) and (i<=totalcreation) do inc(i);
       if i>totalcreation then errorhandler('Disassemble error!',6);
       for j:=1 to 3 do
-	 {if not skillcheck(2) then addcargo(4020)
+	 {if not skillcheck(2) then addcargo(ID_WORTHLESS_JUNK)
 	 else}
 	 if background then
 	    addcargo2(temp^[i].parts[j], true)

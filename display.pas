@@ -331,11 +331,11 @@ begin
            end;
            case job of
                 0..100: i:=job;
-            1000..1499: i:=10;
-            ID_REFLECTIVEHULL..1999: i:=9;
-            2000..2999: i:=11;
-            3000..3999: i:=12;
-            4000..4999: i:=13;
+            ID_DIRK..1499: i:=10;		{ weapons }
+            ID_REFLECTIVEHULL..1999: i:=9;	{ shields }
+            ID_NOTHING..2999: i:=11;		{ devices }
+            ID_UNKNOWN_COMPONENT..3999: i:=12;	{ components }
+            ID_UNKNOWN_MATERIAL..4999: i:=13;	{ materials }
             6000..6999: i:=14;
            end;
            printxy(169,22+j*27,s+teamdata[i]);
@@ -2379,8 +2379,8 @@ begin
            end
           else
            begin
-            addcargo(ship.gunnodes[viewindex]+999, true);
-            ship.engrteam[j].job:=ship.gunnodes[viewindex]+999;
+            addcargo(ship.gunnodes[viewindex]+ID_DIRK-1, true);
+            ship.engrteam[j].job:=ship.gunnodes[viewindex]+ID_DIRK-1;
             ship.engrteam[j].jobtype:=2;
             ship.engrteam[j].timeleft:=1000;
             ship.gunnodes[viewindex]:=0;
@@ -2751,7 +2751,7 @@ begin
 	 4 : s:='fabricator';
 	 5 : s:='starminer';
        end;
-       if (yesnorequest('Recall '+s+'?',0,31)) and (addcargo((tempplan^[curplan].bots and 7)+2001,false))
+       if (yesnorequest('Recall '+s+'?',0,31)) and (addcargo((tempplan^[curplan].bots and 7)+ID_NOTHING+1,false))
          then tempplan^[curplan].bots:=tempplan^[curplan].bots and (255 - 7);
        tcolor:=191;
        bkcolor:=5;

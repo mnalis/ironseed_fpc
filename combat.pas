@@ -1586,14 +1586,14 @@ begin
    i:=random(nships);
    if i>13 then i:=13;
    a:=1;
-   while cargo[a].index<>3000 do inc(a);
+   while cargo[a].index<>ID_UNKNOWN_COMPONENT do inc(a);
    for j:=0 to i do
     begin
      cargoitems[j]:=random(21);
      mousehide;
      printxy(24,28+j*6,cargo[a+cargoitems[j]].name);
      mouseshow;
-     addcargo2(cargoitems[j]+3000, true);
+     addcargo2(cargoitems[j]+ID_UNKNOWN_COMPONENT, true);
     end;
    while fastkeypressed do readkey;
    repeat

@@ -387,7 +387,7 @@ begin
 	 read(creafile,tempcreate^);
 	 if ioresult<>0 then errorhandler('creation.dta',5);
 	 index := tempcreate^.index;
-	 if(index >= 4000) and (index <= 4020) then
+	 if(index >= 4000) and (index <= ID_WORTHLESS_JUNK) then
 	 begin
 	    tt:=99;
 	    tly:=0;

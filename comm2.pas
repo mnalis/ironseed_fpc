@@ -711,16 +711,16 @@ var i,j,worth: integer;
 begin
  i:=0;
  worth:=0;
-   if item=3000 then worth:=27;
-   if item=4000 then worth:=9;
-    if item=4020 then  worth:=1;
+ if item=ID_UNKNOWN_COMPONENT then worth:=27;
+ if item=ID_UNKNOWN_MATERIAL  then worth:=9;
+ if item=ID_WORTHLESS_JUNK then  worth:=1;
  case item of
-  5000..5999: worth:=3;
-  1000..1499: begin i:=1; worth:=4; end;
-  1500..1599: begin i:=1; worth:=6; end;
-  2000..2999: begin i:=1; worth:=4; end;
-  3001..3999: begin i:=1; worth:=3; end;
-  4001..4019,4021..4999: begin i:=1; worth:=2; end;
+  ID_SUBMATERIAL_OFFSET..5999: worth:=3;		{ sub-materials }
+  ID_DIRK..1499: begin i:=1; worth:=4; end;		{ weapons }
+  ID_NOSHIELD..1599: begin i:=1; worth:=6; end;		{ shields }
+  ID_NOTHING..2999: begin i:=1; worth:=4; end;		{ devices }
+  3001..3999: begin i:=1; worth:=3; end; 		{ components }
+  4001..4019,4021..4999: begin i:=1; worth:=2; end;	{ materials }
  end;
  if i=1 then
   begin
@@ -790,27 +790,27 @@ procedure acceptoffer;
 begin
  if (trademode=0) or (tradeworth<alienworth) or (tradeindex=0) then exit;
  case alienstuff^[tradeindex] of
-  2015: begin
+  ID_REINFORCE_HULL: begin
          addcargo(3012, true);
          addcargo(3007, true);
          addcargo(3018, true);
         end;
-  2016: begin
+  ID_INCREASE_THRUST: begin
          addcargo(1000, true);
          addcargo(1000, true);
          addcargo(3008, true);
         end;
-  2017: begin
+  ID_ADD_CARGO_SPACE: begin
          addcargo(3018, true);
          addcargo(3019, true);
          addcargo(3012, true);
         end;
-  2018: begin
+  ID_INSTALL_GUN_NODE: begin
          addcargo(1506, true);
          addcargo(1506, true);
          addcargo(1034, true);
         end;
-  2019: begin
+  ID_MIND_ENHANCERS: begin
          addcargo(3015, true);
          addcargo(3003, true);
          addcargo(3009, true);
@@ -1045,14 +1045,14 @@ begin
  fillchar(alienstuff^,sizeof(alienstuffarray),0);
  if alien.id=1007 then
   for j:=1 to 8+random(13) do
-   alienstuff^[j]:=4020
+   alienstuff^[j]:=ID_WORTHLESS_JUNK
  else
  for j:=1 to 8+random(13) do
   if (random(5)=0) and (hi(alien.techmin)>=4) then
-    alienstuff^[j]:=3001+random(19)
+    alienstuff^[j]:=ID_UNKNOWN_COMPONENT+1+random(19)
    else if (alien.conindex=9) and (random(4)=0) then
-    alienstuff^[j]:=2015+random(5)
-   else alienstuff^[j]:=4001+random(19);
+    alienstuff^[j]:=ID_REINFORCE_HULL+random(5)
+   else alienstuff^[j]:=ID_UNKNOWN_MATERIAL+1+random(19);
  displayleftlist;
 end;
 

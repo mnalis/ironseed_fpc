@@ -1366,7 +1366,7 @@ begin
  while (temp^[i].index<>item) and (i<=totalcreation) do inc(i);
  if i>totalcreation then errorhandler('Disassemble error!',6);
  for j:=1 to 3 do
-  if not skillcheck(2) then addcargo(4020)
+  if not skillcheck(2) then addcargo(ID_WORTHLESS_JUNK)
    else addcargo(temp^[i].parts[j]);
  dispose(temp);
 end;}

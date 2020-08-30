@@ -794,12 +794,12 @@ begin
   if done then
    case mouse.x of
      56..156: case mouse.y of
-                 80..95: if incargo(1000)<5 then addcargo2(1000, true);
+                 80..95: if incargo(ID_DIRK)<5 then addcargo2(ID_DIRK, true);
                100..115: if incargo(ID_REFLECTIVEHULL)<5 then addcargo2(ID_REFLECTIVEHULL, true);
               end;
     163..263: case mouse.y of
-                 80..95: if incargo(3000)<16 then addcargo2(3000, true);
-               100..115: if incargo(4000)<16 then addcargo2(4000, true);
+                 80..95: if incargo(ID_UNKNOWN_COMPONENT)<16 then addcargo2(ID_UNKNOWN_COMPONENT, true);
+               100..115: if incargo(ID_UNKNOWN_MATERIAL)<16 then addcargo2(ID_UNKNOWN_MATERIAL, true);
               end;
    end;
   if fastkeypressed then readkey;

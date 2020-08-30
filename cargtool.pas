@@ -311,7 +311,7 @@ begin
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true;
    ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true;
-   2000..3999: if filters2[4]=1 then finished:=true;
+   ID_NOTHING..3999: if filters2[4]=1 then finished:=true;
    4000..5999: if filters2[3]=1 then finished:=true;
    6000..6999: if filters2[4]=1 then finished:=true;
   end;
@@ -329,7 +329,7 @@ begin
   case ship.cargo[cargoindex] of
    1000..1499: if filters2[1]=1 then finished:=true else dec(cargoindex);
    ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
-   2000..3999,6000..6999: if filters2[4]=1 then finished:=true else dec(cargoindex);
+   ID_NOTHING..3999,6000..6999: if filters2[4]=1 then finished:=true else dec(cargoindex);
    4000..5999: if filters2[3]=1 then finished:=true else dec(cargoindex);
   end;
  until (finished) or (cargoindex<1);
@@ -398,7 +398,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   2000..3999: if filters2[4]=1 then
+   ID_NOTHING..3999: if filters2[4]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -478,7 +478,7 @@ begin
   case ship.cargo[x] of
    1000..1499: if filters2[1]=1 then draw:=true;
    ID_NOSHIELD..1999: if filters2[2]=1 then draw:=true;
-   2000..3999,6000..6999: if filters2[4]=1 then draw:=true;
+   ID_NOTHING..3999,6000..6999: if filters2[4]=1 then draw:=true;
    4000..5999: if filters2[3]=1 then draw:=true;
   end;
   if (x<251) and (draw) then
@@ -499,7 +499,7 @@ begin
     case ship.cargo[x] of
      1000..1499: s:='Weapon   ';
      ID_NOSHIELD..1999: s:='Shield   ';
-     2000..2999: s:='Device   ';
+     ID_NOTHING..2999: s:='Device   ';
      3000..3999: s:='Component';
      4000..5999: s:='Material ';
      6000..6999: s:='Artifact ';
@@ -1246,8 +1246,8 @@ begin
   else
    begin
     index:=ship.cargo[cargoindex];
-    if index>6000 then getartifactname(ship.cargo[cargoindex]);
-    if (index=3000) or (index=4000) then
+    if index>ID_ARTIFACT_OFFSET then getartifactname(ship.cargo[cargoindex]);
+    if (index=ID_UNKNOWN_COMPONENT) or (index=ID_UNKNOWN_MATERIAL) then
      begin
       ship.cargo[cargoindex]:=0;
       i:=ship.numcargo[cargoindex];
@@ -1314,8 +1314,8 @@ begin
      {str(GetBuildTime(index),s);
      printxy(5,5,s);}
   end;
- if (index>999) and (index<ID_NOSHIELD) then weaponinfo(index-999)
-  else if (index>1499) and (index<2000) then weaponinfo(index-ID_SHIELDS_OFFSET)
+ if (index>=ID_DIRK) and (index<ID_NOSHIELD) then weaponinfo(index-ID_DIRK+1)
+  else if (index>1499) and (index<ID_NOTHING) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
         fillchar(screen[i,132],180,1);
  mouseshow;
@@ -1629,7 +1629,7 @@ begin
   end;
    
    case createinfo^[cargoindex].index of
-     2004,2015..2017,1019,3000..5999 : ;
+     ID_FUEL_NODULES, ID_REINFORCE_HULL..ID_ADD_CARGO_SPACE, 1019 {FIXME should be 2019 MIND ENHANCERS, not 1019 OCHRE EMBRYONS ??}, ID_UNKNOWN_COMPONENT..5999 : ;
    else
       if not checkweight(true) then exit;
    end;

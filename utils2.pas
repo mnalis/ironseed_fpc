@@ -312,7 +312,7 @@ begin
 	    inc(total, 2);
 	    for i := 1 to 7 do
 	    begin
-	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = 4020) and (random(2) = 0)) then
+	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = ID_WORTHLESS_JUNK) and (random(2) = 0)) then
 	       begin
 		  r := random(total);
 		  j := 0;
@@ -339,7 +339,7 @@ begin
 	    inc(total, 2);
 	    for i := 1 to 7 do
 	    begin
-	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = 4020) and (random(2) = 0))  then
+	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = ID_WORTHLESS_JUNK) and (random(2) = 0))  then
 	       begin
 		  r := random(total);
 		  j := 0;
@@ -349,7 +349,7 @@ begin
 		     inc(j);
 		  end;
 		  if j = 22 then
-		     tempplan^[n].cache[i] := 4020
+		     tempplan^[n].cache[i] := ID_WORTHLESS_JUNK
 		  else
 		     tempplan^[n].cache[i] := 3000 + j;
 		  dec(lim);
@@ -409,7 +409,7 @@ begin
       begin
 	 read(creafile,tempcreate^);
 	 if ioresult<>0 then errorhandler('creation.dta',5);
-	 if(tempcreate^.index >= 4000) and (tempcreate^.index <= 4020) then
+	 if(tempcreate^.index >= 4000) and (tempcreate^.index <= ID_WORTHLESS_JUNK) then
 	 begin
 	    tt:=99;
 	    tly:=0;
@@ -442,7 +442,7 @@ begin
       inc(total, 2);
       if total > 0 then
 	 for c:=1 to 7 do
-	    if (tempplan^[n].cache[c]=0) or (tempplan^[n].cache[c]=4020) then
+	    if (tempplan^[n].cache[c]=0) or (tempplan^[n].cache[c]=ID_WORTHLESS_JUNK) then
 	    begin
 	       t := random(total);
 	       for j := 0 to 20 do
@@ -1634,7 +1634,7 @@ begin
       begin
        if shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then
         begin
-         addcargo2(CARGO_GUNNODE,true);	{ we are at maximum 10 gunnodes already, cannot add more }
+         addcargo2(ID_INSTALL_GUN_NODE,true);	{ we are at maximum 10 gunnodes already, cannot add more }
          exit;
         end
        else inc(shiptype[SHPTYP_VESSEL]);

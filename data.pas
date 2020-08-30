@@ -100,10 +100,27 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
+       // FIXME search code for constants [1-7]000 (and +-1) and all others too (2015,2016,...)! and addcargo, cargo.*\.index, incargo, job, acceptoffer, alienstuff, cache
+      ID_DIRK = 1000;			{ first weapon }
+
       ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
       ID_NOSHIELD = 1500;		{ no shield installed. WARNING: some version of the code used "0", so always check if (ship.shield <= ID_NOSHIELD) }
       ID_REFLECTIVEHULL = 1501;
       ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
+
+      ID_NOTHING = 2000;		{ we start with devices after all the shields }
+      ID_FUEL_NODULES = 2004;
+      ID_REINFORCE_HULL = 2015;
+      ID_INCREASE_THRUST = 2016;
+      ID_ADD_CARGO_SPACE = 2017;
+      ID_INSTALL_GUN_NODE = 2018;
+      ID_MIND_ENHANCERS = 2019;
+
+      ID_UNKNOWN_COMPONENT = 3000;	{ first component }
+      ID_UNKNOWN_MATERIAL  = 4000;	{ first material }
+      ID_WORTHLESS_JUNK = 4020;
+      ID_SUBMATERIAL_OFFSET = 5000;	{ first submaterial (protic liquid) - need few of them to create material ! }
+      ID_ARTIFACT_OFFSET = 6000;
 
       DMGTYP_PSIONIC = 1;
       DMGTYP_PARTICLE = 2;
@@ -123,8 +140,6 @@ const OPT_SCREENSAVER = 1;
          SHPTYPE_TRANSPORT = 1;
          SHPTYPE_FRIGATE = 2;
          SHPTYPE_CRUISER = 3;
-
-      CARGO_GUNNODE = 2018;
 
 type
    buttontype = record
