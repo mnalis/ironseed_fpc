@@ -192,7 +192,7 @@ var j: integer;
 begin
  d:=round(d/100*(100-ship.damages[DMG_WEAPONS]));
  if d<1 then d:=1;
- with ships^[targetindex] do
+ with ships^[targetindex] do				// givedamage() always works on current "targetindex" ship
   begin
    case n of
     DMGTYP_PSIONIC: inc(damages[DMG_LIFESUPPORT],d);
@@ -212,17 +212,21 @@ begin
    if hullintegrity<0 then hullintegrity:=0;
    for j:=1 to 7 do if damages[j]>100 then damages[j]:=100;
    if shieldlevel<0 then shieldlevel:=0;
-   if shield=ID_REFLECTIVEHULL then shieldlevel:=damages[DMG_SHIELD];	// FIXME: do not damage reflective hull if psionic damage
+   if shield=ID_REFLECTIVEHULL then shieldlevel:=100-damages[DMG_SHIELD];	// reflective hull always has same value as shield subsystem integrity (100%-damage%)
+   assert (shieldlevel >= 0, 'alien shieldlevel is negative');
+   assert (shieldlevel <= 100, 'alien shieldlevel is too big');
    if damages[DMG_LIFESUPPORT]=100 then hullintegrity:=0;
+   //writeln ('  givedamage() type',n,' = ',d,' GJ to alien',targetindex,' result: hullintegrity=', hullintegrity, ' shield', shield, ' level = ', shieldlevel,'%, damages: power=', damages[DMG_POWER], ' shield=', damages[DMG_SHIELD], ' weapons=', damages[DMG_WEAPONS], ' engines=', damages[DMG_ENGINES], ' life=', damages[DMG_LIFESUPPORT], ' comm=', damages[DMG_COMM], ' cpu=', damages[DMG_CPU]);
   end;
 end;
 
 procedure displaymap; forward;
 
+ { this is counterpart to impact(), but with us firing weapons at aliens }
 procedure firingweapon(n: integer);
 var j,i,a,b,c,d: integer;
 begin
- c:=ship.gunnodes[n];
+ c:=ship.gunnodes[n];					// c = our current weapon index
  case weapons[c].dmgtypes[DMGTYP_ENERGY] of
    0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect('gun4.sam',7000)
            else soundeffect('gun1.sam',7000);
@@ -235,43 +239,46 @@ begin
    90..100: soundeffect('laser7.sam',7000);
  end;
  delay(tslice);
- // FIXME: this is counterpart to impact(), but with us firing weapons at aliens. Should see all the bugs fixed there (esp. for reflective hull), or no shield at all (b<0)!
  {if (skillcheck(4)) or ((scanning) and (random(100)<20)) then}
  if SkillTest(True, 4, ships^[targetindex].skill - (ord(scanning) * 20), learnchance) then
   begin
-   b:=ships^[targetindex].shield-ID_SHIELDS_OFFSET;
-   assert (b>0);
-   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then
+   b:=ships^[targetindex].shield-ID_SHIELDS_OFFSET;	// b = alien's shield index
+   assert (b>0);					// aliens always have *some* shield, see Data_Generators/makedata/alienshp.txt
+   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then	// j = our weapon damage types: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy
     begin
-     i:=round(weapons[c].dmgtypes[j]/100*weapons[c].damage*5);
-     if ships^[targetindex].shieldlevel=0 then givedamage(j,i)
+     i:=round(weapons[c].dmgtypes[j]/100*weapons[c].damage*5);	// i = maximum damage our weapon can deal (for this dmgtype "j")
+     //writeln ('successfully firing weapon',c,'(node',n,') with dmgtype',j,' and maxdamage i=',i,' GJ on alien',targetindex, ' with shield', ships^[targetindex].shield, ' at ', ships^[targetindex].shieldlevel ,'%');
+     if ships^[targetindex].shieldlevel=0 then givedamage(j,i)	// alien ship has not shields, let it take full damage "i"
      else
-      begin
-       a:=round(weapons[b].dmgtypes[j]/100*weapons[b].damage*ships^[targetindex].shieldlevel/100);
+      begin							// alien ship has some shield installed
+       a:=round(weapons[b].dmgtypes[j]/100*weapons[b].damage*ships^[targetindex].shieldlevel/100);	// a = current maximum shield damage absorption
+       //writeln ('  alien',targetindex,' has shield',b, ' with resistance ', weapons[b].dmgtypes[j], '% to dmgtype',j,', and shieldlevel ', ships^[targetindex].shieldlevel, '%. Max current damage absorption = ', a, ' GJ');
        if a<i then
-        begin
-         givedamage(j,i-a);
-         ships^[targetindex].shieldlevel:=1;
-         if ships^[targetindex].shield=ID_REFLECTIVEHULL then ships^[targetindex].damages[DMG_SHIELD]:=100;	// FIXME: do not damage reflective hull if psionic damage
+        begin							// alien ship receiving more damage than their shields can handle
+         givedamage(j,i-a);					// let them take residual damage...
+         ships^[targetindex].shieldlevel:=1;			// ... and collapse shields (NB: should be 0, but we are dividing by it!)
+         if (ships^[targetindex].shield=ID_REFLECTIVEHULL) and (j>1) then ships^[targetindex].damages[DMG_SHIELD]:=100;	// psionic damage passes through reflective hull, and thus cannot destroy it
+         //writeln ('  alien shield', ships^[targetindex].shield, ' is collapsing! shield subsystem damages=', ships^[targetindex].damages[DMG_SHIELD]);
         end
        else
-        begin
-         part:=i/ships^[targetindex].shieldlevel;
+        begin							// alien ship receiving less damage than their shields can handle
+         part:=i/ships^[targetindex].shieldlevel;		//   NB: This calculations looks strange... but is the same as for our ship - see "we've taken LESS damage than our shield can handle" part of the code
          part:=part*(1/weapons[b].damage);
          part:=part*100;
-         a:=round(part*100);
-         d:=ships^[targetindex].shieldlevel-a;
+         a:=round(part*100);					//   a = by how many percent will we reduce shield level
+         d:=ships^[targetindex].shieldlevel-a;			//   d = new shield level in percent
+         //writeln ('  alien shield is holding, reducing shieldlevel by ',a,'% to ',d, '%');
          if d<0 then
-          begin
-           givedamage(5,random(4)+1);
-           if ships^[targetindex].shield=ID_REFLECTIVEHULL then	// FIXME: do not damage reflective hull if psionic damage
+          begin							// alien shield has collapsed!
+           givedamage(DMGTYP_FAKE_SHLD,random(4)+1);		//   this always cases damage to shield subsystem for 1-5
+           if (ships^[targetindex].shield=ID_REFLECTIVEHULL) and (j>1) then	// psionic damage passes through reflective hull, and thus cannot destroy it
             ships^[targetindex].damages[DMG_SHIELD]:=100;
-           ships^[targetindex].shieldlevel:=1;
+           ships^[targetindex].shieldlevel:=1;			//   ... and collapse shields (NB: should be 0, but we are dividing by it!)
           end
          else
-          begin
+          begin							// alien shield still holding
            ships^[targetindex].shieldlevel:=d;
-           if ships^[targetindex].shield=ID_REFLECTIVEHULL then	// FIXME: do not damage reflective hull if psionic damage
+           if (ships^[targetindex].shield=ID_REFLECTIVEHULL) and (j>1) then	// psionic damage passes through reflective hull, and thus cannot damage it
             ships^[targetindex].damages[DMG_SHIELD]:=100-d;
           end;
         end;
@@ -280,6 +287,7 @@ begin
   end;
  if ships^[targetindex].hullintegrity=0 then
   begin
+   //writeln ('  alien', targetindex, ' has been destroyed');
    ships^[targetindex].hullintegrity:=1;
    displaymap;
    ships^[targetindex].hullintegrity:=0;
@@ -726,7 +734,7 @@ begin
        if c<0 then
         begin		{ shield would be reduced below zero }
          //writeln ('    Shield passing some damage afterall (total shield malfunction if reflective hull)');
-         takedamage(5,random(3)+1);	{ shield subsystem takes 1-3 damage }
+         takedamage(DMGTYP_FAKE_SHLD,random(3)+1);	{ shield subsystem takes 1-3 damage }
          ship.shieldlevel:=0;
          if (ship.shield=ID_REFLECTIVEHULL) and (j>DMGTYP_PSIONIC) then ship.damages[DMG_SHIELD]:=100;
          displaydamage;

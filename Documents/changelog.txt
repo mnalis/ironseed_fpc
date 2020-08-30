@@ -1,3 +1,4 @@
+- combat: fix alien (with reflective hull) damage calculations
 v 0.1.5
 - combat: various shield handling fixes
 - code: use constants instead of numbers for few types to improve readability
