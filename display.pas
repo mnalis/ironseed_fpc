@@ -2689,7 +2689,7 @@ begin
        if yesnorequest('Send '+s+'?',0,31) then
        begin
 	  tempplan^[curplan].bots:=(tempplan^[curplan].bots and (255 - 7)) or viewindex2;
-	  removecargo(ID_NOTHING+1+viewindex2);
+	  removecargo(ID_PROBOT+viewindex2);
 	  for i:=37 to 115 do
 	     fillchar(screen[i,166],113,5);
 	  viewlevel:=0;
@@ -2751,7 +2751,7 @@ begin
 	 4 : s:='fabricator';
 	 5 : s:='starminer';
        end;
-       if (yesnorequest('Recall '+s+'?',0,31)) and (addcargo((tempplan^[curplan].bots and 7)+ID_NOTHING+1,false))
+       if (yesnorequest('Recall '+s+'?',0,31)) and (addcargo((tempplan^[curplan].bots and 7)+ID_PROBOT,false))
          then tempplan^[curplan].bots:=tempplan^[curplan].bots and (255 - 7);
        tcolor:=191;
        bkcolor:=5;

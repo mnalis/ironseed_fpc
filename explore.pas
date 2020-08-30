@@ -1163,14 +1163,14 @@ begin
 	      {if tempplan^[curplan].orbit=0 then
 	      begin
 		 status:=7;
-		 removecargo(ID_NOTHING+1);
+		 removecargo(ID_PROBOT);
 		 que := -abs(que);
 		 SetScan(0);
 	      end;}
 	      if ((techlvl>=4) and (random(100)<25)) or ((techlvl=3) and (random(100)<5)) then
 	      begin
 		 status:=7;
-		 removecargo(ID_NOTHING+1);
+		 removecargo(ID_PROBOT);
 		 que := -abs(que);
 		 SetScan(0);
 		 {dec(datagathered[que,1]);}
