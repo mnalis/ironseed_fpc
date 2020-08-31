@@ -123,9 +123,9 @@ begin
    0..30: begin
            getspecial(7,1007);		{ 15% chance of Scavengers }
            addtofile;
-           if getanger=1 then i:=WNDORDER_ATTACK
-            else if getanger<4 then i:=WNDORDER_NONE
-            else i:=WNDORDER_RETREAT;
+           if getanger=1 then i:=WNDORDER_RETREAT { afraid }
+            else if getanger<4 then i:=WNDORDER_NONE { indifferent/friendly }
+            else i:=WNDORDER_ATTACK; { angry/violent }
            createwandering(i);
          end;
   31..100: begin			{ 35% chance of random alien }
@@ -134,9 +134,9 @@ begin
             begin
              getspecial(j,1000+j);
              addtofile;
-             if getanger=1 then i:=WNDORDER_ATTACK
-              else if getanger<4 then i:=WNDORDER_NONE
-              else i:=WNDORDER_RETREAT;
+             if getanger=1 then i:=WNDORDER_RETREAT { afraid }
+              else if getanger<4 then i:=WNDORDER_NONE { indifferent/friendly }
+              else i:=WNDORDER_ATTACK; { angry/violent }
              createwandering(i);
             end;
           end;

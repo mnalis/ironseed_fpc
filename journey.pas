@@ -1393,7 +1393,8 @@ begin
     else if abs(rely)>499 then rely:=rely-ofs;
    if (abs(relz)>499) and (relz<0) then relz:=relz+ofs
     else if abs(relz)>499 then relz:=relz-ofs;
-   if (abs(relx)<500) and (abs(rely)<500) and (abs(relz)<500) then
+   if (abs(relx)<500) and (abs(rely)<500) and (abs(relz)<500) and 	{ if ships are close enough... }
+      ((action=WNDACT_ATTACK) or (ship.wandering.orders=WNDORDER_ATTACK) or (calc_anger(ship.wandering.anger, ship.wandering.congeniality) > 3)) then	{ ...and there is a reason for fight to happen }
    begin
       if ship.wandering.alienid = 1013 then	{ drones - save state }
       begin
@@ -1401,7 +1402,7 @@ begin
 	    damages[i] := ship.damages[i];
 	 hull := ship.hullintegrity;
       end;
-      initiatecombat;				{ FIXME - attack always happens when we get close to aliens, no matter if either side wanted it!! }
+      initiatecombat;
       if ship.wandering.alienid = 1013 then	{ drones - restore state }
       begin
 	 for i := 1 to 7 do

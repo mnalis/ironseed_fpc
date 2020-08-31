@@ -106,7 +106,7 @@ events:
 	icon: hallifax
 aliens:
 	Fix aliens so they don't chase between planets and systems.
-	investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
+	x investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
 
 combat:
 	x make drones so that they don't kill the player on them losing
