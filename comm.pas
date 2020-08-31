@@ -97,7 +97,7 @@ begin                                 {       = 1 > retreat }
    anger:=abs(alien.anger+random(11)-5);
    alienid:=alien.id;
    case orders of
-    0: begin
+    WNDORDER_ATTACK: begin
         relx:=3000+random(10000);
         if random(2)=1 then relx:=-relx;
         rely:=3000+random(10000);
@@ -105,7 +105,7 @@ begin                                 {       = 1 > retreat }
         relz:=3000+random(10000);
         if random(2)=1 then relz:=-relz;
        end;
-    1: begin
+    WNDORDER_RETREAT: begin
         relx:=5000+random(12000);
         if random(2)=1 then relx:=-relx;
         rely:=5000+random(12000);
@@ -113,7 +113,7 @@ begin                                 {       = 1 > retreat }
         relz:=5000+random(12000);
         if random(2)=1 then relz:=-relz;
        end;
-    2: begin
+    WNDORDER_NONE: begin
         relx:=3000+random(2000);
         if random(2)=1 then relx:=-relx;
         rely:=3000+random(2000);
@@ -136,7 +136,7 @@ begin
   read(confile,alien);
  until (alien.id=curplan) or (ioresult<>0);
  close(confile);
- if (alien.id=curplan) and (alien.anger>0) and (alien.congeniality/alien.anger<0.7) then createwandering(0);
+ if (alien.id=curplan) and (alien.anger>0) and (alien.congeniality/alien.anger<0.7) then createwandering(WNDORDER_ATTACK);
 end;
 
 procedure gettechlevel(plan: integer);
@@ -324,7 +324,7 @@ begin
            if random(3)=0 then war:=true;
            congeniality:=15;
            anger:=30;
-           createwandering(0);
+           createwandering(WNDORDER_ATTACK);
           end;
        2: begin
            congeniality:=20;
@@ -341,7 +341,7 @@ begin
        5: begin
            congeniality:=5;
            anger:=0;
-           createwandering(1);
+           createwandering(WNDORDER_RETREAT);
           end;
       end;
      end;
@@ -742,7 +742,7 @@ begin
           for i:=182 to 188 do
            fillchar(screen[i,12],200,0);
           contactindex:=-1;
-          createwandering(0);
+          createwandering(WNDORDER_ATTACK);
           ship.wandering.relx:=500+random(100);
           ship.wandering.rely:=500+random(100);
           ship.wandering.relz:=500+random(100);

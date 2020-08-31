@@ -317,7 +317,7 @@ begin
  viewmode:=0;
  batindex:=0;
  idletime:=0;
- action:=0;
+ action:=WNDACT_NONE;
  tcolor:=31;
  alert:=2;
  if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)

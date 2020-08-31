@@ -2,7 +2,7 @@
 - docs: document events/logs system
 - fix race condition when installing/removing shield
 - fix cargo skip of weight check for some items
-- code: use constants for delayes, shiptypes, jobtypes and cargo items to further improve readability
+- code: use constants for delayes, shiptypes, jobtypes, wandering alien action/orders and cargo items to further improve readability
 - combat: fix alien (with reflective hull) damage calculations
 v 0.1.5
 - combat: various shield handling fixes

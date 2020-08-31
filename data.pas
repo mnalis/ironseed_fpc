@@ -166,6 +166,15 @@ const OPT_SCREENSAVER = 1;
       ID_ART_GOOLAS = 6910;
       ID_LAST_ARTIFACT = 6999;
 
+      WNDACT_NONE = 0;			{ our action towards wandering alien - ship.wandering }
+      WNDACT_RETREAT = 1;
+      WNDACT_ATTACK = 2;
+      WNDACT_MASKING = 3;
+
+      WNDORDER_ATTACK = 0;		{ wandering alien orders: set by createwandering() }
+      WNDORDER_RETREAT = 1;
+      WNDORDER_NONE = 2;
+
       JOBTYPE_REPAIR = 0;
       JOBTYPE_INSTALL = 1;
       JOBTYPE_REMOVE = 2;

@@ -1412,18 +1412,18 @@ begin
      setalertmode(1);
      ship.wandering.alienid:=20000;
      checkwandering;
-     action:=0;
+     action:=WNDACT_NONE;
     end;
    if (abs(relx)>23000) or (abs(rely)>23000) or (abs(relz)>23000) then
     begin
      ship.wandering.alienid:=20000;
-     if action=1 then
+     if action=WNDACT_RETREAT then
       begin
        println;
        tcolor:=63;
        print('SECURITY: Evasion successful!');
       end;
-     action:=0;
+     action:=WNDACT_NONE;
     end;
   end;
 end;
@@ -1431,14 +1431,14 @@ end;
 procedure movewandering;
 begin
  case action of
-  0:;
-  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  WNDACT_NONE:;
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
  end;
  case ship.wandering.orders of
-  0: if action=3 then adjustwanderer(30) else adjustwanderer(2);
-  1: if action=3 then adjustwanderer(-50) else adjustwanderer(-70);
-  2: adjustwanderer(-30);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_NONE: adjustwanderer(-30);
  end;
 end;
 

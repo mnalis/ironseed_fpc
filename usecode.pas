@@ -137,9 +137,9 @@ begin
    0..30: begin
            getspecial(7,1007);
            addtofile;
-           if getanger=1 then i:=0
-            else if getanger<4 then i:=2
-            else i:=1;
+           if getanger=1 then i:=WNDORDER_ATTACK
+            else if getanger<4 then i:=WNDORDER_NONE
+            else i:=WNDORDER_RETREAT;
            createwandering(i);
          end;
   31..100: begin
@@ -148,9 +148,9 @@ begin
             begin
              getspecial(j,1000+j);
              addtofile;
-             if getanger=1 then i:=0
-              else if getanger<4 then i:=2
-              else i:=1;
+             if getanger=1 then i:=WNDORDER_ATTACK
+              else if getanger<4 then i:=WNDORDER_NONE
+              else i:=WNDORDER_RETREAT;
              createwandering(i);
             end;
           end;
@@ -1462,23 +1462,23 @@ begin
         readylogs;
        end;
   {sec}
-  27,28: if (ship.wandering.alienid<16000) and (action<>1) and
+  27,28: if (ship.wandering.alienid<16000) and (action<>WNDACT_RETREAT) and			{ retreat }
        ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or
        (abs(ship.wandering.relz)<8000)) then
        begin
         tcolor:=31;
-        action:=1;
+        action:=WNDACT_RETREAT;
         println;
         print('SECURITY: Attempting to evade aliens.');
        end
-      else if (action<>1) then
+      else if (action<>WNDACT_RETREAT) then
        begin
         tcolor:=94;
-        action:=0;
+        action:=WNDACT_NONE;
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  29: begin
+  29: begin											{ launch drones }
 	 j := 0;
 	 for i := 1 to 10 do
 	 begin
@@ -1490,60 +1490,60 @@ begin
 	 if j <= 0 then
 	 begin
 	    tcolor:=31;
-	    action:=1;
+	    action:=WNDACT_RETREAT;
 	    println;
 	    print('SECURITY: We have no weapons installed!');
 	 end else if ship.wandering.alienid < 16000 then
 	 begin
 	    tcolor:=31;
-	    action:=1;
+	    action:=WNDACT_RETREAT;
 	    println;
 	    print('SECURITY: There is an alien vessel nearby. This is not the time for war exercises.');
 	 end else if yesnorequest('Launch Combat Drones?',0,31) then
 	 begin
 	    getspecial(13,1013);
-	    createwandering(0);
+	    createwandering(WNDORDER_ATTACK);
 	    ship.wandering.relx:=400;
 	    ship.wandering.rely:=400;
 	    ship.wandering.relz:=400;
 	 end;
       end;
-  32,35: if (ship.wandering.alienid<16000) and (action<>2) and
+  32,35: if (ship.wandering.alienid<16000) and (action<>WNDACT_ATTACK) and			{ attack }
              ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or
               (abs(ship.wandering.relz)<8000)) then
        begin
         tcolor:=31;
-        action:=2;
+        action:=WNDACT_ATTACK;
         println;
         print('SECURITY: Attempting to close and attack aliens.');
        end
-      else if (action<>2) then
+      else if (action<>WNDACT_ATTACK) then
        begin
         tcolor:=94;
-        action:=0;
+        action:=WNDACT_NONE;
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=2) then lowershields
+  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=2) then lowershields	{ raise/lower shields }
        else raiseshields;
-  31: if (ship.wandering.alienid<16000) and (action<>3) and
+  31: if (ship.wandering.alienid<16000) and (action<>WNDACT_MASKING) and			{ masking }
        ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or
         (abs(ship.wandering.relz)<8000)) then
        begin
         tcolor:=31;
-        action:=3;
+        action:=WNDACT_MASKING;
         println;
         print('SECURITY: Attempting to mask ship.');
        end
-      else if (action<>3) then
+      else if (action<>WNDACT_MASKING) then
        begin
         tcolor:=94;
-        action:=0;
+        action:=WNDACT_NONE;
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  33: if ship.armed then powerdownweapons else armweapons;
-  34: ToggleResearch(4);
+  33: if ship.armed then powerdownweapons else armweapons;					{ arm/disarm weapons }
+  34: ToggleResearch(4);									{ research }
   {ast}
   36: if viewmode2<>1 then
         begin

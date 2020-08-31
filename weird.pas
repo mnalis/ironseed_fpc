@@ -224,14 +224,14 @@ procedure startphaedormoch;
 begin
  getspecial(10,1010);
  addtofile;
- createwandering(1);
+ createwandering(WNDORDER_RETREAT);
 end;
 
 procedure startarmada;
 begin
  getspecial(7,1007);
  addtofile;
- createwandering(0);
+ createwandering(WNDORDER_ATTACK);
  initiatecombat;
 end;
 
@@ -252,11 +252,6 @@ begin
    end;
    
  case n of
- { FIXME: hmmm, sengzhac are n=0: alien = [NAME = 'Sengzhac       ', TECHMIN = 1024, TECHMAX = 1280, ANGER = 27, CONGENIALITY = 0, VICTORY = 12, ID = 364, CONINDEX = 1, WAR = false]
-   shouldn't they also be here, so 0..9? Also, there are 11 races in Data_Generators/makedata/contact.txt??? 
-   Yes, from logs.txt Phaedor_Moch is later addition, which seem to be handled by event40 GLYPTIC SCYTHE below (but shouldn't that be log @1101? what if we don't give them items for repair?? would we get log of them at all?)
-   (0=Sengzhac 1=D_phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 40=Phaedor_Moch 9=Void_Dwellers)
- }
 
    0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
    11	: addlog(11);      { sector codex }
@@ -340,7 +335,7 @@ begin
 	     addcargo(ID_ART_DETONATOR, true);
 	     addlog(39);
 	  end;
-   40	: begin            { glyptic scythe }
+   40	: begin            { glyptic scythe }			{FIXME: from logs.txt Phaedor_Moch LOG is #40, but it seem to be handled by event40 GLYPTIC SCYTHE here - but shouldn't that be log @1101? what if we don't give them items for repair?? would we get log of them at all?)  however it did seem to work previously, so I won't be touchinh this unless it turns out to be a problem}
 	     addcargo(ID_ART_GLYPTIC_SCYTHE, true);
 	     addlog(40);
 	  end;

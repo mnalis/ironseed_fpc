@@ -785,22 +785,22 @@ begin
    if (abs(relx)>23000) or (abs(rely)>23000) or (abs(relz)>23000) then
     begin
      ship.wandering.alienid:=20000;
-     if action=1 then showchar(4,'Evasion successful!');
-     action:=0;
+     if action=WNDACT_RETREAT then showchar(4,'Evasion successful!');
+     action:=WNDACT_NONE;
     end;
   end;
 end;
 
-procedure movewandering;
+procedure movewandering;	{ FIXME: almost same duplicate in journey.pas ?? }
 begin
  case action of
-  0:;
-  1: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  WNDACT_NONE:;
+  WNDACT_RETREAT: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
  end;
  case ship.wandering.orders of
-  0: if action=3 then adjustwanderer(30) else adjustwanderer(2);
-  1: if action=3 then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
  end;
 end;
 
