@@ -196,7 +196,7 @@ end;
 
 procedure addcursor;
 begin
- if (logs[logindex+1]>0) and (logindex<maxlogentries-1) then
+ if (logs[logindex+1]>=0) and (logindex<maxlogentries-1) then
   begin
    inc(logindex);
    if not qmode then displaylist else getlog;
