@@ -197,7 +197,7 @@ begin
    ship.events[i]:=ship.events[i] and not (1 shl j);
 end;
 
-{ add and display a log "n" to first unused (-1) space in logs[256]. 
+{ add and display a log "n" to first unused (-1) space in logs[256].
   Also sets an event "n".
   For events < 50, also add compatibility to ship.events[] }
 procedure addlog(n: integer);
@@ -252,7 +252,13 @@ begin
    end;
    
  case n of
-   1..9: addlog(n);     { alien races  }
+ { FIXME: hmmm, sengzhac are n=0: alien = [NAME = 'Sengzhac       ', TECHMIN = 1024, TECHMAX = 1280, ANGER = 27, CONGENIALITY = 0, VICTORY = 12, ID = 364, CONINDEX = 1, WAR = false]
+   shouldn't they also be here, so 0..9? Also, there are 11 races in Data_Generators/makedata/contact.txt??? 
+   Yes, from logs.txt Phaedor_Moch is later addition, which seem to be handled by event40 GLYPTIC SCYTHE below (but shouldn't that be log @1101? what if we don't give them items for repair?? would we get log of them at all?)
+   (0=Sengzhac 1=D_phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 40=Phaedor_Moch 9=Void_Dwellers)
+ }
+
+   0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
    11	: addlog(11);      { sector codex }
    12	: begin            { second buoy  }
 	     systems[145].notes:=systems[145].notes or 1;

@@ -101,7 +101,7 @@ conversation:
 logs:
 	x keyword highlighting
 	x extra log entries
-	investigate: After communicating with the Sengzhac for the first time, the log book opens, but doesn't automatically load the Sengzhac log. 
+	x investigate: After communicating with the Sengzhac for the first time, the log book opens, but doesn't automatically load the Sengzhac log. 
 events:
 	icon: hallifax
 aliens:
