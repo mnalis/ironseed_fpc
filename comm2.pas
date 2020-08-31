@@ -733,7 +733,7 @@ begin
 end;
 
 procedure barterfor;
-var r: real;
+var
     item_name,item_price:string;
 begin
  if (trademode=1) or (tradeindex=0) then exit;
@@ -747,19 +747,7 @@ begin
  mouseshow;
  fillchar(tradestuff^,sizeof(alienstuffarray),0);
  alienworth:=getworth(alienstuff^[tradeindex]);
- if alien.anger=0 then
-  begin
-   if alien.congeniality>20 then i:=3
-    else i:=1;
-  end
- else
-  begin
-   r:=alien.congeniality/alien.anger;
-   if r<0.3 then i:=5
-   else if r<0.7 then i:=4
-   else if round(r)=1 then i:=2
-   else i:=3;
-  end;
+ i:=calc_anger(alien.anger, alien.congeniality);
  alienworth:=round(alienworth*0.33*i);
  mousehide;
  str(alienworth,item_price);

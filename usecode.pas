@@ -108,24 +108,10 @@ begin
  displayoptions(0);
 end;
 
+
 function getanger: integer;
-var r: real;
-    i: integer;
-begin
- if alien.anger=0 then
-  begin
-   if alien.congeniality>20 then i:=3
-    else i:=1;
-  end
- else
-  begin
-   r:=alien.congeniality/alien.anger;
-   if r<0.3 then i:=5
-   else if r<0.7 then i:=4
-   else if round(r)=1 then i:=2
-   else i:=3;
-  end;
- getanger:=i;
+begin;
+ getanger := calc_anger (alien.anger, alien.congeniality);
 end;
 
 procedure checkrandommonster;
@@ -135,14 +121,14 @@ begin
  i:=random(200);
  case i of
    0..30: begin
-           getspecial(7,1007);
+           getspecial(7,1007);		{ 15% chance of Scavengers }
            addtofile;
            if getanger=1 then i:=WNDORDER_ATTACK
             else if getanger<4 then i:=WNDORDER_NONE
             else i:=WNDORDER_RETREAT;
            createwandering(i);
          end;
-  31..100: begin
+  31..100: begin			{ 35% chance of random alien }
            j:=random(10)+1;
            if (j<>8) then
             begin

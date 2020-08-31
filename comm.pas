@@ -43,6 +43,7 @@ procedure getinfo;
 procedure checkwandering;
 procedure animatealien;
 procedure gettechlevel(plan: integer);
+function calc_anger (anger, congeniality: integer): integer;
 
 implementation
 
@@ -245,6 +246,7 @@ begin
  close(confile);
 end;
 
+{ fills alien structure with gamedata from file for alien "n" (unless n=13), and sets index to "contactindex" }
 procedure getspecial(n,contactindex: integer);
 var f: file of alientype;
 begin
@@ -1117,12 +1119,38 @@ begin
  mouseshow;
 end;
 
+
+{ returns alien anger level:
+  1 = Afraid'
+  2 = Indifferent'
+  3 = Friendly
+  4 = Angry
+  5 = Violent
+}
+function calc_anger (anger, congeniality: integer): integer;
+var r: real;
+begin
+ if anger=0 then
+  begin
+   if congeniality>20 then calc_anger:=3
+    else calc_anger:=1;
+  end
+ else
+  begin
+   r:=congeniality/anger;
+   if r<0.3 then calc_anger:=5
+   else if r<0.7 then calc_anger:=4
+   else if round(r)=1 then calc_anger:=2
+   else calc_anger:=3;
+  end;
+end;
+
+
 procedure getshipinfo;
 var confile: file of alientype;
     done: boolean;
     temp: alientype;
     str1: string[11];
-    r: real;
 begin
  assign(confile,tempdir+'/contacts.dta');
  reset(confile);
@@ -1146,19 +1174,7 @@ begin
  printxy(217,70,'Status:');
  if temp.war then printxy(252,70,'War')
   else printxy(252,70,'Peace');
- if temp.anger=0 then
-  begin
-   if temp.congeniality>20 then i:=3
-    else i:=1;
-  end
- else
-  begin
-   r:=temp.congeniality/temp.anger;
-   if r<0.3 then i:=5
-   else if r<0.7 then i:=4
-   else if round(r)=1 then i:=2
-   else i:=3;
-  end;
+ i:=calc_anger(temp.anger, temp.congeniality);
  case i of
   1: str1:='Afraid';
   2: str1:='Indifferent';
@@ -1231,7 +1247,6 @@ end;
 
 procedure getinfo;
 var str1: string[11];
-    r: real;
 begin
  if infomode then
   begin
@@ -1263,19 +1278,7 @@ begin
   printxy(217,70,'Status:');
   if alien.war then printxy(252,70,'War')
    else printxy(252,70,'Peace');
-  if alien.anger=0 then
-   begin
-    if alien.congeniality>20 then i:=3
-     else i:=1;
-   end
-  else
-   begin
-    r:=alien.congeniality/alien.anger;
-    if r<0.3 then i:=5
-    else if r<0.7 then i:=4
-    else if round(r)=1 then i:=2
-    else i:=3;
-   end;
+  i:=calc_anger(alien.anger, alien.congeniality);
   case i of
    1: str1:='Afraid';
    2: str1:='Indifferent';

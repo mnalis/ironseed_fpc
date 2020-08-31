@@ -1395,14 +1395,14 @@ begin
     else if abs(relz)>499 then relz:=relz-ofs;
    if (abs(relx)<500) and (abs(rely)<500) and (abs(relz)<500) then
    begin
-      if ship.wandering.alienid = 1013 then
+      if ship.wandering.alienid = 1013 then	{ drones - save state }
       begin
 	 for i := 1 to 7 do
 	    damages[i] := ship.damages[i];
 	 hull := ship.hullintegrity;
       end;
-      initiatecombat;
-      if ship.wandering.alienid = 1013 then
+      initiatecombat;				{ FIXME - attack always happens when we get close to aliens, no matter if either side wanted it!! }
+      if ship.wandering.alienid = 1013 then	{ drones - restore state }
       begin
 	 for i := 1 to 7 do
 	    ship.damages[i] := damages[i];
