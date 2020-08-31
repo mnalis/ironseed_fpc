@@ -431,7 +431,7 @@ begin
    mousehide;
    compressfile(tempdir+'/current',@screen);
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/PSYEVAL.MOD');
    loadscreen('data/psyche',@screen);
    new(bubbles);
@@ -574,7 +574,7 @@ procedure mainloop;
 begin
  repeat
     palettedirty := true;
-    fadestep(8);
+    fadestep(FADESTEP_STEP);
     PushRand;
     findmouse;
     PopRand;
@@ -596,7 +596,7 @@ begin
        mouseshow;
        PopRand;
     end;
-    delay(tslice*6);
+    delay(tslice*FADE_TSLICE_MUL_CREW2);
     movebubbles;
  until done;
 end;

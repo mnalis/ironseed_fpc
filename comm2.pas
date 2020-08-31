@@ -357,8 +357,8 @@ end;
 
 procedure mainloop;
 begin
-   repeat
-      fadestep(8);
+ repeat
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(idletime);
@@ -368,7 +368,7 @@ begin
   mousehide;
   mousesetcursor(tmpm^[index]);
   mouseshow;
-  delay(tslice*6);
+  delay(tslice*FADE_TSLICE_MUL_COMM2);
  until done;
 end;
 
@@ -387,7 +387,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current2',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWEVAL.MOD');
  loadscreen('data/log',@screen);
  index:=0;
@@ -437,7 +437,7 @@ begin
  dispose(titles);
  mousehide;
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mouse.setmousecursor(random(3));
  loadscreen(tempdir+'/current2',@screen);
  bkcolor:=3;
@@ -535,7 +535,7 @@ begin
    x:=cargoindex;
    y:=2;
    repeat
-    if (ship.cargo[x]>0) and (ship.cargo[x]<6000) then
+    if (ship.cargo[x]>0) and (ship.cargo[x]<ID_ARTIFACT_OFFSET) then
      begin
       if x=cargoindex then bkcolor:=6 else bkcolor:=0;
       inc(y);
@@ -555,10 +555,10 @@ begin
    y:=3;
    bkcolor:=0;
    repeat
-    if (ship.cargo[x]>0) and (ship.cargo[x]<6000) and (x>0) then
+    if (ship.cargo[x]>0) and (ship.cargo[x]<ID_ARTIFACT_OFFSET) and (x>0) then
      begin
       dec(y);
-      if ship.cargo[x]>5999 then
+      if ship.cargo[x]>ID_LAST_ELEMENT then
        begin
         getartifactname(ship.cargo[x]);
         i:=maxcargo;
@@ -643,11 +643,11 @@ begin
  else
   begin
    dec(cargoindex);
-   while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do dec(cargoindex);
+   while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do dec(cargoindex);
    if cargoindex<1 then
     begin
      cargoindex:=1;
-     while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do inc(cargoindex);
+     while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do inc(cargoindex);
      if cargoindex>250 then cargoindex:=0;
     end;
   end;
@@ -683,11 +683,11 @@ begin
  else
   begin
    inc(cargoindex);
-   while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do inc(cargoindex);
+   while (cargoindex<251) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do inc(cargoindex);
    if cargoindex>250 then
     begin
      cargoindex:=250;
-     while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>5999)) do dec(cargoindex);
+     while (cargoindex>0) and ((ship.cargo[cargoindex]=0) or (ship.cargo[cargoindex]>ID_LAST_ELEMENT)) do dec(cargoindex);
     end;
   end;
  displayleftlist;
@@ -711,22 +711,22 @@ var i,j,worth: integer;
 begin
  i:=0;
  worth:=0;
-   if item=3000 then worth:=27;
-   if item=4000 then worth:=9;
-    if item=4020 then  worth:=1;
+ if item=ID_UNKNOWN_COMPONENT then worth:=27;
+ if item=ID_UNKNOWN_MATERIAL  then worth:=9;
+ if item=ID_WORTHLESS_JUNK then  worth:=1;
  case item of
-  5000..5999: worth:=3;
-  1000..1499: begin i:=1; worth:=4; end;
-  1500..1599: begin i:=1; worth:=6; end;
-  2000..2999: begin i:=1; worth:=4; end;
-  3001..3999: begin i:=1; worth:=3; end;
-  4001..4019,4021..4999: begin i:=1; worth:=2; end;
+  ID_FIRST_ELEMENT..ID_LAST_ELEMENT: worth:=3;	{ elements }
+  ID_DIRK..1499: begin i:=1; worth:=4; end;		{ weapons }
+  ID_NOSHIELD..ID_LAST_SHIELD: begin i:=1; worth:=6; end;		{ shields }
+  ID_NOTHING..2999: begin i:=1; worth:=4; end;		{ devices }
+  3001..3999: begin i:=1; worth:=3; end; 		{ components }
+  4001..4019,4021..4999: begin i:=1; worth:=2; end;	{ materials }
  end;
  if i=1 then
   begin
    while cr^[i].index<>item do inc(i);
    for j:=1 to 3 do
-    if cr^[i].parts[j]>4999 then inc(worth)
+    if cr^[i].parts[j]>=ID_FIRST_ELEMENT then inc(worth)
     else worth:=worth+getworth(cr^[i].parts[j]);
   end;
  getworth:=worth;
@@ -790,30 +790,30 @@ procedure acceptoffer;
 begin
  if (trademode=0) or (tradeworth<alienworth) or (tradeindex=0) then exit;
  case alienstuff^[tradeindex] of
-  2015: begin
-         addcargo(3012, true);
-         addcargo(3007, true);
-         addcargo(3018, true);
+  ID_REINFORCE_HULL: begin
+         addcargo(ID_TORQUE_STANCHION, true);
+         addcargo(ID_METAL_WEAVE, true);
+         addcargo(ID_GUIDANCE_STRUT, true);
         end;
-  2016: begin
-         addcargo(1000, true);
-         addcargo(1000, true);
-         addcargo(3008, true);
+  ID_INCREASE_THRUST: begin
+         addcargo(ID_DIRK, true);
+         addcargo(ID_DIRK, true);
+         addcargo(ID_PULSE_LOOM, true);
         end;
-  2017: begin
-         addcargo(3018, true);
-         addcargo(3019, true);
-         addcargo(3012, true);
+  ID_ADD_CARGO_SPACE: begin
+         addcargo(ID_GUIDANCE_STRUT, true);
+         addcargo(ID_STRATAMOUNT, true);
+         addcargo(ID_TORQUE_STANCHION, true);
         end;
-  2018: begin
-         addcargo(1506, true);
-         addcargo(1506, true);
-         addcargo(1034, true);
+  ID_INSTALL_GUN_NODE: begin
+         addcargo(ID_STASIS_GENERATOR, true);
+         addcargo(ID_STASIS_GENERATOR, true);
+         addcargo(ID_THYNNE_VORTEX, true);
         end;
-  2019: begin
-         addcargo(3015, true);
-         addcargo(3003, true);
-         addcargo(3009, true);
+  ID_MIND_ENHANCERS: begin
+         addcargo(ID_PROTO_NUTRIENT, true);
+         addcargo(ID_CYBERPLASM, true);
+         addcargo(ID_BIOSYNTH, true);
         end;
   else addcargo(alienstuff^[tradeindex], true);
  end;
@@ -1045,14 +1045,14 @@ begin
  fillchar(alienstuff^,sizeof(alienstuffarray),0);
  if alien.id=1007 then
   for j:=1 to 8+random(13) do
-   alienstuff^[j]:=4020
+   alienstuff^[j]:=ID_WORTHLESS_JUNK
  else
  for j:=1 to 8+random(13) do
   if (random(5)=0) and (hi(alien.techmin)>=4) then
-    alienstuff^[j]:=3001+random(19)
+    alienstuff^[j]:=ID_UNKNOWN_COMPONENT+1+random(19)
    else if (alien.conindex=9) and (random(4)=0) then
-    alienstuff^[j]:=2015+random(5)
-   else alienstuff^[j]:=4001+random(19);
+    alienstuff^[j]:=ID_REINFORCE_HULL+random(5)
+   else alienstuff^[j]:=ID_UNKNOWN_MATERIAL+1+random(19);
  displayleftlist;
 end;
 

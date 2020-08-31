@@ -93,7 +93,7 @@ begin
       StartBuild := 0;
       exit;
    end;
-   if (item = 3021) and (not chevent(18)) then {thermoplast can only be made after it's discovery}
+   if (item = ID_THERMOPLAST) and (not chevent(18)) then {thermoplast can only be made after it's discovery}
    begin
       StartBuild := -3;
       exit;
@@ -127,7 +127,7 @@ begin
       end;
    ship.engrteam[team].job := item;
    ship.engrteam[team].extra := root;
-   ship.engrteam[team].jobtype := 3;
+   ship.engrteam[team].jobtype := JOBTYPE_CREATE;
    ship.engrteam[team].timeleft := GetBuildTime(item);
    for j := 1 to 3 do
       RemoveCargo(prtcargo[i,j]);
@@ -309,11 +309,11 @@ begin
  repeat
   inc(cargoindex);
   case ship.cargo[cargoindex] of
-   1000..1499: if filters2[1]=1 then finished:=true;
+   ID_DIRK..1499: if filters2[1]=1 then finished:=true;
    ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true;
-   2000..3999: if filters2[4]=1 then finished:=true;
-   4000..5999: if filters2[3]=1 then finished:=true;
-   6000..6999: if filters2[4]=1 then finished:=true;
+   ID_NOTHING..3999: if filters2[4]=1 then finished:=true;
+   ID_UNKNOWN_MATERIAL..ID_LAST_ELEMENT: if filters2[3]=1 then finished:=true;
+   ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters2[4]=1 then finished:=true;
   end;
  until (finished) or (cargoindex=251);
 end;
@@ -327,10 +327,10 @@ begin
  repeat
   dec(cargoindex);
   case ship.cargo[cargoindex] of
-   1000..1499: if filters2[1]=1 then finished:=true else dec(cargoindex);
+   ID_DIRK..1499: if filters2[1]=1 then finished:=true else dec(cargoindex);
    ID_NOSHIELD..1999: if filters2[2]=1 then finished:=true else dec(cargoindex);
-   2000..3999,6000..6999: if filters2[4]=1 then finished:=true else dec(cargoindex);
-   4000..5999: if filters2[3]=1 then finished:=true else dec(cargoindex);
+   ID_NOTHING..3999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters2[4]=1 then finished:=true else dec(cargoindex);
+   ID_UNKNOWN_MATERIAL..ID_LAST_ELEMENT: if filters2[3]=1 then finished:=true else dec(cargoindex);
   end;
  until (finished) or (cargoindex<1);
 end;
@@ -351,7 +351,7 @@ begin
    {compressfile(tempdir+'/current',@screen);}
    quicksavescreen(tempdir+'/current',@screen, true);
    {fading;}
-   fadefull(-8, 20);
+   fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/CARGO.MOD');
    loadscreen('data/cargo',@screen);
    new(cargobuttons);
@@ -382,7 +382,7 @@ begin
  str(rescargo[x]:3,str2);
  case ship.cargo[x] of
             0: ;
-   1000..1499: if filters2[1]=1 then
+   ID_DIRK..1499: if filters2[1]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -398,7 +398,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   2000..3999: if filters2[4]=1 then
+   ID_NOTHING..3999: if filters2[4]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -406,7 +406,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   4000..5999: if filters2[3]=1 then
+   ID_UNKNOWN_MATERIAL..ID_LAST_ELEMENT: if filters2[3]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  str(ship.numcargo[x]:3,str1);
@@ -414,7 +414,7 @@ begin
                  while cargo[j].index<>ship.cargo[x] do inc(j);
                  printxy(96-10,16+y*6,str1+'('+str2+')'+cargo[j].name);
                 end;
-   6000..6999: if filters2[4]=1 then
+   ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters2[4]=1 then
                 begin
                  if down then dec(y) else inc(y);
                  getartifactname(ship.cargo[x]);
@@ -476,14 +476,14 @@ begin
   while (x<251) and (ship.cargo[x]=0) do inc(x);
   draw:=false;
   case ship.cargo[x] of
-   1000..1499: if filters2[1]=1 then draw:=true;
+   ID_DIRK..1499: if filters2[1]=1 then draw:=true;
    ID_NOSHIELD..1999: if filters2[2]=1 then draw:=true;
-   2000..3999,6000..6999: if filters2[4]=1 then draw:=true;
-   4000..5999: if filters2[3]=1 then draw:=true;
+   ID_NOTHING..3999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters2[4]=1 then draw:=true;
+   ID_UNKNOWN_MATERIAL..ID_LAST_ELEMENT: if filters2[3]=1 then draw:=true;
   end;
   if (x<251) and (draw) then
    begin
-    if ship.cargo[x]>6000 then
+    if ship.cargo[x]>ID_ARTIFACT_OFFSET then
      begin
       j:=maxcargo;
       getartifactname(ship.cargo[x]);
@@ -497,12 +497,12 @@ begin
     printxy(92,2+y*20,cargo[j].name);
     if y>0 then bkcolor:=0;
     case ship.cargo[x] of
-     1000..1499: s:='Weapon   ';
+     ID_DIRK..1499: s:='Weapon   ';
      ID_NOSHIELD..1999: s:='Shield   ';
-     2000..2999: s:='Device   ';
-     3000..3999: s:='Component';
-     4000..5999: s:='Material ';
-     6000..6999: s:='Artifact ';
+     ID_NOTHING..2999: s:='Device   ';
+     ID_UNKNOWN_COMPONENT..3999: s:='Component';
+     ID_UNKNOWN_MATERIAL..ID_LAST_ELEMENT: s:='Material ';
+     ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: s:='Artifact ';
      else s:='         ';
     end;
     printxy(100,8+y*20,'Type: '+s);
@@ -656,7 +656,7 @@ procedure dropit;
 var s: string[20];
 begin
    if (cargoindex=0) or (cargoindex=251) then exit;
-   if (ship.cargo[cargoindex]=1056) or (ship.cargo[cargoindex]>6899) then
+   if (ship.cargo[cargoindex]=ID_MOBIUS_DEVICE) or (ship.cargo[cargoindex]>=ID_ART_SHUNT_DRIVE) then
    begin
       a:=ship.options[OPT_MSGS];
       ship.options[OPT_MSGS]:=2;
@@ -887,7 +887,7 @@ end;
 procedure mainloop;
 begin
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(idletime);
@@ -899,7 +899,7 @@ begin
     addtime2;
     if cargomode=0 then displaylist else displayinfo;
    end;
-  delay(tslice*4);
+  delay(tslice*FADE_TSLICE_MUL_CARGTOOL);
  until done;
 end;
 
@@ -907,8 +907,8 @@ procedure removedata;
 begin
    mousehide;
    {fading;}
-   {fadefull(-8, 20);}
-   fadestopmod(-8, 20);
+   {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
    {loadscreen(tempdir+'/current',@screen);}
    quickloadscreen(tempdir+'/current',@screen, true);
@@ -945,8 +945,8 @@ begin
   for j:=1 to 6 do if ship.crew[j].level>=createinfo^[cargoindex].levels[j] then inc(i);
   case createinfo^[cargoindex].index of
       0..2999: if filters[3]=1 then drawit:=true;
-   3000..3999: if filters[2]=1 then drawit:=true;
-   4000..4999: if filters[1]=1 then drawit:=true;
+   ID_UNKNOWN_COMPONENT..3999: if filters[2]=1 then drawit:=true;
+   ID_UNKNOWN_MATERIAL..4999: if filters[1]=1 then drawit:=true;
   end;
  until ((i=6) and (drawit)) or (cargoindex>maxcreation)
  else
@@ -954,9 +954,9 @@ begin
    inc(cargoindex);
    while (cargoindex<251) and (ship.numcargo[cargoindex]=0) do inc(cargoindex);
    case ship.cargo[cargoindex] of
-      0..2999,6000..6999: if filters[3]=1 then drawit:=true;
-   3000..3999: if filters[2]=1 then drawit:=true;
-   4000..4999: if filters[1]=1 then drawit:=true;
+      0..2999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters[3]=1 then drawit:=true;
+   ID_UNKNOWN_COMPONENT..3999: if filters[2]=1 then drawit:=true;
+   ID_UNKNOWN_MATERIAL..4999: if filters[1]=1 then drawit:=true;
   end;
   until (drawit) or (cargoindex>250);
  if (qmode) and (viewteam>0) then
@@ -978,8 +978,8 @@ begin
   for j:=1 to 6 do if ship.crew[j].level>=createinfo^[cargoindex].levels[j] then inc(i);
   case createinfo^[cargoindex].index of
       0..2999: if filters[3]=1 then drawit:=true;
-   3000..3999: if filters[2]=1 then drawit:=true;
-   4000..4999: if filters[1]=1 then drawit:=true;
+   ID_UNKNOWN_COMPONENT..3999: if filters[2]=1 then drawit:=true;
+   ID_UNKNOWN_MATERIAL..4999: if filters[1]=1 then drawit:=true;
   end;
  until ((i=6) and (drawit)) or (cargoindex<1)
  else
@@ -987,9 +987,9 @@ begin
    dec(cargoindex);
    while (cargoindex>0) and (ship.numcargo[cargoindex]=0) do dec(cargoindex);
    case ship.cargo[cargoindex] of
-      0..2999,6000..6999: if filters[3]=1 then drawit:=true;
-   3000..3999: if filters[2]=1 then drawit:=true;
-   4000..4999: if filters[1]=1 then drawit:=true;
+      0..2999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT: if filters[3]=1 then drawit:=true;
+   ID_UNKNOWN_COMPONENT..3999: if filters[2]=1 then drawit:=true;
+   ID_UNKNOWN_MATERIAL..4999: if filters[1]=1 then drawit:=true;
   end;
   until (drawit) or (cargoindex<1);
  if (qmode) and (viewteam>0) then
@@ -1073,8 +1073,8 @@ begin
    {compressfile(tempdir+'/current',@screen);}
    quicksavescreen(tempdir+'/current',@screen, true);
    {fading;}
-   {fadefull(-8, 20);}
-   fadestopmod(-8, 20);
+   {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/COMPONT.MOD');
    loadscreen('data/tech1',@screen);
    drawfilters2;
@@ -1126,7 +1126,7 @@ begin
    lastinfo:=item;
    mousehide;
    tcolor:=28;
-   if item>6000 then
+   if item>ID_ARTIFACT_OFFSET then
    begin
       getartifactname(item);
       s:=cargo[maxcargo].name;
@@ -1149,7 +1149,7 @@ begin
    s2[0]:=chr(i);
    printxy(217+round((78-length(s1)*5)/2),59,s1);
    printxy(217+round((78-length(s2)*5)/2),65,s2);
-   if item<6000 then
+   if item<ID_ARTIFACT_OFFSET then
    begin
       if (cargomode=0) and (viewteam=0) then
 	 k := CheckBuildStock(item);
@@ -1246,8 +1246,8 @@ begin
   else
    begin
     index:=ship.cargo[cargoindex];
-    if index>6000 then getartifactname(ship.cargo[cargoindex]);
-    if (index=3000) or (index=4000) then
+    if index>ID_ARTIFACT_OFFSET then getartifactname(ship.cargo[cargoindex]);
+    if (index=ID_UNKNOWN_COMPONENT) or (index=ID_UNKNOWN_MATERIAL) then
      begin
       ship.cargo[cargoindex]:=0;
       i:=ship.numcargo[cargoindex];
@@ -1282,7 +1282,7 @@ begin
  if cargomode=0 then printxy(1,160,createinfo^[cargoindex].name)
   else
    begin
-    if ship.cargo[cargoindex]>6000 then j:=maxcargo
+    if ship.cargo[cargoindex]>ID_ARTIFACT_OFFSET then j:=maxcargo
     else
      begin
       j:=1;
@@ -1296,7 +1296,7 @@ begin
   begin
    for i:=175 to 195 do
     fillchar(screen[i,6],140,2);
-   if index<6000 then printxy(1,169,'Fabricated Material        ')
+   if index<ID_ARTIFACT_OFFSET then printxy(1,169,'Fabricated Material        ')
     else printxy(1,169,'Unknown Alien Artifact     ');
   end
  else
@@ -1314,8 +1314,8 @@ begin
      {str(GetBuildTime(index),s);
      printxy(5,5,s);}
   end;
- if (index>999) and (index<ID_NOSHIELD) then weaponinfo(index-999)
-  else if (index>1499) and (index<2000) then weaponinfo(index-ID_SHIELDS_OFFSET)
+ if (index>=ID_DIRK) and (index<ID_NOSHIELD) then weaponinfo(index-ID_DIRK+1)
+  else if (index>=ID_NOSHIELD) and (index<ID_NOTHING) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
         fillchar(screen[i,132],180,1);
  mouseshow;
@@ -1339,11 +1339,11 @@ begin
                  if filters[3]=1 then drawit:=true;
                  tcolor:=47;
                 end;
-    3000..3999: begin
+    ID_UNKNOWN_COMPONENT..3999: begin
                  if filters[2]=1 then drawit:=true;
                  tcolor:=79;
                 end;
-    4000..4999: begin
+    ID_UNKNOWN_MATERIAL..4999: begin
                  if filters[1]=1 then drawit:=true;
                  tcolor:=143;
                 end;
@@ -1377,11 +1377,11 @@ begin
                  if filters[3]=1 then drawit:=true;
                  tcolor:=47;
                 end;
-    3000..3999: begin
+    ID_UNKNOWN_COMPONENT..3999: begin
                  if filters[2]=1 then drawit:=true;
                  tcolor:=79;
                 end;
-    4000..4999: begin
+    ID_UNKNOWN_MATERIAL..4999: begin
                  if filters[1]=1 then drawit:=true;
                  tcolor:=143;
                 end;
@@ -1425,16 +1425,16 @@ begin
   while (x>0) and (ship.numcargo[x]=0) do dec(x);
   if x>0 then
    case ship.cargo[x] of
-       0..2999,6000..6999:
+       0..2999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT:
                 begin
                  if filters[3]=1 then drawit:=true;
                  tcolor:=47;
                 end;
-    3000..3999: begin
+    ID_UNKNOWN_COMPONENT..3999: begin
                  if filters[2]=1 then drawit:=true;
                  tcolor:=79;
                 end;
-    4000..4999: begin
+    ID_UNKNOWN_MATERIAL..4999: begin
                  if filters[1]=1 then drawit:=true;
                  tcolor:=143;
                 end;
@@ -1442,7 +1442,7 @@ begin
   if not colorcode then tcolor:=31;
   if drawit then
    begin
-    if ship.cargo[x]>6000 then
+    if ship.cargo[x]>ID_ARTIFACT_OFFSET then
      begin
       getartifactname(ship.cargo[x]);
       i:=maxcargo;
@@ -1468,16 +1468,16 @@ begin
   drawit:=false;
   while (x<251) and (ship.numcargo[x]=0) do inc(x);
   case ship.cargo[x] of
-       0..2999,6000..6999:
+       0..2999,ID_ARTIFACT_OFFSET..ID_LAST_ARTIFACT:
                 begin
                  if filters[3]=1 then drawit:=true;
                  tcolor:=47;
                 end;
-    3000..3999: begin
+    ID_UNKNOWN_COMPONENT..3999: begin
                  if filters[2]=1 then drawit:=true;
                  tcolor:=79;
                 end;
-    4000..4999: begin
+    ID_UNKNOWN_MATERIAL..4999: begin
                  if filters[1]=1 then drawit:=true;
                  tcolor:=143;
                 end;
@@ -1485,7 +1485,7 @@ begin
   if not colorcode then tcolor:=31;
   if (drawit) and (x<251) then
    begin
-    if ship.cargo[x]>6000 then
+    if ship.cargo[x]>ID_ARTIFACT_OFFSET then
      begin
       getartifactname(ship.cargo[x]);
       i:=maxcargo;
@@ -1538,19 +1538,19 @@ begin
       teamjob := ship.engrteam[team].job;
    end;
    case ship.engrteam[team].jobtype of
-     0 : printxy(233,62,'Repairing');
-     1: printxy(231,62,'Installing');
-     2: printxy(236,62,'Removing');
-  5: printxy(236,62,'	Research');
+     JOBTYPE_REPAIR: printxy(233,62,'Repairing');
+     JOBTYPE_INSTALL: printxy(231,62,'Installing');
+     JOBTYPE_REMOVE: printxy(236,62,'Removing');
+     JOBTYPE_RESEARCH: printxy(236,62,'	Research');	// FIXME does it really need that <TAB> ?!
    end;
-   if ship.engrteam[team].jobtype<3 then
+   if ship.engrteam[team].jobtype<JOBTYPE_CREATE then
    begin
       for i:=77 to 80 do
 	 fillchar(screen[i,222],77,0);
       mouseshow;
       exit;
    end;
-   if ship.engrteam[team].jobtype<5 then displaybreakdown(ship.engrteam[team].job);
+   if ship.engrteam[team].jobtype<JOBTYPE_RESEARCH then displaybreakdown(ship.engrteam[team].job);
    b:=76-round(ship.engrteam[team].timeleft/GetBuildTime(ship.engrteam[team].job)*76);
    assert ((b>=0) and (b<=76), 'engineering team gradient progressbar out of bounds');
    {b:=round((ship.engrteam[team].extra shr 8) * 76/
@@ -1571,25 +1571,25 @@ end;
 
 procedure go2(team: integer);
 begin
- if (ship.cargo[cargoindex]=3000) or (ship.cargo[cargoindex]=4000) then
+ if (ship.cargo[cargoindex]=ID_UNKNOWN_COMPONENT) or (ship.cargo[cargoindex]=ID_UNKNOWN_MATERIAL) then
   begin
    getinfo;
    displaycargo;
    exit;
   end;
- if ship.cargo[cargoindex]<6000 then
+ if ship.cargo[cargoindex]<ID_ARTIFACT_OFFSET then
   displaybreakdown(ship.cargo[cargoindex]);
  with ship.engrteam[team] do
   begin
    job:=ship.cargo[cargoindex];
-   if job<6000 then jobtype:=4 else jobtype:=5;
+   if job<ID_ARTIFACT_OFFSET then jobtype:=JOBTYPE_DECOMPOSE else jobtype:=JOBTYPE_RESEARCH;
    timeleft:=0;
-   if job<6000 then
+   if job<ID_ARTIFACT_OFFSET then
     begin
      i:=1;
      while createinfo^[i].index<>job do inc(i);
      for j:=1 to 6 do timeleft:=timeleft+100*createinfo^[i].levels[j];
-    end else timeleft:=6000+random(5)*100;
+    end else timeleft:=ID_ARTIFACT_OFFSET+random(5)*100;
    dec(ship.numcargo[cargoindex]);
    if ship.numcargo[cargoindex]=0 then
     begin
@@ -1629,7 +1629,7 @@ begin
   end;
    
    case createinfo^[cargoindex].index of
-     2004,2015..2017,1019,3000..5999 : ;
+     ID_FUEL_NODULES, ID_REINFORCE_HULL..ID_ADD_CARGO_SPACE, ID_MIND_ENHANCERS, ID_UNKNOWN_COMPONENT..ID_LAST_ELEMENT : ;
    else
       if not checkweight(true) then exit;
    end;
@@ -1713,7 +1713,7 @@ begin
  {with ship.engrteam[team] do
   begin
    job:=createinfo^[cargoindex].index;
-   jobtype:=3;
+   jobtype:=JOBTYPE_CREATE;
    timeleft:=0;
    for j:=1 to 6 do timeleft:=timeleft+100*createinfo^[cargoindex].levels[j];
    for j:=1 to 6 do addxp(j,25*createinfo^[cargoindex].levels[j],0);
@@ -1864,7 +1864,7 @@ begin
    if (cargomode=1) or (cargoindex=0) or (lastinfo=0) then exit;
    i:=1;
    while (i<maxcreation) and (createinfo^[i].index<>lastinfo) do inc(i);
-   if createinfo^[i].parts[part]>4999 then exit;
+   if createinfo^[i].parts[part]>=ID_FIRST_ELEMENT then exit;
    HistoryPush(lastinfo);
    setpartcursor(createinfo^[i].parts[part])
  {j:=1;
@@ -2081,7 +2081,7 @@ end;
 procedure maincreationloop;
 begin
    repeat
-      fadestep(8);
+      fadestep(FADESTEP_STEP);
       findcreationmouse;
       if fastkeypressed then processcreationkey;
       inc(idletime);
@@ -2097,7 +2097,7 @@ begin
       begin
 	 if cargomode=0 then displaydevices else displaycargo;
       end;
-      delay(tslice*2);
+      delay(tslice*FADE_TSLICE_MUL_CARGCREAT);
    until done=true;
 end;
 

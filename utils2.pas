@@ -167,13 +167,13 @@ begin
 	 begin
 	    n := prtcargo[i, j];
 	    case n of
-	      5000..5999: begin
-		 n := ele[(n - 5000) div 10];
+	      ID_FIRST_ELEMENT..ID_LAST_ELEMENT: begin
+		 n := ele[(n - ID_FIRST_ELEMENT) div 10];
 	      end;
-	      4000..4999: begin
-		 n := mat[n - 4000];
+	      ID_UNKNOWN_MATERIAL..4999: begin
+		 n := mat[n - ID_UNKNOWN_MATERIAL];
 	      end;
-	      3000..3999: begin
+	      ID_UNKNOWN_COMPONENT..3999: begin
 		 n := getsubamount(n, ele, mat);
 	      end;
 	    end; { case }
@@ -215,7 +215,7 @@ begin
    for i:=1 to 19 do
    begin
       mat[i] := 0;
-      n := i + 4000;
+      n := i + ID_UNKNOWN_MATERIAL;
       for j:=1 to maxcargo do
 	 if cargo[j].index = n then
 	 begin
@@ -224,7 +224,7 @@ begin
 	    cub := 1;
 	    for k := 1 to 3 do
 	    begin
-	       n := ele[(prtcargo[j,k] - 5000) div 10];
+	       n := ele[(prtcargo[j,k] - ID_FIRST_ELEMENT) div 10];
 	       inc(tly, n);
 	       if n < tt then
 		  tt := n;
@@ -242,7 +242,7 @@ begin
    
    {compute component counts}
    for i := 1 to 20 do
-      cmp[i] := getsubamount(i + 3000, ele, mat);
+      cmp[i] := getsubamount(i + ID_UNKNOWN_COMPONENT, ele, mat);
    cmp[0] := 0;
    cmp[21] := 0;
    cmp[22] := 0;
@@ -294,7 +294,7 @@ begin
 		     dec(r, ele[j]);
 		     inc(j);
 		  end;
-		  tempplan^[n].cache[i] := 5000 + j * 10;
+		  tempplan^[n].cache[i] := ID_FIRST_ELEMENT + j * 10;
 		  dec(lim);
 		  if lim <= 0 then
 		     break;
@@ -312,7 +312,7 @@ begin
 	    inc(total, 2);
 	    for i := 1 to 7 do
 	    begin
-	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = 4020) and (random(2) = 0)) then
+	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = ID_WORTHLESS_JUNK) and (random(2) = 0)) then
 	       begin
 		  r := random(total);
 		  j := 0;
@@ -321,7 +321,7 @@ begin
 		     dec(r, mat[j]);
 		     inc(j);
 		  end;
-		  tempplan^[n].cache[i] := 4000 + j;
+		  tempplan^[n].cache[i] := ID_UNKNOWN_MATERIAL + j;
 		  dec(lim);
 		  if lim <= 0 then
 		     break;
@@ -339,7 +339,7 @@ begin
 	    inc(total, 2);
 	    for i := 1 to 7 do
 	    begin
-	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = 4020) and (random(2) = 0))  then
+	       if (tempplan^[n].cache[i] = 0) or ((tempplan^[n].cache[i] = ID_WORTHLESS_JUNK) and (random(2) = 0))  then
 	       begin
 		  r := random(total);
 		  j := 0;
@@ -349,9 +349,9 @@ begin
 		     inc(j);
 		  end;
 		  if j = 22 then
-		     tempplan^[n].cache[i] := 4020
+		     tempplan^[n].cache[i] := ID_WORTHLESS_JUNK
 		  else
-		     tempplan^[n].cache[i] := 3000 + j;
+		     tempplan^[n].cache[i] := ID_UNKNOWN_COMPONENT + j;
 		  dec(lim);
 		  if lim <= 0 then
 		     break;
@@ -390,7 +390,7 @@ begin
 	       dec(b,temp^[a,tempplan^[n].state]);
 	       inc(a);
 	    until (b<0) or (a=17);
-	    a:=(a-1)*10+5000;
+	    a:=(a-1)*10+ID_FIRST_ELEMENT;
 	    tempplan^[n].cache[c]:=a;
 	    dec(lim);
 	    if lim <= 0 then break;
@@ -409,14 +409,14 @@ begin
       begin
 	 read(creafile,tempcreate^);
 	 if ioresult<>0 then errorhandler('creation.dta',5);
-	 if(tempcreate^.index >= 4000) and (tempcreate^.index <= 4020) then
+	 if(tempcreate^.index >= ID_UNKNOWN_MATERIAL) and (tempcreate^.index <= ID_WORTHLESS_JUNK) then
 	 begin
 	    tt:=99;
 	    tly:=0;
 	    for i:=1 to 3 do
-	       if (tempcreate^.parts[i]>=5000) then
+	       if (tempcreate^.parts[i]>=ID_FIRST_ELEMENT) then
 	       begin
-		  cnt := temp^[(tempcreate^.parts[i]-5000) div 10,tempplan^[n].state];
+		  cnt := temp^[(tempcreate^.parts[i]-ID_FIRST_ELEMENT) div 10,tempplan^[n].state];
 		  if tt > cnt then tt := cnt;
 		  inc(tly, cnt);
 	       end;
@@ -425,15 +425,15 @@ begin
 	    if tt > 0 then
 	    begin
 	       inc(total, tly + tly);
-	       amounts[tempcreate^.index - 4000] := tly + tly;
+	       amounts[tempcreate^.index - ID_UNKNOWN_MATERIAL] := tly + tly;
 	    end else
-	       amounts[tempcreate^.index - 4000] := 0;
+	       amounts[tempcreate^.index - ID_UNKNOWN_MATERIAL] := 0;
 	    {str(tempcreate^.index, s);
-	    printxy(0,(tempcreate^.index - 4000) * 6, s);
+	    printxy(0,(tempcreate^.index - ID_UNKNOWN_MATERIAL) * 6, s);
 	    str(tt, s);
-	    printxy(40,(tempcreate^.index - 4000) * 6, s);
+	    printxy(40,(tempcreate^.index - ID_UNKNOWN_MATERIAL) * 6, s);
 	    str(tly, s);
-	    printxy(60,(tempcreate^.index - 4000) * 6, s);}
+	    printxy(60,(tempcreate^.index - ID_UNKNOWN_MATERIAL) * 6, s);}
 	 end;
       end;
       {give a chance for unkowns and worthless junk}
@@ -442,14 +442,14 @@ begin
       inc(total, 2);
       if total > 0 then
 	 for c:=1 to 7 do
-	    if (tempplan^[n].cache[c]=0) or (tempplan^[n].cache[c]=4020) then
+	    if (tempplan^[n].cache[c]=0) or (tempplan^[n].cache[c]=ID_WORTHLESS_JUNK) then
 	    begin
 	       t := random(total);
 	       for j := 0 to 20 do
 	       begin
 		  if t < amounts[j] then
 		  begin
-		     tempplan^[n].cache[c] := j + 4000;
+		     tempplan^[n].cache[c] := j + ID_UNKNOWN_MATERIAL;
 		     break;
 		  end;
 		  dec(t, amounts[j]);
@@ -734,7 +734,7 @@ begin
  bkcolor:=3;
  tcolor:=31;
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mousehide;
  loadscreen(tempdir+'/current',@screen);
  showtime;
@@ -1530,7 +1530,7 @@ procedure removedata;
 begin
    mousehide;
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
    loadscreen(tempdir+'/current',@screen);
    showresearchlights;
@@ -1547,7 +1547,7 @@ procedure dothatartifactthing(n: integer);
 var i: integer;
     t: longint;
 begin
- if n<6900 then
+ if n<ID_ART_SHUNT_DRIVE then
   begin
    a:=random(1000);
    case a of
@@ -1582,10 +1582,10 @@ begin
  else
   begin
    case n of
-    6900: begin   { shunt drive }
+    ID_ART_SHUNT_DRIVE: begin   { shunt drive }
            if not chevent(36) then
             begin
-             addcargo(6900, true);
+             addcargo(ID_ART_SHUNT_DRIVE, true);
              viewmode:=0;
              viewmode2:=0;
              n:=ship.options[OPT_AUTOSAVE];
@@ -1599,15 +1599,15 @@ begin
              event(36);
             end;
           end;
-    6905: begin   { thermal plating tapes }
+    ID_ART_THERMAL_PLATING: begin   { thermal plating tapes }
            n:=ship.options[OPT_MSGS];
            ship.options[OPT_MSGS]:=2;
            showchar(2,'We can create Thermal ThermoPlast!');
            ship.options[OPT_MSGS]:=n;
            event(18);
           end;
-    6906: event(30); {ermigen data tapes }
-    else if n>6900 then
+    ID_ART_ERMIGEN_DATA_TAPES: event(30); {ermigen data tapes }
+    else if n>ID_ART_SHUNT_DRIVE then
           begin
            addcargo(n,true);
            i:=ship.options[OPT_MSGS];
@@ -1628,21 +1628,21 @@ begin
  move(ship.gunnodes,old,10);
  with ship do
   begin
-   if shiptype[1]=3 then
+   if shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_STATEGIC{3} then
     begin
-     if shiptype[2]=3 then
+     if shiptype[SHPTYP_PURPOSE]=SHPTYPE_STORM{3} then
       begin
-       if shiptype[3]=3 then
+       if shiptype[SHPTYP_VESSEL]=SHPTYPE_CRUISER{3} then
         begin
-         addcargo2(2018,true);
+         addcargo2(ID_INSTALL_GUN_NODE,true);	{ we are at maximum 10 gunnodes already, cannot add more }
          exit;
         end
-       else inc(shiptype[3]);
+       else inc(shiptype[SHPTYP_VESSEL]);
       end
-     else inc(shiptype[2]);
+     else inc(shiptype[SHPTYP_PURPOSE]);
     end
-   else if shiptype[1]=2 then shiptype[1]:=1
-   else shiptype[1]:=3;
+   else if shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_LIGHT{2} then shiptype[SHPTYP_HEAVYNESS]:=SHPTYPE_HEAVY{1}
+   else shiptype[SHPTYP_HEAVYNESS]:=SHPTYPE_STATEGIC{3};
   end;
  fillchar(ship.gunnodes,10,0);
  j:=0;
@@ -1781,7 +1781,7 @@ begin
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mousehide;
    loadscreen(tempdir+'/current',@screen);
    mouseshow;

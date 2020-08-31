@@ -282,48 +282,48 @@ var
 	 begin
 	    RebuildCargoReserve;
 	    case job of
-	      2004 : ship.fuel:=ship.fuelmax;
-	      2015 : begin
+	      ID_FUEL_NODULES : ship.fuel:=ship.fuelmax;
+	      ID_REINFORCE_HULL : begin
 			     i:=ship.hullmax+25;
 			     if i>5000 then
 				if background then
-				   addcargo2(2015, true)
+				   addcargo2(ID_REINFORCE_HULL, true)
 				else
-				   addcargo(2015, true)
+				   addcargo(ID_REINFORCE_HULL, true)
 			     else begin
 				inc(ship.hullmax,15);
 				CrewMessage(background, 31, 2,'	Hull reinforced.');
 			     end;
 			  end;
-	      2016 : begin
+	      ID_INCREASE_THRUST : begin
 			     i:=ship.accelmax+10;
 			     if i>1100 then
 				if background then
-				   addcargo2(2016, true)
+				   addcargo2(ID_INCREASE_THRUST, true)
 				else
-				   addcargo(2016, true)
+				   addcargo(ID_INCREASE_THRUST, true)
 			     else begin
 				inc(ship.accelmax,10);
 				CrewMessage(background, 31, 2,'Acceleration increased.');
 			     end;
 			  end;
-	      2017 : begin
+	      ID_ADD_CARGO_SPACE : begin
 			     i:=ship.cargomax+75;
 			if i>20000 then
 			   if background then
-			      addcargo2(2017, true)
+			      addcargo2(ID_ADD_CARGO_SPACE, true)
 			   else
-			      addcargo(2017, true)
+			      addcargo(ID_ADD_CARGO_SPACE, true)
 			else begin
 			   inc(ship.cargomax,75);
 			   CrewMessage(background, 31, 2,'Cargo space increased.');
 			end;
 		     end;
-	      2018 : begin
+	      ID_INSTALL_GUN_NODE : begin
 			addgunnode;
 			CrewMessage(background, 31, 2,'Weapon Node Assembled.');
 		     end;
-	      2019 : begin
+	      ID_MIND_ENHANCERS : begin
 			a:=ship.crew[1].men;
 			b:=1;
 			for i:=1 to 6 do
@@ -370,13 +370,13 @@ var
 		  addcargo(job, true);
 	       if not ((extra = 0) or (job = extra)) then
 	       begin
-		  jobtype := 0;
+		  jobtype := JOBTYPE_REPAIR;
 		  timeleft := 0;
 		  job := 0;
 		  RebuildCargoReserve;
 		  i := StartBuild(background, extra, extra, team);
 		  case i of
-		    0  : CrewMessage(background, 31, 2, 'Insufficent parts to coninue ' + CargoName(extra) + '.');
+		    0  : CrewMessage(background, 31, 2, 'Insufficent parts to continue ' + CargoName(extra) + '.');
 		    -1,-3 : CrewMessage(background, 31, 2, 'Insufficent expertise to finish ' + CargoName(extra) + '.');
 		    -2 : CrewMessage(background, 31, 2, 'Internal error trying to build: ' + CargoName(extra) + '.');
 		  end;
@@ -384,9 +384,9 @@ var
 	       end
 	    end;
 	    end;
-	    jobtype:=0;
+	    jobtype:=JOBTYPE_REPAIR;
 	    timeleft:=0;
-	    if job<>2019 then CrewMessage(background, 31, 2,'Synthesis of '+CargoName(job)+' completed, sir!');
+	    if job<>ID_MIND_ENHANCERS then CrewMessage(background, 31, 2,'Synthesis of '+CargoName(job)+' completed, sir!');
 	    job:=0;
 	 end
 	 else if timeleft=0 then timeleft:=5;
@@ -409,7 +409,7 @@ var
       while (temp^[i].index<>item) and (i<=totalcreation) do inc(i);
       if i>totalcreation then errorhandler('Disassemble error!',6);
       for j:=1 to 3 do
-	 {if not skillcheck(2) then addcargo(4020)
+	 {if not skillcheck(2) then addcargo(ID_WORTHLESS_JUNK)
 	 else}
 	 if background then
 	    addcargo2(temp^[i].parts[j], true)
@@ -426,7 +426,7 @@ var
       for j:=1 to 3 do
 	 with ship.engrteam[j] do
 	    case jobtype of
-	      0	  : 
+	      JOBTYPE_REPAIR :
 		 if (job<8) and (job>0) then
 		 begin
 		    dec(timeleft, 5);
@@ -458,7 +458,7 @@ var
 				end;
 			  end;
 			  for i:=1 to 3 do
-			     if (i<>j) and (ship.engrteam[i].jobtype=0) and (ship.engrteam[i].job=job) then
+			     if (i<>j) and (ship.engrteam[i].jobtype=JOBTYPE_REPAIR) and (ship.engrteam[i].job=job) then
 			     begin
 				ship.engrteam[i].timeleft:=nexttime;
 				ship.engrteam[i].job:=nextjob;
@@ -494,7 +494,7 @@ var
 			     end;
 			  end;
 			  for i:=1 to 3 do
-			     if (i<>j) and (ship.engrteam[i].jobtype=0) and (ship.engrteam[i].job=job) then
+			     if (i<>j) and (ship.engrteam[i].jobtype=JOBTYPE_REPAIR) and (ship.engrteam[i].job=job) then
 			     begin
 				ship.engrteam[i].timeleft:=nexttime;
 				ship.engrteam[i].job:=nextjob;
@@ -505,8 +505,8 @@ var
 		       end;
 		    end;
 		 end;
-	      1,2 : 
-	         if job<1500 then
+	      JOBTYPE_INSTALL, JOBTYPE_REMOVE :
+	         if job<ID_NOSHIELD then
 		 begin
 		    dec(timeleft,5);
 		    if (random(2) = 0) and SkillTest(background, 2, 40, 10) then
@@ -515,11 +515,11 @@ var
 		    if extra >= 110 * 16 then
 		    begin
 		       timeleft:=0;
-		       if jobtype=1 then ship.gunnodes[extra and 15]:=job-999;
-		       if jobtype=2 then CrewMessage(background, 31, 2, 'Weapon removed, sir!')
+		       if jobtype=JOBTYPE_INSTALL then ship.gunnodes[extra and 15]:=job-ID_DIRK+1;
+		       if jobtype=JOBTYPE_REMOVE  then CrewMessage(background, 31, 2, 'Weapon removed, sir!')
 		       else CrewMessage(background, 31, 2,'weapon installed, sir!');
 		       job:=0;
-		       jobtype:=0;
+		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end
 		 else begin
@@ -527,8 +527,8 @@ var
 		    if random(220)=0 then
 		    begin
 		       timeleft:=0;
-		       if jobtype=1 then ship.shield:=job;
-		       if jobtype=2 then CrewMessage(background, 31, 2, 'Shield removed, sir!')
+		       if jobtype=JOBTYPE_INSTALL then ship.shield:=job;
+		       if jobtype=JOBTYPE_REMOVE then CrewMessage(background, 31, 2, 'Shield removed, sir!')
 		       else
 		       begin
 			  CrewMessage(background, 31, 2,'Shield installed, sir!');
@@ -541,12 +541,12 @@ var
 			  else for a:=1 to 3 do ship.shieldopt[a]:=100-ship.damages[DMG_SHIELD];
 		       end;
 		       job:=0;
-		       jobtype:=0;
+		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end;
-	      3	  : 
+	      JOBTYPE_CREATE	  :
 		   EngBuildFinish(background, j);
-	      4	  : begin
+	      JOBTYPE_DECOMPOSE	  : begin
 		       dec(timeleft,5);
 		       if SkillTest(background, 2, 40, 10) then
 			  if SkillTest(background, 2, 40, 10) then
@@ -561,11 +561,11 @@ var
 			  EngDisassembleFinish(background, job);
 			  timeleft:=0;
 			  job:=0;
-			  jobtype:=0;
+			  jobtype:=JOBTYPE_REPAIR;
 			  CrewMessage(background, 31, 2,'Disassmebling completed, sir!');
 		       end;
 		    end;
-	      5	  : begin
+	      JOBTYPE_RESEARCH	  : begin
 		       dec(timeleft,5);
 		       if SkillTest(background, 2, 40, 10) then
 			  if SkillTest(background, 2, 40, 10) then
@@ -574,12 +574,12 @@ var
 			     dec(timeleft, 5);
 		       {if (random(10) = 0) and SkillTest(background, 2, 40, 10) then
 			  inc(extra, 256);
-		       if ((extra shr 8) > (extra and 255)) and (job<>6900) then}
-		       {job 6900 (the shunt drive) needs to be defered until the main screen is up.}
-		       if (timeleft<1) and ((job<>6900) or (not background)) then
+		       if ((extra shr 8) > (extra and 255)) and (job<>ID_ART_SHUNT_DRIVE) then}
+		       {job ID_ART_SHUNT_DRIVE (the shunt drive) needs to be defered until the main screen is up.}
+		       if (timeleft<1) and ((job<>ID_ART_SHUNT_DRIVE) or (not background)) then
 		       begin
 			  timeleft:=0;
-			  jobtype:=0;
+			  jobtype:=JOBTYPE_REPAIR;
 			  CrewMessage(background, 31, 2,'Artifact research completed, sir!');
 			  dothatartifactthing(job);
 			  job:=0;

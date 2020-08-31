@@ -721,8 +721,8 @@ begin
  repeat
   findmouse2;
   if fastkeypressed then processkey2;
-    delay(tslice);
-    fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_SAVELOAD);
+  fadestep(FADESTEP_STEP);
  until done;
  if cursor=1 then mainloop2:=true else mainloop2:=false;
 end;
@@ -1208,7 +1208,7 @@ begin
   if (ship.cargo[j]>rangemin) and (ship.cargo[j]<rangemax) then
    begin
     write(ft,ship.numcargo[j]:3);
-    if ship.cargo[j]>5999 then
+    if ship.cargo[j]>ID_LAST_ELEMENT then
      begin
       getartifactname(ship.cargo[j]);
       a:=maxcargo;
@@ -1251,9 +1251,9 @@ begin
  writeln(ft,'IRONSEED CARGO FILE:');
  writeln(ft);
  writeln(ft,'WEAPONS:');
- printpartof(999,1499);
+ printpartof(999,ID_NOSHIELD-1);
  writeln(ft,'SHIELDS:');
- printpartof(1499,1999);
+ printpartof(ID_NOSHIELD-1,1999);
  writeln(ft,'DEVICES:');
  printpartof(1999,2999);
  writeln(ft,'COMPONENTS:');
@@ -1261,9 +1261,9 @@ begin
  writeln(ft,'MATERIALS:');
  printpartof(3999,4999);
  writeln(ft,'ELEMENTS:');
- printpartof(4999,5999);
+ printpartof(4999,ID_LAST_ELEMENT);
  writeln(ft,'ARTIFACTS:');
- printpartof(5999,6999);
+ printpartof(ID_LAST_ELEMENT,ID_LAST_ARTIFACT);
  writeln(ft,'     NET CARGO SIZE: ',(i/10):0:1,' CUBIC METERS');
  writeln(ft,' CARGO SLOTS FILLED: ',lastx,'/250');
  writeln(ft,' TOTAL NUMBER ITEMS: ',lasty);

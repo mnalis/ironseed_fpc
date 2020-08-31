@@ -100,16 +100,97 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
+      ID_DIRK = 1000;			{ first weapon }
+      ID_BALLISTA = 1009;
+      ID_THYNNE_VORTEX = 1034;
+      ID_SLING_OF_DAVID = 1035;
+      ID_HEAVY_CORSE_GRENADE = 1043;
+      ID_DOOM_GATE = 1044;
+      ID_THAUMATURGE = 1046;
+      ID_MOBIUS_DEVICE = 1056;
+
       ID_SHIELDS_OFFSET = 1442;		{ ship.shield have numbers 1500..1999: (ship.shield - ID_SHIELDS_OFFSET) gives weapon/shield id from Data_Generators/makedata/weapon.txt }
       ID_NOSHIELD = 1500;		{ no shield installed. WARNING: some version of the code used "0", so always check if (ship.shield <= ID_NOSHIELD) }
       ID_REFLECTIVEHULL = 1501;
       ID_QUARTER_SHIELDS = 1502;	{ first powered shield }
+      ID_STASIS_GENERATOR = 1506;
+      ID_TEMPORAL_ANCHOR = 1513;
+
+      ID_LAST_SHIELD = 1599;
+
+      ID_NOTHING = 2000;		{ we start with devices after all the shields }
+      ID_PROBOT = 2001;
+      ID_MINEBOT = 2002;
+      ID_MANUFACTORY = 2003;
+      ID_FUEL_NODULES = 2004;
+      ID_FABRICATOR = 2005;
+      ID_STARMINER = 2006;
+      ID_STARDIVER = 2009;
+      ID_REINFORCE_HULL = 2015;
+      ID_INCREASE_THRUST = 2016;
+      ID_ADD_CARGO_SPACE = 2017;
+      ID_INSTALL_GUN_NODE = 2018;
+      ID_MIND_ENHANCERS = 2019;
+
+      ID_UNKNOWN_COMPONENT = 3000;	{ first component - need few of them to create device }
+      ID_CYBERPLASM = 3003;
+      ID_METAL_WEAVE = 3007;
+      ID_PULSE_LOOM = 3008;
+      ID_BIOSYNTH = 3009;
+      ID_TORQUE_STANCHION = 3012;
+      ID_PROTO_NUTRIENT = 3015;
+      ID_GUIDANCE_STRUT = 3018;
+      ID_STRATAMOUNT = 3019;
+      ID_THERMOPLAST = 3021;
+
+      ID_UNKNOWN_MATERIAL  = 4000;	{ first material - need few of them to create component }
+      ID_COOLANTS = 4007;
+      ID_RADIOACTIVES = 4014;
+      ID_WORTHLESS_JUNK = 4020;
+
+      ID_FIRST_ELEMENT = 5000;		{ first element (protic liquid) - need few of them to create material }
+      ID_LAST_ELEMENT = 5999;
+
+      ID_ARTIFACT_OFFSET = 6000;
+      ID_ARTIFACT2_OFFSET = 6500;
+      ID_ART_SHUNT_DRIVE = 6900;
+      ID_ART_CHANNELER = 6901;
+      ID_ART_IRON_SEED = 6902;
+      ID_ART_HOMING_DEVICE = 6903;
+      ID_ART_DETONATOR = 6904;
+      ID_ART_THERMAL_PLATING = 6905;
+      ID_ART_ERMIGEN_DATA_TAPES = 6906;
+      ID_ART_GLYPTIC_SCYTHE = 6907;
+      ID_ART_MULTI_IMAGER = 6908;
+      ID_ART_YLINTH_MUTAGENICS = 6909;
+      ID_ART_GOOLAS = 6910;
+      ID_LAST_ARTIFACT = 6999;
+
+      JOBTYPE_REPAIR = 0;
+      JOBTYPE_INSTALL = 1;
+      JOBTYPE_REMOVE = 2;
+      JOBTYPE_CREATE = 3;
+      JOBTYPE_DECOMPOSE = 4;
+      JOBTYPE_RESEARCH = 5;
 
       DMGTYP_PSIONIC = 1;
       DMGTYP_PARTICLE = 2;
       DMGTYP_INERTIAL = 3;
       DMGTYP_ENERGY = 4;
       DMGTYP_FAKE_SHLD = 5;		{ fake damagetype which only hits shields }
+
+      SHPTYP_HEAVYNESS = 1;
+         SHPTYPE_HEAVY = 1;
+         SHPTYPE_LIGHT = 2;
+         SHPTYPE_STATEGIC = 3;
+      SHPTYP_PURPOSE = 2;
+         SHPTYPE_SHUTTLE = 1;
+         SHPTYPE_ASSAULT = 2;
+         SHPTYPE_STORM = 3;
+      SHPTYP_VESSEL = 3;
+         SHPTYPE_TRANSPORT = 1;
+         SHPTYPE_FRIGATE = 2;
+         SHPTYPE_CRUISER = 3;
 
 type
    buttontype = record
@@ -321,6 +402,26 @@ const
 const
    MAXCANARY_=8192;
    CANARY_QW=6148914691236517205; { 'UUUUUUUU' }
+   FADING_TSLICE_DIV=2;	// tslice divisor for delay, used by fadein() and fading()
+   FADEFULL_STEP=8;	// step (coarseness) used by fadefull() and fadestopmod()
+   FADEFULL_DELAY=20;	// delay() used by fadefull() and fadestopmod()
+
+   FADESTEP_STEP=8;	// step (coarseness) used by fadestep() in various mainloop()'s
+   // delay tslice multipliers, and fixed delays usead in loops around fadestep();
+   FADE_TSLICE_MUL_COMBAT=3;
+   FADE_TSLICE_MUL_CREW2=6;
+   FADE_TSLICE_MUL_CREWINFO=7;
+   FADE_TSLICE_MUL_EXPLORE=2;
+   FADE_TSLICE_MUL_INFO=8;
+   FADE_TSLICE_MUL_JOURNEY=2;
+   FADE_TSLICE_MUL_CARGTOOL=4;
+   FADE_TSLICE_MUL_CARGCREAT=2;
+   FADE_TSLICE_MUL_SAVELOAD=1;
+   FADE_TSLICE_MUL_UTILS=1;
+   FADE_TSLICE_MUL_COMM2=6;
+   FADE_TSLICE_MUL_COMM=5;
+   FADE_TSLICE_MUL_BLINK=8;
+   FADE_TSLICE_ALIENS=5;
 
 var
  colors: paltype;
@@ -800,7 +901,7 @@ begin
       px[j]:=colors[0,j] div 48;
       pdx[j]:=colors[0,j] mod 48;
    end;
-   b:=tslice div 2;
+   b:=tslice div FADING_TSLICE_DIV;
    for a:=47 downto 1 do
    begin
       for j:=1 to 768 do
@@ -827,7 +928,7 @@ var
    temppal   : paltype;
    px,dx,pdx : array[1..768] of shortint;
 begin
-   b:=tslice div 2;
+   b:=tslice div FADING_TSLICE_DIV;
 
    temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(temppal, sizeof(temppal), 0);

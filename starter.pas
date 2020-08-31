@@ -306,7 +306,7 @@ begin
  batindex:=0;
  glowindex:=1;
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  palettedirty := true;
  fadestep(-64);
  loadscreen('data/main',@screen);
@@ -365,7 +365,7 @@ begin
  new(colordisplay);
  {HeapStats;}
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  palettedirty := true;
  fadestep(-64);
  mouseshow;

@@ -193,7 +193,7 @@ begin
  mouseshow;
  viewlevel:=1;
  viewmode:=10;
- if ship.shiptype[1]=1 then viewindex:=2 else viewindex:=1;
+ if ship.shiptype[SHPTYP_HEAVYNESS]=SHPTYPE_HEAVY{1} then viewindex:=2 else viewindex:=1;
  displayconfigure(6);
 end;
 
@@ -211,11 +211,11 @@ begin
    y := 0;
    if tempplan^[curplan].state <> 7 then
    begin
-      if incargo(2002)>0 then inc(y);
-      if incargo(2003)>0 then inc(y);
-      if incargo(2005)>0 then inc(y);
+      if incargo(ID_MINEBOT)>0 then inc(y);
+      if incargo(ID_MANUFACTORY)>0 then inc(y);
+      if incargo(ID_FABRICATOR)>0 then inc(y);
    end else begin
-      if incargo(2006)>0 then inc(y);
+      if incargo(ID_STARMINER)>0 then inc(y);
    end;
    for i:=37 +1 + y * 6 to 114 do
       fillchar(screen[i,166],113,5);
@@ -251,7 +251,7 @@ begin
 		  s[4] := s[3];
 		  s[3] := '.';
 		  s[5] := '%';
-		  printxy(170-7, 37 + y * 6, CargoName(5000 + j * 10));
+		  printxy(170-7, 37 + y * 6, CargoName(ID_FIRST_ELEMENT + j * 10));
 		  printxy(170-2+16*5, 37 + y * 6, s);
 	       end;
 	       inc(y);
@@ -280,7 +280,7 @@ begin
 		  s[4] := s[3];
 		  s[3] := '.';
 		  s[5] := '%';
-		  printxy(170-7, 37 + y * 6, CargoName(4000 + j));
+		  printxy(170-7, 37 + y * 6, CargoName(ID_UNKNOWN_MATERIAL + j));
 		  printxy(170-2+16*5, 37 + y * 6, s);
 	       end;
 	       inc(y);
@@ -309,7 +309,7 @@ begin
 		  s[4] := s[3];
 		  s[3] := '.';
 		  s[5] := '%';
-		  printxy(170-7, 37 + y * 6, CargoName(3000 + j));
+		  printxy(170-7, 37 + y * 6, CargoName(ID_UNKNOWN_COMPONENT + j));
 		  if mx = total then
 		     printxy(170-2+16*5, 37 + y * 6, ' 100%')
 		  else
@@ -331,13 +331,13 @@ begin
    if tempplan^[curplan].notes and 1=0 then
    begin
       y:=0;
-      if incargo(2002)>0 then
+      if incargo(ID_MINEBOT)>0 then
       begin
 	 printxy(170,43+y*6,'No info available');
 	 y:=6;
       end;
       if viewindex2=2 then bkcolor:=179 else bkcolor:=5;
-      if incargo(2003)>0 then printxy(170,43+y*6,'No info available');
+      if incargo(ID_MANUFACTORY)>0 then printxy(170,43+y*6,'No info available');
       exit;
    end;
    y:=0;
@@ -349,10 +349,10 @@ begin
    if ioresult<>0 then errorhandler('scan.dta',5);
    close(scanfile);
    for j:=0 to 16 do amounts[j]:=temp^[j,tempplan^[curplan].state];
-   if incargo(2002)>0 then
+   if incargo(ID_MINEBOT)>0 then
    begin
       cargindex:=1;
-      while (cargo[cargindex].index<5000) do inc(cargindex);
+      while (cargo[cargindex].index<ID_FIRST_ELEMENT) do inc(cargindex);
       total:=0;
       for j:=0 to 16 do total:=total+amounts[j];
       repeat
@@ -374,7 +374,7 @@ begin
       until y=4;
       y:=6;
    end;
-   if incargo(2003)>0 then
+   if incargo(ID_MANUFACTORY)>0 then
    begin
       new(tempcreate);
       assign(creafile,'data/creation.dta');
@@ -387,27 +387,27 @@ begin
 	 read(creafile,tempcreate^);
 	 if ioresult<>0 then errorhandler('creation.dta',5);
 	 index := tempcreate^.index;
-	 if(index >= 4000) and (index <= 4020) then
+	 if(index >= ID_UNKNOWN_MATERIAL) and (index <= ID_WORTHLESS_JUNK) then
 	 begin
 	    tt:=99;
 	    tly:=0;
 	    for i:=1 to 3 do
-	       if (tempcreate^.parts[i]>=5000) then
+	       if (tempcreate^.parts[i]>=ID_FIRST_ELEMENT) then
 	       begin
-		  cnt := temp^[(tempcreate^.parts[i]-5000) div 10,tempplan^[curplan].state];
+		  cnt := temp^[(tempcreate^.parts[i]-ID_FIRST_ELEMENT) div 10,tempplan^[curplan].state];
 		  if tt > cnt then tt := cnt;
 		  inc(tly, cnt);
 	       end;
 	    if tt > 0 then
-	       amounts[index - 4000] := tly
+	       amounts[index - ID_UNKNOWN_MATERIAL] := tly
 	    else
-	       amounts[index - 4000] := 0;
+	       amounts[index - ID_UNKNOWN_MATERIAL] := 0;
 	    {str(index, str1);
-	    printxy(0,(index - 4000) * 6, str1);
+	    printxy(0,(index - ID_UNKNOWN_MATERIAL) * 6, str1);
 	    str(tly, str1);
-	    printxy(40,(index - 4000) * 6, str1);
+	    printxy(40,(index - ID_UNKNOWN_MATERIAL) * 6, str1);
 	    str(tt, str1);
-	    printxy(60,(index - 4000) * 6, str1);}
+	    printxy(60,(index - ID_UNKNOWN_MATERIAL) * 6, str1);}
 	 end;
       end;
       repeat
@@ -422,7 +422,7 @@ begin
 	 begin
 	    amounts[index] := 0;
 	    for j := 1 to maxcargo do
-	       if cargo[j].index = 4000 + index then
+	       if cargo[j].index = ID_UNKNOWN_MATERIAL + index then
 	       begin
 		  inc(y);
 		  inc(x);
@@ -1002,8 +1002,8 @@ begin
  displayship2(17,27);
  tcolor:=191;
  bkcolor:=5;
- printxy(13,106,'Model:'+shipnames[ship.shiptype[1]-1]+' '+
-  shipnames[ship.shiptype[2]+2]+' '+shipnames[ship.shiptype[3]+5]);
+ printxy(13,106,'Model:'+shipnames[ship.shiptype[SHPTYP_HEAVYNESS]-1]+' '+
+  shipnames[ship.shiptype[SHPTYP_PURPOSE]+2]+' '+shipnames[ship.shiptype[SHPTYP_VESSEL]+5]);
  printxy(189,26,'X Loc');
  printxy(189,32,'Y Loc');
  printxy(189,38,'Z Loc');
@@ -1426,7 +1426,7 @@ begin
        begin
 	  if (tempplan^[curplan].state <> 7) then
 	  begin
-	     if (incargo(2001)>0) then
+	     if (incargo(ID_PROBOT)>0) then
 		exploreplanet
 	     else begin
 		tcolor:=94;
@@ -1434,7 +1434,7 @@ begin
 		print('SCIENCE: We have no probots.');
 	     end;
 	  end else begin
-	     if (incargo(2009)>0) then
+	     if (incargo(ID_STARDIVER)>0) then
 		exploreplanet
 	     else begin
 		tcolor:=94;

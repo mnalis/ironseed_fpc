@@ -190,7 +190,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWCOMM.MOD');
  loadscreen('data/char2',@screen);
  new(holo);
@@ -291,7 +291,7 @@ procedure mainloop;
 begin
  repeat
   palettedirty := true;
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   inc(idletime);
@@ -305,7 +305,7 @@ begin
   if msgindex<32 then inc(msgindex) else msgindex:=0;
   if msgindex=0 then displaymsg
   else displaylittlemsgs;
-  delay(tslice*7);
+  delay(tslice*FADE_TSLICE_MUL_CREWINFO);
  until done;
 end;
 

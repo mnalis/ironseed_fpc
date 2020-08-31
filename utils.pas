@@ -299,7 +299,7 @@ begin
  for j:=1 to 250 do
   if ship.cargo[j]>0 then
    begin
-    if ship.cargo[j]>6000 then
+    if ship.cargo[j]>ID_ARTIFACT_OFFSET then
      begin
       i:=maxcargo;
       getartifactname(ship.cargo[j]);
@@ -345,7 +345,7 @@ begin
    for j:=1 to 250 do
       if ship.cargo[j]>0 then
       begin
-	 if ship.cargo[j]>6000 then
+	 if ship.cargo[j]>ID_ARTIFACT_OFFSET then
 	 begin
 	    i:=maxcargo;
 	    getartifactname(ship.cargo[j]);
@@ -357,7 +357,7 @@ begin
 	 end;
 	 weight:=weight+cargo[i].size*ship.numcargo[j];
       end;
-   if item>6000 then
+   if item>ID_ARTIFACT_OFFSET then
    begin
       i:=maxcargo;
       getartifactname(item);
@@ -369,7 +369,7 @@ begin
    end;
    weight:=weight+cargo[i].size;
    weight:=weight div 10;
-   if (weight>ship.cargomax) and (item < 6000) and not force then
+   if (weight>ship.cargomax) and (item < ID_ARTIFACT_OFFSET) and not force then
    begin
       println;
       tcolor:=94;
@@ -501,7 +501,7 @@ begin
       rescargo[i] := 0;
    begin
    for i := 1 to 3 do
-      if (ship.engrteam[i].jobtype = 3) and not
+      if (ship.engrteam[i].jobtype = JOBTYPE_CREATE) and not
 	 ((ship.engrteam[i].job = ship.engrteam[i].extra) or (ship.engrteam[i].extra = 0)) then
       begin
 	 AddCargoReserves(ship.engrteam[i].extra, i, True);
@@ -668,8 +668,8 @@ begin
     mouseshow;
    end;
   if fastkeypressed then ans:=readkey;
-    delay(tslice);
-    fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_UTILS);
+  fadestep(FADESTEP_STEP);
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
@@ -690,7 +690,7 @@ begin
  for j:=1 to 250 do
   if ship.cargo[j]>0 then
    begin
-    if ship.cargo[j]>6000 then
+    if ship.cargo[j]>ID_ARTIFACT_OFFSET then
      begin
       i:=maxcargo;
       getartifactname(ship.cargo[j]);
@@ -702,7 +702,7 @@ begin
      end;
     weight:=weight+cargo[i].size*ship.numcargo[j];
    end;
- if item>6000 then
+ if item>ID_ARTIFACT_OFFSET then
   begin
    i:=maxcargo;
    getartifactname(item);
@@ -714,7 +714,7 @@ begin
   end;
  weight:=weight+cargo[i].size;
  weight:=weight div 10;
- if (weight>ship.cargomax) and (item < 6000) and not force then
+ if (weight>ship.cargomax) and (item < ID_ARTIFACT_OFFSET) and not force then
   begin
    str(weight,str1);
    str(ship.cargomax,str2);
@@ -759,7 +759,7 @@ begin
  while (temp^[i].index<>item) and (i<=totalcreation) do inc(i);
  if i>totalcreation then errorhandler('Disassemble error!',6);
  for j:=1 to 3 do
-  if not skillcheck(2) then addcargo(4020)
+  if not skillcheck(2) then addcargo(ID_WORTHLESS_JUNK)
    else addcargo2(temp^[i].parts[j]);
  dispose(temp);
 end;}
@@ -880,8 +880,8 @@ begin
 	 mouseshow;
       end;
       if fastkeypressed then ans:=readkey;
-      delay(tslice);
-      fadestep(8);
+      delay(tslice*FADE_TSLICE_MUL_UTILS);
+      fadestep(FADESTEP_STEP);
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
@@ -985,8 +985,8 @@ begin
  ans:=' ';
  c:=0;
  repeat
-  delay(tslice);
-  fadestep(8);
+  delay(tslice*FADE_TSLICE_MUL_UTILS);
+  fadestep(FADESTEP_STEP);
   done:=mouse.getstatus;
   if (c=0) and (mouse.y>109) and (mouse.y<125) and (mouse.x>138) and (mouse.x<180) then
    begin
@@ -1031,11 +1031,11 @@ end;
 procedure getartifactname(n: integer);
 var j: integer;
 begin
- if n<6900 then
+ if n<ID_ART_SHUNT_DRIVE then
   begin
-   if n>6500 then
-    cargo[maxcargo].name:=artifacts^[((n-6501) div 10)+41]+' '+artifacts^[((n-6501) mod 10)+51]
-   else cargo[maxcargo].name:=artifacts^[(n-6001) div 20+1]+' '+artifacts^[(n-6001) mod 20+21];
+   if n>ID_ARTIFACT2_OFFSET then
+    cargo[maxcargo].name:=artifacts^[((n-ID_ARTIFACT2_OFFSET-1) div 10)+41]+' '+artifacts^[((n-ID_ARTIFACT2_OFFSET-1) mod 10)+51]
+   else cargo[maxcargo].name:=artifacts^[(n-ID_ARTIFACT_OFFSET-1) div 20+1]+' '+artifacts^[(n-ID_ARTIFACT_OFFSET-1) mod 20+21];
    if ord(cargo[maxcargo].name[0])<20 then
     for j:=ord(cargo[maxcargo].name[0])+1 to 20 do cargo[maxcargo].name[j]:=' ';
      cargo[maxcargo].name[0]:=#20;
@@ -1045,17 +1045,17 @@ begin
  else
   begin
    case n of
-    6900: cargo[maxcargo].name:='Shunt Drive         ';
-    6901: cargo[maxcargo].name:='Channeler           ';
-    6902: cargo[maxcargo].name:='Iron Seed           ';
-    6903: cargo[maxcargo].name:='Homing Device       ';
-    6904: cargo[maxcargo].name:='Detonator           ';
-    6905: cargo[maxcargo].name:='Thermal Plating     ';
-    6906: cargo[maxcargo].name:='Ermigen Data Tapes  ';
-    6907: cargo[maxcargo].name:='Glyptic Scythe      ';
-    6908: cargo[maxcargo].name:='Multi-Imager        ';
-    6909: cargo[maxcargo].name:='Ylinth Mutagenics   ';
-    6910: cargo[maxcargo].name:='Goolas              ';
+    ID_ART_SHUNT_DRIVE: cargo[maxcargo].name:=		'Shunt Drive         ';
+    ID_ART_CHANNELER: cargo[maxcargo].name:=		'Channeler           ';
+    ID_ART_IRON_SEED: cargo[maxcargo].name:=		'Iron Seed           ';
+    ID_ART_HOMING_DEVICE: cargo[maxcargo].name:=	'Homing Device       ';
+    ID_ART_DETONATOR: cargo[maxcargo].name:=		'Detonator           ';
+    ID_ART_THERMAL_PLATING: cargo[maxcargo].name:=	'Thermal Plating     ';
+    ID_ART_ERMIGEN_DATA_TAPES: cargo[maxcargo].name:=	'Ermigen Data Tapes  ';
+    ID_ART_GLYPTIC_SCYTHE: cargo[maxcargo].name:=	'Glyptic Scythe      ';
+    ID_ART_MULTI_IMAGER: cargo[maxcargo].name:=		'Multi-Imager        ';
+    ID_ART_YLINTH_MUTAGENICS: cargo[maxcargo].name:=	'Ylinth Mutagenics   ';
+    ID_ART_GOOLAS: cargo[maxcargo].name:=		'Goolas              ';
    end;
    cargo[maxcargo].size:=0;
    cargo[maxcargo].index:=n;

@@ -84,13 +84,13 @@ begin
    begin
       if (tempplan^[curplan].system = 45) and (tempplan^[curplan].orbit = 0) and chevent(28) then
       begin
-	 tempplan^[curplan].cache[1]:=1513;
-	 tempplan^[curplan].cache[2]:=1043;
-	 tempplan^[curplan].cache[3]:=1043;
-	 tempplan^[curplan].cache[4]:=1035;
-	 tempplan^[curplan].cache[5]:=1035;
-	 tempplan^[curplan].cache[6]:=1034;
-	 tempplan^[curplan].cache[7]:=1034;
+	 tempplan^[curplan].cache[1]:=ID_TEMPORAL_ANCHOR;
+	 tempplan^[curplan].cache[2]:=ID_HEAVY_CORSE_GRENADE;
+	 tempplan^[curplan].cache[3]:=ID_HEAVY_CORSE_GRENADE;
+	 tempplan^[curplan].cache[4]:=ID_SLING_OF_DAVID;
+	 tempplan^[curplan].cache[5]:=ID_SLING_OF_DAVID;
+	 tempplan^[curplan].cache[6]:=ID_THYNNE_VORTEX;
+	 tempplan^[curplan].cache[7]:=ID_THYNNE_VORTEX;
 	 exit;
       end;
       {printxy(160,182,'Anom!');}
@@ -662,7 +662,7 @@ var j,max,cargindex,total: integer;
 begin
  y:=0;
  cargindex:=1;
- while (cargo[cargindex].index<5000) do inc(cargindex);
+ while (cargo[cargindex].index<ID_FIRST_ELEMENT) do inc(cargindex);
  total:=0;
  angle:=0;
  amounts2:=amounts;
@@ -1163,14 +1163,14 @@ begin
 	      {if tempplan^[curplan].orbit=0 then
 	      begin
 		 status:=7;
-		 removecargo(2001);
+		 removecargo(ID_PROBOT);
 		 que := -abs(que);
 		 SetScan(0);
 	      end;}
 	      if ((techlvl>=4) and (random(100)<25)) or ((techlvl=3) and (random(100)<5)) then
 	      begin
 		 status:=7;
-		 removecargo(2001);
+		 removecargo(ID_PROBOT);
 		 que := -abs(que);
 		 SetScan(0);
 		 {dec(datagathered[que,1]);}
@@ -1507,7 +1507,7 @@ begin
    for j:=1 to 7 do if tempplan^[curplan].cache[j]>0 then
    begin
       a:=tempplan^[curplan].cache[j];
-      if a>6000 then
+      if a>ID_ARTIFACT_OFFSET then
       begin
 	 getartifactname(a);
 	 i:=maxcargo;
@@ -1947,7 +1947,7 @@ begin
  mouseshow;
  displayinfogathered;
  repeat
-  fadestep(8);
+  fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
   controlprobes;
@@ -1961,7 +1961,7 @@ begin
   setrgb256(235,0,green,0);
   showzoom;
   controlprobes;
-  delay(tslice*2);
+  delay(tslice*FADE_TSLICE_MUL_EXPLORE);
  until done;
  anychange:=true;
 end;
@@ -1982,14 +1982,14 @@ begin
  bkcolor:=0;
  batindex:=0;
  if tempplan^[curplan].state <> 7 then
-    numprobes:=incargo(2001)
+    numprobes:=incargo(ID_PROBOT)
  else
-    numprobes:=incargo(2009);
+    numprobes:=incargo(ID_STARDIVER);
    
  if numprobes>4 then numprobes:=4;
  compressfile(tempdir+'/current',@screen);
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  loadscreen('data/landform',@screen);
  new(summarypic);
 // new(landcolors);
@@ -2060,7 +2060,7 @@ begin
  {if backgr <> nil then dispose(backgr);
  new(backgr);}
  {fading;}
- fadestopmod(-8, 20);
+ fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  loadscreen('data/cloud',backgr);
  loadscreen(tempdir+'/current',@screen);
  if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield

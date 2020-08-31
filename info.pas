@@ -1026,14 +1026,14 @@ end;
 procedure mainloop;
 begin
    repeat
-      fadestep(8);
+      fadestep(FADESTEP_STEP);
       displaysector;
       if batindex<8 then inc(batindex) else
       begin
 	 batindex:=0;
 	 addtime2;
       end;
-      delay(tslice*8);
+      delay(tslice*FADE_TSLICE_MUL_INFO);
       if fastkeypressed then processkey;
       findmouse;
       if idletime=maxidle then screensaver;
@@ -1045,7 +1045,7 @@ begin
    mousehide;
    compressfile(tempdir+'/current',@screen);
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/GENER1.MOD');
    loadscreen('data/sector',@screen);
    {fadein;}
@@ -1068,7 +1068,7 @@ procedure removedata;
 begin
    mousehide;
    {fading;}
-   fadestopmod(-8, 20);
+   fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
    loadscreen(tempdir+'/current',@screen);
    bkcolor:=3;
