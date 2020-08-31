@@ -54,3 +54,23 @@ Data structures
         - example : planet finished only land, sea, air has: tempplan^[curplan].notes = 28 (00011100), 
         - after all scans completed, it becomes 125 (01111101)
         - after we contact Void dwellers on planet, it becomes 127 (01111111)
+
+- events system (events[], logs[], logpending[] and old ship.events[]) :
+	NOTE: ship.events[65] and events[1024] are two different things.
+
+        ship.events[65] is array of bytes, initially fist 50 = 0xff, next 15=0x00
+        After adding logs, 255s at the start of array become event numbers (in order of happening?), eg: [10, 11, 255 <repeats 48 times>, 0 <repeats 15 times>]
+        it seems that up to some version of the game, ship.events held both events/logs (events with ID<=50).
+
+        Nowdays, if saveX/EVENTS.DTA exists, we load directly:
+        - EVENTS.DTA to events[1024] bitmap. event 8 is  "n mod 8" bit in "n/8" byte set to 1. So for example event 11 is 3rd bit in 2nd byte [event[1], as it starts counting from 0])
+        - LOGS.DTA to logs[256] array of integers (with -1 meaning no log)
+        - PENDING.DTA to logpending[128] of record time,log:integer (created by addpending() so event will happen automatically some time in the future). Currently only used with time=0 (meaning now)
+
+        Otherwise, if those files do not exist (ooold saves?), convertevents() is called which does:
+           - copies up to 50 ship.events with ID<50 to logs[], and to converts them into events[] bitmap (having 1024*8 bits for 8192 events)
+           - next 15 bytes of ship.events is bitmap; which gets converted to part of events[] too
+
+	events:
+		- 500-599: clear before conversations with crew/aliens?
+		- 20000-21000 is event initiated by chat with races from  Data_Generators/makedata/event.txt ?

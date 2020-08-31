@@ -521,7 +521,7 @@ begin
    for i:=40 to 140 do
     move(tempscr^[i,74],screen[i,74],43*4);
   end;
- result:=mainloop(tofadein);
+ result:=mainloop(tofadein);			{ result = which saveslot was selected for load }
  if result=9 then loadgamedata:=false else
   begin
    loadgamedata:=true;
@@ -536,9 +536,9 @@ begin
  dispose(names);
  bkcolor:=3;
  if result<9 then
- begin
-    event(10);
-    if chevent(12) then event(1001);
+ begin						{ some savegame was loaded }
+    event(10);					{ event10 = "Greetings and hallucinations", present at the start of the game always }
+    if chevent(12) then event(1001);		{ event12 = "SECOND BUOY LOCATED" does event1001 = "FAREWELL TO MARS" }
  end;
 end;
 

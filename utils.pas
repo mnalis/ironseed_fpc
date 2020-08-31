@@ -77,19 +77,21 @@ var
  a,b,j,i,index : integer;
    randsave    : longint;
 
+{ checks if event "n" has happened }
 function chevent(n: integer): boolean;
 {var i,j: integer;}
 begin
-   if (n<0) or (n>19999) then
+   if (n<0) or (n>19999) then	{ n >= 20000 is chat with races from  Data_Generators/makedata/event.txt }
    begin
       chevent:=true;
       exit;
    end;
    if (n >= 8192) then
    begin
-      chevent := false
+      chevent := false		{ should never happen? }
+      assert (n < 8192, 'event index out of bounds1');
    end else begin
-      chevent := (events[n shr 3] and (1 shl (n and 7))) <> 0;
+      chevent := (events[n shr 3] and (1 shl (n and 7))) <> 0;		{ look up "n mod 8" bit in "n/8" byte. So for example event 11 is 3rd bit in 2nd byte [event[1], as it starts counting from 0])
    end;
 {   if n<50 then
    begin

@@ -109,6 +109,7 @@ begin
  move(temppal,colors,sizeof(paltype));
 end;
 
+{ add event "n" to happen in some time "t" in the future }
 procedure addpending(n, t : integer);
 var
    i : integer;
@@ -130,6 +131,7 @@ begin
    end;
 end; { addpending }
 
+{ move logpending[] to events[]/logs[] when it's time happens }
 procedure tickpending(ticks : integer; background : boolean);
 var
    i, j : integer;
@@ -161,23 +163,28 @@ begin
    end;
 end; { tickpending }
 
+{ just sets the bit in events[] bitmap (and in ship.events bitmap for events 50-500) }
 procedure setevent(n: integer);
 var i,j: word;
 begin
-    if n >= 8192 then
+   assert (n < 8192, 'event index out of bounds2');
+   if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] or (1 shl (n and 7));
    
    if (n<50) or (n>=500) then exit;
    n:=n-50;
-   i:=50+(n div 8);
-   j:=n mod 8;
+   i:=50+(n div 8);	{ same as 50+(n shr 3) ? }
+   j:=n mod 8;		{ same as (n and 7) ? }
+   assert (i<=64, 'ship.events index out of bounds1');
    ship.events[i]:=ship.events[i] or (1 shl j);
 end;
 
+{ just clears the bit in events[] bitmap (and in ship.events bitmap for events 50-500) }
 procedure clearevent(n: integer);
 var i,j: word;
 begin
+   assert (n < 8192, 'event index out of bounds3');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] and not (1 shl (n and 7));
@@ -186,9 +193,13 @@ begin
    n:=n-50;
    i:=50+(n div 8);
    j:=n mod 8;
+   assert (i<=64, 'ship.events index out of bounds2');
    ship.events[i]:=ship.events[i] and not (1 shl j);
 end;
 
+{ add and display a log "n" to first unused (-1) space in logs[256]. 
+  Also sets an event "n".
+  For events < 50, also add compatibility to ship.events[] }
 procedure addlog(n: integer);
 var i: integer;
 begin
@@ -196,12 +207,14 @@ begin
    i:=0;
    while logs[i] <> -1 do
       inc(i);
+   assert (i<=255, 'logs index out of bounds');
    logs[i] := n;
    if n < 50 then
    begin
       {Set old style log/events.}
       i:=0;
       while ship.events[i]<>255 do inc(i);
+      assert (i<50, 'ship.events (non-bitmapped) index out of bounds');
       ship.events[i]:=n;
    end;
    computerlogs(n);
@@ -222,6 +235,7 @@ begin
  initiatecombat;
 end;
 
+{ this adds the event "n", adds a log for it, and handles all associated things that happen related to that event (like cargo/systems update, endgame etc.) }
 procedure event(n: integer);
 var i,j: integer;
 //    p:^byte;
