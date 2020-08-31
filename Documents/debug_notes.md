@@ -74,3 +74,9 @@ Data structures
 	events:
 		- 500-599: clear before conversations with crew/aliens?
 		- 20000-21000 is event initiated by chat with races from  Data_Generators/makedata/event.txt ?
+
+- conversations
+	See `Data_Generators/makedata/conv0000.txt` for format of `Data_Generators/makedata/*con1.txt`
+	Also `Data_Generators/makedata/template.txt`
+
+	if event is triggered by talks, it is parsed in `comm.pas` in `run20000event()` and `run21000event()`
