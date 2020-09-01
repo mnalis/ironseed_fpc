@@ -80,3 +80,12 @@ Data structures
 	Also `Data_Generators/makedata/template.txt`
 
 	if event is triggered by talks, it is parsed in `comm.pas` in `run20000event()` and `run21000event()`
+
+	Races 0-9 (0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers)
+	automatically get event 0-9, by `comm.pas:removedata()` which gets called at the end of `continuecontact()` and does `event(n)` for `n<10`
+	Also called is `checkotherevents(n)` which consults `Data_Generators/makedata/event.txt` (with columns `want`, `give` and `message`) which checks:
+	- if events (n*10+50) to (n*10+59) has happened, skip the following two points...
+	- for `want > 20000`: if there was event `want-20000` - if so, then it calls event `give-20000` (if `give>20000`) or adds cargo `give` if `give<20000` 
+	- for `want > 0`: check if there is cargo `want` in hold, and if so removes it. Then it calls event `give-20000` (if `give>20000`) or adds cargo `give` if `give<20000` 
+	- for `want = 0` and `give<>0`: it calls event `give-20000` (if `give>20000`) or adds cargo `give` if `give<20000` 
+	- in any case, it also calls event (n*10+5x) for each time we triggered the `want`.

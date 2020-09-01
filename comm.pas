@@ -1555,6 +1555,7 @@ begin
  until done;
 end;
 
+{ contact aliens on planet }
 procedure getlocals;
 var confile: file of alientype;
     done: boolean;
@@ -1582,6 +1583,7 @@ begin
  contactsequence(curplan,random(3));
 end;
 
+{ contact alien ship }
 procedure getship;
 var confile: file of alientype;
     done: boolean;
