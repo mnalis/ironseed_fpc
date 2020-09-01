@@ -814,7 +814,7 @@ begin
             end;
      0..8: if mouse.y>182 then
             begin
-             if alert<2 then
+             if alert<ALRT_COMBAT then
               begin
                armweapons;
                raiseshields;
@@ -1145,23 +1145,24 @@ begin
  idletime:=0;
 end;
 
+{ change alert mode - which sets wanted shield level only (besides doing checks and displaying messages) }
 procedure setalertmode(mode: integer);
 var alt,new: integer;
 begin
  if alert=mode then exit;
  case alert of
-  0: alt:=48;
-  1: alt:=112;
-  2: alt:=80;
+  ALRT_REST: alt:=48;
+  ALRT_ALERT: alt:=112;
+  ALRT_COMBAT: alt:=80;
  end;
  case mode of
-  0: new:=48;
-  1: new:=112;
-  2: new:=80;
+  ALRT_REST: new:=48;
+  ALRT_ALERT: new:=112;
+  ALRT_COMBAT: new:=80;
  end;
  plainfadearea(0,184,7,199,new-alt);
  alert:=mode;
- if alert=2 then exit;
+ if alert=ALRT_COMBAT then exit;	// FIXME: is this correct? if we are currently in COMBAT alert status, maybe we don't need checks for shield stability as we are at MAX, but don't we still need to set shieldlevel??
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -1183,9 +1184,9 @@ begin
     end;
   end;
  if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
- else if alert=0 then
+ else if alert=ALRT_REST then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
- else if alert=1 then
+ else if alert=ALRT_ALERT then
   ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
@@ -1314,7 +1315,7 @@ begin
   'G': if cube<>4 then rotatecube(cube,4,true);
   'B': if cube<>5 then rotatecube(cube,5,true);
   'P': begin
-        if alert<2 then
+        if alert<ALRT_COMBAT then
          begin
           armweapons;
           raiseshields;
@@ -1410,7 +1411,7 @@ begin
 	 ship.hullintegrity := hull;
       end;
      ship.armed:=true;
-     setalertmode(1);
+     setalertmode(ALRT_ALERT);
      ship.wandering.alienid:=20000;
      checkwandering;
      action:=WNDACT_NONE;

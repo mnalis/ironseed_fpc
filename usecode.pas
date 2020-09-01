@@ -553,11 +553,11 @@ begin
    if viewmode2>0 then removestarmap;
    cleanright(true);
    tcolor:=31;
-   setalertmode(1);
+   setalertmode(ALRT_ALERT);
    println;
    print('ENGINEERING: Engaging..');
    redoscreen(x,y,z);
-   setalertmode(0);
+   setalertmode(ALRT_REST);
 end;
 
 procedure readyweaponinfo;
@@ -745,7 +745,7 @@ begin
  tcolor:=63;
  print('SECURITY: Lowering shields...');
  graypalin;
- if not ship.armed then setalertmode(1);
+ if not ship.armed then setalertmode(ALRT_ALERT);
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
@@ -785,7 +785,7 @@ begin
   end;
  print('SECURITY: Raising shields...');
  graypalin;
- setalertmode(2);
+ setalertmode(ALRT_COMBAT);
  ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
@@ -807,7 +807,7 @@ begin
  print('SECURITY: Powering down weapons...');
  graypalin;
  if (ship.shieldlevel<>ship.shieldopt[SHLD_COMBAT_WANT]) or (ship.shieldopt[SHLD_COMBAT_WANT]<=ship.shieldopt[SHLD_LOWERED_WANT])
-  then setalertmode(1);
+  then setalertmode(ALRT_ALERT);
  for j:=1 to 10 do
   if ship.gunnodes[j]>0 then
    begin
@@ -852,7 +852,7 @@ begin
   end;
  print('SECURITY: Arming weapons...');
  graypalin;
- setalertmode(2);
+ setalertmode(ALRT_COMBAT);
  ship.armed:=true;
  for j:=1 to 10 do
   if (ship.gunnodes[j]>0) and (ship.battery>=weapons[ship.gunnodes[j]].energy) then
@@ -1510,7 +1510,7 @@ begin
         println;
         print('SECURITY: No aliens on our scopes.');
        end;
-  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=2) then lowershields	{ raise/lower shields }
+  30: if (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (alert=ALRT_COMBAT) then lowershields	{ raise/lower shields }
        else raiseshields;
   31: if (ship.wandering.alienid<16000) and (action<>WNDACT_MASKING) and			{ masking }
        ((abs(ship.wandering.relx)<8000) or (abs(ship.wandering.rely)<8000) or

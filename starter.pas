@@ -319,9 +319,6 @@ begin
  idletime:=0;
  action:=WNDACT_NONE;
  tcolor:=31;
- alert:=2;
- if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)
-  else setalertmode(0);
  bkcolor:=3;
  if (ship.shield=0) then
   begin
@@ -331,6 +328,9 @@ begin
  ship.shieldlevel:=0;
  if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100
   else if ship.shield>ID_REFLECTIVEHULL then ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
+ alert:=ALRT_COMBAT;
+ if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(ALRT_COMBAT)
+  else setalertmode(ALRT_REST);
  showresearchlights;
 end;
 

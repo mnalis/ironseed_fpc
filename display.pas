@@ -764,7 +764,8 @@ begin
  end;
  mouseshow;
  bkcolor:=3;
- if (ship.shield<=ID_REFLECTIVEHULL) or (alert=2) then exit;
+ if (ship.shield<=ID_REFLECTIVEHULL) or (alert=ALRT_COMBAT) then exit;	// FIXME: when does this get called anyway?
+ // FIXME: check, this will also skip setting shieldlevel if we are in ALERT mode?? FIXME but it does not get set for COMBAT mode anyway?? this happens in other places in the code too. why? and does it work?
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -785,9 +786,9 @@ begin
       end;
     end;
   end;
- if alert=0 then
+ if alert=ALRT_REST then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
- else if alert=1 then
+ else if alert=ALRT_ALERT then
   ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
 end;
 
@@ -1378,10 +1379,10 @@ end;
 
 procedure checkstats;
 begin
- if alert<2 then
+ if alert<ALRT_COMBAT then	{ if we are damaged and not in COMBAT mode already, put us at least in ALERT mode... }
   begin
-   i:=0;
-   for j:=1 to 7 do if ship.damages[j]<>0 then i:=1;
+   i:=ALRT_REST;
+   for j:=1 to 7 do if ship.damages[j]<>0 then i:=ALRT_ALERT;
    setalertmode(i);
   end;
  if ship.hullintegrity<250 then tc:=80
