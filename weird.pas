@@ -495,7 +495,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -681,7 +681,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -762,7 +762,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -1186,7 +1186,7 @@ begin
   begin
    new(s2);
    loadscreen('data/saver',s2);
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    for i:=0 to 199 do
     for j:=0 to 319 do

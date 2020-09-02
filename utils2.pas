@@ -715,7 +715,7 @@ begin
  move(nearby,nearbybackup,sizeof(nearbyarraytype));
  mousehide;
  compressfile(tempdir+'/current',@screen);
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  tcolor:=47;
  bkcolor:=0;
  time:=round(dist*2)+1;
@@ -1256,7 +1256,7 @@ begin
    creategasplanet;
    new(t);
    move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1292,7 +1292,7 @@ begin
    makeastoroidfield;
    new(t);
    move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1319,7 +1319,7 @@ begin
    makecloud;
    new(t);
    move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1344,7 +1344,7 @@ begin
   begin
    new(t);
    move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1489,7 +1489,7 @@ begin
  i2:=i+6;
  new(t);
  move(screen,t^,sizeof(screen));
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  set256colors(colors);
  tcolor:=47;
  bkcolor:=0;
@@ -1777,7 +1777,7 @@ begin
    ship.orbiting:=index;
    mousehide;
    compressfile(tempdir+'/current',@screen);
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}

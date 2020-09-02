@@ -261,7 +261,7 @@ begin
    begin
       fadestep(1);
       for i:=20 to 130 do
-	 fillchar(screen[i,90],144,0);
+	 scr_fillchar(screen[i,90],144,0);
       for i:=110 to 126 do
 	 move(cargobuttons^[i,92],screen[i,92],34*4);
    end
@@ -358,7 +358,7 @@ begin
    for i:=110 to 126 do
    begin
       move(screen[i,92],cargobuttons^[i,92],34*4);
-      fillchar(screen[i,94],133,0);
+      scr_fillchar(screen[i,94],133,0);
    end;
    plainfadearea(38,78,40,82,12);
    drawfilters;
@@ -442,7 +442,7 @@ begin
  until (y=1) or (x<1);
  if y>1 then
   for i:=23 to 16+y*6 do
-   fillchar(screen[i,92],133,0);
+   scr_fillchar(screen[i,92],133,0);
  bkcolor:=6;
  x:=cargoindex;
  y:=6;
@@ -453,7 +453,7 @@ begin
  until (y=14) or (x>251);
  if y<14 then
   for i:=23+y*6 to 106 do
-   fillchar(screen[i,92],133,0);
+   scr_fillchar(screen[i,92],133,0);
  mouseshow;
 end;
 
@@ -516,7 +516,7 @@ begin
  until (y=4) or (x>250);
  if y<4 then
   for i:=22+y*20 to 106 do
-   fillchar(screen[i,92],133,0);
+   scr_fillchar(screen[i,92],133,0);
  mouseshow;
 end;
 
@@ -771,7 +771,7 @@ begin
              110..126: begin
                         if cargomode=1 then cargomode:=0 else cargomode:=1;
                         for i:=22 to 106 do
-                         fillchar(screen[i,90],140,0);
+                         scr_fillchar(screen[i,90],140,0);
                         newcursor(0);
                        end;
             end;
@@ -794,7 +794,7 @@ begin
    cargoindex:=0;
    mousehide;
    for i:=22 to 106 do
-    fillchar(screen[i,90],140,0);
+    scr_fillchar(screen[i,90],140,0);
    mouseshow;
   end;
  if cargomode=0 then displaylist else displayinfo;
@@ -854,7 +854,7 @@ begin
   '/','?': begin
             if cargomode=1 then cargomode:=0 else cargomode:=1;
             for i:=22 to 106 do
-             fillchar(screen[i,90],140,0);
+             scr_fillchar(screen[i,90],140,0);
             newcursor(0);
            end;
   #10: printbigbox(GetHeapStats1,GetHeapStats2);
@@ -864,7 +864,7 @@ begin
    cargoindex:=0;
    mousehide;
    for i:=22 to 106 do
-    fillchar(screen[i,90],140,0);
+    scr_fillchar(screen[i,90],140,0);
    mouseshow;
   end;
  if cargomode=0 then displaylist else displayinfo;
@@ -963,7 +963,7 @@ begin
   begin
    viewteam:=0;
    for i:=77 to 80 do
-    fillchar(screen[i,222],77,0);
+    scr_fillchar(screen[i,222],77,0);
   end;
  anychange:=true;
 end;
@@ -996,7 +996,7 @@ begin
   begin
    viewteam:=0;
    for i:=77 to 80 do
-    fillchar(screen[i,222],77,0);
+    scr_fillchar(screen[i,222],77,0);
   end;
  anychange:=true;
 end;
@@ -1110,7 +1110,7 @@ begin
 	    screen[i,34]:=95;
 	    screen[i,33]:=95;
 	 end;
-   if colorcode then fillchar(screen[125,69],4,63);
+   if colorcode then scr_fillchar(screen[125,69],4,63);
    viewteam:=0;
    {if ship.options[OPT_ANIMATION]=1 then opendoors2 else fadein;}
    inccursor;
@@ -1222,9 +1222,9 @@ begin
     begin
      if i>0 then y:=100-i
       else y:=100+i;
-     fillchar(screen[1+i+j*6,260],x,y);
+     scr_fillchar(screen[1+i+j*6,260],x,y);
      if x<50 then
-      fillchar(screen[1+i+j*6,260+x],50-x,0);
+      scr_fillchar(screen[1+i+j*6,260+x],50-x,0);
     end;
   end;
  if n<59 then readweaicon(n-1) else readweaicon(n-2);
@@ -1295,7 +1295,7 @@ begin
  if (i=totalcreation) and (iteminfo^.index<>index) then
   begin
    for i:=175 to 195 do
-    fillchar(screen[i,6],140,2);
+    scr_fillchar(screen[i,6],140,2);
    if index<ID_ARTIFACT_OFFSET then printxy(1,169,'Fabricated Material        ')
     else printxy(1,169,'Unknown Alien Artifact     ');
   end
@@ -1307,9 +1307,9 @@ begin
   begin
    for j:=0 to 2 do
     for i:=0 to 13 do
-     fillchar(screen[j*21+40+i,131],79,0);
+     scr_fillchar(screen[j*21+40+i,131],79,0);
    for i:=59 to 72 do
-    fillchar(screen[i,221],79,0);
+    scr_fillchar(screen[i,221],79,0);
    displaybreakdown(index);
      {str(GetBuildTime(index),s);
      printxy(5,5,s);}
@@ -1317,7 +1317,7 @@ begin
  if (index>=ID_DIRK) and (index<ID_NOSHIELD) then weaponinfo(index-ID_DIRK+1)
   else if (index>=ID_NOSHIELD) and (index<ID_NOTHING) then weaponinfo(index-ID_SHIELDS_OFFSET)
   else for i:=3 to 29 do
-        fillchar(screen[i,132],180,1);
+        scr_fillchar(screen[i,132],180,1);
  mouseshow;
 end;
 
@@ -1364,7 +1364,7 @@ begin
   until (y=1) or (x<1);
  if y>1 then
   for i:=22 to y*6+16 do
-   fillchar(screen[i,11],100,0);
+   scr_fillchar(screen[i,11],100,0);
  x:=cargoindex+1;
  y:=8;
  bkcolor:=0;
@@ -1401,7 +1401,7 @@ begin
  until (y=16) or (x>maxcreation);
  if y<16 then
   for i:=y*6+23 to 118 do
-   fillchar(screen[i,11],100,0);
+   scr_fillchar(screen[i,11],100,0);
  mouseshow;
 end;
 
@@ -1413,7 +1413,7 @@ begin
  if cargoindex=0 then
   begin
    for i:=22 to 118 do
-    fillchar(screen[i,11],100,0);
+    scr_fillchar(screen[i,11],100,0);
    exit;
   end;
  y:=9;
@@ -1460,7 +1460,7 @@ begin
  until (y=1) or (x<1);
  if y>1 then
   for i:=22 to 16+y*6 do
-   fillchar(screen[i,11],100,0);
+   scr_fillchar(screen[i,11],100,0);
  x:=cargoindex+1;
  y:=8;
  bkcolor:=0;
@@ -1502,7 +1502,7 @@ begin
  until (y=16) or (x>250);
  if y<16 then
   for i:=y*6+23 to 118 do
-   fillchar(screen[i,11],100,0);
+   scr_fillchar(screen[i,11],100,0);
  mouseshow;
 end;
 
@@ -1516,11 +1516,11 @@ begin
       mousehide;
       for j:=0 to 2 do
 	 for i:=0 to 13 do
-	    fillchar(screen[j*21+40+i,131],79,0);
+	    scr_fillchar(screen[j*21+40+i,131],79,0);
       for i:=59 to 72 do
-	 fillchar(screen[i,221],79,0);
+	 scr_fillchar(screen[i,221],79,0);
       for i:=77 to 80 do
-	 fillchar(screen[i,222],77,0);
+	 scr_fillchar(screen[i,222],77,0);
       viewteam:=0;
       mouseshow;
       exit;
@@ -1530,11 +1530,11 @@ begin
    begin
       for j:=0 to 2 do
 	 for i:=0 to 13 do
-	    fillchar(screen[j*21+40+i,131],79,0);
+	    scr_fillchar(screen[j*21+40+i,131],79,0);
       for i:=59 to 72 do
-	 fillchar(screen[i,221],79,0);
+	 scr_fillchar(screen[i,221],79,0);
       for i:=77 to 80 do
-	 fillchar(screen[i,222],77,0);
+	 scr_fillchar(screen[i,222],77,0);
       teamjob := ship.engrteam[team].job;
    end;
    case ship.engrteam[team].jobtype of
@@ -1546,7 +1546,7 @@ begin
    if ship.engrteam[team].jobtype<JOBTYPE_CREATE then
    begin
       for i:=77 to 80 do
-	 fillchar(screen[i,222],77,0);
+	 scr_fillchar(screen[i,222],77,0);
       mouseshow;
       exit;
    end;
@@ -1564,7 +1564,7 @@ begin
    end;
    if b<76 then
       for i:=77 to 80 do
-	 fillchar(screen[i,b+223],75-b,0);
+	 scr_fillchar(screen[i,b+223],75-b,0);
    mouseshow;
    anychange:=true;
 end;
@@ -1612,9 +1612,9 @@ begin
  tcolor:=31;
  for j:=0 to 2 do
   for i:=0 to 13 do
-   fillchar(screen[j*21+40+i,131],79,0);
+   scr_fillchar(screen[j*21+40+i,131],79,0);
  for i:=59 to 72 do
-  fillchar(screen[i,221],79,0);
+  scr_fillchar(screen[i,221],79,0);
  mouseshow;
  if ship.engrteam[team].job>0 then
   begin
@@ -1644,9 +1644,9 @@ begin
      0	: begin
 	     tcolor:=92;
 	     for i:=59 to 72 do
-		fillchar(screen[i,221],79,0);
+		scr_fillchar(screen[i,221],79,0);
 	     for i:=77 to 80 do
-		fillchar(screen[i,222],77,0);
+		scr_fillchar(screen[i,222],77,0);
 	     printxy(226,59,'Insufficient');
 	     printxy(244,65,'Parts');
 	     exit;
@@ -1654,9 +1654,9 @@ begin
      -1	: begin
 	tcolor:=92;
 	for i:=59 to 72 do
-	   fillchar(screen[i,221],79,0);
+	   scr_fillchar(screen[i,221],79,0);
 	for i:=77 to 80 do
-	   fillchar(screen[i,222],77,0);
+	   scr_fillchar(screen[i,222],77,0);
 	printxy(226,59,'Insufficient');
 	printxy(244,65,'Level');
 	exit;
@@ -1664,9 +1664,9 @@ begin
      -2	: begin
 	tcolor:=92;
 	for i:=59 to 72 do
-	   fillchar(screen[i,221],79,0);
+	   scr_fillchar(screen[i,221],79,0);
 	for i:=77 to 80 do
-	   fillchar(screen[i,222],77,0);
+	   scr_fillchar(screen[i,222],77,0);
 	printxy(226,59,'  Internal  ');
 	printxy(244,65,'Error');
 	exit;
@@ -1674,9 +1674,9 @@ begin
      -3	: begin
 	tcolor:=92;
 	for i:=59 to 72 do
-	   fillchar(screen[i,221],79,0);
+	   scr_fillchar(screen[i,221],79,0);
 	for i:=77 to 80 do
-	   fillchar(screen[i,222],77,0);
+	   scr_fillchar(screen[i,222],77,0);
 	printxy(226,59,'Insufficient');
 	printxy(228,65,' Knowledge ');
 	exit;
@@ -1691,9 +1691,9 @@ begin
   begin
    tcolor:=92;
    for i:=59 to 72 do
-    fillchar(screen[i,221],79,0);
+    scr_fillchar(screen[i,221],79,0);
    for i:=77 to 80 do
-    fillchar(screen[i,222],77,0);
+    scr_fillchar(screen[i,222],77,0);
    printxy(226,59,'Insufficient');
    printxy(244,65,'Parts');
    exit;
@@ -1702,9 +1702,9 @@ begin
   begin
    tcolor:=92;
    for i:=59 to 72 do
-    fillchar(screen[i,221],79,0);
+    scr_fillchar(screen[i,221],79,0);
    for i:=77 to 80 do
-    fillchar(screen[i,222],77,0);
+    scr_fillchar(screen[i,222],77,0);
    printxy(226,59,'Insufficient');
    printxy(244,65,'Level');
    exit;
@@ -1826,12 +1826,12 @@ begin
  mousehide;
  if colorcode then
   begin
-   fillchar(screen[125,69],4,95);
+   scr_fillchar(screen[125,69],4,95);
    colorcode:=false;
   end
  else
   begin
-   fillchar(screen[125,69],4,63);
+   scr_fillchar(screen[125,69],4,63);
    colorcode:=true;
   end;
  mouseshow;

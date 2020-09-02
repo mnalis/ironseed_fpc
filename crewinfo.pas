@@ -82,7 +82,7 @@ begin {120,37,294,112}
  c:=ship.crew[num].emo;
  part:=36/100;
  for i:=14 to 88 do
-  fillchar(screen[i,16],185,0);
+  scr_fillchar(screen[i,16],185,0);
  for i:=35 to 63 do
   move(holo^[i,84],screen[i,84],9*4);
  moveto(16,50);
@@ -142,7 +142,7 @@ begin
  while (i>1) and (s[i]=' ') do dec(i);
  s[0]:=chr(i);
  for i:=103 to 108 do
-  fillchar(screen[i,121],119,0);
+  scr_fillchar(screen[i,121],119,0);
  printxy(121+(120-length(s)*6) div 2,103,s);
  for a:=0 to 9 do
   printxy(0,130+a*6,crewdata.desc[a]);
@@ -207,7 +207,7 @@ begin
   for i:=0 to 15 do
    move(screen[i+180,10+a*17],mcursor^[a,i],4*4);
  for i:=130 to 196 do
-  fillchar(screen[i,4],262,0);
+  scr_fillchar(screen[i,4],262,0);
  for i:=35 to 63 do
   move(screen[i,84],holo^[i,84],9*4);
  graphindex:=1;

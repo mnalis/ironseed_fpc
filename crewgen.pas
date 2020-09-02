@@ -71,7 +71,7 @@ begin
    bkcolor:=5;
    fading;
    loadpal('data/main.pal');
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    for i:=0 to 199 do
       for j:=0 to 319 do
 	 screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -205,7 +205,7 @@ begin {120,37,294,112}
  c:=ship.crew[num].emo;
  part:=36/100;
  for i:=14 to 88 do
-  fillchar(screen[i,121],175,0);
+  scr_fillchar(screen[i,121],175,0);
  moveto(121,50);
  for j:=121 to 295 do
  begin
@@ -451,7 +451,7 @@ begin
  with ship do
   begin
    for i:=0 to 5 do
-    fillchar(screen[i+122,30],231,0);
+    scr_fillchar(screen[i+122,30],231,0);
    s:=shipnames[shiptype[SHPTYP_HEAVYNESS]-1]+' '+shipnames[shiptype[SHPTYP_PURPOSE]+2]+' '+shipnames[shiptype[SHPTYP_VESSEL]+5];
    printxy(131-round(length(s)*2.5),122,s);
    str(shipdata.guns:2,strln);
@@ -589,7 +589,7 @@ begin
  lowerball;
  mousehide;
  for i:=120 to 196 do
-  fillchar(screen[i,4],260,0);
+  scr_fillchar(screen[i,4],260,0);
  mouseshow;
  inc(inputlevel);
  if inputlevel=7 then
@@ -625,7 +625,7 @@ begin
      delay(tslice div 7);
     end;
    for i:=120 to 196 do
-    fillchar(screen[i,4],260,0);
+    scr_fillchar(screen[i,4],260,0);
    mouseshow;
    inputlevel:=0;
    raiseball;
@@ -635,7 +635,7 @@ begin
    lowerball;
    mousehide;
    for i:=120 to 196 do
-    fillchar(screen[i,4],260,0);
+    scr_fillchar(screen[i,4],260,0);
    mouseshow;
    dec(inputlevel);
    raiseball;
@@ -986,7 +986,7 @@ begin
  for i:=131 to 146 do
   move(screen[i,11],mcursor^[i-131],4*4);
  for i:=131 to 146 do
-  fillchar(screen[i,11],16,0);
+  scr_fillchar(screen[i,11],16,0);
  mousesetcursor(mcursor^);
  dispose(mcursor);
  showtitle;

@@ -158,7 +158,7 @@ begin
       until (i<0) or (y=0);
    if y>0 then
       for i:=14 to y*6+14 do
-	 fillchar(screen[i,8],246,0);
+	 scr_fillchar(screen[i,8],246,0);
    y:=12;
    i:=logindex;
    repeat
@@ -169,7 +169,7 @@ begin
    until (i=maxlogentries) or (y=25) or (logs[i]<0);
    if y<25 then
       for i:=y*6+21 to 170 do
-	 fillchar(screen[i,8],246,0);
+	 scr_fillchar(screen[i,8],246,0);
    mouseshow;
 end;
 
@@ -228,7 +228,7 @@ begin
                end;
               if not qmode then
                for i:=14 to 173 do
-                fillchar(screen[i,8],246,0);
+                scr_fillchar(screen[i,8],246,0);
                mouseshow;
               qmode:=true;
               if not qmode then displaylist else getlog;
@@ -251,7 +251,7 @@ begin
                           screen[i,312]:=79;
                          end;
                         for i:=14 to 173 do
-                         fillchar(screen[i,8],246,0);
+                         scr_fillchar(screen[i,8],246,0);
                         mouseshow;
                         displaylist;
                        end
@@ -265,7 +265,7 @@ begin
                           screen[i,312]:=63;
                          end;
                         for i:=14 to 174 do
-                         fillchar(screen[i,8],246,0);
+                         scr_fillchar(screen[i,8],246,0);
                         mouseshow;
                         getlog;
                        end;
@@ -283,7 +283,7 @@ begin
                   screen[i,312]:=79;
                  end;
                 for i:=14 to 173 do
-                 fillchar(screen[i,8],246,0);
+                 scr_fillchar(screen[i,8],246,0);
                 mouseshow;
                 displaylist;
                end
@@ -297,7 +297,7 @@ begin
                   screen[i,312]:=63;
                  end;
                 for i:=14 to 173 do
-                 fillchar(screen[i,8],246,0);
+                 scr_fillchar(screen[i,8],246,0);
                 mouseshow;
                 getlog;
                end;
@@ -329,7 +329,7 @@ begin
             screen[i,312]:=79;
            end;
           for i:=14 to 173 do
-           fillchar(screen[i,8],246,0);
+           scr_fillchar(screen[i,8],246,0);
           mouseshow;
           displaylist;
          end
@@ -343,7 +343,7 @@ begin
             screen[i,312]:=63;
            end;
           for i:=14 to 173 do
-           fillchar(screen[i,8],246,0);
+           scr_fillchar(screen[i,8],246,0);
           mouseshow;
           getlog;
          end;
@@ -411,7 +411,7 @@ begin
    move(screen[i+120,j*17+9],tmpm^[j,i],4*4);
  mousesetcursor(tmpm^[0]);
  for i:=15 to 170 do
-  fillchar(screen[i,8],246,0);
+  scr_fillchar(screen[i,8],246,0);
  displaylist;
  mouseshow;
  {fadein;}
@@ -424,7 +424,7 @@ begin
      screen[i,312]:=63;
     end;
    for i:=15 to 170 do
-    fillchar(screen[i,8],246,0);
+    scr_fillchar(screen[i,8],246,0);
    getlog;
   end;
  done:=false;
@@ -486,7 +486,7 @@ begin
    if tradeindex=0 then
     begin
      for i:=141 to 183 do
-      fillchar(screen[i,4],121,0);
+      scr_fillchar(screen[i,4],121,0);
      mouseshow;
      exit;
     end;
@@ -505,7 +505,7 @@ begin
    until (y=6) or (x>20);
    if y<6 then
     for i:=147+y*6 to 183 do
-     fillchar(screen[i,4],121,0);
+     scr_fillchar(screen[i,4],121,0);
    x:=tradeindex-1;
    y:=3;
    bkcolor:=0;
@@ -521,14 +521,14 @@ begin
    until (y=0) or (x<0);
    if y>0 then
     for i:=141 to 140+y*6 do
-     fillchar(screen[i,4],121,0);
+     scr_fillchar(screen[i,4],121,0);
   end
  else
   begin
    if cargoindex=0 then
     begin
      for i:=141 to 183 do
-      fillchar(screen[i,4],121,0);
+      scr_fillchar(screen[i,4],121,0);
      mouseshow;
      exit;
     end;
@@ -550,7 +550,7 @@ begin
    until (y=6) or (x>250);
    if y<6 then
     for i:=147+y*6 to 183 do
-     fillchar(screen[i,4],121,0);
+     scr_fillchar(screen[i,4],121,0);
    x:=cargoindex-1;
    y:=3;
    bkcolor:=0;
@@ -577,7 +577,7 @@ begin
    until (y=0) or (x<0);
    if y>0 then
     for i:=141 to 140+y*6 do
-     fillchar(screen[i,4],121,0);
+     scr_fillchar(screen[i,4],121,0);
   end;
  mouseshow;
 end;
@@ -588,7 +588,7 @@ begin
  if stuffindex=0 then
   begin
    for i:=141 to 183 do
-    fillchar(screen[i,194],101,0);
+    scr_fillchar(screen[i,194],101,0);
    mouseshow;
    exit;
   end;
@@ -607,7 +607,7 @@ begin
  until (y=6) or (x>20);
  if y<6 then
   for i:=147+y*6 to 183 do
-   fillchar(screen[i,194],101,0);
+   scr_fillchar(screen[i,194],101,0);
  x:=stuffindex-1;
  y:=3;
  bkcolor:=0;
@@ -623,7 +623,7 @@ begin
  until (y=0) or (x<0);
  if y>0 then
   for i:=141 to 140+y*6 do
-   fillchar(screen[i,194],101,0);
+   scr_fillchar(screen[i,194],101,0);
  mouseshow;
 end;
 
@@ -763,13 +763,13 @@ begin
  trademode:=0;
  mousehide;
  for i:=128 to 133 do
-  fillchar(screen[i,97],121,0);
+  scr_fillchar(screen[i,97],121,0);
  for i:=141 to 183 do
-  fillchar(screen[i,194],101,0);
+  scr_fillchar(screen[i,194],101,0);
  for j:=1 to 20 do
   if tradestuff^[j]>0 then addcargo2(tradestuff^[j], true);
  for i:=158 to 164 do
-  fillchar(screen[i,131],57,0);
+  scr_fillchar(screen[i,131],57,0);
  displayleftlist;
  mouseshow;
 end;
@@ -810,11 +810,11 @@ begin
  subcursor2;
  mousehide;
  for i:=128 to 133 do
-  fillchar(screen[i,97],121,0);
+  scr_fillchar(screen[i,97],121,0);
  for i:=141 to 183 do
-  fillchar(screen[i,194],101,0);
+  scr_fillchar(screen[i,194],101,0);
  for i:=158 to 164 do
-  fillchar(screen[i,131],57,0);
+  scr_fillchar(screen[i,131],57,0);
  displayleftlist;
  mouseshow;
 end;
@@ -833,8 +833,8 @@ begin
  mousehide;
  for i:=158 to 164 do
   begin
-   fillchar(screen[i,131],num,c);
-   if num<57 then fillchar(screen[i,131+num],57-num,0);
+   scr_fillchar(screen[i,131],num,c);
+   if num<57 then scr_fillchar(screen[i,131+num],57-num,0);
   end;
  mouseshow;
 end;

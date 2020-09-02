@@ -43,8 +43,10 @@ procedure lineto(const x1,y1:word);cdecl ; external;
 procedure moveto(const x1,y1:word);cdecl ; external;
 procedure pieslice(const x1,y1,phi0,phi1,r: word);cdecl ; external;
 procedure setwritemode(const mode: byte); cdecl ; external;
+procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 
 implementation
+uses data, sysutils; 
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
 
@@ -66,6 +68,30 @@ begin
  fastkeypressed:=boolean(key_pressed);
 end;
 
+
+type addr_type = qword;
+const screen_size = 320*200;
+
+function _address (constref somevar) : addr_type;
+var p: pbyte;
+    a: ^addr_type;
+begin
+  p := @somevar;
+  a := addr(p);
+  _address := a^;
+end;
+
+procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
+var dest_addr, screen_addr: addr_type;
+begin
+ dest_addr := _address(dest);
+ screen_addr := _address(screen);
+
+ writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (dest_addr >= screen_addr, 'scr_fillchar: screen destination below 0');
+ assert (dest_addr + count <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
+ fillchar(dest, count, value);
+end;
 
 begin
 

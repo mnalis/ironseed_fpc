@@ -194,7 +194,7 @@ begin
     for i:=151 to 186 do move(screen2^[i,11],screen[i,11],150);
   end;
  for i:=158 to 182 do
-  fillchar(screen[i,163],6,2);
+  scr_fillchar(screen[i,163],6,2);
  for j:=163 to 168 do
   screen[157+textindex,j]:=86;
  mouseshow;

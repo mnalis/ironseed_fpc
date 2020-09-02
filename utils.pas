@@ -122,9 +122,9 @@ procedure graybutton(x1,y1,x2,y2: integer);
 begin
  x:=x2-x1+1;
  for i:=y1 to y2 do
-  fillchar(screen[i,x1],x,5);
- fillchar(screen[y2,x1],x,2);
- fillchar(screen[y1,x1],x,10);
+  scr_fillchar(screen[i,x1],x,5);
+ scr_fillchar(screen[y2,x1],x,2);
+ scr_fillchar(screen[y1,x1],x,10);
  setcolor(2);
  line(x2,y1,x2,y2);
  setcolor(10);
@@ -136,8 +136,8 @@ end;
 procedure revgraybutton(x1,y1,x2,y2: integer);
 begin
  x:=x2-x1+1;
- fillchar(screen[y2,x1],x,10);
- fillchar(screen[y1,x1],x,2);
+ scr_fillchar(screen[y2,x1],x,10);
+ scr_fillchar(screen[y1,x1],x,2);
  setcolor(10);
  line(x2,y1,x2,y2);
  setcolor(2);
@@ -255,7 +255,7 @@ begin
    delay(tslice*2);
   end;
  for i:=25 to 117 do
-  fillchar(screen[i,165],115,5);
+  scr_fillchar(screen[i,165],115,5);
  setcolor(2);
  line(279,25,279,117);
  line(165,117,279,117);

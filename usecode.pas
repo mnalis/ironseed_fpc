@@ -204,7 +204,7 @@ begin
       if incargo(ID_STARMINER)>0 then inc(y);
    end;
    for i:=37 +1 + y * 6 to 114 do
-      fillchar(screen[i,166],113,5);
+      scr_fillchar(screen[i,166],113,5);
    if tempplan^[curplan].notes and 1=0 then
    begin
       printxy(170,37+y*6,'No info available');
@@ -595,7 +595,7 @@ begin
  circle(85,86,40);
  revgraybutton(35,24,135,44);
  for i:=25 to 43 do
-  fillchar(screen[i,36],99,0);
+  scr_fillchar(screen[i,36],99,0);
  randseed:=tempplan^[curplan].seed;
  if showplanet then
   begin
@@ -899,7 +899,7 @@ begin
  line(147,49,147,86);
  line(148,59,148,76);
  for i:=10 to 125 do
-  fillchar(screen[i,25],119,5);
+  scr_fillchar(screen[i,25],119,5);
  setcolor(10);
  line(25,9,145,9);
  line(25,9,25,126);
@@ -939,7 +939,7 @@ begin
    delay(tslice*2);
   end;
  for i:=25 to 117 do
-  fillchar(screen[i,165],115,5);
+  scr_fillchar(screen[i,165],115,5);
  setcolor(2);
  line(279,25,279,117);
  line(165,117,279,117);

@@ -519,7 +519,7 @@ procedure command2(n: integer);
 begin
  mousehide;
  for i:=135 to 189 do
-  fillchar(screen[i,15],278,0);
+  scr_fillchar(screen[i,15],278,0);
  printxy(12,182,'Subject:');
  if contactindex>-1 then erasecursor;
  contactindex:=n;
@@ -697,7 +697,7 @@ begin
       if y=8 then
       begin
 	 for j:=184 to 188 do
-	    fillchar(screen[j,15],288,0);
+	    scr_fillchar(screen[j,15],288,0);
 	 tcolor:=47;
 	 printxy(146,191,'MORE');
 	 i2:=47;
@@ -714,7 +714,7 @@ begin
 	 while fastkeypressed do readkey;
 	 mousehide;
 	 for j:=141 to 188 do
-	    fillchar(screen[j,15],288,0);
+	    scr_fillchar(screen[j,15],288,0);
 	 printxy(146,191,'    ');
 	 tcolor:=s;
 	 y:=1;
@@ -728,21 +728,21 @@ begin
  case n of
   20000: begin {good bye}
           for i:=182 to 188 do
-           fillchar(screen[i,12],200,0);
+           scr_fillchar(screen[i,12],200,0);
           contactindex:=-1;
          end;
   20001: begin {trade}
           if alien.war then
            begin
             for i:=141 to 181 do
-             fillchar(screen[i,12],288,0);
+             scr_fillchar(screen[i,12],288,0);
             printxy(12,141,'WE ARE AT WAR!');
            end
           else trade;
          end;
   20002: begin {attack!}
           for i:=182 to 188 do
-           fillchar(screen[i,12],200,0);
+           scr_fillchar(screen[i,12],200,0);
           contactindex:=-1;
           createwandering(WNDORDER_ATTACK);
           ship.wandering.relx:=500+random(100);
@@ -847,9 +847,9 @@ var index,index2,i,i2: integer;
 begin
    mousehide;
    for i:=135 to 181 do
-      fillchar(screen[i,15],288,0);
+      scr_fillchar(screen[i,15],288,0);
    for i:=182 to 187 do
-      fillchar(screen[i,61],100,0);
+      scr_fillchar(screen[i,61],100,0);
    tcolor:=s;
    printxy(12,135,question);
    i:=20;
@@ -1619,7 +1619,7 @@ var t	 : ^eventarray;
    begin
       mousehide;
       for j:=127 to 179 do
-	 fillchar(screen[j,5],300,0);
+	 scr_fillchar(screen[j,5],300,0);
       str2^:=t^[i].msg;
       done:=false;
       y:=0;
@@ -1698,7 +1698,7 @@ begin
    for i:=0 to 15 do
    begin
       move(screen[i+130,20],tmpm^[i],4*4);
-      fillchar(screen[i+130,20],16,0);
+      scr_fillchar(screen[i+130,20],16,0);
    end;
    mousesetcursor(tmpm^);
    dispose(tmpm);

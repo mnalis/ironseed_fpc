@@ -594,7 +594,7 @@ procedure showplanet(num: integer);
 var indexi,indexj,i,j,a: integer;
 begin
  for i:=1 to 26 do
-  fillchar(screen[i+num*40-26,276],36,0);
+  scr_fillchar(screen[i+num*40-26,276],36,0);
  for a:=30 downto 4 do
   begin
    indexi:=0;
@@ -750,9 +750,9 @@ begin
   end;
  mousehide;
  for i:=13 to 133 do
-  fillchar(screen[i,28],240,0);
+  scr_fillchar(screen[i,28],240,0);
  for i:=147 to 196 do
-  fillchar(screen[i,6],125,0);
+  scr_fillchar(screen[i,6],125,0);
  randseed:=tempplan^[curplan].seed;
  tcolor:=207;
  if tempplan^[curplan].state <> 7 then
@@ -966,7 +966,7 @@ begin
    if explorelevel <> 0 then
    begin
       for i:=147 to 196 do
-	 fillchar(screen[i,5],128,0);
+	 scr_fillchar(screen[i,5],128,0);
       refreshinfogathered(true);
    end else
       refreshinfogathered(false);
@@ -1217,10 +1217,10 @@ begin
 	      cury:=random(60)+30;
 	      tarx:=random(180)+30;
 	      tary:=random(60)+30;
-	      fillchar(screen[j*40+1,281],30,0);
+	      scr_fillchar(screen[j*40+1,281],30,0);
 	      status:=3;
 	      for i:=1 to 30 do
-		 fillchar(screen[j*40-26+i,281],32,0);
+		 scr_fillchar(screen[j*40-26+i,281],32,0);
 	   end;
         5: begin {returning}
 	      for i:=1 to 26 do
@@ -1308,7 +1308,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displayhydroinfo;
@@ -1328,7 +1328,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displaylithoinfo;
@@ -1348,7 +1348,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displaybioinfo;
@@ -1439,7 +1439,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Atmosphere Data');
  displayatmoinfo;
  mouseshow;
@@ -1456,7 +1456,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Hydrosphere Data');
  displayhydroinfo;
  mouseshow;
@@ -1473,7 +1473,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Lithosphere Data');
  displaylithoinfo;
  mouseshow;
@@ -1487,7 +1487,7 @@ begin
  explorelevel:=4;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Biosphere Data');
  displaybioinfo;
  mouseshow;
@@ -1501,7 +1501,7 @@ begin
    createano;
    mousehide;
    for i:=147 to 196 do
-      fillchar(screen[i,5],128,0);
+      scr_fillchar(screen[i,5],128,0);
    printxy(6,148,'Anomaly Data');
    y:=0;
    for j:=1 to 7 do if tempplan^[curplan].cache[j]>0 then
@@ -2023,14 +2023,14 @@ begin
  if j<4 then
   for a:=j+1 to 4 do
    for i:=1 to 26 do
-    fillchar(screen[i+a*40-26,281],31,0);
+    scr_fillchar(screen[i+a*40-26,281],31,0);
  for j:=1 to 7 do
   for i:=20 to 27 do
    move(screen[i,j*20+10],msgs^[j,i-20],4*4);
  que:=0;
  SetScan(0);
  for i:=13 to 133 do
-  fillchar(screen[i,28],240,0);
+  scr_fillchar(screen[i,28],240,0);
  if (not colorchange) and (zoommode=3) then
   begin
    zoommode:=2;

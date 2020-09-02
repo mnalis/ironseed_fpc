@@ -172,7 +172,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -290,7 +290,7 @@ begin
  bkcolor:=255;
  fading;
  mousehide;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
 
  playmod(true,'sound/DIMENSIO.MOD');
  loadscreen('data/end1',@screen);
