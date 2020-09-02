@@ -764,8 +764,8 @@ begin
  end;
  mouseshow;
  bkcolor:=3;
- if (ship.shield<=ID_REFLECTIVEHULL) or (alert=ALRT_COMBAT) then exit;	// FIXME: when does this get called anyway?
- // FIXME: check, this will also skip setting shieldlevel if we are in ALERT mode?? FIXME but it does not get set for COMBAT mode anyway?? this happens in other places in the code too. why? and does it work?
+ { engineering / shield display checks }
+ if ship.shield<=ID_REFLECTIVEHULL then exit;
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -786,10 +786,13 @@ begin
       end;
     end;
   end;
+
  if alert=ALRT_REST then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
  else if alert=ALRT_ALERT then
-  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT]
+ else if alert=ALRT_COMBAT then
+  ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
 end;
 
 procedure setupweaponinfo;
