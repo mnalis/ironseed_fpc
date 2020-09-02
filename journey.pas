@@ -1424,7 +1424,7 @@ begin
 	    ship.damages[i] := damages[i];
 	 ship.hullintegrity := hull;
       end;
-     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed }
+     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up }
      setalertmode(ALRT_ALERT, true);
      ship.wandering.alienid:=20000;
      checkwandering;

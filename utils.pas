@@ -791,7 +791,7 @@ begin
   end;
 end;
 
-procedure movewandering;	{ FIXME: almost same duplicate in journey.pas ?? }
+procedure movewandering;	{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
 begin
  case action of
   WNDACT_NONE:;

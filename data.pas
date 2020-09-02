@@ -100,7 +100,7 @@ const OPT_SCREENSAVER = 1;
       SHLD_ALERT_WANT = 2;
       SHLD_COMBAT_WANT = 3;
 
-      ALRT_REST = 0;			{ alert mode - sets 'alert' via setalertmode() } //FIXME: see setalertmode() / armweapons/powerdownewapons/raiseshieldslowershields / ironseed manual. see FIXMEs in code. is it possible to lower shield to NONE level?? or only change between ALRT/COMBAT modes??
+      ALRT_REST = 0;			{ alert mode - sets 'alert' via setalertmode() }
       ALRT_ALERT = 1;
       ALRT_COMBAT = 2;
 
