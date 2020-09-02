@@ -1,4 +1,4 @@
-- shield/weapon arming/disarming and panic button rework
+- shield/weapon arming/disarming and panic button rework, also fix its status on loadgame
 - docs: more events/logs system documenting
 - code: use constants for alert mode, cleanup whitespace
 v 0.1.6

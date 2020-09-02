@@ -328,18 +328,16 @@ begin
   end;
  if ship.shield=ID_NOSHIELD then ship.shieldlevel:=0
   else if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100; { fixup shield status only if we are sure what they must be }
-
  { alert is not saved in savegame. Try to calculate it }
- { game will upgrade from REST to ALERT if any subsystems are damaged automatically in periodically called checkstats() }
-
+ { NB: game will upgrade from REST to ALERT and vice versa if any subsystems are damaged automatically -  by periodically calling checkstats() }
  alert:=ALRT_COMBAT;	 { NB: main.png has panic button in RED color. So every game must start with ALERT in RED (COMBAT) or color changes won't be working correctly }
 
  if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then
-    setalertmode(ALRT_COMBAT, true)
+    setalertmode(ALRT_COMBAT, false)
   else if (ship.shieldlevel=ship.shieldopt[SHLD_ALERT_WANT]) and (ship.shieldopt[SHLD_ALERT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT]) then
-    setalertmode(ALRT_ALERT, true)
+    setalertmode(ALRT_ALERT, false)
   else
-    setalertmode(ALRT_REST, true);
+    setalertmode(ALRT_REST, false);
 
  showresearchlights;
 end;
