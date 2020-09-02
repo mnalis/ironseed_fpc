@@ -1278,7 +1278,7 @@ begin
    tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    for i:=1 to 120 do
     scrfrom_move(screen[i+12,28],planet^[i],30*4);
@@ -1307,7 +1307,7 @@ begin
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
  end
@@ -1336,7 +1336,7 @@ begin
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
   end
@@ -1357,7 +1357,7 @@ begin
    createplanet(120,60);
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    water:=50;
    case tempplan^[curplan].state of
@@ -1503,7 +1503,7 @@ begin
  tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(tpal,sizeof(paltype),0);
  set256colors(tpal);
- move(t^,screen,sizeof(screen));
+ scrto_move(t^,screen,sizeof(screen));
  dispose(t);
  loadscreen(tempdir+'/current',@screen);
  showtime;

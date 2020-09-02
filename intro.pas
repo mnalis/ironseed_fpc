@@ -670,7 +670,7 @@ begin
 
 
   mousehide;
-  move(s3^,screen,sizeof(screen));
+  scrto_move(s3^,screen,sizeof(screen));
   mouseshow;
   drawcursor;
   findmouse;

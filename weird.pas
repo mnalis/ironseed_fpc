@@ -1167,7 +1167,7 @@ begin
     end;
    if not quit then
     begin
-     move(backgr^,screen,sizeof(screen));
+     scrto_move(backgr^,screen,sizeof(screen));
      repeat
       for i:=32 to 63 do
        colors[i]:=colors[random(32)];
@@ -1252,7 +1252,7 @@ begin
        pop es
       end;
       if (fastkeypressed) or (mouse.getstatus) then quit:=true;
-      if not quit then move(backgr^[1],screen,15600*4);
+      if not quit then scrto_move(backgr^[1],screen,15600*4);
      end;
    until quit;
    dispose(s2);

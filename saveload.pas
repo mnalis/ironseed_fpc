@@ -485,7 +485,7 @@ begin
      pop es
     end;
 }
-    move(s^,screen,sizeof(screen));
+    scrto_move(s^,screen,sizeof(screen));
     mouseshow;
     delay(b);
    end;

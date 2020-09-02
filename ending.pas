@@ -251,7 +251,7 @@ var t: pscreentype;
 begin
  new(t);
  loadscreen('data/end6',backgr);
- move(backgr^,screen,sizeof(screen));
+ scrto_move(backgr^,screen,sizeof(screen));
  loadscreen('data/end5',t);
  fadein;
  k:=0;
@@ -260,7 +260,7 @@ begin
  repeat
   inc(k,80);
   inc(k2,320);
-  move(t^[0,64000-k2],screen,k*4);
+  scrto_move(t^[0,64000-k2],screen,k*4);
   scrto_move(backgr^,screen[0,k2],(16000-k)*4);
   delay(b);
  until k=16000;
