@@ -52,7 +52,7 @@ procedure closegraph;   // close video
 begin
     all_done;
 //    SDL_Quit();
-    
+
 end;
 procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
 var rp,gp,bp:byte;

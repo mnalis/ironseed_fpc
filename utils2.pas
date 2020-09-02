@@ -72,7 +72,7 @@ var
 function GetTechnologyLevel(plan : Integer) : Integer;
 var
    i,techlvl : integer;
-begin 
+begin
  if tempplan^[plan].orbit=0 then
   begin
    GetTechnologyLevel:=0;
@@ -239,7 +239,7 @@ begin
    end;
    mat[0] := 0;
    mat[20] := 0;
-   
+
    {compute component counts}
    for i := 1 to 20 do
       cmp[i] := getsubamount(i + ID_UNKNOWN_COMPONENT, ele, mat);
@@ -1114,7 +1114,7 @@ begin
 	 for yy := -y1 to y1 do
 	 begin
 	    if y1 > 0 then
-	       
+
 	       b := (bl * (y1 - abs(yy)) * (y1 - abs(yy))) div y1 div y1
 	    else
 	       b := 0;
@@ -1127,7 +1127,7 @@ begin
 	 end;
       end;
    end;
-   
+
    for i:=1 to 120 do
       for j:=1 to 240 do
 	 landform^[j,i]:=backgr^[i+10,j+40];

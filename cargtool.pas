@@ -59,7 +59,7 @@ var
    res2cargo						    : array[1..250] of Integer;
    history						    : array[1..32] of Integer;
    historyindex						    : Integer;
-							     
+
 function GetBuildTime(item : Integer):Integer;
 var
    i : Integer;
@@ -67,7 +67,7 @@ begin
    for i:= 1 to maxcargo do
       if cargo[i].index = item then
       begin
-         { special artifacts with id>6000 like "Glyptic Scythe" do not have entry creation.dta, so they default to 30000 
+         { special artifacts with id>6000 like "Glyptic Scythe" do not have entry creation.dta, so they default to 30000
            while their timeleft in go2() is initialized to timeleft:=6000+random(5)*100, which causes progress bar to break.
            So initialize to worst case 6500 so we have something more reasonable for progressbar. }
          if bldcargo[i]=30000 then bldcargo[i] := 65;
@@ -1627,7 +1627,7 @@ begin
    go2(team);
    exit;
   end;
-   
+
    case createinfo^[cargoindex].index of
      ID_FUEL_NODULES, ID_REINFORCE_HULL..ID_ADD_CARGO_SPACE, ID_MIND_ENHANCERS, ID_UNKNOWN_COMPONENT..ID_LAST_ELEMENT : ;
    else
@@ -1639,7 +1639,7 @@ begin
       i := 0
    else if i >=0 then
       i := StartBuild(True, createinfo^[cargoindex].index, createinfo^[cargoindex].index, team);
-      
+
    case i of
      0	: begin
 	     tcolor:=92;
@@ -1682,7 +1682,7 @@ begin
 	exit;
      end;
    end;
-     {	
+     {
  i:=0;
  for j:=1 to 3 do if createinfo^[cargoindex].parts[j]=createinfo^[cargoindex].parts[1] then inc(i);
  if (incargo(createinfo^[cargoindex].parts[1])<i) or
@@ -1840,7 +1840,7 @@ end;
 
 procedure clearkbbuffer;
 begin
- 
+
 end;
 
 procedure setpartcursor(index : integer);
@@ -1964,7 +1964,7 @@ begin
     40..53: setinfocursor(1);
     61..74: setinfocursor(2);
     82..95: setinfocursor(3);
-  end;	   
+  end;
   152..212: case mouse.y of
     40..53: setinfocursor(1);
     61..74: setinfocursor(2);

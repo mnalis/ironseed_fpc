@@ -181,7 +181,7 @@ begin
    write(systfile,systems);
    if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
    close(systfile);
-   
+
    assign(eventfile,'save'+chr(num+48)+'/EVENTS.DTA');
    rewrite(eventfile);
    if ioresult<>0 then errorhandler('EVENTS.DTA',1);
@@ -202,7 +202,7 @@ begin
    write(logpendingfile,logpending);
    if ioresult<>0 then errorhandler('PENDING.DTA',5);
    close(logpendingfile);
-   
+
    curfilenum:=num;
    saveplanetinfo;
 end;
@@ -281,7 +281,7 @@ begin
    read(shipfile,ship);
    if ioresult<>0 then errorhandler('SHIP.DTA',5);
    close(shipfile);
-   
+
    assign(systfile,'save'+chr(num+48)+'/SYSTEMS.DTA');
    reset(systfile);
    if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
@@ -297,7 +297,7 @@ begin
       read(eventfile,events);
       if ioresult<>0 then errorhandler('EVENTS.DTA',5);
       close(eventfile);
-      
+
       assign(logsfile,'save'+chr(num+48)+'/LOGS.DTA');
       reset(logsfile);
       if ioresult<>0 then errorhandler('LOGS.DTA',1);
@@ -312,7 +312,7 @@ begin
       if ioresult<>0 then errorhandler('PENDING.DTA',5);
       close(logpendingfile);
    end;
-   
+
    curfilenum:=num;
    loadplanetinfo;
    tslice:=ship.options[OPT_TIMESLICE];
@@ -468,7 +468,7 @@ begin
     move(backgr^,(p+k)^,64000-k);
     p:=@(backgr^);
     move((p+64000-k)^,s^,k);
-   
+
     for i:=40 to 140 do
      move(tempscr^[i,74],s^[i,74],43*4);
     mousehide;

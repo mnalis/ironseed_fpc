@@ -555,7 +555,7 @@ end;
 
 procedure printxy2(x1,y1,m,n,o: integer; s: string);
 var letter,j2,a,x,y,t : integer;
-label skipit; 
+label skipit;
 begin
    t:=tcolor;
    brighter:=false;
@@ -671,7 +671,7 @@ begin
 	      'A' ..'Z': letter:=letter-36;
 	      'a' ..'z': letter:=letter-40;
 	    else letter:=1;
-	    end;	
+	    end;
 	    str2^[j]:=chr(letter);
 	    inc(j);
 	 end;
@@ -796,7 +796,7 @@ begin
 		   bkcolor := 0;
 		   tcolor := s;
 		   printxy(12,135+(1)*6,'Give the Phaedor Moch a radioactive and a coolant?');
-		   mouseshow; 
+		   mouseshow;
 		   result := yesnorequest('Give supplies?',0,31);
 		   mousehide;
 		   if result then
@@ -820,7 +820,7 @@ begin
 		if (incargo(ID_STRATAMOUNT) >= 1) then
 		begin
 		   printxy(12,135+(1)*6,'Give the Aard a stratamount?');
-		   mouseshow; 
+		   mouseshow;
 		   result := yesnorequest('Give supplies?',0,31);
 		   mousehide;
 		   if result then
@@ -868,7 +868,7 @@ begin
 	'a' ..'z': question[j]:=chr(ord(question[j])-40);
 	'%'	  : question[j]:=#55;
       else question[j]:=#1;
-      end;	  
+      end;
    index:=0;
    {i:=1;}
    repeat
@@ -940,7 +940,7 @@ begin
  case ans of
   'A'..'Z',' ','0'..'9','''','-': if contactindex>-1 then
         begin
-	
+
          if cursorx<20 then
           begin
            for j:=20 downto cursorx do question[j]:=question[j-1];

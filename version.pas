@@ -18,7 +18,7 @@ unit version;
 
 interface
 var
-   versionstring :string[20]; 
+   versionstring :string[20];
 implementation
 begin
    versionstring :=

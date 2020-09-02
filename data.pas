@@ -47,7 +47,7 @@ const
   ('Lithosphere..','Hydrosphere..','Atmosphere...','Biosphere....','Anomaly......');
  activity: array[1..5] of string[8] =
   ('    Calm','    Mild','Moderate','   Heavy',' Massive');
- repairname: array[1..8] of string = 
+ repairname: array[1..8] of string =
   ('Power Supply','Shield Control','Weapons Control','Engine'
   ,'Life Support ','Communications','Computer AI','Hull Damage');
  teamdata:array[0..15] of string[13] =
@@ -209,7 +209,7 @@ type
    buttontype = record
 		   x, y, w, h : Integer;
 		   c1, c2     : char;
-		end;	      
+		end;
  portraittype= array[0..69,0..69] of byte;
  scandatatype= array[0..11] of byte;
  scantype= array[0..16] of scandatatype;
@@ -350,7 +350,7 @@ type
 logpendingtype =
    record
       time, log	: Integer;
-   end;		
+   end;
 
 eventarray = array[0..1023] of byte;
 logarray = array[0..255] of Integer;
@@ -798,7 +798,7 @@ begin
       close(fp);
    end;
 end;
-					    
+
 procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 var
    fs : file of screentype;
@@ -820,7 +820,7 @@ begin
       close(fp);
    end;
 end;
-					    
+
 
 
 procedure printxy(x1,y1: integer; s: string);
@@ -1057,7 +1057,7 @@ end;
 
 procedure checkcanary2;
 begin
-      if canary_[MAXCANARY_] <> CANARY_QW then 
+      if canary_[MAXCANARY_] <> CANARY_QW then
        begin
          dumpcanary;
          writeln ('FATAL ERROR: memory surely corrupted - quick canary check failed, ', canary_[MAXCANARY_], ' != ', CANARY_QW);

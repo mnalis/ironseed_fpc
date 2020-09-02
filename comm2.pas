@@ -47,7 +47,7 @@ type
    titlebody	 = record
 		      id   : Integer;
 		      text : string[49];
-		   end;	   
+		   end;
  titletype	 = array[0..maxlogentries-1] of titlebody;
  computerlogtype = array[0..24] of string[49];
  alienstuffarray = array[1..20] of integer;

@@ -818,7 +818,7 @@ begin
       shadowprintln;
       shadowprint(s1+' '+s2);
    end;
-   
+
    quickloadscreen(tempdir+'/current',@screen, false);
 end;}
 
@@ -828,7 +828,7 @@ var
    oldt,t,c,ofsc : integer;
    done		 : boolean;
    ans		 : char;
-begin		 
+begin
    oldt:=tcolor;
    if ship.options[OPT_MSGS]=0 then exit;
    tcolor:=31;

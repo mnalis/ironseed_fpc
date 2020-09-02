@@ -1,6 +1,6 @@
 - shield/weapon arming/disarming and panic button rework
 - docs: more events/logs system documenting
-- code: use constants for alert mode
+- code: use constants for alert mode, cleanup whitespace
 v 0.1.6
 - fix bugs in logic deciding when aliens attack
 - fix bugs with Sengzhac log not showing and not being able to scroll over it

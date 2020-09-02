@@ -106,7 +106,7 @@ begin
 	      3: case i of
 		   0..50: a:=(random(17)+500)*10; {element}
 		   51..75: a:=(random(2)+3)*1000;{Unknown material or component}
-		 end;	  
+		 end;
 	      4: case i of
 		   0..40: a:=(random(17)+500)*10; {element}
 		   41..70: a:=(random(2)+3)*1000; {Unknown material or component}
@@ -115,7 +115,7 @@ begin
 		      if a>400 then a:=6101+a
 		      else a:=6001+a;
 		   end;
-		 end;	  
+		 end;
 	      5: case i of
 		   0..65: a:=(random(2)+3)*1000; {Unknown material or component}
 		   73..75: begin {artifact}
@@ -123,7 +123,7 @@ begin
 		      if a>400 then a:=6101+a
 		      else a:=6001+a;
 		   end;
-		 end;	  
+		 end;
 	      6: if i<6 then {artifact}
 		 begin
 		    a:=random(500);
@@ -167,16 +167,16 @@ begin
 	end;
     end;
    techlvl:=-2;
-   
+
    case tempplan^[curplan].system of
-     93,138,78,191,171,221 : 
+     93,138,78,191,171,221 :
      if (tempplan^[curplan].orbit <> 0) then
      begin
 	techlvl:=6;
 	tl2:=0;
 	exit;
      end;
-     45			   : 
+     45			   :
 	  if (tempplan^[curplan].orbit <> 0) and not chevent(27) then
 	  begin
 	     techlvl:=6;
@@ -423,7 +423,7 @@ begin
         0..10: index:=spcindex[index div 2];
 	end;
         if index=64 then index:=95;
-       
+
        tempzoom^[i,j]:=index;
       end;
     end
@@ -493,7 +493,7 @@ begin
   y:=13+(j div 240);
   x:=28+(j mod 240);
   screen[y,x]:=landcolors^[y,x];
-  if index mod 50=0 then 
+  if index mod 50=0 then
    begin
     if not fastkeypressed then delay(tslice div 9);
    end;
@@ -970,7 +970,7 @@ begin
       refreshinfogathered(true);
    end else
       refreshinfogathered(false);
-      
+
    printxy(6,148,'Information Gathered');
    for j:=1 to 5 do
    begin
@@ -1001,7 +1001,7 @@ end;
 
 procedure SetScan(nextscan : Integer);
 var
-   i, y, x, c	:Integer ; 
+   i, y, x, c	:Integer ;
 begin
    if (nextscan <> 0) and (abs(nextscan) <= 5) and (datagathered[abs(nextscan),2] < 1000) then
       que := nextscan;
@@ -1263,7 +1263,7 @@ begin
   end;
  if dirty and (explorelevel = 0) then
     displayinfogathered;
-   
+
  if not showscan then
   case zoommode of
    1: rectangle(zoomx+28,zoomy+13,zoomx+88,zoomy+73);
@@ -1842,7 +1842,7 @@ begin
 	       end;
 	    end;
 	 end;
-end;	   
+end;
 
 procedure processkey;
 var ans	: char;
@@ -1985,7 +1985,7 @@ begin
     numprobes:=incargo(ID_PROBOT)
  else
     numprobes:=incargo(ID_STARDIVER);
-   
+
  if numprobes>4 then numprobes:=4;
  compressfile(tempdir+'/current',@screen);
  {fading;}
@@ -2105,5 +2105,5 @@ begin
  zoomx:=1;
  zoomy:=1;
  new(landcolors);
- 
+
 end.

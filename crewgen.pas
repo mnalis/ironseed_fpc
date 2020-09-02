@@ -300,13 +300,13 @@ begin
    rewrite(confile);
    if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
    close(confile);
-   
+
    if not savegamedata(160,191) then
    begin
        sublevel;
       exit;
    end;
-   
+
    quit:=true;
    code:=curfilenum+48;
    str(curfilenum,nums);
@@ -316,7 +316,7 @@ begin
    write(planfile,planets^);
    if ioresult<>0 then errorhandler('PLANETS.DTA',5);
    close(planfile);
-   
+
    assign(confile,'save'+nums+'/CONTACTS.DTA');
    rewrite(confile);
    if ioresult<>0 then errorhandler('save'+nums+'/CONTACTS.DTA',1);
@@ -349,7 +349,7 @@ begin
    write(logpendingfile,logpending);
    if ioresult<>0 then errorhandler('PENDING.DTA',5);
    close(logpendingfile);
-   
+
 end;
 
 procedure drawcrew;
@@ -942,7 +942,7 @@ begin
 			orbit := 2;
 			age := 2000;
 		     end;
-		  end else 
+		  end else
 		     setstate(curplan,i);
 		  if i=1 then systems[j].mode:=planets^[curplan].mode;
 	       end;
