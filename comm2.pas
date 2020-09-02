@@ -408,7 +408,7 @@ begin
  close(f2);
  for j:=0 to 6 do
   for i:=0 to 15 do
-   move(screen[i+120,j*17+9],tmpm^[j,i],4*4);
+   scrfrom_move(screen[i+120,j*17+9],tmpm^[j,i],4*4);
  mousesetcursor(tmpm^[0]);
  for i:=15 to 170 do
   scr_fillchar(screen[i,8],246,0);

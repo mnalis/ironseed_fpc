@@ -442,7 +442,7 @@ begin
      if k>64000 then k:=k-64000;
     mousehide;
     for i:=40 to 140 do
-     move(screen[i,74],tempscr^[i,74],43*4);
+     scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
     mouseshow;
 {    asm
      push es
@@ -503,7 +503,7 @@ begin
  tcolor:=26;
  mousehide;
  for i:=40 to 140 do
-  move(screen[i,74],tempscr^[i,74],43*4);
+  scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
  button(75,40,244,140,0);
  for a:=1 to 8 do button(85,40+a*10,235,48+a*10,2);
  button(185,130,225,138,2);
@@ -515,9 +515,9 @@ begin
   begin
    new(s);
    for i:=40 to 140 do
-    move(screen[i,74],tempscr^[i,74],43*4);
+    scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
    loadscreen('data/cloud',@screen);
-   move(screen,backgr^,sizeof(screen));
+   scrfrom_move(screen,backgr^,sizeof(screen));
    for i:=40 to 140 do
     move(tempscr^[i,74],screen[i,74],43*4);
   end;
@@ -606,7 +606,7 @@ begin
  new(names);
  mousehide;
  for i:=40 to 140 do
-  move(screen[i,74],tempscr^[i,74],43*4);
+  scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text;
  button(75,40,244,140,alt);
  for a:=1 to 8 do button(85,40+a*10,235,48+a*10,2+alt);
@@ -734,7 +734,7 @@ begin
  mousehide;
  tcolor:=text;
  for i:=60 to 102 do
-  move(screen[i,74],tempscr^[i,74],43*4);
+  scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text-5;
  bkcolor:=35+alt;
  button(74,60,245,102,alt);
@@ -1017,7 +1017,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=85 to 105 do
-  move(screen[i,75],tempscr^[i,75],43*4);
+  scrfrom_move(screen[i,75],tempscr^[i,75],43*4);
  graybutton(75,85,245,105);
  revgraybutton(84,89,236,101);
  last:=0;
@@ -1238,7 +1238,7 @@ begin
  mousehide;
  new(tempscr);
  for i:=85 to 105 do
-  move(screen[i,105],tempscr^[i,105],28*4);
+  scrfrom_move(screen[i,105],tempscr^[i,105],28*4);
  graybutton(105,85,215,105);
  tcolor:=191;
  i:=0;

@@ -1447,16 +1447,16 @@ begin
    new(shieldpic2);
    new(msgs);
    for i:=10 to 11 do
-      move(screen[i,71],statpic^[i-10],10);
+      scrfrom_move(screen[i,71],statpic^[i-10],10);
    for i:=26 to 27 do
-      move(screen[i,269],blank^[i-26],10);
+      scrfrom_move(screen[i,269],blank^[i-26],10);
    for i:=0 to 6 do
-      move(screen[i+10,91],shieldpic^[i],1*4);
+      scrfrom_move(screen[i+10,91],shieldpic^[i],1*4);
    for i:=0 to 6 do
-      move(screen[i+10,101],shieldpic2^[i],1*4);
+      scrfrom_move(screen[i+10,101],shieldpic2^[i],1*4);
    for j:=0 to 3 do
       for i:=0 to 9 do
-	 move(screen[i+10,110+j*10],msgs^[j,i],10);
+	 scrfrom_move(screen[i+10,110+j*10],msgs^[j,i],10);
    for i:=9 to 20 do
       scr_fillchar(screen[i,71],177,0);
    displaytimedelay;
@@ -1506,7 +1506,7 @@ begin
       if ship.gunnodes[j]=0 then poweredup[j]:=-1;
    end;
    for i:=125 to 189 do
-      move(screen[i,6],asdisplay^[i],93);
+      scrfrom_move(screen[i,6],asdisplay^[i],93);
    for i:=137 to 189 do
       scr_fillchar(screen[i,6],93,0);
    for j:=1 to 3 do stats[j]:=0;

@@ -271,7 +271,7 @@ begin
 	 fadestep(1);
 	 delay(tslice div 4);
 	 for i:=20 to 130-a do
-	    move(screen[i+1,90],screen[i,90],36*4);
+	    scrfrom_move(screen[i+1,90],screen[i,90],36*4);
 	 if ((131-a)<127) and ((131-a)>109) then
 	    move(cargobuttons^[131-a,92],screen[131-a,92],34*4);
       end;
@@ -357,7 +357,7 @@ begin
    new(cargobuttons);
    for i:=110 to 126 do
    begin
-      move(screen[i,92],cargobuttons^[i,92],34*4);
+      scrfrom_move(screen[i,92],cargobuttons^[i,92],34*4);
       scr_fillchar(screen[i,94],133,0);
    end;
    plainfadearea(38,78,40,82,12);
@@ -627,7 +627,7 @@ begin
  mousehide;
  tcolor:=text;
  for i:=60 to 102 do
-  move(screen[i,74],tempscr^[i,74],43*4);
+  scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
  tcolor:=text-5;
  bkcolor:=35+alt;
  button(75,60,245,102,alt);

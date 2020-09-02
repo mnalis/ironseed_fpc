@@ -394,7 +394,7 @@ begin  {215,145}
   end;
  mousehide;
  for i:=133 to 144 do
-  move(screen[i,215],back1[i-133],13*4);
+  scrfrom_move(screen[i,215],back1[i-133],13*4);
  b:=tslice div 4;
  for t:=1 to 20 do
   begin

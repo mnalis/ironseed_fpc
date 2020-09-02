@@ -1255,7 +1255,7 @@ begin
   begin
    creategasplanet;
    new(t);
-   move(screen,t^,sizeof(screen));
+   scrfrom_move(screen,t^,sizeof(screen));
    scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
@@ -1281,7 +1281,7 @@ begin
    move(t^,screen,sizeof(screen));
    dispose(t);
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    makegasplanet;
   end
  else if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then
@@ -1291,7 +1291,7 @@ begin
    backgry:=0;
    makeastoroidfield;
    new(t);
-   move(screen,t^,sizeof(screen));
+   scrfrom_move(screen,t^,sizeof(screen));
    scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
@@ -1318,7 +1318,7 @@ begin
    backgry:=0;
    makecloud;
    new(t);
-   move(screen,t^,sizeof(screen));
+   scrfrom_move(screen,t^,sizeof(screen));
    scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
@@ -1332,7 +1332,7 @@ begin
      delay(tslice);
     end;
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
@@ -1343,7 +1343,7 @@ begin
  else
   begin
    new(t);
-   move(screen,t^,sizeof(screen));
+   scrfrom_move(screen,t^,sizeof(screen));
    scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
@@ -1420,7 +1420,7 @@ begin
      ppart[i]:=r2/y;
     end;
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    makesphere;
    sphere:=1;
   end;
@@ -1488,7 +1488,7 @@ begin
  fillchar(planet^,14400,0);
  i2:=i+6;
  new(t);
- move(screen,t^,sizeof(screen));
+ scrfrom_move(screen,t^,sizeof(screen));
  scr_fillchar(screen,sizeof(screen),0);
  set256colors(colors);
  tcolor:=47;
@@ -1514,7 +1514,7 @@ begin
    ppart[i]:=r2/y;
   end;
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  makestar;
  checkstats;
  mouseshow;

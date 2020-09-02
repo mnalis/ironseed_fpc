@@ -631,7 +631,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=50 to 102 do
-  move(screen[i,75],tempscr^[i,75],43*4);
+  scrfrom_move(screen[i,75],tempscr^[i,75],43*4);
  if colors[32,2]=63 then ofsc:=-26
   else if colors[32,1]=0 then ofsc:=0
   else ofsc:=74;
@@ -842,7 +842,7 @@ begin
    new(tempscr);
    mousehide;
    for i:=50 to 102 do
-      move(screen[i,70],tempscr^[i,70],45*4);
+      scrfrom_move(screen[i,70],tempscr^[i,70],45*4);
    if colors[32,2]=63 then ofsc:=-26
    else if colors[32,1]=0 then ofsc:=0
    else ofsc:=74;

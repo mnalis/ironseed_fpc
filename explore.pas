@@ -586,7 +586,7 @@ begin
    screen[cury+12,curx+27]:=90+random(6);
    a:=num*40-26;
    for i:=1 to 26 do
-    move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
+    scrfrom_move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
   end;
 end;
 
@@ -929,7 +929,7 @@ begin
         end;
  end;
  for i:=13 to 132 do
-  move(screen[i,28],summarypic^[i,28],240);
+  scrfrom_move(screen[i,28],summarypic^[i,28],240);
  mouseshow;
  donescan:=true;
  showscan:=true;
@@ -1136,7 +1136,7 @@ begin
 	      end;*)
 	      screen[cury+12,curx+27]:=90+random(6);
 	      for i:=1 to 26 do
-		 move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
+		 scrfrom_move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
 	      for b:=1 to 26 do
 		 for a:=1 to 31 do
 		    if probeicons^[1,b,a]<>0 then screen[j*40-26+b,280+a]:=probeicons^[1,b,a];
@@ -2016,7 +2016,7 @@ begin
  if datagathered[5,2]>=1000 then doneano:=true;
  for j:=1 to 4 do
   for i:=1 to 26 do
-   move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
+   scrfrom_move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
  for j:=1 to numprobes do
   for i:=1 to 26 do
    move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
@@ -2026,7 +2026,7 @@ begin
     scr_fillchar(screen[i+a*40-26,281],31,0);
  for j:=1 to 7 do
   for i:=20 to 27 do
-   move(screen[i,j*20+10],msgs^[j,i-20],4*4);
+   scrfrom_move(screen[i,j*20+10],msgs^[j,i-20],4*4);
  que:=0;
  SetScan(0);
  for i:=13 to 133 do

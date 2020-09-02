@@ -199,17 +199,17 @@ begin
  new(littlemsgs);
  for a:=0 to 8 do
   for i:=0 to 8 do
-   move(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10*4);
+   scrfrom_move(screen[(a div 3)*10+145+i,(a mod 3)*40+10],msgs^[a,i],10*4);
  for a:=0 to 7 do
   for i:=0 to 4 do
-   move(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4*4);
+   scrfrom_move(screen[(a div 2)*10+145+i,(a mod 2)*20+130],littlemsgs^[a,i],4*4);
  for a:=0 to 6 do
   for i:=0 to 15 do
-   move(screen[i+180,10+a*17],mcursor^[a,i],4*4);
+   scrfrom_move(screen[i+180,10+a*17],mcursor^[a,i],4*4);
  for i:=130 to 196 do
   scr_fillchar(screen[i,4],262,0);
  for i:=35 to 63 do
-  move(screen[i,84],holo^[i,84],9*4);
+  scrfrom_move(screen[i,84],holo^[i,84],9*4);
  graphindex:=1;
  adjustgraph;
  crewindex:=1;

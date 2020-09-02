@@ -1113,7 +1113,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   move(screen,s^,sizeof(screen));
+   scrfrom_move(screen,s^,sizeof(screen));
    max:=60;
    repeat
     for a:=5 to max do
@@ -1143,7 +1143,7 @@ begin
   end
  else if i=1 then
   begin
-   move(screen,s^,sizeof(screen));
+   scrfrom_move(screen,s^,sizeof(screen));
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do

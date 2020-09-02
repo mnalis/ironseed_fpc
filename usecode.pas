@@ -619,7 +619,7 @@ begin
  viewindex3:=135;
  randomize;
  for i:=18 to 123 do
-  move(screen[i,27],starmapscreen^[i,27],29*4);
+  scrfrom_move(screen[i,27],starmapscreen^[i,27],29*4);
  mouseshow;
  displaylongscan;
 end;

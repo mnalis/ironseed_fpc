@@ -1697,7 +1697,7 @@ begin
    new(tmpm);
    for i:=0 to 15 do
    begin
-      move(screen[i+130,20],tmpm^[i],4*4);
+      scrfrom_move(screen[i+130,20],tmpm^[i],4*4);
       scr_fillchar(screen[i+130,20],16,0);
    end;
    mousesetcursor(tmpm^);

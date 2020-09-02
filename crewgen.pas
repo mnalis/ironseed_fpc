@@ -973,7 +973,7 @@ begin
  playmod(true,'sound/CHARGEN.MOD');
  loadscreen('data/char',@screen);
  for i:=0 to 69 do
-  move(screen[i+7,13],birdpic^[i],70);
+  scrfrom_move(screen[i+7,13],birdpic^[i],70);
  assign(anifile,'data/charani.dta');
  reset(anifile);
  if ioresult<>0 then errorhandler('charani.dta',1);
@@ -984,7 +984,7 @@ begin
   move(ani^[30,i],screen[i+81,22],12*4);
  new(mcursor);
  for i:=131 to 146 do
-  move(screen[i,11],mcursor^[i-131],4*4);
+  scrfrom_move(screen[i,11],mcursor^[i-131],4*4);
  for i:=131 to 146 do
   scr_fillchar(screen[i,11],16,0);
  mousesetcursor(mcursor^);

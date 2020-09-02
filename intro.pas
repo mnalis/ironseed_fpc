@@ -516,7 +516,7 @@ begin
  new(s2);
  new(s3);
  mousehide;
- move(screen,s2^,sizeof(screen));
+ scrfrom_move(screen,s2^,sizeof(screen));
  mouseshow;
  loadscreen('data/cloud',s1);
 end;
@@ -1295,7 +1295,7 @@ begin
  new(t);
 // fillchar(t^,sizeof(screen),0);
  if t=nil then writeln('Out of memory !!!');
- move(screen,t^,sizeof(t^));
+ scrfrom_move(screen,t^,sizeof(t^));
  max:=25;
  for a:=1 to max-1 do
   begin
@@ -1308,7 +1308,7 @@ begin
    scale_img(10,0,200,106,startx,starty,round(partx),round(party),t^,screen);
   end;
  for i:=142 to 176 do
-  move(screen[i,234],t^[i,234],18*4);
+  scrfrom_move(screen[i,234],t^[i,234],18*4);
  set256colors(temppal);
  loadscreen('data/alien',@screen);
  for i:=142 to 176 do
@@ -1383,7 +1383,7 @@ begin
   for i:=0 to 199 do
    if screen[i,j]=255 then screen[i,j]:=backgr^[i,j];
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  radius:=400;
  c2:=1.30;
  r2:=round(sqrt(radius));
@@ -1523,7 +1523,7 @@ begin
  loadpalette('data/main.pal');
  loadscreen('data/cloud',@screen);
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  sleep(0);
  makeplanet(0,false);
  tcolor:=22;
@@ -1572,7 +1572,7 @@ begin
  bigprintxy(0,183,'crew some thousand years later and are');
  bigprintxy(0,191,'confronted by an alien horde...');
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  fadein;
  makeplanet(10,false);
@@ -1635,7 +1635,7 @@ skip2:
  spcindex[4]:=128;
  spcindex[5]:=129;
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  makeplanet(0,false);
  tcolor:=22;
  bkcolor:=255;
