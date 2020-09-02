@@ -185,12 +185,12 @@ begin
  loadscreen('data/image'+s+'',portrait);
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2],screen[i*2+7,13],70);
+   scrto_move(portrait^[i*2],screen[i*2+7,13],70);
    delay(tslice div 7);
   end;
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2+1],screen[i*2+8,13],70);
+   scrto_move(portrait^[i*2+1],screen[i*2+8,13],70);
    delay(tslice div 7);
   end;
  dispose(portrait);
@@ -231,7 +231,7 @@ begin
  for j:=0 to 30 do
   begin
    for i:=0 to 34 do
-    move(ani^[j,i],screen[i+81,22],12*4);
+    scrto_move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -243,7 +243,7 @@ begin
  for j:=30 downto 0 do
   begin
    for i:=0 to 34 do
-    move(ani^[j,i],screen[i+81,22],12*4);
+    scrto_move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -616,12 +616,12 @@ begin
    mousehide;
    for i:=0 to 34 do
     begin
-     move(birdpic^[i*2],screen[i*2+7,13],70);
+     scrto_move(birdpic^[i*2],screen[i*2+7,13],70);
      delay(tslice div 7);
     end;
    for i:=0 to 34 do
     begin
-     move(birdpic^[i*2+1],screen[i*2+8,13],70);
+     scrto_move(birdpic^[i*2+1],screen[i*2+8,13],70);
      delay(tslice div 7);
     end;
    for i:=120 to 196 do
@@ -981,7 +981,7 @@ begin
  if ioresult<>0 then errorhandler('charani.dta',5);
  close(anifile);
  for i:=0 to 34 do
-  move(ani^[30,i],screen[i+81,22],12*4);
+  scrto_move(ani^[30,i],screen[i+81,22],12*4);
  new(mcursor);
  for i:=131 to 146 do
   scrfrom_move(screen[i,11],mcursor^[i-131],4*4);

@@ -58,7 +58,7 @@ begin
  if n<10 then s[1]:='0';
  loadscreen('data/image'+s+'',portrait);
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+16,220],70);
+  scrto_move(portrait^[i],screen[i+16,220],70);
  dispose(portrait);
 end;
 
@@ -84,7 +84,7 @@ begin {120,37,294,112}
  for i:=14 to 88 do
   scr_fillchar(screen[i,16],185,0);
  for i:=35 to 63 do
-  move(holo^[i,84],screen[i,84],9*4);
+  scrto_move(holo^[i,84],screen[i,84],9*4);
  moveto(16,50);
  for j:=17 to 200 do
  begin
@@ -266,7 +266,7 @@ begin
  a:=random(9);
  mousehide;
  for i:=0 to 8 do
-  move(msgs^[a,i],screen[122+i,273],10*4);
+  scrto_move(msgs^[a,i],screen[122+i,273],10*4);
  mouseshow;
 end;
 
@@ -277,12 +277,12 @@ begin
  if msgindex mod 2=0 then
   begin
    for i:=0 to 4 do
-    move(littlemsgs^[a,i],screen[133+i,273],4*4);
+    scrto_move(littlemsgs^[a,i],screen[133+i,273],4*4);
   end
  else
   begin
    for i:=0 to 4 do
-    move(littlemsgs^[a,i],screen[133+i,296],4*4);
+    scrto_move(littlemsgs^[a,i],screen[133+i,296],4*4);
   end;
  mouseshow;
 end;

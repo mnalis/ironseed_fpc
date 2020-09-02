@@ -473,7 +473,7 @@ begin
  setcolor(47);
  mousehide;
  for i:=1 to 60 do
-  move(tempzoom^[i],screen[i+138,206],15*4);
+  scrto_move(tempzoom^[i],screen[i+138,206],15*4);
  circle(236,169,8*zoommode);
  circle(236,169,4*zoommode);
  mouseshow;
@@ -1051,7 +1051,7 @@ begin
 	   begin
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end;
@@ -1081,7 +1081,7 @@ begin
 	   begin {begin return to craft}
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end
@@ -1224,7 +1224,7 @@ begin
 	   end;
         5: begin {returning}
 	      for i:=1 to 26 do
-		 move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=40;
 	      status:=6;
 	   end;
@@ -1232,7 +1232,7 @@ begin
 	      status := 8;
 	      timeleft:=10;
 	      for i := 1 to 26 do
-		 move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
 	      dirty := true;
 	      {if explorelevel = 0 then
 		 displayinfogathered;}
@@ -2019,7 +2019,7 @@ begin
    scrfrom_move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
  for j:=1 to numprobes do
   for i:=1 to 26 do
-   move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
+   scrto_move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
  if j<4 then
   for a:=j+1 to 4 do
    for i:=1 to 26 do

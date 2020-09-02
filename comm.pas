@@ -456,12 +456,12 @@ begin
  loadscreen('data/image'+s,portrait);
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2],screen[i*2+41,126],70);
+   scrto_move(portrait^[i*2],screen[i*2+41,126],70);
    delay(tslice div 5);
   end;
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2+1],screen[i*2+42,126],70);
+   scrto_move(portrait^[i*2+1],screen[i*2+42,126],70);
    delay(tslice div 5);
   end;
  dispose(portrait);
@@ -1253,7 +1253,7 @@ begin
    infomode:=false;
    mousehide;
    for i:=20 to 101 do
-    move(backgr^[i-11,222],screen[i,222],19*4);
+    scrto_move(backgr^[i-11,222],screen[i,222],19*4);
    mouseshow;
    exit;
   end;
@@ -1433,7 +1433,7 @@ begin
   5: begin
       if indexa<5 then inc(indexa) else indexa:=0;
       for i:=0 to 10 do
-       move(aliens^[i+indexa*12,170],screen[29+i,94],49);
+       scrto_move(aliens^[i+indexa*12,170],screen[29+i,94],49);
       if random(20)=0 then
        begin
         if indexb<4 then inc(indexb) else indexb:=0;
@@ -1461,7 +1461,7 @@ begin
   7: begin
       if indexa<18 then inc(indexa) else indexa:=0;
       for i:=0 to 2 do
-       move(aliens^[i+indexa*4,180],screen[i+27,88],21);
+       scrto_move(aliens^[i+indexa*4,180],screen[i+27,88],21);
       if indexb<6 then inc(indexb) else indexb:=0;
       for i:=0 to 33 do
        for j:=0 to 20 do
@@ -1522,7 +1522,7 @@ begin
           if indexa<8 then inc(indexa) else indexa:=0;
          end;
         for i:=0 to 8 do
-         move(aliens^[i+indexa*10+101],screen[i+51,111],50);
+         scrto_move(aliens^[i+indexa*10+101],screen[i+51,111],50);
        end;
  end;
  mouseshow;

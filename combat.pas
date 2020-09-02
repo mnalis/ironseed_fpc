@@ -89,31 +89,31 @@ begin
  if round(part)<>stats[1] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[1]+i,269],10);
+    scrto_move(blank^[i],screen[117-stats[1]+i,269],10);
    stats[1]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,269],10);
+    scrto_move(statpic^[i],screen[y+i,269],10);
    end;
  part:=102/32000*ship.battery;
  if round(part)<>stats[2] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[2]+i,285],10);
+    scrto_move(blank^[i],screen[117-stats[2]+i,285],10);
    stats[2]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,285],10);
+    scrto_move(statpic^[i],screen[y+i,285],10);
   end;
  part:=102/100*ship.shieldlevel;
  if round(part)<>stats[3] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[3]+i,301],10);
+    scrto_move(blank^[i],screen[117-stats[3]+i,301],10);
    stats[3]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,301],10);
+    scrto_move(statpic^[i],screen[y+i,301],10);
   end;
  mouseshow;
 end;
@@ -136,7 +136,7 @@ begin
  ship.shieldopt[SHLD_COMBAT_WANT]:=n;
  part:=102/100*n;
  for i:=0 to 6 do
-  move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
+  scrto_move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
  mouseshow;
 end;
 
@@ -160,7 +160,7 @@ begin
    if picx>139 then j:=10 else j:=5;
    if picy>=179 then a:=19 else a:=20;
    for i:=0 to a do
-    move(backgr^[i+picy,picx],screen[161+i,14],j*4);
+    scrto_move(backgr^[i+picy,picx],screen[161+i,14],j*4);
    if j=5 then
     for i:=0 to 19 do
      scr_fillchar(screen[161+i,34],20,0);
@@ -168,19 +168,19 @@ begin
     begin
      a:=random(2);
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,60],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,60],10);
     end;
    for j:=0 to 1 do
     begin
      a:=random(2);
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,70],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,70],10);
     end;
    for j:=0 to 1 do
     begin
      a:=random(2)+2;
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,80],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,80],10);
     end;
   end;
  mouseshow;
@@ -389,9 +389,9 @@ begin
             for j:=0 to 19 do
              screen[y1+j,x1+i]:=tempicon^[i,j];
   4,6: for i:=0 to 19 do
-        move(tempicon^[i],screen[y1+i,x1],5*4);
+        scrto_move(tempicon^[i],screen[y1+i,x1],5*4);
   5,7: for i:=0 to 19 do
-        move(tempicon^[19-i],screen[y1+i,x1],5*4);
+        scrto_move(tempicon^[19-i],screen[y1+i,x1],5*4);
   9,10: for i:=0 to 19 do
          for j:=0 to 19 do
           screen[y1+j,x1+20-i]:=tempicon^[i,j];
@@ -446,7 +446,7 @@ begin
    for i:=0 to 6 do
     scr_fillchar(screen[oldshddmg+i,296],4,0);
    for i:=0 to 6 do
-    move(shieldpic2^[i],screen[round(part)+i,296],1*4);
+    scrto_move(shieldpic2^[i],screen[round(part)+i,296],1*4);
    oldshddmg:=round(part);
   end;
  mouseshow;
@@ -871,13 +871,13 @@ begin
  if not alienpicmode then
   begin
    for i:=156 to 189 do
-    move(asdisplay^[i,6],screen[i,6],93);
+    scrto_move(asdisplay^[i,6],screen[i,6],93);
    alienpicmode:=true;
   end
  else
   begin
    for i:=125 to 155 do
-    move(asdisplay^[i,6],screen[i,6],93);
+    scrto_move(asdisplay^[i,6],screen[i,6],93);
    alienpicmode:=false;
   end;
  mouseshow;

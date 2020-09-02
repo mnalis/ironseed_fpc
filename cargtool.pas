@@ -263,7 +263,7 @@ begin
       for i:=20 to 130 do
 	 scr_fillchar(screen[i,90],144,0);
       for i:=110 to 126 do
-	 move(cargobuttons^[i,92],screen[i,92],34*4);
+	 scrto_move(cargobuttons^[i,92],screen[i,92],34*4);
    end
    else
       for a:=0 to 109 do
@@ -273,7 +273,7 @@ begin
 	 for i:=20 to 130-a do
 	    scrfrom_move(screen[i+1,90],screen[i,90],36*4);
 	 if ((131-a)<127) and ((131-a)>109) then
-	    move(cargobuttons^[131-a,92],screen[131-a,92],34*4);
+	    scrto_move(cargobuttons^[131-a,92],screen[131-a,92],34*4);
       end;
    plainfadearea(38,78,40,82,-12);
    plainfadearea(44,78,46,82,12);
@@ -292,7 +292,7 @@ begin
   begin
    delay(tslice div 4);
    for i:=20 to 20+a do
-    move(temp^[110-a+i,90],screen[i,90],36*4);
+    scrto_move(temp^[110-a+i,90],screen[i,90],36*4);
   end;
  dispose(temp);
  mouseshow;
@@ -642,7 +642,7 @@ begin
  result:=mainloop2;
  mousehide;
  for i:=60 to 102 do
-  move(tempscr^[i,74],screen[i,74],43*4);
+  scrto_move(tempscr^[i,74],screen[i,74],43*4);
  dispose(tempscr);
  request:=result;
  bkcolor:=3;
@@ -1229,7 +1229,7 @@ begin
   end;
  if n<59 then readweaicon(n-1) else readweaicon(n-2);
  for i:=0 to 19 do
-  move(tempicon^[i],screen[9+i,210],5*4);
+  scrto_move(tempicon^[i],screen[9+i,210],5*4);
  bkcolor:=0;
 end;
 

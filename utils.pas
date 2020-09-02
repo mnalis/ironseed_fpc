@@ -675,7 +675,7 @@ begin
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
-  move(tempscr^[i,75],screen[i,75],43*4);
+  scrto_move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  dispose(tempscr);
  tcolor:=oldt;
@@ -887,7 +887,7 @@ begin
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
-      move(tempscr^[i,70],screen[i,70],45*4);
+      scrto_move(tempscr^[i,70],screen[i,70],45*4);
    mouseshow;
    dispose(tempscr);
    tcolor:=oldt;
@@ -965,7 +965,7 @@ begin
 	  end
     else
        for i:=0 to 69 do
-	  move(portrait^[i],screen[i+y,x],70);
+	  scrto_move(portrait^[i],screen[i+y,x],70);
     dispose(portrait);
  end;
  if colors[32,2]=63 then ofsc:=-24

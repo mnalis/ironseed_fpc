@@ -248,7 +248,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i],screen[i+25,27],29*4);
+  scrto_move(starmapscreen^[i],screen[i+25,27],29*4);
  x1:=tarxr;
  y1:=tarzr;
  if rotatemode=-1 then

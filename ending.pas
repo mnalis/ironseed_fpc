@@ -261,7 +261,7 @@ begin
   inc(k,80);
   inc(k2,320);
   move(t^[0,64000-k2],screen,k*4);
-  move(backgr^,screen[0,k2],(16000-k)*4);
+  scrto_move(backgr^,screen[0,k2],(16000-k)*4);
   delay(b);
  until k=16000;
  dispose(t);

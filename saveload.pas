@@ -519,7 +519,7 @@ begin
    loadscreen('data/cloud',@screen);
    scrfrom_move(screen,backgr^,sizeof(screen));
    for i:=40 to 140 do
-    move(tempscr^[i,74],screen[i,74],43*4);
+    scrto_move(tempscr^[i,74],screen[i,74],43*4);
   end;
  result:=mainloop(tofadein);			{ result = which saveslot was selected for load }
  if result=9 then loadgamedata:=false else
@@ -530,7 +530,7 @@ begin
  mousehide;
  if tofadein then dispose(s)
   else for i:=40 to 140 do
-   move(tempscr^[i,74],screen[i,74],43*4);
+   scrto_move(tempscr^[i,74],screen[i,74],43*4);
  mouseshow;
  dispose(tempscr);
  dispose(names);
@@ -636,7 +636,7 @@ redo:
   end;
  mousehide;
  for i:=40 to 140 do
-  move(tempscr^[i,74],screen[i,74],43*4);
+  scrto_move(tempscr^[i,74],screen[i,74],43*4);
  dispose(names);
  dispose(tempscr);
  mouseshow;
@@ -747,7 +747,7 @@ begin
  result:=mainloop2;
  mousehide;
  for i:=60 to 102 do
-  move(tempscr^[i,74],screen[i,74],43*4);
+  scrto_move(tempscr^[i,74],screen[i,74],43*4);
  dispose(tempscr);
  yesnorequest:=result;
  bkcolor:=3;
@@ -1192,7 +1192,7 @@ begin
  close(ft);
  dispose(tempscr);
  for i:=85 to 105 do
-  move(tempscr^[i,75],screen[i,75],43*4);
+  scrto_move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  if ioresult<>0 then printbox('Printer Error!');
 end;
@@ -1271,7 +1271,7 @@ begin
  close(ft);
  dispose(tempscr);
  for i:=85 to 105 do
-  move(tempscr^[i,105],screen[i,105],28*4);
+  scrto_move(tempscr^[i,105],screen[i,105],28*4);
  mouseshow;
  bkcolor:=3;
  if ioresult<>0 then printbox('Printer Error!');

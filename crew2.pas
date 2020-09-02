@@ -55,7 +55,7 @@ begin
  if n<10 then s[1]:='0';
  loadscreen('data/image'+s+'',portrait);
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+110,210],70);
+  scrto_move(portrait^[i],screen[i+110,210],70);
  dispose(portrait);
 end;
 

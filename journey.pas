@@ -177,7 +177,7 @@ begin
   begin
    for i2:=textindex to textindex+5 do printstring(9,(i2-textindex)*6+150,i2);
    mousehide;
-   for i:=151 to 186 do move(screen2^[i,11],screen[i,11],150);
+   for i:=151 to 186 do scrto_move(screen2^[i,11],screen[i,11],150);
   end
  else
   begin
@@ -187,11 +187,11 @@ begin
    if scrollit then
     for i2:=0 to 6 do
      begin
-      for i:=151 to 186 do move(screen2^[i+i2,11],screen[i,11],150);
+      for i:=151 to 186 do scrto_move(screen2^[i+i2,11],screen[i,11],150);
       delay(tslice div 3);
      end
    else
-    for i:=151 to 186 do move(screen2^[i,11],screen[i,11],150);
+    for i:=151 to 186 do scrto_move(screen2^[i,11],screen[i,11],150);
   end;
  for i:=158 to 182 do
   scr_fillchar(screen[i,163],6,2);
@@ -324,7 +324,7 @@ begin  {215,145}
   begin
    mousehide;
    for i:=0 to 44 do
-    move(cubetar^[i,0],screen[i+145,215],51);
+    scrto_move(cubetar^[i,0],screen[i+145,215],51);
    mouseshow;
    cube:=tar;
    exit;
@@ -363,7 +363,7 @@ begin  {215,145}
     mousehide;
    end;
  for i:=0 to 44 do
-  move(cubetar^[i,0],screen[i+145,215],51);
+  scrto_move(cubetar^[i,0],screen[i+145,215],51);
  mouseshow;
  cube:=tar;
 end;
@@ -387,7 +387,7 @@ begin  {215,145}
   begin
    mousehide;
    for i:=0 to 44 do
-    move(cubetar^[i,0],screen[i+145,215],51);
+    scrto_move(cubetar^[i,0],screen[i+145,215],51);
    mouseshow;
    cube:=tar;
    exit;
@@ -419,16 +419,16 @@ begin  {215,145}
    end;
 skip1:
    for j:=133 to 145-m do
-    move(back1[j-133],screen[j,215],13*4);
+    scrto_move(back1[j-133],screen[j,215],13*4);
    for j:=190+m to 199 do
-    move(back2[j-190],screen[j,215],13*4);
+    scrto_move(back2[j-190],screen[j,215],13*4);
    mouseshow;
    delay(b);
    mousehide;
   end;
  for i:=0 to 44 do
-  move(cubetar^[i],screen[i+145,215],51);
- move(back2,screen[190,215],13*4);
+  scrto_move(cubetar^[i],screen[i+145,215],51);
+ scrto_move(back2,screen[190,215],13*4);
  mouseshow;
  cube:=tar;
 end;
@@ -551,7 +551,7 @@ endcheck:
   end;
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -669,7 +669,7 @@ procedure makesphere3;
 begin
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -709,7 +709,7 @@ endcheck:
    end;
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;

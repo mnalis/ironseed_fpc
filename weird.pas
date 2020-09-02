@@ -522,14 +522,14 @@ begin
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
    else portrait^[i,j]:=(portrait^[i,j]-128) div 2;
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+69,50],70);
+  scrto_move(portrait^[i],screen[i+69,50],70);
  loadscreen('data/image32',portrait);
  for i:=0 to 69 do
   for j:=0 to 69 do
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
    else portrait^[i,j]:=(portrait^[i,j]-128) div 2;
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+69,201],70);
+  scrto_move(portrait^[i],screen[i+69,201],70);
  dispose(portrait);
  mouseshow;
  c:=0;

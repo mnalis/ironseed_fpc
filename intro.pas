@@ -1016,7 +1016,7 @@ begin
       end;
     end;
   for i:=1 to 120 do
-   move(planet^[i],screen[i+12,28],30*4);
+   scrto_move(planet^[i],screen[i+12,28],30*4);
 //  delay(tslice);
     delay(tslice*3);
 getcurtime;
@@ -1312,7 +1312,7 @@ begin
  set256colors(temppal);
  loadscreen('data/alien',@screen);
  for i:=142 to 176 do
-  move(t^[i,234],screen[i,234],18*4);
+  scrto_move(t^[i,234],screen[i,234],18*4);
  dispose(t);
 end;
 

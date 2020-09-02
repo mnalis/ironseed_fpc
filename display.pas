@@ -404,7 +404,7 @@ begin
      begin
       readweaicon(shd-ID_SHIELDS_OFFSET-2);	{ NOSHIELD / noweapon do not have icons, so -2  }
       for i:=0 to 19 do
-       move(tempicon^[i],screen[89+i,172],5*4);
+       scrto_move(tempicon^[i],screen[89+i,172],5*4);
      end;
  end;
 end;
@@ -902,7 +902,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  move(tempicon^[i],screen[y1+i,x1],5*4);
+  scrto_move(tempicon^[i],screen[y1+i,x1],5*4);
 end;
 
 procedure sideshowweaponicon(x1,y1,weap,node: integer);
@@ -930,7 +930,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  move(tempicon^[19-i],screen[y1+i,x1],5*4);
+  scrto_move(tempicon^[19-i],screen[y1+i,x1],5*4);
 end;
 
 procedure displayweaponinfo(com: integer);
@@ -1071,7 +1071,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i,27],screen[i,27],29*4);
+  scrto_move(starmapscreen^[i,27],screen[i,27],29*4);
  if target>0 then
   begin
    if index<0 then index:=0;
@@ -3072,7 +3072,7 @@ begin
  if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i,27],screen[i,27],29*4);
+  scrto_move(starmapscreen^[i,27],screen[i,27],29*4);
  computegraph;
  mouseshow;
  for i:=1 to 3 do
