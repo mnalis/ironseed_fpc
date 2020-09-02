@@ -21,7 +21,7 @@ procedure delay(const MS:Word); cdecl ; external;
 procedure setcolor(const Color: Word); cdecl ; external;
 procedure rectangle(const x1: word; y1:word; x2: word; y2:word);cdecl ; external;
 procedure circle(const x,y,r:word); cdecl ; external;
-procedure SDL_init_video(var scr:screentype); cdecl ; external;
+procedure init_video(var scr:screentype);
 procedure set256colors(var pal : paltype); cdecl; external;	// NB: pal is actually constref, but fpc still gives "Hint: (3187) C arrays are passed by reference" then in fpc 3.0.4+dfsg-22 :(
 procedure setrgb256(const palnum,r,g,b: byte); cdecl ; external; // set palette
 procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
@@ -49,9 +49,10 @@ procedure scrto_move(const source; var dest; count: SizeInt);
 procedure scrfromto_move(const source; var dest; count: SizeInt);
 
 implementation
-uses data;//, sysutils;
+uses sysutils;
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
+procedure SDL_init_video(var scr:screentype); cdecl ; external;
 
 procedure closegraph;   // close video
 begin
@@ -71,26 +72,15 @@ begin
  fastkeypressed:=boolean(key_pressed);
 end;
 
-
 type addr_type = qword;		// NB: word should be enough to hold memory address ?! https://www.tutorialspoint.com/pascal/pascal_pointers.htm
 const screen_size = 320*200;
-
-function _address (const somevar) : addr_type;
-var p: pbyte;
-    a: ^addr_type;
-begin
-  p := @somevar;
-  a := addr(p);			// FIXME: we should better use FarAddr() (and adjust addr_type if needed), but that needs FPC 3.2.0 at least
-  _address := a^;
-end;
+var screen_addr: addr_type;
 
 { bounds checking fillchar(), when dest is screen[] }
 procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
-var dest_addr, screen_addr: addr_type;
+var dest_addr: addr_type;
 begin
- dest_addr := _address(dest);
- screen_addr := _address(screen);
-
+ dest_addr := addr_type(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (dest_addr >= screen_addr, 'scr_fillchar: screen destination below 0');
  assert (dest_addr + count <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
@@ -99,11 +89,9 @@ end;
 
 { bounds checking move(), when dest is screen[] }
 procedure scrto_move(const source; var dest; count: SizeInt);
-var dest_addr, screen_addr: addr_type;
+var dest_addr: addr_type;
 begin
- dest_addr := _address(dest);
- screen_addr := _address(screen);
-
+ dest_addr := addr_type(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
  assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
@@ -112,11 +100,9 @@ end;
 
 { bounds checking move(), when source is screen[] }
 procedure scrfrom_move(const source; var dest; count: SizeInt);
-var src_addr, screen_addr: addr_type;
+var src_addr: addr_type;
 begin
- src_addr := _address(source);
- screen_addr := _address(screen);
-
+ src_addr := addr_type(@source);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (src_addr >= screen_addr, 'scrfrom_move: screen source below 0');
  assert (src_addr + count <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
@@ -125,18 +111,22 @@ end;
 
 { bounds checking move(), when source is screen[] }
 procedure scrfromto_move(const source; var dest; count: SizeInt);
-var src_addr, dest_addr, screen_addr: addr_type;
+var src_addr, dest_addr: addr_type;
 begin
- src_addr := _address(source);
- dest_addr := _address(dest);
- screen_addr := _address(screen);
-
+ src_addr := addr_type(@source);
+ dest_addr := addr_type(@dest);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (src_addr >= screen_addr, 'scrfromto_move: screen source below 0');
  assert (src_addr + count <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
  assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
+end;
+
+procedure init_video(var scr:screentype);
+begin
+  screen_addr := addr_type(@scr);
+  SDL_init_video(scr);
 end;
 
 begin
