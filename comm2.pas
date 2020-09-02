@@ -1015,7 +1015,7 @@ begin
  done:=false;
  compressfile(tempdir+'/current3',backgr);
  loadscreen('data/trade',backgr);
- scrto_move(backgr^[111],screen[111,0],7200*4);		// FIXME: causes canary failure!
+ scrto_move(backgr^[111],screen[111,0],(200-111)*320);
  loadscreen(tempdir+'/current3',backgr);
  mouseshow;
  trademode:=0;
@@ -1052,7 +1052,7 @@ begin
  mousehide;
  compressfile(tempdir+'/current3',backgr);
  loadscreen(tempdir+'/current2',backgr);
- scrto_move(backgr^[111],screen[111,0],7200*4);	// FIXME: also wrong, see above causes canary failure!
+ scrto_move(backgr^[111],screen[111,0],(200-111)*320);
  loadscreen(tempdir+'/current3',backgr);
  bkcolor:=3;
 end;
