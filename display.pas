@@ -1083,6 +1083,7 @@ begin
  mouseshow;
 end;
 
+{ shows quick ship stats: hull/primary/secondary/shield right-side display }
 procedure displaystatus;
 var part: real;
     str1: string[5];
@@ -1377,13 +1378,15 @@ begin
  bkcolor:=3;
 end;
 
+
+{ colors dpg/pwr/aux/shd status buttons (at top far right), and updates Alert status ALERT<->REST depending on subsystems damage }
 procedure checkstats;
 begin
- if alert<ALRT_COMBAT then	{ if we are damaged and not in COMBAT mode already, put us at least in ALERT mode... }
+ if alert<ALRT_COMBAT then	{ if we not in COMBAT mode, automatically put us ALERT mode if damaged, or REST mode if not }
   begin
    i:=ALRT_REST;
    for j:=1 to 7 do if ship.damages[j]<>0 then i:=ALRT_ALERT;
-   setalertmode(i);
+   setalertmode(i, true);
   end;
  if ship.hullintegrity<250 then tc:=80
   else if ship.hullintegrity<500 then tc:=112
@@ -1845,7 +1848,7 @@ begin
 	  j:=findfirstplanet(viewindex2)+viewindex;
 	  curplan:=j;
 	  if tempplan^[j].visits<255 then inc(tempplan^[j].visits);
-	  
+
         tempplan^[j].datey:=ship.stardate[3];
         tempplan^[j].datem:=ship.stardate[1];
         ship.orbiting:=viewindex;

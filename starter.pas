@@ -288,6 +288,7 @@ begin
   end;
 end;
 
+{ this is always called after game is (re-)loaded }
 procedure initializedata;
 var j: integer;
 begin
@@ -325,15 +326,25 @@ begin
     writeln('FIXUP shield from 0 to ID_NOSHIELD');
     ship.shield:=ID_NOSHIELD;
   end;
- ship.shieldlevel:=0;
- if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100
-  else if ship.shield>ID_REFLECTIVEHULL then ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
- alert:=ALRT_COMBAT;
- if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(ALRT_COMBAT)
-  else setalertmode(ALRT_REST);
+ if ship.shield=ID_NOSHIELD then ship.shieldlevel:=0
+  else if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100; { fixup shield status only if we are sure what they must be }
+
+ { alert is not saved in savegame. Try to calculate it }
+ { game will upgrade from REST to ALERT if any subsystems are damaged automatically in periodically called checkstats() }
+
+ alert:=ALRT_COMBAT;	 { NB: main.png has panic button in RED color. So every game must start with ALERT in RED (COMBAT) or color changes won't be working correctly }
+
+ if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then
+    setalertmode(ALRT_COMBAT, true)
+  else if (ship.shieldlevel=ship.shieldopt[SHLD_ALERT_WANT]) and (ship.shieldopt[SHLD_ALERT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT]) then
+    setalertmode(ALRT_ALERT, true)
+  else
+    setalertmode(ALRT_REST, true);
+
  showresearchlights;
 end;
 
+{ load game from commandline non-interactively }
 procedure loadspecial;
 var t: string[10];
     j: integer;
@@ -345,7 +356,7 @@ begin
  curfilenum:=0;
  loadgame(j);
  if curfilenum<>0 then
- begin
+ begin						{ some savegame was loaded }
     event(10);
     if chevent(12) then event(1001);
  end;

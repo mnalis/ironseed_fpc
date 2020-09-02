@@ -303,7 +303,7 @@ begin
 	       end;
 	       inc(y);
 	    end;
-         end; 
+         end;
    end;
 end; { showbotstuff }
 (*var j,tt,tly,cnt,max,cargindex,total: integer;
@@ -477,7 +477,7 @@ begin
       if ship.stardate[4]>19 then
       begin
 	 if dayticks then
-	    DayTick(background);	 
+	    DayTick(background);
 	 inc(ship.stardate[2],ship.stardate[4] div 20);
 	 ship.stardate[4]:=ship.stardate[4] mod 20;
 	 if ship.stardate[2]>19 then
@@ -553,11 +553,11 @@ begin
    if viewmode2>0 then removestarmap;
    cleanright(true);
    tcolor:=31;
-   setalertmode(ALRT_ALERT);
+   setalertmode(ALRT_ALERT, true);
    println;
    print('ENGINEERING: Engaging..');
    redoscreen(x,y,z);
-   setalertmode(ALRT_REST);
+   setalertmode(ALRT_REST, true);
 end;
 
 procedure readyweaponinfo;
@@ -740,12 +740,12 @@ end;
 
 procedure lowershields;
 begin
- if ship.shield<=ID_REFLECTIVEHULL then exit;
+ if ship.shield<=ID_REFLECTIVEHULL then exit;	{ only makes sense for powered shields }
  println;
  tcolor:=63;
  print('SECURITY: Lowering shields...');
  graypalin;
- if not ship.armed then setalertmode(ALRT_ALERT);
+ setalertmode(ALRT_ALERT, true);
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
@@ -785,8 +785,7 @@ begin
   end;
  print('SECURITY: Raising shields...');
  graypalin;
- setalertmode(ALRT_COMBAT);
- ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
+ setalertmode(ALRT_COMBAT, true);
  if viewmode=1 then displaystatus else checkstats;
  delay(tslice*3);
  graypalout;
@@ -806,8 +805,7 @@ begin
  tcolor:=63;
  print('SECURITY: Powering down weapons...');
  graypalin;
- if (ship.shieldlevel<>ship.shieldopt[SHLD_COMBAT_WANT]) or (ship.shieldopt[SHLD_COMBAT_WANT]<=ship.shieldopt[SHLD_LOWERED_WANT])
-  then setalertmode(ALRT_ALERT);
+ setalertmode(ALRT_ALERT, false);
  for j:=1 to 10 do
   if ship.gunnodes[j]>0 then
    begin
@@ -852,7 +850,7 @@ begin
   end;
  print('SECURITY: Arming weapons...');
  graypalin;
- setalertmode(ALRT_COMBAT);
+ setalertmode(ALRT_COMBAT, false);
  ship.armed:=true;
  for j:=1 to 10 do
   if (ship.gunnodes[j]>0) and (ship.battery>=weapons[ship.gunnodes[j]].energy) then
@@ -1328,7 +1326,7 @@ begin
    ship.research := ship.research xor (1 shl face);
    tcolor:=63;
    println;
-   if ship.research and (1 shl face)<>0 then 
+   if ship.research and (1 shl face)<>0 then
       print(crewtitles[face]+': Initiating research.')
    else
       print(crewtitles[face]+': Cancelling research.');

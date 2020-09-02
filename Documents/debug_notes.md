@@ -75,6 +75,12 @@ Data structures
 		- 500-599: clear before conversations with crew/aliens?
 		- 20000-21000 is event initiated by chat with races from  Data_Generators/makedata/event.txt ?
 
+	functions:
+		- addlog(n) - adds a log "n" AND an event "n" (via setevent(n))
+		- setevent(n) - sets event "n"
+		- clearevent(n) - clears event "n"
+		- event(n) - handles event "n", and might (or might not) addlog(n) or setevent(n), depending on event number, dependencies etc.
+
 - conversations
 	See `Data_Generators/makedata/conv0000.txt` for format of `Data_Generators/makedata/*con1.txt`
 	Also `Data_Generators/makedata/template.txt`

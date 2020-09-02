@@ -171,7 +171,7 @@ begin
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] or (1 shl (n and 7));
-   
+
    if (n<50) or (n>=500) then exit;
    n:=n-50;
    i:=50+(n div 8);	{ same as 50+(n shr 3) ? }
@@ -188,7 +188,7 @@ begin
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] and not (1 shl (n and 7));
-   
+
    if (n<50) or (n>=500) then exit;
    n:=n-50;
    i:=50+(n div 8);
@@ -235,7 +235,10 @@ begin
  initiatecombat;
 end;
 
-{ this adds the event "n", adds a log for it, and handles all associated things that happen related to that event (like cargo/systems update, endgame etc.) }
+{ this handles all associated things that happen related to that event (like cargo/systems update, endgame etc.)
+  It might add a log for that event (but not always)
+  and it might mark that event as happened via setevent() (but not for events 0-50 nor 1000-1999 !)
+}
 procedure event(n: integer);
 var i,j: integer;
 //    p:^byte;
@@ -250,7 +253,7 @@ begin
    begin
       setevent(n);
    end;
-   
+
  case n of
 
    0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
@@ -1270,7 +1273,7 @@ begin
 idletime:=0;
 end;
 
-   
+
 procedure deathsequence(n: integer);
 begin
  assert (n<2); { just to ignore warning, variable really not used }

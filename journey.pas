@@ -34,7 +34,7 @@ procedure print(s: string);
 procedure println;
 procedure showtime;
 procedure addtime;
-procedure setalertmode(mode: integer);
+procedure setalertmode(mode: integer; do_shields: boolean);
 procedure makesphere;
 procedure makegasplanet;
 procedure makestar;
@@ -1145,11 +1145,22 @@ begin
  idletime:=0;
 end;
 
-{ change alert mode - which sets wanted shield level only (besides doing checks and displaying messages) }
-procedure setalertmode(mode: integer);
-var alt,new: integer;
+{ change alert mode - which really ONLY sets ship.shieldlevel (besides doing checks and displaying messages and changes panic button color) }
+procedure setalertmode(mode: integer; do_shields: boolean);
+var alt,new, shield_wanted: integer;
 begin
- if alert=mode then exit;
+ shield_wanted := 0;
+ if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
+ else if mode=ALRT_REST then
+  shield_wanted:=ship.shieldopt[SHLD_LOWERED_WANT]
+ else if mode=ALRT_ALERT then
+  shield_wanted:=ship.shieldopt[SHLD_ALERT_WANT]
+ else if mode=ALRT_COMBAT then
+  shield_wanted:=ship.shieldopt[SHLD_COMBAT_WANT];
+
+ if ship.armed then mode:=ALRT_COMBAT; { if weapons are still armed, do not drop out of COMBAT mode, even if we drop shields }
+ if (not do_shields) and (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) then mode:=ALRT_COMBAT; { if we are powering down weapons, but shields are still in COMBAT mode, remain in COMBAT alert status }
+
  case alert of
   ALRT_REST: alt:=48;
   ALRT_ALERT: alt:=112;
@@ -1160,9 +1171,15 @@ begin
   ALRT_ALERT: new:=112;
   ALRT_COMBAT: new:=80;
  end;
- plainfadearea(0,184,7,199,new-alt);
+ if alert<>mode then
+  plainfadearea(0,184,7,199,new-alt);	{ modifies the color of the panic button in lower left corner of the screen }
  alert:=mode;
- if alert=ALRT_COMBAT then exit;	// FIXME: is this correct? if we are currently in COMBAT alert status, maybe we don't need checks for shield stability as we are at MAX, but don't we still need to set shieldlevel??
+
+ if not do_shields then exit;		{ only set "alert" variable  and panic button color unless do_Shields is true }
+
+
+ if ship.shieldlevel = shield_wanted then exit;
+
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -1183,11 +1200,8 @@ begin
       end;
     end;
   end;
- if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
- else if alert=ALRT_REST then
-  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
- else if alert=ALRT_ALERT then
-  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
+
+ ship.shieldlevel := shield_wanted;
 end;
 
 procedure processkey;
@@ -1410,8 +1424,8 @@ begin
 	    ship.damages[i] := damages[i];
 	 ship.hullintegrity := hull;
       end;
-     ship.armed:=true;
-     setalertmode(ALRT_ALERT);
+     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed }
+     setalertmode(ALRT_ALERT, true);
      ship.wandering.alienid:=20000;
      checkwandering;
      action:=WNDACT_NONE;
