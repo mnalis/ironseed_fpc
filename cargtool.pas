@@ -1541,7 +1541,7 @@ begin
      JOBTYPE_REPAIR: printxy(233,62,'Repairing');
      JOBTYPE_INSTALL: printxy(231,62,'Installing');
      JOBTYPE_REMOVE: printxy(236,62,'Removing');
-     JOBTYPE_RESEARCH: printxy(236,62,'	Research');	// FIXME does it really need that <TAB> ?!
+     JOBTYPE_RESEARCH: printxy(236,62,'Research');
    end;
    if ship.engrteam[team].jobtype<JOBTYPE_CREATE then
    begin
