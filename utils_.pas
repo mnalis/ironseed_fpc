@@ -76,11 +76,16 @@ type addr_type = qword;		// NB: word should be enough to hold memory address ?! 
 const screen_size = 320*200;
 var screen_addr: addr_type;
 
+function _address (const someaddress: pointer): addr_type;
+begin
+  _address := {$hints-}addr_type(someaddress);{$hints+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We shoud be using FarAddr (fpc 3.2.0+) instaed of "@"/addr() anyway
+end;
+
 { bounds checking fillchar(), when dest is screen[] }
 procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 var dest_addr: addr_type;
 begin
- dest_addr := addr_type(@dest);
+ dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (dest_addr >= screen_addr, 'scr_fillchar: screen destination below 0');
  assert (dest_addr + count <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
@@ -91,7 +96,7 @@ end;
 procedure scrto_move(const source; var dest; count: SizeInt);
 var dest_addr: addr_type;
 begin
- dest_addr := addr_type(@dest);
+ dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
  assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
@@ -102,7 +107,7 @@ end;
 procedure scrfrom_move(const source; var dest; count: SizeInt);
 var src_addr: addr_type;
 begin
- src_addr := addr_type(@source);
+ src_addr := _address(@source);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (src_addr >= screen_addr, 'scrfrom_move: screen source below 0');
  assert (src_addr + count <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
@@ -113,8 +118,8 @@ end;
 procedure scrfromto_move(const source; var dest; count: SizeInt);
 var src_addr, dest_addr: addr_type;
 begin
- src_addr := addr_type(@source);
- dest_addr := addr_type(@dest);
+ src_addr := _address(@source);
+ dest_addr := _address(@dest);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (src_addr >= screen_addr, 'scrfromto_move: screen source below 0');
  assert (src_addr + count <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
@@ -125,7 +130,7 @@ end;
 
 procedure init_video(var scr:screentype);
 begin
-  screen_addr := addr_type(@scr);
+  screen_addr := _address(@scr);
   SDL_init_video(scr);
 end;
 

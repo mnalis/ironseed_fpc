@@ -5,7 +5,7 @@ d_compiler = gdc -g -o $@
 
 fpc_flags:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049,4055 -dTrace
+fpc_debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049 -dTrace
 # -Cr -CR -Ct   -gh  -gc -dDEBUG
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
 cflags:= -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion
