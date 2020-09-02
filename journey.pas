@@ -1393,6 +1393,8 @@ begin
    anychange:=true;
 end;
 
+{ NB: almost same duplicate in utils.pas ?? but it seems to work... }
+{ adjust wandering aliens relative ship position. Negative "ofs" move them away from us, positive "ofs" bring them closer to us }
 procedure adjustwanderer(ofs: integer);
 var
    damages : array[1..7] of byte;
@@ -1444,17 +1446,18 @@ begin
   end;
 end;
 
+{ NB: almost same duplicate in utils.pas ?? but it seems to work... }
 procedure movewandering;
 begin
  case action of
   WNDACT_NONE:;
-  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
-  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ negative values = move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ positive values = move closer }
  end;
  case ship.wandering.orders of
-  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
-  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
-  WNDORDER_NONE: adjustwanderer(-30);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(5-random(12)) else adjustwanderer(30);	{ if masking, probably slowly move away, but might be getting closer too: from -6 to +5  }
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);		{ running away from us is somewhat slower if they don't know where we are }
+  WNDORDER_NONE: adjustwanderer(-30);									{ slowly drift away }
  end;
 end;
 

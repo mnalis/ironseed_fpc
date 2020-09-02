@@ -766,13 +766,15 @@ begin
  dispose(temp);
 end;}
 
+{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+{ adjust wandering aliens relative ship position. Negative "ofs" move them away from us, positive "ofs" bring them closer to us }
 procedure adjustwanderer(ofs: integer);
 begin
  with ship.wandering do
   begin
    if alienid>16000 then exit;
-   if (abs(relx)>499) and (relx<0) then relx:=relx+ofs
-    else if abs(relx)>499 then relx:=relx-ofs;
+   if (abs(relx)>499) and (relx<0) then relx:=relx+ofs		{ example: relx=-600, ofs=-100; new relx=-600+(-100) = -700, so distance is increasing for ofs<0 }
+    else if abs(relx)>499 then relx:=relx-ofs;			{ example: relx=+700, ofs=-100; new relx=+700+100=+800, so distance is increasing for ofs<0 }
    if (abs(rely)>499) and (rely<0) then rely:=rely+ofs
     else if abs(rely)>499 then rely:=rely-ofs;
    if (abs(relz)>499) and (relz<0) then relz:=relz+ofs
@@ -791,16 +793,17 @@ begin
   end;
 end;
 
-procedure movewandering;	{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+procedure movewandering;
 begin
  case action of
   WNDACT_NONE:;
-  WNDACT_RETREAT: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
-  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ negative values = move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ positive values = move closer }
  end;
  case ship.wandering.orders of
-  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
-  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(5-random(12)) else adjustwanderer(30);	{ if masking, probably slowly move away, but might be getting closer too: from -6 to +5  }
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);		{ running away from us is somewhat slower if they don't know where we are }
  end;
 end;
 
