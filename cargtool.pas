@@ -271,7 +271,7 @@ begin
 	 fadestep(1);
 	 delay(tslice div 4);
 	 for i:=20 to 130-a do
-	    scrfrom_move(screen[i+1,90],screen[i,90],36*4);
+	    scrfromto_move(screen[i+1,90],screen[i,90],36*4);
 	 if ((131-a)<127) and ((131-a)>109) then
 	    scrto_move(cargobuttons^[131-a,92],screen[131-a,92],34*4);
       end;

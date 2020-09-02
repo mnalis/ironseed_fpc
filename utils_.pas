@@ -46,6 +46,7 @@ procedure setwritemode(const mode: byte); cdecl ; external;
 procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 procedure scrfrom_move(const source; var dest; count: SizeInt);
 procedure scrto_move(const source; var dest; count: SizeInt);
+procedure scrfromto_move(const source; var dest; count: SizeInt);
 
 implementation
 uses data;//, sysutils;
@@ -74,7 +75,7 @@ end;
 type addr_type = qword;		// NB: word should be enough to hold memory address ?! https://www.tutorialspoint.com/pascal/pascal_pointers.htm
 const screen_size = 320*200;
 
-function _address (constref somevar) : addr_type;
+function _address (const somevar) : addr_type;
 var p: pbyte;
     a: ^addr_type;
 begin
@@ -119,6 +120,22 @@ begin
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
  assert (src_addr >= screen_addr, 'scrfrom_move: screen source below 0');
  assert (src_addr + count <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
+ move (source, dest, count);
+end;
+
+{ bounds checking move(), when source is screen[] }
+procedure scrfromto_move(const source; var dest; count: SizeInt);
+var src_addr, dest_addr, screen_addr: addr_type;
+begin
+ src_addr := _address(source);
+ dest_addr := _address(dest);
+ screen_addr := _address(screen);
+
+ //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (src_addr >= screen_addr, 'scrfromto_move: screen source below 0');
+ assert (src_addr + count <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
+ assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
+ assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
 end;
 

@@ -586,7 +586,7 @@ begin
    screen[cury+12,curx+27]:=90+random(6);
    a:=num*40-26;
    for i:=1 to 26 do
-    scrfrom_move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
+    scrfromto_move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
   end;
 end;
 
@@ -1136,7 +1136,7 @@ begin
 	      end;*)
 	      screen[cury+12,curx+27]:=90+random(6);
 	      for i:=1 to 26 do
-		 scrfrom_move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
+		 scrfromto_move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
 	      for b:=1 to 26 do
 		 for a:=1 to 31 do
 		    if probeicons^[1,b,a]<>0 then screen[j*40-26+b,280+a]:=probeicons^[1,b,a];

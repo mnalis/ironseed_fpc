@@ -1,3 +1,4 @@
+- code: verify bounds for move() and fillscreen() when acccessing screen[]
 - shield/weapon arming/disarming and panic button rework, also fix its status on loadgame
 - docs: more events/logs system documenting
 - code: use constants for alert mode, cleanup whitespace
