@@ -1266,7 +1266,7 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    for i:=6 to maxspherei do
     begin
@@ -1302,7 +1302,7 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
@@ -1329,7 +1329,7 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    for i:=1 to 120 do
     scrfrom_move(screen[i+12,28],planet^[i],30*4);
