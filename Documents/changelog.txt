@@ -1,3 +1,4 @@
+v 0.1.7
 - fix Security / Masking so it behaves more like the manual says
 - fix memory corruption in trade()
 - code: verify bounds for move() and fillscreen() when acccessing screen[]
