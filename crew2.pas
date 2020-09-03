@@ -135,14 +135,14 @@ var
 {   stmp		    : String[8];}
 begin
    randseed:=crewindex*crewindex*crewindex;
-   
+
    iski:=ComputeSkill(crewindex);
    rski:=ship.crew[crewindex].skill;
    iski:=max2(min2(99,iski),1);
    rski:=max2(min2(99,rski),1);
    gradientbar(179, 20, 241 - 179 + 1, 2, 137, 22, iski, 99);
    gradientbar(179, 22, 241 - 179 + 1, 1, 105, 22, rski, 99);
-   
+
    iper:=ComputePerformance(crewindex);
    rper:=ship.crew[crewindex].perf;
    iper:=max2(min2(99,iper),1);
@@ -156,7 +156,7 @@ begin
    rsan:=max2(min2(99,rsan),1);
    gradientbar(179, 36, 241 - 179 + 1, 2, 137, 22, isan, 99);
    gradientbar(179, 38, 241 - 179 + 1, 1, 105, 22, rsan, 99);
-   
+
    for i:=96 to 127 do
    begin
       colors[i,1]:=(rski * ((i - 96) * 2 + 1) div 99);

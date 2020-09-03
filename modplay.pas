@@ -17,7 +17,7 @@ unit modplay;
 ********************************************************************)
 {$L c_utils.o}
 interface
-	
+
 	procedure setmodvolumeto(const vol:word);cdecl ; external;
 	procedure haltmod;cdecl ; external;
 	procedure initializemod;
@@ -36,7 +36,7 @@ uses strings, data, utils_;
 	procedure musicDone;cdecl ; external;
 	procedure play_mod(const loop:byte; const filename:pchar);cdecl ; external;
 	procedure play_sound(const filename:pchar; const rate:word);cdecl ; external;
-	
+
 procedure playmod(const looping: boolean; const s: string);  // load & play mod
 Var p : Pchar;
 begin
@@ -48,7 +48,7 @@ begin
     setmodvolumeto(ship.options[OPT_VOLUME]);
 end;
 
-	
+
 
 procedure initializemod;  //SDL mod
 begin
@@ -73,7 +73,7 @@ procedure soundeffect(const s: string; const rate: word);
 Var p : Pchar;
 begin
     if ship.options[OPT_SOUND]=0 then exit;
-    
+
     p:=StrAlloc (length(s)+1);
     StrPCopy (P,s);
     play_sound(P,rate);

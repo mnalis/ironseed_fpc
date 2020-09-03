@@ -77,19 +77,21 @@ var
  a,b,j,i,index : integer;
    randsave    : longint;
 
+{ checks if event "n" has happened }
 function chevent(n: integer): boolean;
 {var i,j: integer;}
 begin
-   if (n<0) or (n>19999) then
+   if (n<0) or (n>19999) then	{ n >= 20000 is chat with races from  Data_Generators/makedata/event.txt }
    begin
       chevent:=true;
       exit;
    end;
    if (n >= 8192) then
    begin
-      chevent := false
+      chevent := false;		{ should never happen? }
+      assert (n < 8192, 'event index out of bounds1');
    end else begin
-      chevent := (events[n shr 3] and (1 shl (n and 7))) <> 0;
+      chevent := (events[n shr 3] and (1 shl (n and 7))) <> 0;		{ look up "n mod 8" bit in "n/8" byte. So for example event 11 is 3rd bit in 2nd byte (event[1], as it starts counting from 0) }
    end;
 {   if n<50 then
    begin
@@ -783,22 +785,22 @@ begin
    if (abs(relx)>23000) or (abs(rely)>23000) or (abs(relz)>23000) then
     begin
      ship.wandering.alienid:=20000;
-     if action=1 then showchar(4,'Evasion successful!');
-     action:=0;
+     if action=WNDACT_RETREAT then showchar(4,'Evasion successful!');
+     action:=WNDACT_NONE;
     end;
   end;
 end;
 
-procedure movewandering;
+procedure movewandering;	{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
 begin
  case action of
-  0:;
-  1: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  WNDACT_NONE:;
+  WNDACT_RETREAT: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
  end;
  case ship.wandering.orders of
-  0: if action=3 then adjustwanderer(30) else adjustwanderer(2);
-  1: if action=3 then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
  end;
 end;
 
@@ -816,7 +818,7 @@ begin
       shadowprintln;
       shadowprint(s1+' '+s2);
    end;
-   
+
    quickloadscreen(tempdir+'/current',@screen, false);
 end;}
 
@@ -826,7 +828,7 @@ var
    oldt,t,c,ofsc : integer;
    done		 : boolean;
    ans		 : char;
-begin		 
+begin
    oldt:=tcolor;
    if ship.options[OPT_MSGS]=0 then exit;
    tcolor:=31;

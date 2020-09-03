@@ -34,7 +34,7 @@ implementation
 uses data, utils, utils2, journey, weird, cargtool, utils_;
 var
    lastalienid : Integer;
-   
+
    Function Sign(value: Integer):Integer;
    begin
       if value < 0 then
@@ -74,7 +74,7 @@ var
 	16 : s:='Interrupt vector table restored.';
 	17 : s:='Default settings.';
 	18 : s:='Power fluxuation detected on brain '+chr(n+64)+'.';
-      end; 
+      end;
       showchar(n,s);
    end; { tempinsanity }
 
@@ -231,8 +231,8 @@ var
 	 print(crewtitles[crew] + ': ' + msg);
 	 tcolor := oldcolour;
       end;
-      
-	 
+
+
    end; { CrewMessage }
 
    procedure ShipTick(background : Boolean);
@@ -397,7 +397,7 @@ var
    var cfile : file of createarray;
       temp   : ^createarray;
       j,i    : integer;
-   begin     
+   begin
       new(temp);
       assign(cfile,'data/creation.dta');
       reset(cfile);
@@ -507,7 +507,7 @@ var
 		 end;
 	      JOBTYPE_INSTALL, JOBTYPE_REMOVE :
 	         if job<ID_NOSHIELD then
-		 begin
+		 begin		{ weapon }
 		    dec(timeleft,5);
 		    if (random(2) = 0) and SkillTest(background, 2, 40, 10) then
 		       inc(extra, 16);
@@ -522,7 +522,7 @@ var
 		       jobtype:=JOBTYPE_REPAIR;
 		    end;
 		 end
-		 else begin
+		 else begin	{ shield }
 		    dec(timeleft,5);
 		    if random(220)=0 then
 		    begin
@@ -585,8 +585,8 @@ var
 			  job:=0;
 		       end;
 		    end;
-	    end;  
-      
+	    end;
+
    end; { EngTick }
 
    procedure SecTick(background : Boolean);
@@ -612,7 +612,7 @@ var
    procedure MedTick(background : Boolean);
    var
       i, d : Integer;
-   begin   
+   begin
       for i := 1 to 6 do
 	 with ship.crew[i] do
 	 begin
@@ -631,7 +631,7 @@ var
    procedure ResearchTick(background : Boolean);
    var
       i, d : Integer;
-   begin   
+   begin
       for i := 1 to 6 do
 	 with ship.crew[i] do
 	    if (ship.research and (1 shl i)) > 0 then

@@ -288,6 +288,7 @@ begin
   end;
 end;
 
+{ this is always called after game is (re-)loaded }
 procedure initializedata;
 var j: integer;
 begin
@@ -317,23 +318,31 @@ begin
  viewmode:=0;
  batindex:=0;
  idletime:=0;
- action:=0;
+ action:=WNDACT_NONE;
  tcolor:=31;
- alert:=2;
- if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then setalertmode(2)
-  else setalertmode(0);
  bkcolor:=3;
  if (ship.shield=0) then
   begin
     writeln('FIXUP shield from 0 to ID_NOSHIELD');
     ship.shield:=ID_NOSHIELD;
   end;
- ship.shieldlevel:=0;
- if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100
-  else if ship.shield>ID_REFLECTIVEHULL then ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT];
+ if ship.shield=ID_NOSHIELD then ship.shieldlevel:=0
+  else if ship.shield=ID_REFLECTIVEHULL then ship.shieldlevel:=100; { fixup shield status only if we are sure what they must be }
+ { alert is not saved in savegame. Try to calculate it }
+ { NB: game will upgrade from REST to ALERT and vice versa if any subsystems are damaged automatically -  by periodically calling checkstats() }
+ alert:=ALRT_COMBAT;	 { NB: main.png has panic button in RED color. So every game must start with ALERT in RED (COMBAT) or color changes won't be working correctly }
+
+ if (ship.armed) or ((ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) and (ship.shieldopt[SHLD_COMBAT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT])) then
+    setalertmode(ALRT_COMBAT, false)
+  else if (ship.shieldlevel=ship.shieldopt[SHLD_ALERT_WANT]) and (ship.shieldopt[SHLD_ALERT_WANT]>ship.shieldopt[SHLD_LOWERED_WANT]) then
+    setalertmode(ALRT_ALERT, false)
+  else
+    setalertmode(ALRT_REST, false);
+
  showresearchlights;
 end;
 
+{ load game from commandline non-interactively }
 procedure loadspecial;
 var t: string[10];
     j: integer;
@@ -345,7 +354,7 @@ begin
  curfilenum:=0;
  loadgame(j);
  if curfilenum<>0 then
- begin
+ begin						{ some savegame was loaded }
     event(10);
     if chevent(12) then event(1001);
  end;

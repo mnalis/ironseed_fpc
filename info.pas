@@ -144,7 +144,7 @@ begin
    if systems[i].y>1250 then j:=j+2;
    if systems[i].z>1250 then j:=j+4;
 
-   //with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets); 
+   //with systems[i] do writeln (' i=',i,' sec=', j, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    if systems[i].name='OBAN       ' then systems[i].name := 'OBAN        '; { fix legacy off-by-one padding }
    if (ord(systems[i].name[0]) <> 12) then
    begin
@@ -158,7 +158,7 @@ begin
       fixupcoord(i);
       with systems[i] do writeln ('  FIXUP BROKEN system=',i, ' s.x=', x, ' s.y=', y, ' s.z=', z, ' s.name=', name, ' s.name[0]=', ord(name[0]), ' s.visits=', visits, ' s.date_ym=', datey, '/', datem, ' s.mode=', mode, ' s.notes=', notes, ' s.numplanets=', numplanets);
    end;
-   
+
 {$IFDEF DEMO}
    if j=sector then
 {$ELSE}
@@ -1017,7 +1017,7 @@ begin
             end;
      2..10: if (mouse.y>162) and (mouse.y<198) then findhome;
 //   end;
-//   case mouse.x of  
+//   case mouse.x of
 //  198..310: if (mouse.y<159) and (mouse.y>20) then findtarget;
  end;
  idletime:=0;

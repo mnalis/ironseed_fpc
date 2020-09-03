@@ -153,7 +153,7 @@ begin
   DecodeTime(Now,hh,mm,ss,ms);
   modth:=byte(hh);//h;
   modtm:=byte(mm);//m;
-  modts:=byte(ss);//s; 
+  modts:=byte(ss);//s;
 end;
 
 procedure getcurtime;  // get current time
@@ -1022,7 +1022,7 @@ begin
 getcurtime;
   i:=abs(curth-modth)*3600+abs(curtm-modtm)*60+curts-modts;
  until i>t;
- 
+
 end;
 
 procedure readyencode;
@@ -1285,7 +1285,7 @@ var t: pscreentype;
     a,startx,max,starty: integer;
     temppal: paltype;
 begin
-    
+
  temppal[0,1]:=0;		// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(temppal,sizeof(paltype),0);
  for i:=0 to 31 do
@@ -1456,7 +1456,7 @@ end;
 
 procedure runintro;
 var a: integer;
-    
+
 label continue,skip,skip2;
 begin
  bkcolor:=0;

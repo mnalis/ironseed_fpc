@@ -109,6 +109,7 @@ begin
  move(temppal,colors,sizeof(paltype));
 end;
 
+{ add event "n" to happen in some time "t" in the future }
 procedure addpending(n, t : integer);
 var
    i : integer;
@@ -130,6 +131,7 @@ begin
    end;
 end; { addpending }
 
+{ move logpending[] to events[]/logs[] when it's time happens }
 procedure tickpending(ticks : integer; background : boolean);
 var
    i, j : integer;
@@ -161,34 +163,43 @@ begin
    end;
 end; { tickpending }
 
+{ just sets the bit in events[] bitmap (and in ship.events bitmap for events 50-500) }
 procedure setevent(n: integer);
 var i,j: word;
 begin
-    if n >= 8192 then
+   assert (n < 8192, 'event index out of bounds2');
+   if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] or (1 shl (n and 7));
-   
+
    if (n<50) or (n>=500) then exit;
    n:=n-50;
-   i:=50+(n div 8);
-   j:=n mod 8;
+   i:=50+(n div 8);	{ same as 50+(n shr 3) ? }
+   j:=n mod 8;		{ same as (n and 7) ? }
+   assert (i<=64, 'ship.events index out of bounds1');
    ship.events[i]:=ship.events[i] or (1 shl j);
 end;
 
+{ just clears the bit in events[] bitmap (and in ship.events bitmap for events 50-500) }
 procedure clearevent(n: integer);
 var i,j: word;
 begin
+   assert (n < 8192, 'event index out of bounds3');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] and not (1 shl (n and 7));
-   
+
    if (n<50) or (n>=500) then exit;
    n:=n-50;
    i:=50+(n div 8);
    j:=n mod 8;
+   assert (i<=64, 'ship.events index out of bounds2');
    ship.events[i]:=ship.events[i] and not (1 shl j);
 end;
 
+{ add and display a log "n" to first unused (-1) space in logs[256].
+  Also sets an event "n".
+  For events < 50, also add compatibility to ship.events[] }
 procedure addlog(n: integer);
 var i: integer;
 begin
@@ -196,12 +207,14 @@ begin
    i:=0;
    while logs[i] <> -1 do
       inc(i);
+   assert (i<=255, 'logs index out of bounds');
    logs[i] := n;
    if n < 50 then
    begin
       {Set old style log/events.}
       i:=0;
       while ship.events[i]<>255 do inc(i);
+      assert (i<50, 'ship.events (non-bitmapped) index out of bounds');
       ship.events[i]:=n;
    end;
    computerlogs(n);
@@ -211,17 +224,21 @@ procedure startphaedormoch;
 begin
  getspecial(10,1010);
  addtofile;
- createwandering(1);
+ createwandering(WNDORDER_RETREAT);
 end;
 
 procedure startarmada;
 begin
  getspecial(7,1007);
  addtofile;
- createwandering(0);
+ createwandering(WNDORDER_ATTACK);
  initiatecombat;
 end;
 
+{ this handles all associated things that happen related to that event (like cargo/systems update, endgame etc.)
+  It might add a log for that event (but not always)
+  and it might mark that event as happened via setevent() (but not for events 0-50 nor 1000-1999 !)
+}
 procedure event(n: integer);
 var i,j: integer;
 //    p:^byte;
@@ -236,9 +253,10 @@ begin
    begin
       setevent(n);
    end;
-   
+
  case n of
-   1..9: addlog(n);     { alien races  }
+
+   0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
    11	: addlog(11);      { sector codex }
    12	: begin            { second buoy  }
 	     systems[145].notes:=systems[145].notes or 1;
@@ -320,7 +338,7 @@ begin
 	     addcargo(ID_ART_DETONATOR, true);
 	     addlog(39);
 	  end;
-   40	: begin            { glyptic scythe }
+   40	: begin            { glyptic scythe }			{FIXME: from logs.txt Phaedor_Moch LOG is #40, but it seem to be handled by event40 GLYPTIC SCYTHE here - but shouldn't that be log @1101? what if we don't give them items for repair?? would we get log of them at all?)  however it did seem to work previously, so I won't be touchinh this unless it turns out to be a problem}
 	     addcargo(ID_ART_GLYPTIC_SCYTHE, true);
 	     addlog(40);
 	  end;
@@ -1255,7 +1273,7 @@ begin
 idletime:=0;
 end;
 
-   
+
 procedure deathsequence(n: integer);
 begin
  assert (n<2); { just to ignore warning, variable really not used }

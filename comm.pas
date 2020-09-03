@@ -43,6 +43,7 @@ procedure getinfo;
 procedure checkwandering;
 procedure animatealien;
 procedure gettechlevel(plan: integer);
+function calc_anger (anger, congeniality: integer): integer;
 
 implementation
 
@@ -97,7 +98,7 @@ begin                                 {       = 1 > retreat }
    anger:=abs(alien.anger+random(11)-5);
    alienid:=alien.id;
    case orders of
-    0: begin
+    WNDORDER_ATTACK: begin
         relx:=3000+random(10000);
         if random(2)=1 then relx:=-relx;
         rely:=3000+random(10000);
@@ -105,7 +106,7 @@ begin                                 {       = 1 > retreat }
         relz:=3000+random(10000);
         if random(2)=1 then relz:=-relz;
        end;
-    1: begin
+    WNDORDER_RETREAT: begin
         relx:=5000+random(12000);
         if random(2)=1 then relx:=-relx;
         rely:=5000+random(12000);
@@ -113,7 +114,7 @@ begin                                 {       = 1 > retreat }
         relz:=5000+random(12000);
         if random(2)=1 then relz:=-relz;
        end;
-    2: begin
+    WNDORDER_NONE: begin
         relx:=3000+random(2000);
         if random(2)=1 then relx:=-relx;
         rely:=3000+random(2000);
@@ -136,7 +137,7 @@ begin
   read(confile,alien);
  until (alien.id=curplan) or (ioresult<>0);
  close(confile);
- if (alien.id=curplan) and (alien.anger>0) and (alien.congeniality/alien.anger<0.7) then createwandering(0);
+ if (alien.id=curplan) and (alien.anger>0) and (alien.congeniality/alien.anger<0.7) then createwandering(WNDORDER_ATTACK);
 end;
 
 procedure gettechlevel(plan: integer);
@@ -245,6 +246,7 @@ begin
  close(confile);
 end;
 
+{ fills alien structure with gamedata from file for alien "n" (unless n=13), and sets index to "contactindex" }
 procedure getspecial(n,contactindex: integer);
 var f: file of alientype;
 begin
@@ -324,7 +326,7 @@ begin
            if random(3)=0 then war:=true;
            congeniality:=15;
            anger:=30;
-           createwandering(0);
+           createwandering(WNDORDER_ATTACK);
           end;
        2: begin
            congeniality:=20;
@@ -341,7 +343,7 @@ begin
        5: begin
            congeniality:=5;
            anger:=0;
-           createwandering(1);
+           createwandering(WNDORDER_RETREAT);
           end;
       end;
      end;
@@ -553,7 +555,7 @@ end;
 
 procedure printxy2(x1,y1,m,n,o: integer; s: string);
 var letter,j2,a,x,y,t : integer;
-label skipit; 
+label skipit;
 begin
    t:=tcolor;
    brighter:=false;
@@ -669,7 +671,7 @@ begin
 	      'A' ..'Z': letter:=letter-36;
 	      'a' ..'z': letter:=letter-40;
 	    else letter:=1;
-	    end;	
+	    end;
 	    str2^[j]:=chr(letter);
 	    inc(j);
 	 end;
@@ -742,7 +744,7 @@ begin
           for i:=182 to 188 do
            fillchar(screen[i,12],200,0);
           contactindex:=-1;
-          createwandering(0);
+          createwandering(WNDORDER_ATTACK);
           ship.wandering.relx:=500+random(100);
           ship.wandering.rely:=500+random(100);
           ship.wandering.relz:=500+random(100);
@@ -794,7 +796,7 @@ begin
 		   bkcolor := 0;
 		   tcolor := s;
 		   printxy(12,135+(1)*6,'Give the Phaedor Moch a radioactive and a coolant?');
-		   mouseshow; 
+		   mouseshow;
 		   result := yesnorequest('Give supplies?',0,31);
 		   mousehide;
 		   if result then
@@ -818,7 +820,7 @@ begin
 		if (incargo(ID_STRATAMOUNT) >= 1) then
 		begin
 		   printxy(12,135+(1)*6,'Give the Aard a stratamount?');
-		   mouseshow; 
+		   mouseshow;
 		   result := yesnorequest('Give supplies?',0,31);
 		   mousehide;
 		   if result then
@@ -866,7 +868,7 @@ begin
 	'a' ..'z': question[j]:=chr(ord(question[j])-40);
 	'%'	  : question[j]:=#55;
       else question[j]:=#1;
-      end;	  
+      end;
    index:=0;
    {i:=1;}
    repeat
@@ -938,7 +940,7 @@ begin
  case ans of
   'A'..'Z',' ','0'..'9','''','-': if contactindex>-1 then
         begin
-	
+
          if cursorx<20 then
           begin
            for j:=20 downto cursorx do question[j]:=question[j-1];
@@ -1117,12 +1119,38 @@ begin
  mouseshow;
 end;
 
+
+{ returns alien anger level:
+  1 = Afraid'
+  2 = Indifferent'
+  3 = Friendly
+  4 = Angry
+  5 = Violent
+}
+function calc_anger (anger, congeniality: integer): integer;
+var r: real;
+begin
+ if anger=0 then
+  begin
+   if congeniality>20 then calc_anger:=3
+    else calc_anger:=1;
+  end
+ else
+  begin
+   r:=congeniality/anger;
+   if r<0.3 then calc_anger:=5
+   else if r<0.7 then calc_anger:=4
+   else if round(r)=1 then calc_anger:=2
+   else calc_anger:=3;
+  end;
+end;
+
+
 procedure getshipinfo;
 var confile: file of alientype;
     done: boolean;
     temp: alientype;
     str1: string[11];
-    r: real;
 begin
  assign(confile,tempdir+'/contacts.dta');
  reset(confile);
@@ -1146,19 +1174,7 @@ begin
  printxy(217,70,'Status:');
  if temp.war then printxy(252,70,'War')
   else printxy(252,70,'Peace');
- if temp.anger=0 then
-  begin
-   if temp.congeniality>20 then i:=3
-    else i:=1;
-  end
- else
-  begin
-   r:=temp.congeniality/temp.anger;
-   if r<0.3 then i:=5
-   else if r<0.7 then i:=4
-   else if round(r)=1 then i:=2
-   else i:=3;
-  end;
+ i:=calc_anger(temp.anger, temp.congeniality);
  case i of
   1: str1:='Afraid';
   2: str1:='Indifferent';
@@ -1231,7 +1247,6 @@ end;
 
 procedure getinfo;
 var str1: string[11];
-    r: real;
 begin
  if infomode then
   begin
@@ -1263,19 +1278,7 @@ begin
   printxy(217,70,'Status:');
   if alien.war then printxy(252,70,'War')
    else printxy(252,70,'Peace');
-  if alien.anger=0 then
-   begin
-    if alien.congeniality>20 then i:=3
-     else i:=1;
-   end
-  else
-   begin
-    r:=alien.congeniality/alien.anger;
-    if r<0.3 then i:=5
-    else if r<0.7 then i:=4
-    else if round(r)=1 then i:=2
-    else i:=3;
-   end;
+  i:=calc_anger(alien.anger, alien.congeniality);
   case i of
    1: str1:='Afraid';
    2: str1:='Indifferent';
@@ -1552,6 +1555,7 @@ begin
  until done;
 end;
 
+{ contact aliens on planet }
 procedure getlocals;
 var confile: file of alientype;
     done: boolean;
@@ -1579,6 +1583,7 @@ begin
  contactsequence(curplan,random(3));
 end;
 
+{ contact alien ship }
 procedure getship;
 var confile: file of alientype;
     done: boolean;

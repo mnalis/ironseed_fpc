@@ -34,7 +34,7 @@ procedure print(s: string);
 procedure println;
 procedure showtime;
 procedure addtime;
-procedure setalertmode(mode: integer);
+procedure setalertmode(mode: integer; do_shields: boolean);
 procedure makesphere;
 procedure makegasplanet;
 procedure makestar;
@@ -814,7 +814,7 @@ begin
             end;
      0..8: if mouse.y>182 then
             begin
-             if alert<2 then
+             if alert<ALRT_COMBAT then
               begin
                armweapons;
                raiseshields;
@@ -1145,23 +1145,41 @@ begin
  idletime:=0;
 end;
 
-procedure setalertmode(mode: integer);
-var alt,new: integer;
+{ change alert mode - which really ONLY sets ship.shieldlevel (besides doing checks and displaying messages and changes panic button color) }
+procedure setalertmode(mode: integer; do_shields: boolean);
+var alt,new, shield_wanted: integer;
 begin
- if alert=mode then exit;
+ shield_wanted := 0;
+ if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
+ else if mode=ALRT_REST then
+  shield_wanted:=ship.shieldopt[SHLD_LOWERED_WANT]
+ else if mode=ALRT_ALERT then
+  shield_wanted:=ship.shieldopt[SHLD_ALERT_WANT]
+ else if mode=ALRT_COMBAT then
+  shield_wanted:=ship.shieldopt[SHLD_COMBAT_WANT];
+
+ if ship.armed then mode:=ALRT_COMBAT; { if weapons are still armed, do not drop out of COMBAT mode, even if we drop shields }
+ if (not do_shields) and (ship.shieldlevel=ship.shieldopt[SHLD_COMBAT_WANT]) then mode:=ALRT_COMBAT; { if we are powering down weapons, but shields are still in COMBAT mode, remain in COMBAT alert status }
+
  case alert of
-  0: alt:=48;
-  1: alt:=112;
-  2: alt:=80;
+  ALRT_REST: alt:=48;
+  ALRT_ALERT: alt:=112;
+  ALRT_COMBAT: alt:=80;
  end;
  case mode of
-  0: new:=48;
-  1: new:=112;
-  2: new:=80;
+  ALRT_REST: new:=48;
+  ALRT_ALERT: new:=112;
+  ALRT_COMBAT: new:=80;
  end;
- plainfadearea(0,184,7,199,new-alt);
+ if alert<>mode then
+  plainfadearea(0,184,7,199,new-alt);	{ modifies the color of the panic button in lower left corner of the screen }
  alert:=mode;
- if alert=2 then exit;
+
+ if not do_shields then exit;		{ only set "alert" variable  and panic button color unless do_Shields is true }
+
+
+ if ship.shieldlevel = shield_wanted then exit;
+
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -1182,11 +1200,8 @@ begin
       end;
     end;
   end;
- if ship.shield<=ID_NOSHIELD then ship.shieldlevel:=0
- else if alert=0 then
-  ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
- else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
+
+ ship.shieldlevel := shield_wanted;
 end;
 
 procedure processkey;
@@ -1314,7 +1329,7 @@ begin
   'G': if cube<>4 then rotatecube(cube,4,true);
   'B': if cube<>5 then rotatecube(cube,5,true);
   'P': begin
-        if alert<2 then
+        if alert<ALRT_COMBAT then
          begin
           armweapons;
           raiseshields;
@@ -1393,37 +1408,38 @@ begin
     else if abs(rely)>499 then rely:=rely-ofs;
    if (abs(relz)>499) and (relz<0) then relz:=relz+ofs
     else if abs(relz)>499 then relz:=relz-ofs;
-   if (abs(relx)<500) and (abs(rely)<500) and (abs(relz)<500) then
+   if (abs(relx)<500) and (abs(rely)<500) and (abs(relz)<500) and 	{ if ships are close enough... }
+      ((action=WNDACT_ATTACK) or (ship.wandering.orders=WNDORDER_ATTACK) or (calc_anger(ship.wandering.anger, ship.wandering.congeniality) > 3)) then	{ ...and there is a reason for fight to happen }
    begin
-      if ship.wandering.alienid = 1013 then
+      if ship.wandering.alienid = 1013 then	{ drones - save state }
       begin
 	 for i := 1 to 7 do
 	    damages[i] := ship.damages[i];
 	 hull := ship.hullintegrity;
       end;
       initiatecombat;
-      if ship.wandering.alienid = 1013 then
+      if ship.wandering.alienid = 1013 then	{ drones - restore state }
       begin
 	 for i := 1 to 7 do
 	    ship.damages[i] := damages[i];
 	 ship.hullintegrity := hull;
       end;
-     ship.armed:=true;
-     setalertmode(1);
+     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up }
+     setalertmode(ALRT_ALERT, true);
      ship.wandering.alienid:=20000;
      checkwandering;
-     action:=0;
+     action:=WNDACT_NONE;
     end;
    if (abs(relx)>23000) or (abs(rely)>23000) or (abs(relz)>23000) then
     begin
      ship.wandering.alienid:=20000;
-     if action=1 then
+     if action=WNDACT_RETREAT then
       begin
        println;
        tcolor:=63;
        print('SECURITY: Evasion successful!');
       end;
-     action:=0;
+     action:=WNDACT_NONE;
     end;
   end;
 end;
@@ -1431,14 +1447,14 @@ end;
 procedure movewandering;
 begin
  case action of
-  0:;
-  1: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
-  2: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));
+  WNDACT_NONE:;
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
  end;
  case ship.wandering.orders of
-  0: if action=3 then adjustwanderer(30) else adjustwanderer(2);
-  1: if action=3 then adjustwanderer(-50) else adjustwanderer(-70);
-  2: adjustwanderer(-30);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_NONE: adjustwanderer(-30);
  end;
 end;
 

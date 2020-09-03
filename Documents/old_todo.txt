@@ -93,7 +93,7 @@ travel:
 conversation:
 	x giving items to races
 	suggestions from the crew
-	investigate: Ermigen repairs: no dialog and automatically done on first meeting
+	investigate: Ermigen repairs: no dialog and automatically done on first meeting - see https://github.com/mnalis/ironseed_fpc/issues/53
 	x investigate: mouse not seen in yes/no dialogs
 	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same responce for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
 	investigate: When viewing information on a race you're communicating with, it sometimes says "The Guild" as the race name, when it's not. Example: I noticed this with the Quai Pa'loi and D'pahk, but it only happens sometimes, not always. 
@@ -101,12 +101,12 @@ conversation:
 logs:
 	x keyword highlighting
 	x extra log entries
-	investigate: After communicating with the Sengzhac for the first time, the log book opens, but doesn't automatically load the Sengzhac log. 
+	x investigate: After communicating with the Sengzhac for the first time, the log book opens, but doesn't automatically load the Sengzhac log. 
 events:
 	icon: hallifax
 aliens:
 	Fix aliens so they don't chase between planets and systems.
-	investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
+	x investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
 
 combat:
 	x make drones so that they don't kill the player on them losing

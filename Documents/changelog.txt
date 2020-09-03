@@ -1,5 +1,13 @@
+- shield/weapon arming/disarming and panic button rework, also fix its status on loadgame
+- docs: more events/logs system documenting
+- code: use constants for alert mode, cleanup whitespace
+v 0.1.6
+- fix bugs in logic deciding when aliens attack
+- fix bugs with Sengzhac log not showing and not being able to scroll over it
+- docs: document events/logs system
+- fix race condition when installing/removing shield
 - fix cargo skip of weight check for some items
-- code: use constants for delayes, shiptypes, jobtypes and cargo items to further improve readability
+- code: use constants for delayes, shiptypes, jobtypes, wandering alien action/orders and cargo items to further improve readability
 - combat: fix alien (with reflective hull) damage calculations
 v 0.1.5
 - combat: various shield handling fixes

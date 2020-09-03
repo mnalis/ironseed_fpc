@@ -608,8 +608,19 @@ begin
          end;
      end;
   7: begin
-      if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ can't remove reflective hull }
-       begin
+     i:=0;
+     for j:=1 to 3 do
+      if ((ship.engrteam[j].jobtype>=JOBTYPE_INSTALL) and (ship.engrteam[j].jobtype<=JOBTYPE_REMOVE)
+      and (ship.engrteam[j].job>=ID_NOSHIELD) and (ship.engrteam[j].job<=ID_LAST_SHIELD)) then i:=1;
+     if i=1 then
+      begin
+       tcolor:=94;
+       bkcolor:=3;
+       println;
+       print('ENGINEERING: Already working on a shield.');
+      end
+     else if (viewlevel=1) and (ship.shield>ID_REFLECTIVEHULL) then	{ noshield and reflective hull can't be removed }
+       begin		{ want to remove shield }
         mouseshow;
         if yesnorequest('Remove this shield?',0,31) then
          begin
@@ -621,8 +632,8 @@ begin
             tcolor:=94;
             print('ENGINEERING: No team available.');
            end
-          else		{ there is engineering team available }
-           begin
+          else
+           begin	{ there is engineering team available, start removing shield }
             addcargo(ship.shield, true);
             ship.engrteam[j].job:=ship.shield;
             ship.engrteam[j].jobtype:=JOBTYPE_REMOVE;
@@ -637,7 +648,7 @@ begin
         mousehide;
        end
       else if (viewlevel>1) and (ship.shield<=ID_REFLECTIVEHULL) and (viewindex2>0) then
-       begin
+       begin		{ want to install shield }
         mouseshow;
         if yesnorequest('Install this shield?',0,31) then
          begin
@@ -650,7 +661,7 @@ begin
             print('ENGINEERING: No team available.');
            end
           else
-           begin
+           begin	{ there is engineering team available, start installing shield }
             ship.engrteam[j].job:=ship.cargo[viewindex2];
             removecargo(ship.cargo[viewindex2]);
             ship.engrteam[j].jobtype:=JOBTYPE_INSTALL;
@@ -753,7 +764,8 @@ begin
  end;
  mouseshow;
  bkcolor:=3;
- if (ship.shield<=ID_REFLECTIVEHULL) or (alert=2) then exit;
+ { engineering / shield display checks }
+ if ship.shield<=ID_REFLECTIVEHULL then exit;
  if ship.damages[DMG_SHIELD]>25 then
   begin
    tcolor:=94;
@@ -774,10 +786,13 @@ begin
       end;
     end;
   end;
- if alert=0 then
+
+ if alert=ALRT_REST then
   ship.shieldlevel:=ship.shieldopt[SHLD_LOWERED_WANT]
- else if alert=1 then
-  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT];
+ else if alert=ALRT_ALERT then
+  ship.shieldlevel:=ship.shieldopt[SHLD_ALERT_WANT]
+ else if alert=ALRT_COMBAT then
+  ship.shieldlevel:=ship.shieldopt[SHLD_COMBAT_WANT];
 end;
 
 procedure setupweaponinfo;
@@ -1071,6 +1086,7 @@ begin
  mouseshow;
 end;
 
+{ shows quick ship stats: hull/primary/secondary/shield right-side display }
 procedure displaystatus;
 var part: real;
     str1: string[5];
@@ -1365,13 +1381,15 @@ begin
  bkcolor:=3;
 end;
 
+
+{ colors dpg/pwr/aux/shd status buttons (at top far right), and updates Alert status ALERT<->REST depending on subsystems damage }
 procedure checkstats;
 begin
- if alert<2 then
+ if alert<ALRT_COMBAT then	{ if we not in COMBAT mode, automatically put us ALERT mode if damaged, or REST mode if not }
   begin
-   i:=0;
-   for j:=1 to 7 do if ship.damages[j]<>0 then i:=1;
-   setalertmode(i);
+   i:=ALRT_REST;
+   for j:=1 to 7 do if ship.damages[j]<>0 then i:=ALRT_ALERT;
+   setalertmode(i, true);
   end;
  if ship.hullintegrity<250 then tc:=80
   else if ship.hullintegrity<500 then tc:=112
@@ -1833,7 +1851,7 @@ begin
 	  j:=findfirstplanet(viewindex2)+viewindex;
 	  curplan:=j;
 	  if tempplan^[j].visits<255 then inc(tempplan^[j].visits);
-	  
+
         tempplan^[j].datey:=ship.stardate[3];
         tempplan^[j].datem:=ship.stardate[1];
         ship.orbiting:=viewindex;

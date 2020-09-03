@@ -41,7 +41,7 @@ end;
 
 function GetHeapStats1:String;
 
-begin 
+begin
    GetHeapStats1 := 'heap: TotalSize(' + '10050' + ')';
 end;
 

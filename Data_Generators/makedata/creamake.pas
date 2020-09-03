@@ -92,8 +92,8 @@ begin
  close(f2);
  assign(ft,'Data_Generators/other/itemdata.txt');
  rewrite(ft);
- writeln(ft,'    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS            ');
- writeln(ft,'------------------ ------------------- ------------------- ------------------- ----- ------------------');
+ writeln(ft,'    ITEM TO CREATE             PART #1                 PART #2                 PART #3          WORTH                    LEVELS                   ');
+ writeln(ft,'---------------------- ----------------------- ----------------------- ----------------------- ------- -------------------------------------------');
  for j:=1 to maxcreation do
   begin
 {   i:=1;

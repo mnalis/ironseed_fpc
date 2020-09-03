@@ -695,9 +695,9 @@ begin
  for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
-       { FIXME: why *5 ?!
+       { QUESTION: why *5 ?!
          if some weapon has damage potential of 50GJ and 20% is for 'j' damage type, it should be 10GJ damage for this damage type, isn't it so?)
-         yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25 
+         yet putting DIRK as example does: impact: attacking weapon1 for dmgtype4=100% and its damage dealing=5GJ; THEIR CURRENT weapon subsystem damage=0 ; their attack total i=25
 
          ANSWER: Ah, it seems to because real alian weapons are not implemented, and we always do impact(j,maxweapons=72) in moveships().
          But aliens ships^[j].gunnodes has 5 positions, so this just simulates as all 5 weapons of type 72 fired all at once with same chances to hit.
@@ -814,8 +814,7 @@ begin
            if (ships^[j].damages[DMG_WEAPONS] < 100) and	{ enemy ship can only fire if it's weapons subsystem is not completely destroyed }
               (ships^[j].battery > 0) then	{ and it's battery is not completely deplated }
              impact(j,maxweapons);		{ j=enemyship, second param is weapon: currently always 72 "Alien weapon - debug" }
-           //FIXME: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc... 
-           // and would produce 5 times as much sound effects.
+           //FIXME: realistically we should cycle through ships^[j].gunnodes[] -- but that would require tracking their energy, using power, AI for firing etc... and would produce 5 times as much sound effects.
            displaymap;
           end;
          charges[a]:=0;
@@ -1207,7 +1206,7 @@ begin
          #75: setdir(4); { left }
          #77: setdir(6); { right }
          #79: setdir(7); { end }
-         #80: setdir(8); { down } 
+         #80: setdir(8); { down }
          #81: setdir(9); { PgDn}
          #59: if range>5000 then	{ F1 - zoom in}
                begin
@@ -1412,7 +1411,7 @@ begin
     dec(a,c+1);
     if index<4 then inc(index) else
      begin
-      basex:=100*random(600);                                //WTF?  too far away  was  basex:=10000*random(6000); 
+      basex:=100*random(600);                                //WTF?  too far away  was  basex:=10000*random(6000);
       if random(2)=0 then basex:=-basex;
       basey:=100*random(600);
       if random(2)=0 then basey:=-basey;
