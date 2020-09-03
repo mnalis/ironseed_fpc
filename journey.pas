@@ -1426,7 +1426,7 @@ begin
 	    ship.damages[i] := damages[i];
 	 ship.hullintegrity := hull;
       end;
-     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up }
+     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up. FIXME - unfortunate(?) side effect is that you would have to manually turn disarm weapons to be able to drop out of COMBAT mode. Perhaps better do here the same as in disarm - return energy to batteries and disarm? }
      setalertmode(ALRT_ALERT, true);
      ship.wandering.alienid:=20000;
      checkwandering;
