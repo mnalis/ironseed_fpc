@@ -1,4 +1,4 @@
-- fixed incorrect highlighting in logs sometimes
+- fixed incorrect highlighting and leftover chars in logs sometimes
 - fix issue when >255 items of some type
 - allow skipping of slow "Approaching planet" countdowns
 v 0.1.7
