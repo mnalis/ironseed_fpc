@@ -384,24 +384,44 @@ begin
       exit;
    end;
    j:=1;
-   while (j<251) and (ship.cargo[j]<>item) and (ship.numcargo[j]<255) do inc(j);
-   if j>250 then
+   while (j<251) and (ship.cargo[j]<>item) do
+   begin
+      if (ship.numcargo[j]>=255) then
+      begin
+        println;
+        tcolor:=94;
+        print('Too much of some cargo.  Dumping excess.');	{ NB: hmm, numcargo[x] is word, so game should handle up to 65535, not 255, but other parts of the code do not support it... anyway, there is limit, and it should be enforced - so enforce it at safe level of 255 }
+        ship.numcargo[j]:=254;
+      end;
+      inc(j);
+   end;
+   if j>250 then		{ Our item not found, try to find unused slot }
    begin
       j:=1;
       while (ship.numcargo[j]<>0) and (j<251) do inc(j);
-      if j=251 then
+      if j=251 then		{ this should happen extremly rarely - there are 146 items in Data_Generators/makedata/cargo.txt, so unless we gather more than 109 artifacts and never research them... }
       begin
 	 println;
 	 tcolor:=94;
-	 print('No cargo slot available.  Some cargo dumped.');
-	 weight:=ship.cargomax+1;
-	 j:=random(50)+100;
-	 exit;
+	 print('No cargo slot available.  Some cargo should be dumped.  Can not store.');
+         addcargo:=false;
+         exit;
       end;
-      ship.cargo[j]:=item;
+      ship.cargo[j]:=item;	{ found unused slot, claim it for ourselves }
       ship.numcargo[j]:=1;
    end
-   else inc(ship.numcargo[j]);
+   else
+   begin			{ we've found our item }
+      if (ship.numcargo[j]<254) then inc(ship.numcargo[j])
+      else
+      begin
+        println;
+        tcolor:=94;
+        print('Already have too much of that cargo.  Can not store.');
+        addcargo:=false;
+        exit;
+      end;
+   end;
    if weight>ship.cargomax then addcargo:=false else addcargo:=true;
    sortcargo;
 end;

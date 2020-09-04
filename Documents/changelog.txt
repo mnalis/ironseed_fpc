@@ -1,3 +1,4 @@
+- fix issue when >255 items of some type
 - allow skipping of slow "Approaching planet" countdowns
 v 0.1.7
 - fix Security / Masking so it behaves more like the manual says
