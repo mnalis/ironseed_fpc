@@ -61,13 +61,12 @@ var
  alienstuff,tradestuff: ^alienstuffarray;
  trademode,cargoindex,tradeindex,stuffindex,alienworth,tradeworth: integer;
  str1: string[3];
+ bright	: boolean;
 
 procedure printxy2(x1,y1: integer; s: string);
 var i,j,a,x,y,t	: integer;
-   bright	: boolean;
 begin
    t:=tcolor;
-   bright := false;
    x1:=x1+4;
    for j:=1 to length(s) do
    begin
@@ -1065,4 +1064,5 @@ begin
 end;
 
 begin
+  bright := false;
 end.
