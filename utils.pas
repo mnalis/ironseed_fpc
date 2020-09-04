@@ -88,8 +88,7 @@ begin
    end;
    if (n >= 8192) then
    begin
-      chevent := false;		{ should never happen? }
-      assert (n < 8192, 'event index out of bounds1');
+      chevent := false;
    end else begin
       chevent := (events[n shr 3] and (1 shl (n and 7))) <> 0;		{ look up "n mod 8" bit in "n/8" byte. So for example event 11 is 3rd bit in 2nd byte (event[1], as it starts counting from 0) }
    end;

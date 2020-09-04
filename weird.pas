@@ -167,7 +167,6 @@ end; { tickpending }
 procedure setevent(n: integer);
 var i,j: word;
 begin
-   assert (n < 8192, 'event index out of bounds2');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] or (1 shl (n and 7));
@@ -184,7 +183,6 @@ end;
 procedure clearevent(n: integer);
 var i,j: word;
 begin
-   assert (n < 8192, 'event index out of bounds3');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] and not (1 shl (n and 7));
