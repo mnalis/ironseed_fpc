@@ -1,3 +1,4 @@
+- fix bug with removing wrong items sometimes!
 - fixed incorrect highlighting and leftover chars in logs sometimes
 - fix issue when >255 items of some type
 - allow skipping of slow "Approaching planet" countdowns

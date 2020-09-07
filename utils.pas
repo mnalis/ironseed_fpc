@@ -476,8 +476,24 @@ var j: integer;
 begin
  j:=1;
  while (j<250) and (ship.cargo[j]<>item) do inc(j);
- if (j<251) and (ship.numcargo[j]>254) then j:=251;
- if j>251 then exit;
+ if ship.cargo[j]=item then
+  begin				{ item to remove found }
+   if ship.numcargo[j]<1 then
+   begin
+     writeln('warning: trying to remove cargo ',item,' with count of ', ship.numcargo[j]);
+     assert(false, 'debug removecargo: item to remove count<1 - game logic bug');
+     exit;
+   end;
+  end
+ else
+  begin				{ item to remove not found }
+   writeln ('warning: trying to remove nonexistant cargo ',item);
+   assert(false, 'debug removecargo: item to remove does not exits - game logic bug');
+   exit;
+  end;
+ assert (j<=250, 'removecargo index too big');
+ assert (ship.cargo[j]=item, 'removecargo removes wrong item');
+ assert (ship.numcargo[j]>0, 'removecargo removes item with count<1');
  dec(ship.numcargo[j]);
  if ship.numcargo[j]=0 then ship.cargo[j]:=0;
 end;
@@ -721,8 +737,11 @@ begin
       i:=1;
       while (cargo[i].index<>ship.cargo[j]) and (i<maxcargo) do inc(i);
      end;
+    assert (i<=maxcargo, 'addcargo2: out of cargo bounds');
+    assert (cargo[i].index=ship.cargo[j], 'addcargo2: cargo not found');
     weight:=weight+cargo[i].size*ship.numcargo[j];
    end;
+
  if item>ID_ARTIFACT_OFFSET then
   begin
    i:=maxcargo;
@@ -733,6 +752,7 @@ begin
    i:=1;
    while (cargo[i].index<>item) and (i<maxcargo) do inc(i);
   end;
+
  weight:=weight+cargo[i].size;
  weight:=weight div 10;
  if (weight>ship.cargomax) and (item < ID_ARTIFACT_OFFSET) and not force then
@@ -740,9 +760,10 @@ begin
    str(weight,str1);
    str(ship.cargomax,str2);
    printbox('Cargo full! '+str1+'/'+str2+' used.');
-     addcargo2:=false;
-     exit;
+   addcargo2:=false;
+   exit;
   end;
+
  j:=1;
  while (j<251) and (ship.cargo[j]<>item) do inc(j);
  if (j<251) and (ship.numcargo[j]>254) then j:=251;
@@ -752,9 +773,9 @@ begin
    while (ship.numcargo[j]<>0) and (j<251) do inc(j);
    if j=251 then
     begin
-     printbigbox('No cargo slot available.','Some Cargo dumped.');
-     j:=100+random(50);
-     weight:=ship.cargomax+1;
+     printbigbox('No cargo slot available.  Some cargo should be dumped.', 'Can not store.');
+     addcargo2:=false;
+     exit;
     end;
     ship.cargo[j]:=item;
     ship.numcargo[j]:=1;
