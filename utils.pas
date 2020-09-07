@@ -481,14 +481,14 @@ begin
    if ship.numcargo[j]<1 then
    begin
      writeln('warning: trying to remove cargo ',item,' with count of ', ship.numcargo[j]);
-     assert(false, 'debug removecargo: item to remove count<1 - game logic bug');
+     assert(false, 'debug removecargo: item to remove count<1 - probable game logic bug');
      exit;
    end;
   end
  else
   begin				{ item to remove not found }
    writeln ('warning: trying to remove nonexistant cargo ',item);
-   assert(false, 'debug removecargo: item to remove does not exits - game logic bug');
+   //assert(item=ID_ART_SHUNT_DRIVE, 'debug removecargo: item to remove does not exits - probable game logic bug'); 	{ we know about ID_ART_SHUNT_DRIVE issue: see https://github.com/mnalis/ironseed_fpc/issues/80 }
    exit;
   end;
  assert (j<=250, 'removecargo index too big');

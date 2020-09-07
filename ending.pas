@@ -314,8 +314,8 @@ begin
  bigprintxy(0,108,'survival. We were struck by a full salvo');
  bigprintxy(0,115,'from a Scavenger Incorporator and all');
  bigprintxy(0,122,'seemed lost.');
- readkey;
  while fastkeypressed do readkey;
+ while not fastkeypressed do delay(1);
  fading;
 
  loadscreen('data/end2',@screen);
@@ -341,8 +341,8 @@ begin
  bigprintxy(0,122,' As the last ship fell out of sight we');
  bigprintxy(0,129,'received a message...');
  bigprintxy(0,136,'...from the Scavenger Overmind!');
- readkey;
  while fastkeypressed do readkey;
+ while not fastkeypressed do delay(1);
  fading;
 
  loadscreen('data/end3',@screen);
@@ -375,8 +375,8 @@ begin
  bigprintxy(0,171,'order to become immortal. You have given');
  bigprintxy(0,178,'us the hope to know we will be so..."');
  bigprintxy(0,188,'                    ... End Transmission');
- readkey;
  while fastkeypressed do readkey;
+ while not fastkeypressed do delay(1);
  fading;
 
  loadscreen('data/end4',@screen);
@@ -401,8 +401,8 @@ begin
  bigprintxy(0,115,'A great blue sphere came through the');
  bigprintxy(0,122,'light and the brightness vanished along');
  bigprintxy(0,129,'with the Eye itself.');
- readkey;
  while fastkeypressed do readkey;
+ while not fastkeypressed do delay(1);
  fading;
 
  playmod(false,'sound/LOVE.MOD');
@@ -427,8 +427,8 @@ begin
  bigprintxy(0,174,'the order to send down probes to confirm');
  bigprintxy(0,181,'what we already knew...');
  bigprintxy(0,188,' ...we had found paradise.');
- readkey;
  while fastkeypressed do readkey;
+ while not fastkeypressed do delay(1);
  fading;
 
  credits;
