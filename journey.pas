@@ -177,7 +177,7 @@ begin
   begin
    for i2:=textindex to textindex+5 do printstring(9,(i2-textindex)*6+150,i2);
    mousehide;
-   for i:=151 to 186 do move(screen2^[i,11],screen[i,11],150);
+   for i:=151 to 186 do scrto_move(screen2^[i,11],screen[i,11],150);
   end
  else
   begin
@@ -187,14 +187,14 @@ begin
    if scrollit then
     for i2:=0 to 6 do
      begin
-      for i:=151 to 186 do move(screen2^[i+i2,11],screen[i,11],150);
+      for i:=151 to 186 do scrto_move(screen2^[i+i2,11],screen[i,11],150);
       delay(tslice div 3);
      end
    else
-    for i:=151 to 186 do move(screen2^[i,11],screen[i,11],150);
+    for i:=151 to 186 do scrto_move(screen2^[i,11],screen[i,11],150);
   end;
  for i:=158 to 182 do
-  fillchar(screen[i,163],6,2);
+  scr_fillchar(screen[i,163],6,2);
  for j:=163 to 168 do
   screen[157+textindex,j]:=86;
  mouseshow;
@@ -324,7 +324,7 @@ begin  {215,145}
   begin
    mousehide;
    for i:=0 to 44 do
-    move(cubetar^[i,0],screen[i+145,215],51);
+    scrto_move(cubetar^[i,0],screen[i+145,215],51);
    mouseshow;
    cube:=tar;
    exit;
@@ -363,7 +363,7 @@ begin  {215,145}
     mousehide;
    end;
  for i:=0 to 44 do
-  move(cubetar^[i,0],screen[i+145,215],51);
+  scrto_move(cubetar^[i,0],screen[i+145,215],51);
  mouseshow;
  cube:=tar;
 end;
@@ -387,14 +387,14 @@ begin  {215,145}
   begin
    mousehide;
    for i:=0 to 44 do
-    move(cubetar^[i,0],screen[i+145,215],51);
+    scrto_move(cubetar^[i,0],screen[i+145,215],51);
    mouseshow;
    cube:=tar;
    exit;
   end;
  mousehide;
  for i:=133 to 144 do
-  move(screen[i,215],back1[i-133],13*4);
+  scrfrom_move(screen[i,215],back1[i-133],13*4);
  b:=tslice div 4;
  for t:=1 to 20 do
   begin
@@ -419,16 +419,16 @@ begin  {215,145}
    end;
 skip1:
    for j:=133 to 145-m do
-    move(back1[j-133],screen[j,215],13*4);
+    scrto_move(back1[j-133],screen[j,215],13*4);
    for j:=190+m to 199 do
-    move(back2[j-190],screen[j,215],13*4);
+    scrto_move(back2[j-190],screen[j,215],13*4);
    mouseshow;
    delay(b);
    mousehide;
   end;
  for i:=0 to 44 do
-  move(cubetar^[i],screen[i+145,215],51);
- move(back2,screen[190,215],13*4);
+  scrto_move(cubetar^[i],screen[i+145,215],51);
+ scrto_move(back2,screen[190,215],13*4);
  mouseshow;
  cube:=tar;
 end;
@@ -551,7 +551,7 @@ endcheck:
   end;
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -669,7 +669,7 @@ procedure makesphere3;
 begin
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -709,7 +709,7 @@ endcheck:
    end;
  mousehide;
  for i:=1 to 120 do
-  move(planet^[i],screen[i+12,28],30*4);
+  scrto_move(planet^[i],screen[i+12,28],30*4);
  mouseshow;
  inc(c);
  if c>240 then c:=c-240;
@@ -1393,6 +1393,8 @@ begin
    anychange:=true;
 end;
 
+{ NB: almost same duplicate in utils.pas ?? but it seems to work... }
+{ adjust wandering aliens relative ship position. Negative "ofs" move them away from us, positive "ofs" bring them closer to us }
 procedure adjustwanderer(ofs: integer);
 var
    damages : array[1..7] of byte;
@@ -1424,7 +1426,7 @@ begin
 	    ship.damages[i] := damages[i];
 	 ship.hullintegrity := hull;
       end;
-     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up }
+     ship.armed:=true;				{ drop down from COMBAT to ALERT mode after fight, but with weapons armed - we did have them on in battle, and they presumeably charged up. FIXME - unfortunate(?) side effect is that you would have to manually turn disarm weapons to be able to drop out of COMBAT mode. Perhaps better do here the same as in disarm - return energy to batteries and disarm? }
      setalertmode(ALRT_ALERT, true);
      ship.wandering.alienid:=20000;
      checkwandering;
@@ -1444,17 +1446,18 @@ begin
   end;
 end;
 
+{ NB: almost same duplicate in utils.pas ?? but it seems to work... }
 procedure movewandering;
 begin
  case action of
   WNDACT_NONE:;
-  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
-  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ negative values = move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ positive values = move closer }
  end;
  case ship.wandering.orders of
-  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
-  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
-  WNDORDER_NONE: adjustwanderer(-30);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(5-random(12)) else adjustwanderer(30);	{ if masking, probably slowly move away, but might be getting closer too: from -6 to +5  }
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);		{ running away from us is somewhat slower if they don't know where we are }
+  WNDORDER_NONE: adjustwanderer(-30);									{ slowly drift away }
  end;
 end;
 

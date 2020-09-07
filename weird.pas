@@ -495,7 +495,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -522,14 +522,14 @@ begin
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
    else portrait^[i,j]:=(portrait^[i,j]-128) div 2;
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+69,50],70);
+  scrto_move(portrait^[i],screen[i+69,50],70);
  loadscreen('data/image32',portrait);
  for i:=0 to 69 do
   for j:=0 to 69 do
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
    else portrait^[i,j]:=(portrait^[i,j]-128) div 2;
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+69,201],70);
+  scrto_move(portrait^[i],screen[i+69,201],70);
  dispose(portrait);
  mouseshow;
  c:=0;
@@ -681,7 +681,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -762,7 +762,7 @@ begin
  compressfile(tempdir+'/current2',@screen);
  bkcolor:=5;
  fading;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -1113,7 +1113,7 @@ begin
  quit:=false;
  if i=0 then
   begin
-   move(screen,s^,sizeof(screen));
+   scrfrom_move(screen,s^,sizeof(screen));
    max:=60;
    repeat
     for a:=5 to max do
@@ -1143,7 +1143,7 @@ begin
   end
  else if i=1 then
   begin
-   move(screen,s^,sizeof(screen));
+   scrfrom_move(screen,s^,sizeof(screen));
    max:=60;
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1167,7 +1167,7 @@ begin
     end;
    if not quit then
     begin
-     move(backgr^,screen,sizeof(screen));
+     scrto_move(backgr^,screen,sizeof(screen));
      repeat
       for i:=32 to 63 do
        colors[i]:=colors[random(32)];
@@ -1186,7 +1186,7 @@ begin
   begin
    new(s2);
    loadscreen('data/saver',s2);
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    for i:=0 to 199 do
     for j:=0 to 319 do
@@ -1252,7 +1252,7 @@ begin
        pop es
       end;
       if (fastkeypressed) or (mouse.getstatus) then quit:=true;
-      if not quit then move(backgr^[1],screen,15600*4);
+      if not quit then scrto_move(backgr^[1],screen,15600*4);
      end;
    until quit;
    dispose(s2);

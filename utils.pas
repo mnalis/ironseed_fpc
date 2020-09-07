@@ -122,9 +122,9 @@ procedure graybutton(x1,y1,x2,y2: integer);
 begin
  x:=x2-x1+1;
  for i:=y1 to y2 do
-  fillchar(screen[i,x1],x,5);
- fillchar(screen[y2,x1],x,2);
- fillchar(screen[y1,x1],x,10);
+  scr_fillchar(screen[i,x1],x,5);
+ scr_fillchar(screen[y2,x1],x,2);
+ scr_fillchar(screen[y1,x1],x,10);
  setcolor(2);
  line(x2,y1,x2,y2);
  setcolor(10);
@@ -136,8 +136,8 @@ end;
 procedure revgraybutton(x1,y1,x2,y2: integer);
 begin
  x:=x2-x1+1;
- fillchar(screen[y2,x1],x,10);
- fillchar(screen[y1,x1],x,2);
+ scr_fillchar(screen[y2,x1],x,10);
+ scr_fillchar(screen[y1,x1],x,2);
  setcolor(10);
  line(x2,y1,x2,y2);
  setcolor(2);
@@ -255,7 +255,7 @@ begin
    delay(tslice*2);
   end;
  for i:=25 to 117 do
-  fillchar(screen[i,165],115,5);
+  scr_fillchar(screen[i,165],115,5);
  setcolor(2);
  line(279,25,279,117);
  line(165,117,279,117);
@@ -631,7 +631,7 @@ begin
  new(tempscr);
  mousehide;
  for i:=50 to 102 do
-  move(screen[i,75],tempscr^[i,75],43*4);
+  scrfrom_move(screen[i,75],tempscr^[i,75],43*4);
  if colors[32,2]=63 then ofsc:=-26
   else if colors[32,1]=0 then ofsc:=0
   else ofsc:=74;
@@ -675,7 +675,7 @@ begin
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
  for i:=60 to 102 do
-  move(tempscr^[i,75],screen[i,75],43*4);
+  scrto_move(tempscr^[i,75],screen[i,75],43*4);
  mouseshow;
  dispose(tempscr);
  tcolor:=oldt;
@@ -766,13 +766,15 @@ begin
  dispose(temp);
 end;}
 
+{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+{ adjust wandering aliens relative ship position. Negative "ofs" move them away from us, positive "ofs" bring them closer to us }
 procedure adjustwanderer(ofs: integer);
 begin
  with ship.wandering do
   begin
    if alienid>16000 then exit;
-   if (abs(relx)>499) and (relx<0) then relx:=relx+ofs
-    else if abs(relx)>499 then relx:=relx-ofs;
+   if (abs(relx)>499) and (relx<0) then relx:=relx+ofs		{ example: relx=-600, ofs=-100; new relx=-600+(-100) = -700, so distance is increasing for ofs<0 }
+    else if abs(relx)>499 then relx:=relx-ofs;			{ example: relx=+700, ofs=-100; new relx=+700+100=+800, so distance is increasing for ofs<0 }
    if (abs(rely)>499) and (rely<0) then rely:=rely+ofs
     else if abs(rely)>499 then rely:=rely-ofs;
    if (abs(relz)>499) and (relz<0) then relz:=relz+ofs
@@ -791,16 +793,17 @@ begin
   end;
 end;
 
-procedure movewandering;	{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+{ NB: almost same duplicate in journey.pas ?? but it seems to work... }
+procedure movewandering;
 begin
  case action of
   WNDACT_NONE:;
-  WNDACT_RETREAT: adjustwanderer(round((-ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move away }
-  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ move closer }
+  WNDACT_RETREAT: adjustwanderer(round(-(ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ negative values = move away }
+  WNDACT_ATTACK: adjustwanderer(round((ship.accelmax div 4)*(100-ship.damages[DMG_ENGINES])/100));	{ positive values = move closer }
  end;
  case ship.wandering.orders of
-  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(30) else adjustwanderer(2);
-  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);
+  WNDORDER_ATTACK: if action=WNDACT_MASKING then adjustwanderer(5-random(12)) else adjustwanderer(30);	{ if masking, probably slowly move away, but might be getting closer too: from -6 to +5  }
+  WNDORDER_RETREAT: if action=WNDACT_MASKING then adjustwanderer(-50) else adjustwanderer(-70);		{ running away from us is somewhat slower if they don't know where we are }
  end;
 end;
 
@@ -842,7 +845,7 @@ begin
    new(tempscr);
    mousehide;
    for i:=50 to 102 do
-      move(screen[i,70],tempscr^[i,70],45*4);
+      scrfrom_move(screen[i,70],tempscr^[i,70],45*4);
    if colors[32,2]=63 then ofsc:=-26
    else if colors[32,1]=0 then ofsc:=0
    else ofsc:=74;
@@ -887,7 +890,7 @@ begin
    until ((done) and (c=1)) or (ans=#27) or (ans=#13);
    mousehide;
    for i:=50 to 102 do
-      move(tempscr^[i,70],screen[i,70],45*4);
+      scrto_move(tempscr^[i,70],screen[i,70],45*4);
    mouseshow;
    dispose(tempscr);
    tcolor:=oldt;
@@ -965,7 +968,7 @@ begin
 	  end
     else
        for i:=0 to 69 do
-	  move(portrait^[i],screen[i+y,x],70);
+	  scrto_move(portrait^[i],screen[i+y,x],70);
     dispose(portrait);
  end;
  if colors[32,2]=63 then ofsc:=-24

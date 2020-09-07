@@ -23,5 +23,5 @@ implementation
 begin
    versionstring :=
    {12345678901234567890}
-   'v1.30.0001 fpc 0.1.6';
+   'v1.30.0001 fpc 0.1.7';
 end.

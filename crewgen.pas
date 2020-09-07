@@ -71,7 +71,7 @@ begin
    bkcolor:=5;
    fading;
    loadpal('data/main.pal');
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    for i:=0 to 199 do
       for j:=0 to 319 do
 	 screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -185,12 +185,12 @@ begin
  loadscreen('data/image'+s+'',portrait);
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2],screen[i*2+7,13],70);
+   scrto_move(portrait^[i*2],screen[i*2+7,13],70);
    delay(tslice div 7);
   end;
  for i:=0 to 34 do
   begin
-   move(portrait^[i*2+1],screen[i*2+8,13],70);
+   scrto_move(portrait^[i*2+1],screen[i*2+8,13],70);
    delay(tslice div 7);
   end;
  dispose(portrait);
@@ -205,7 +205,7 @@ begin {120,37,294,112}
  c:=ship.crew[num].emo;
  part:=36/100;
  for i:=14 to 88 do
-  fillchar(screen[i,121],175,0);
+  scr_fillchar(screen[i,121],175,0);
  moveto(121,50);
  for j:=121 to 295 do
  begin
@@ -231,7 +231,7 @@ begin
  for j:=0 to 30 do
   begin
    for i:=0 to 34 do
-    move(ani^[j,i],screen[i+81,22],12*4);
+    scrto_move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -243,7 +243,7 @@ begin
  for j:=30 downto 0 do
   begin
    for i:=0 to 34 do
-    move(ani^[j,i],screen[i+81,22],12*4);
+    scrto_move(ani^[j,i],screen[i+81,22],12*4);
    delay(tslice);
   end;
  mouseshow;
@@ -451,7 +451,7 @@ begin
  with ship do
   begin
    for i:=0 to 5 do
-    fillchar(screen[i+122,30],231,0);
+    scr_fillchar(screen[i+122,30],231,0);
    s:=shipnames[shiptype[SHPTYP_HEAVYNESS]-1]+' '+shipnames[shiptype[SHPTYP_PURPOSE]+2]+' '+shipnames[shiptype[SHPTYP_VESSEL]+5];
    printxy(131-round(length(s)*2.5),122,s);
    str(shipdata.guns:2,strln);
@@ -589,7 +589,7 @@ begin
  lowerball;
  mousehide;
  for i:=120 to 196 do
-  fillchar(screen[i,4],260,0);
+  scr_fillchar(screen[i,4],260,0);
  mouseshow;
  inc(inputlevel);
  if inputlevel=7 then
@@ -616,16 +616,16 @@ begin
    mousehide;
    for i:=0 to 34 do
     begin
-     move(birdpic^[i*2],screen[i*2+7,13],70);
+     scrto_move(birdpic^[i*2],screen[i*2+7,13],70);
      delay(tslice div 7);
     end;
    for i:=0 to 34 do
     begin
-     move(birdpic^[i*2+1],screen[i*2+8,13],70);
+     scrto_move(birdpic^[i*2+1],screen[i*2+8,13],70);
      delay(tslice div 7);
     end;
    for i:=120 to 196 do
-    fillchar(screen[i,4],260,0);
+    scr_fillchar(screen[i,4],260,0);
    mouseshow;
    inputlevel:=0;
    raiseball;
@@ -635,7 +635,7 @@ begin
    lowerball;
    mousehide;
    for i:=120 to 196 do
-    fillchar(screen[i,4],260,0);
+    scr_fillchar(screen[i,4],260,0);
    mouseshow;
    dec(inputlevel);
    raiseball;
@@ -973,7 +973,7 @@ begin
  playmod(true,'sound/CHARGEN.MOD');
  loadscreen('data/char',@screen);
  for i:=0 to 69 do
-  move(screen[i+7,13],birdpic^[i],70);
+  scrfrom_move(screen[i+7,13],birdpic^[i],70);
  assign(anifile,'data/charani.dta');
  reset(anifile);
  if ioresult<>0 then errorhandler('charani.dta',1);
@@ -981,12 +981,12 @@ begin
  if ioresult<>0 then errorhandler('charani.dta',5);
  close(anifile);
  for i:=0 to 34 do
-  move(ani^[30,i],screen[i+81,22],12*4);
+  scrto_move(ani^[30,i],screen[i+81,22],12*4);
  new(mcursor);
  for i:=131 to 146 do
-  move(screen[i,11],mcursor^[i-131],4*4);
+  scrfrom_move(screen[i,11],mcursor^[i-131],4*4);
  for i:=131 to 146 do
-  fillchar(screen[i,11],16,0);
+  scr_fillchar(screen[i,11],16,0);
  mousesetcursor(mcursor^);
  dispose(mcursor);
  showtitle;

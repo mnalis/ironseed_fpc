@@ -172,7 +172,7 @@ end;
 procedure writestr2(s1,s2,s3: string);
 var i,j1,j2,j3,b: integer;
 begin
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  j1:=156-((length(s1)*5) div 2);
  j2:=156-((length(s2)*5) div 2);
  j3:=156-((length(s3)*5) div 2);
@@ -251,7 +251,7 @@ var t: pscreentype;
 begin
  new(t);
  loadscreen('data/end6',backgr);
- move(backgr^,screen,sizeof(screen));
+ scrto_move(backgr^,screen,sizeof(screen));
  loadscreen('data/end5',t);
  fadein;
  k:=0;
@@ -260,8 +260,8 @@ begin
  repeat
   inc(k,80);
   inc(k2,320);
-  move(t^[0,64000-k2],screen,k*4);
-  move(backgr^,screen[0,k2],(16000-k)*4);
+  scrto_move(t^[0,64000-k2],screen,k*4);
+  scrto_move(backgr^,screen[0,k2],(16000-k)*4);
   delay(b);
  until k=16000;
  dispose(t);
@@ -290,7 +290,7 @@ begin
  bkcolor:=255;
  fading;
  mousehide;
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
 
  playmod(true,'sound/DIMENSIO.MOD');
  loadscreen('data/end1',@screen);

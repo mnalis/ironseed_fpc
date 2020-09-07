@@ -89,31 +89,31 @@ begin
  if round(part)<>stats[1] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[1]+i,269],10);
+    scrto_move(blank^[i],screen[117-stats[1]+i,269],10);
    stats[1]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,269],10);
+    scrto_move(statpic^[i],screen[y+i,269],10);
    end;
  part:=102/32000*ship.battery;
  if round(part)<>stats[2] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[2]+i,285],10);
+    scrto_move(blank^[i],screen[117-stats[2]+i,285],10);
    stats[2]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,285],10);
+    scrto_move(statpic^[i],screen[y+i,285],10);
   end;
  part:=102/100*ship.shieldlevel;
  if round(part)<>stats[3] then
   begin
    for i:=0 to 1 do
-    move(blank^[i],screen[117-stats[3]+i,301],10);
+    scrto_move(blank^[i],screen[117-stats[3]+i,301],10);
    stats[3]:=round(part);
    y:=117-round(part);
    for i:=0 to 1 do
-    move(statpic^[i],screen[y+i,301],10);
+    scrto_move(statpic^[i],screen[y+i,301],10);
   end;
  mouseshow;
 end;
@@ -131,12 +131,12 @@ begin
 
  part:=102/100*ship.shieldopt[SHLD_COMBAT_WANT];
  for i:=0 to 6 do
-  fillchar(screen[114-round(part)+i,312],4,0);
+  scr_fillchar(screen[114-round(part)+i,312],4,0);
  if n>100-ship.damages[DMG_SHIELD] then n:=100-ship.damages[DMG_SHIELD];
  ship.shieldopt[SHLD_COMBAT_WANT]:=n;
  part:=102/100*n;
  for i:=0 to 6 do
-  move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
+  scrto_move(shieldpic^[i],screen[114-round(part)+i,312],1*4);
  mouseshow;
 end;
 
@@ -160,27 +160,27 @@ begin
    if picx>139 then j:=10 else j:=5;
    if picy>=179 then a:=19 else a:=20;
    for i:=0 to a do
-    move(backgr^[i+picy,picx],screen[161+i,14],j*4);
+    scrto_move(backgr^[i+picy,picx],screen[161+i,14],j*4);
    if j=5 then
     for i:=0 to 19 do
-     fillchar(screen[161+i,34],20,0);
+     scr_fillchar(screen[161+i,34],20,0);
    for j:=0 to 1 do
     begin
      a:=random(2);
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,60],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,60],10);
     end;
    for j:=0 to 1 do
     begin
      a:=random(2);
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,70],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,70],10);
     end;
    for j:=0 to 1 do
     begin
      a:=random(2)+2;
      for i:=0 to 9 do
-      move(msgs^[a,i],screen[162+i+j*10,80],10);
+      scrto_move(msgs^[a,i],screen[162+i+j*10,80],10);
     end;
   end;
  mouseshow;
@@ -379,7 +379,7 @@ begin
  if weap=0 then
   begin
    for i:=0 to 19 do
-    fillchar(screen[y1+i,x1],20,3);
+    scr_fillchar(screen[y1+i,x1],20,3);
    exit;
   end;
  readweaicon(weap-1);
@@ -389,9 +389,9 @@ begin
             for j:=0 to 19 do
              screen[y1+j,x1+i]:=tempicon^[i,j];
   4,6: for i:=0 to 19 do
-        move(tempicon^[i],screen[y1+i,x1],5*4);
+        scrto_move(tempicon^[i],screen[y1+i,x1],5*4);
   5,7: for i:=0 to 19 do
-        move(tempicon^[19-i],screen[y1+i,x1],5*4);
+        scrto_move(tempicon^[19-i],screen[y1+i,x1],5*4);
   9,10: for i:=0 to 19 do
          for j:=0 to 19 do
           screen[y1+j,x1+20-i]:=tempicon^[i,j];
@@ -435,8 +435,8 @@ begin
     end;
    if b<51 then
     begin
-     fillchar(screen[a*9+127,268+b],49-b,0);
-     fillchar(screen[a*9+128,268+b],49-b,0);
+     scr_fillchar(screen[a*9+127,268+b],49-b,0);
+     scr_fillchar(screen[a*9+128,268+b],49-b,0);
     end;
   end;
  if 100-ship.damages[DMG_SHIELD]<ship.shieldopt[SHLD_COMBAT_WANT] then displayshieldpic(100-ship.damages[DMG_SHIELD]);
@@ -444,9 +444,9 @@ begin
  if round(part)<>oldshddmg then
   begin
    for i:=0 to 6 do
-    fillchar(screen[oldshddmg+i,296],4,0);
+    scr_fillchar(screen[oldshddmg+i,296],4,0);
    for i:=0 to 6 do
-    move(shieldpic2^[i],screen[round(part)+i,296],1*4);
+    scrto_move(shieldpic2^[i],screen[round(part)+i,296],1*4);
    oldshddmg:=round(part);
   end;
  mouseshow;
@@ -506,34 +506,34 @@ begin
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
-    fillchar(screen[i+138,8],8,round(i*part));
+    scr_fillchar(screen[i+138,8],8,round(i*part));
    if b<49 then
     for i:=b+1 to 49 do
-     fillchar(screen[i+138,8],8,0);
+     scr_fillchar(screen[i+138,8],8,0);
    b:=round((100-damages[DMG_LIFESUPPORT])/100*49);	{ life support }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
-    fillchar(screen[i+138,23],8,round(i*part));
+    scr_fillchar(screen[i+138,23],8,round(i*part));
    if b<49 then
     for i:=b+1 to 49 do
-     fillchar(screen[i+138,23],8,0);
+     scr_fillchar(screen[i+138,23],8,0);
    b:=round(battery/32000*49);		{ power / batt level }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
-    fillchar(screen[i+138,38],9,round(i*part));
+    scr_fillchar(screen[i+138,38],9,round(i*part));
    if b<49 then
     for i:=b+1 to 49 do
-     fillchar(screen[i+138,38],9,0);
+     scr_fillchar(screen[i+138,38],9,0);
    b:=round(shieldlevel/100*49);	{ shield level }
    if b<=0 then b:=1;
    part:=31/b;
    for i:=0 to b do
-    fillchar(screen[i+138,54],8,round(i*part));
+    scr_fillchar(screen[i+138,54],8,round(i*part));
    if b<49 then
     for i:=b+1 to 49 do
-     fillchar(screen[i+138,54],8,0);
+     scr_fillchar(screen[i+138,54],8,0);
    for j:=1 to 7 do			{ subsystem integrity: 1=power, 2=shield, 3=weapons, 4=engines, 5=life support, 6=comm, 7=cpu }
     begin
      b:=round((100-damages[j])/100*49);
@@ -867,17 +867,17 @@ procedure switchalienmode;
 begin
  mousehide;
  for i:=125 to 189 do
-  fillchar(screen[i,6],93,0);
+  scr_fillchar(screen[i,6],93,0);
  if not alienpicmode then
   begin
    for i:=156 to 189 do
-    move(asdisplay^[i,6],screen[i,6],93);
+    scrto_move(asdisplay^[i,6],screen[i,6],93);
    alienpicmode:=true;
   end
  else
   begin
    for i:=125 to 155 do
-    move(asdisplay^[i,6],screen[i,6],93);
+    scrto_move(asdisplay^[i,6],screen[i,6],93);
    alienpicmode:=false;
   end;
  mouseshow;
@@ -1122,7 +1122,7 @@ begin
                          autofire:=true;
                          mousehide;
                          for i:=125 to 126 do
-                          fillchar(screen[i,163],52,63);
+                          scr_fillchar(screen[i,163],52,63);
                          mouseshow;
                         end
                        else
@@ -1130,7 +1130,7 @@ begin
                          autofire:=false;
                          mousehide;
                          for i:=125 to 126 do
-                          fillchar(screen[i,163],52,95);
+                          scr_fillchar(screen[i,163],52,95);
                          mouseshow;
                         end;
              185..192: if (mouse.x<241) then previoustarget;
@@ -1153,7 +1153,7 @@ begin
                          scanning:=true;
                          mousehide;
                          for i:=187 to 188 do
-                          fillchar(screen[i,163],52,63);
+                          scr_fillchar(screen[i,163],52,63);
                          mouseshow;
                         end
                        else
@@ -1161,7 +1161,7 @@ begin
                          scanning:=false;
                          mousehide;
                          for i:=187 to 188 do
-                          fillchar(screen[i,163],52,95);
+                          scr_fillchar(screen[i,163],52,95);
                          mouseshow;
                         end;
              185..192: if (mouse.x>245) then nexttarget;
@@ -1229,7 +1229,7 @@ begin
                 autofire:=true;
                 mousehide;
                 for i:=125 to 126 do
-                 fillchar(screen[i,163],52,63);
+                 scr_fillchar(screen[i,163],52,63);
                 mouseshow;
                end
               else
@@ -1237,7 +1237,7 @@ begin
                 autofire:=false;
                 mousehide;
                 for i:=125 to 126 do
-                 fillchar(screen[i,163],52,95);
+                 scr_fillchar(screen[i,163],52,95);
                 mouseshow;
                end;
          #62: if not scanning then	{ F4 - Active Radar}
@@ -1245,7 +1245,7 @@ begin
                 scanning:=true;
                 mousehide;
                 for i:=187 to 188 do
-                 fillchar(screen[i,163],52,63);
+                 scr_fillchar(screen[i,163],52,63);
                 mouseshow;
                end
               else
@@ -1253,7 +1253,7 @@ begin
                 scanning:=false;
                 mousehide;
                 for i:=187 to 188 do
-                 fillchar(screen[i,163],52,95);
+                 scr_fillchar(screen[i,163],52,95);
                 mouseshow;
                end;
          #16,#45: begin
@@ -1447,18 +1447,18 @@ begin
    new(shieldpic2);
    new(msgs);
    for i:=10 to 11 do
-      move(screen[i,71],statpic^[i-10],10);
+      scrfrom_move(screen[i,71],statpic^[i-10],10);
    for i:=26 to 27 do
-      move(screen[i,269],blank^[i-26],10);
+      scrfrom_move(screen[i,269],blank^[i-26],10);
    for i:=0 to 6 do
-      move(screen[i+10,91],shieldpic^[i],1*4);
+      scrfrom_move(screen[i+10,91],shieldpic^[i],1*4);
    for i:=0 to 6 do
-      move(screen[i+10,101],shieldpic2^[i],1*4);
+      scrfrom_move(screen[i+10,101],shieldpic2^[i],1*4);
    for j:=0 to 3 do
       for i:=0 to 9 do
-	 move(screen[i+10,110+j*10],msgs^[j,i],10);
+	 scrfrom_move(screen[i+10,110+j*10],msgs^[j,i],10);
    for i:=9 to 20 do
-      fillchar(screen[i,71],177,0);
+      scr_fillchar(screen[i,71],177,0);
    displaytimedelay;
    tcolor:=95;
    bkcolor:=0;
@@ -1469,18 +1469,18 @@ begin
       autofire:=true;
       scanning:=true;
       for i:=125 to 126 do
-	 fillchar(screen[i,163],52,63);
+	 scr_fillchar(screen[i,163],52,63);
       for i:=187 to 188 do
-	 fillchar(screen[i,163],52,63);
+	 scr_fillchar(screen[i,163],52,63);
    end
    else
    begin
       autofire:=false;
       scanning:=false;
       for i:=125 to 126 do
-	 fillchar(screen[i,163],52,95);
+	 scr_fillchar(screen[i,163],52,95);
       for i:=187 to 188 do
-	 fillchar(screen[i,163],52,95);
+	 scr_fillchar(screen[i,163],52,95);
    end;
    for i:=9 to 117 do
       for j:=6 to 260 do
@@ -1506,9 +1506,9 @@ begin
       if ship.gunnodes[j]=0 then poweredup[j]:=-1;
    end;
    for i:=125 to 189 do
-      move(screen[i,6],asdisplay^[i],93);
+      scrfrom_move(screen[i,6],asdisplay^[i],93);
    for i:=137 to 189 do
-      fillchar(screen[i,6],93,0);
+      scr_fillchar(screen[i,6],93,0);
    for j:=1 to 3 do stats[j]:=0;
    displayweapons;
    displaystats;
@@ -1566,9 +1566,9 @@ begin
  playmod(true,'sound/VICTORY.MOD');
  mousehide;
  for i:=9 to 117 do
-  fillchar(screen[i,6],254,0);
+  scr_fillchar(screen[i,6],254,0);
  for i:=125 to 189 do
-  fillchar(screen[i,6],93,0);
+  scr_fillchar(screen[i,6],93,0);
  tcolor:=95;
  printxy(18,8,'VICTORY!');
  mouseshow;

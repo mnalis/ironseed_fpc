@@ -55,7 +55,7 @@ begin
  if n<10 then s[1]:='0';
  loadscreen('data/image'+s+'',portrait);
  for i:=0 to 69 do
-  move(portrait^[i],screen[i+110,210],70);
+  scrto_move(portrait^[i],screen[i+110,210],70);
  dispose(portrait);
 end;
 
@@ -200,7 +200,7 @@ begin
    d:=ship.crew[num].status;
    part:=34/100;
    for y:=111 to 145 do
-      fillchar(screen[y,297],7,0);
+      scr_fillchar(screen[y,297],7,0);
    col := 95;
    if a > 0 then cs := 23/(part*a) else cs := 1;
    for y := 145-round(part*a) to 145 do
@@ -237,7 +237,7 @@ begin
  mousehide;
  showportrait(ship.crew[crewindex].index);
  for i:=81 to 88 do
-  fillchar(screen[i,210],71,0);
+  scr_fillchar(screen[i,210],71,0);
  printxy(241-round(length(jobs[crewindex])*2.5),81,jobs[crewindex]);
  drawgraphs;
  with ship.crew[crewindex] do
@@ -269,7 +269,7 @@ begin {120,37,294,112}
  {d:=ship.crew[num].status;}
  part:=34/100;
  {for i:=111 to 145 do
-  fillchar(screen[i,299],3,0);
+  scr_fillchar(screen[i,299],3,0);
  for j:=299 to 301 do
   begin
    screen[145-round(part*a),j]:=95;
@@ -300,9 +300,9 @@ procedure redraw2;
 begin
  mousehide;
  for i:=110 to 180 do
-  fillchar(screen[i,145],141,0);
+  scr_fillchar(screen[i,145],141,0);
  for i:=81 to 88 do
-  fillchar(screen[i,210],71,0);
+  scr_fillchar(screen[i,210],71,0);
  printxy(241-round(length(jobs[crewindex])*2.5),81,jobs[crewindex]);
  drawgraphs;
  displayblips;
@@ -327,7 +327,7 @@ end;
 procedure closedisplay;
 begin
  for i:=110 to 180 do
-  fillchar(screen[i,145],141,0);
+  scr_fillchar(screen[i,145],141,0);
  for a:=60 downto 1 do
   begin
    for i:=99 to 190 do
@@ -341,7 +341,7 @@ end;
 procedure opendisplay;
 begin
  for i:=110 to 180 do
-  fillchar(screen[i,210],71,0);
+  scr_fillchar(screen[i,210],71,0);
  for a:=1 to 60 do
   begin
    for i:=99 to 190 do
@@ -478,7 +478,7 @@ begin
          closedisplay;
          mousehide;
          for i:=111 to 145 do
-         fillchar(screen[i,299],3,0);
+         scr_fillchar(screen[i,299],3,0);
          mouseshow;
         end
        else
@@ -537,7 +537,7 @@ begin
                          closedisplay;
                          mousehide;
                          for i:=111 to 145 do
-                          fillchar(screen[i,299],3,0);
+                          scr_fillchar(screen[i,299],3,0);
                          mouseshow;
                         end;
              207..241: if psychemode<>1 then

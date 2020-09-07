@@ -473,7 +473,7 @@ begin
  setcolor(47);
  mousehide;
  for i:=1 to 60 do
-  move(tempzoom^[i],screen[i+138,206],15*4);
+  scrto_move(tempzoom^[i],screen[i+138,206],15*4);
  circle(236,169,8*zoommode);
  circle(236,169,4*zoommode);
  mouseshow;
@@ -586,7 +586,7 @@ begin
    screen[cury+12,curx+27]:=90+random(6);
    a:=num*40-26;
    for i:=1 to 26 do
-    move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
+    scrfromto_move(screen[cury-1+i,curx+11],screen[i+a,281],8*4);
   end;
 end;
 
@@ -594,7 +594,7 @@ procedure showplanet(num: integer);
 var indexi,indexj,i,j,a: integer;
 begin
  for i:=1 to 26 do
-  fillchar(screen[i+num*40-26,276],36,0);
+  scr_fillchar(screen[i+num*40-26,276],36,0);
  for a:=30 downto 4 do
   begin
    indexi:=0;
@@ -750,9 +750,9 @@ begin
   end;
  mousehide;
  for i:=13 to 133 do
-  fillchar(screen[i,28],240,0);
+  scr_fillchar(screen[i,28],240,0);
  for i:=147 to 196 do
-  fillchar(screen[i,6],125,0);
+  scr_fillchar(screen[i,6],125,0);
  randseed:=tempplan^[curplan].seed;
  tcolor:=207;
  if tempplan^[curplan].state <> 7 then
@@ -929,7 +929,7 @@ begin
         end;
  end;
  for i:=13 to 132 do
-  move(screen[i,28],summarypic^[i,28],240);
+  scrfrom_move(screen[i,28],summarypic^[i,28],240);
  mouseshow;
  donescan:=true;
  showscan:=true;
@@ -966,7 +966,7 @@ begin
    if explorelevel <> 0 then
    begin
       for i:=147 to 196 do
-	 fillchar(screen[i,5],128,0);
+	 scr_fillchar(screen[i,5],128,0);
       refreshinfogathered(true);
    end else
       refreshinfogathered(false);
@@ -1051,7 +1051,7 @@ begin
 	   begin
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end;
@@ -1081,7 +1081,7 @@ begin
 	   begin {begin return to craft}
 	      screen[tary+12,tarx+27]:=landcolors^[tary+12,tarx+27];
 	      for i:=1 to 26 do
-		 move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[4,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=70;
 	      status:=5;
 	   end
@@ -1136,7 +1136,7 @@ begin
 	      end;*)
 	      screen[cury+12,curx+27]:=90+random(6);
 	      for i:=1 to 26 do
-		 move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
+		 scrfromto_move(screen[cury-1+i,curx+12],screen[i+j*40-26,281],8*4);
 	      for b:=1 to 26 do
 		 for a:=1 to 31 do
 		    if probeicons^[1,b,a]<>0 then screen[j*40-26+b,280+a]:=probeicons^[1,b,a];
@@ -1217,14 +1217,14 @@ begin
 	      cury:=random(60)+30;
 	      tarx:=random(180)+30;
 	      tary:=random(60)+30;
-	      fillchar(screen[j*40+1,281],30,0);
+	      scr_fillchar(screen[j*40+1,281],30,0);
 	      status:=3;
 	      for i:=1 to 30 do
-		 fillchar(screen[j*40-26+i,281],32,0);
+		 scr_fillchar(screen[j*40-26+i,281],32,0);
 	   end;
         5: begin {returning}
 	      for i:=1 to 26 do
-		 move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[3,i],screen[i+j*40-26,281],8*4);
 	      timeleft:=40;
 	      status:=6;
 	   end;
@@ -1232,7 +1232,7 @@ begin
 	      status := 8;
 	      timeleft:=10;
 	      for i := 1 to 26 do
-		 move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
+		 scrto_move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
 	      dirty := true;
 	      {if explorelevel = 0 then
 		 displayinfogathered;}
@@ -1308,7 +1308,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displayhydroinfo;
@@ -1328,7 +1328,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displaylithoinfo;
@@ -1348,7 +1348,7 @@ begin
  until (y=7) or (x>52);
  if y<7 then
   for i:=(y+1)*6+149 to 197 do
-   fillchar(screen[i,5],128,0);
+   scr_fillchar(screen[i,5],128,0);
 end;
 
 procedure displaybioinfo;
@@ -1439,7 +1439,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Atmosphere Data');
  displayatmoinfo;
  mouseshow;
@@ -1456,7 +1456,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Hydrosphere Data');
  displayhydroinfo;
  mouseshow;
@@ -1473,7 +1473,7 @@ begin
  if explorecur=53 then explorecur:=0;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Lithosphere Data');
  displaylithoinfo;
  mouseshow;
@@ -1487,7 +1487,7 @@ begin
  explorelevel:=4;
  mousehide;
  for i:=147 to 196 do
-  fillchar(screen[i,5],128,0);
+  scr_fillchar(screen[i,5],128,0);
  printxy(6,148,'Biosphere Data');
  displaybioinfo;
  mouseshow;
@@ -1501,7 +1501,7 @@ begin
    createano;
    mousehide;
    for i:=147 to 196 do
-      fillchar(screen[i,5],128,0);
+      scr_fillchar(screen[i,5],128,0);
    printxy(6,148,'Anomaly Data');
    y:=0;
    for j:=1 to 7 do if tempplan^[curplan].cache[j]>0 then
@@ -2016,21 +2016,21 @@ begin
  if datagathered[5,2]>=1000 then doneano:=true;
  for j:=1 to 4 do
   for i:=1 to 26 do
-   move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
+   scrfrom_move(screen[i+j*40-26,281],probeicons^[j,i],8*4);
  for j:=1 to numprobes do
   for i:=1 to 26 do
-   move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
+   scrto_move(probeicons^[2,i],screen[i+j*40-26,281],8*4);
  if j<4 then
   for a:=j+1 to 4 do
    for i:=1 to 26 do
-    fillchar(screen[i+a*40-26,281],31,0);
+    scr_fillchar(screen[i+a*40-26,281],31,0);
  for j:=1 to 7 do
   for i:=20 to 27 do
-   move(screen[i,j*20+10],msgs^[j,i-20],4*4);
+   scrfrom_move(screen[i,j*20+10],msgs^[j,i-20],4*4);
  que:=0;
  SetScan(0);
  for i:=13 to 133 do
-  fillchar(screen[i,28],240,0);
+  scr_fillchar(screen[i,28],240,0);
  if (not colorchange) and (zoommode=3) then
   begin
    zoommode:=2;

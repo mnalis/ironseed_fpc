@@ -225,7 +225,7 @@ begin
   for i:=145 to 189 do
    back4[j-266,i-145]:=screen[i,j];
  for i:=190 to 199 do
-  move(screen[i,215],back2[i-190],13*4);
+  scrfrom_move(screen[i,215],back2[i-190],13*4);
 end;
 
 procedure loaddata;

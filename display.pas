@@ -162,7 +162,7 @@ begin
       begin
        viewlevel:=1;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[44,165]:=10;
        screen[45,279]:=2;
        setcolor(2);
@@ -192,7 +192,7 @@ begin
       begin
        viewlevel:=2;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[63,165]:=10;
        screen[90,165]:=10;
        screen[64,279]:=2;
@@ -260,7 +260,7 @@ begin
             viewindex:=com-5;
             viewlevel:=2;
             for i:=37 to 114 do
-             fillchar(screen[i,166],113,5);
+             scr_fillchar(screen[i,166],113,5);
             screen[63,165]:=10;
             screen[90,165]:=10;
             screen[64,279]:=2;
@@ -377,7 +377,7 @@ begin
       printxy(186,102,teamdata[8]);
       printxy(253,102,s);
       for i:=46 to 114 do
-       fillchar(screen[i,170],17,5);
+       scr_fillchar(screen[i,170],17,5);
       for j:=1 to 3 do
        begin
         if ship.engrteam[j].jobtype>JOBTYPE_REPAIR then i:=9
@@ -398,13 +398,13 @@ begin
  case shd of
   ID_NOSHIELD: begin
       for i:=0 to 19 do
-       fillchar(screen[89+i,172],20,0);
+       scr_fillchar(screen[89+i,172],20,0);
      end;
   ID_REFLECTIVEHULL..1519:
      begin
       readweaicon(shd-ID_SHIELDS_OFFSET-2);	{ NOSHIELD / noweapon do not have icons, so -2  }
       for i:=0 to 19 do
-       move(tempicon^[i],screen[89+i,172],5*4);
+       scrto_move(tempicon^[i],screen[89+i,172],5*4);
      end;
  end;
 end;
@@ -413,7 +413,7 @@ procedure setupshieldinfo(shd: integer);
 begin
  assert (shd >= ID_NOSHIELD);
  for i:=37 to 114 do
-  fillchar(screen[i,166],113,5);
+  scr_fillchar(screen[i,166],113,5);
  setcolor(184);
  line(168,44,232,44);
  revgraybutton(171,88,192,109);
@@ -473,9 +473,9 @@ begin
       begin
        if i>0 then x:=100-i
         else x:=100+i;
-       fillchar(screen[83+i+j*6,205],y,x);
+       scr_fillchar(screen[83+i+j*6,205],y,x);
        if y<66 then
-        fillchar(screen[83+i+j*6,205+y],66-y,0);
+        scr_fillchar(screen[83+i+j*6,205+y],66-y,0);
       end;
     end;
   end
@@ -484,7 +484,7 @@ begin
    printxy(218,61,'      None');
    printxy(218,68,'      None');
    for i:=87 to 110 do
-    fillchar(screen[i,205],65,2);
+    scr_fillchar(screen[i,205],65,2);
   end;
 
  if shd>ID_REFLECTIVEHULL then	{ some energy&space-using shield installed }
@@ -505,7 +505,7 @@ end;
 procedure removeshieldinfo;
 begin
  for i:=37 to 114 do
-  fillchar(screen[i,166],113,5);
+  scr_fillchar(screen[i,166],113,5);
  screen[52,165]:=10;
  screen[82,165]:=10;
  screen[53,279]:=2;
@@ -553,7 +553,7 @@ begin
       begin
        viewlevel:=2;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        showpanel(shdbut3);
        screen[52,165]:=10;
        screen[82,165]:=10;
@@ -684,7 +684,7 @@ begin
       begin
        viewlevel:=2;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        showpanel(shdbut3);
        screen[52,165]:=10;
        screen[82,165]:=10;
@@ -739,7 +739,7 @@ begin
       until (y=13) or (x>250);
       if y<13 then
        for j:=38+y*6 to 116 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
       x:=viewindex2;
       y:=8;
       repeat
@@ -754,7 +754,7 @@ begin
       until (y=1) or (x<1);
       if y>1 then
        for j:=37 to 31+y*6 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
      end;
   3: begin
       if (ship.cargo[viewindex2]<ID_NOSHIELD) or (ship.cargo[viewindex2]>=ID_NOTHING) then
@@ -798,7 +798,7 @@ end;
 procedure setupweaponinfo;
 begin
  for i:=37 to 114 do
-  fillchar(screen[i,166],113,5);
+  scr_fillchar(screen[i,166],113,5);
  revgraybutton(171,88,192,109);
  setcolor(10);
  line(166,53,278,53);
@@ -858,9 +858,9 @@ begin
        begin
         if i>0 then x:=100-i
          else x:=100+i;
-        fillchar(screen[83+i+j*6,205],y,x);
+        scr_fillchar(screen[83+i+j*6,205],y,x);
         if y<66 then
-         fillchar(screen[83+i+j*6,205+y],66-y,0);
+         scr_fillchar(screen[83+i+j*6,205+y],66-y,0);
        end;
      end;
   end
@@ -871,7 +871,7 @@ begin
    printxy(218,68,'       None');
    printxy(218,75,'       None');
    for i:=87 to 110 do
-    fillchar(screen[i,205],66,2);
+    scr_fillchar(screen[i,205],66,2);
   end;
 end;
 
@@ -884,13 +884,13 @@ begin;
     (ship.engrteam[j].jobtype=JOBTYPE_INSTALL) and ((ship.engrteam[j].extra and 15)=node) then
    begin
     for i:=0 to 19 do
-     fillchar(screen[y1+i,x1],20,84);
+     scr_fillchar(screen[y1+i,x1],20,84);
     exit;
    end;
  if weap=0 then
   begin
    for i:=0 to 19 do
-    fillchar(screen[y1+i,x1],20,5);
+    scr_fillchar(screen[y1+i,x1],20,5);
    exit;
   end;
  b:=1;
@@ -902,7 +902,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  move(tempicon^[i],screen[y1+i,x1],5*4);
+  scrto_move(tempicon^[i],screen[y1+i,x1],5*4);
 end;
 
 procedure sideshowweaponicon(x1,y1,weap,node: integer);
@@ -930,7 +930,7 @@ begin
  getweaponicons(x1,y1,weap,node);
  if b<0 then exit;
  for i:=0 to 19 do
-  move(tempicon^[19-i],screen[y1+i,x1],5*4);
+  scrto_move(tempicon^[19-i],screen[y1+i,x1],5*4);
 end;
 
 procedure displayweaponinfo(com: integer);
@@ -945,7 +945,7 @@ begin
        printxy(168,27,'Gun Node Information');
        viewlevel:=0;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[52,165]:=10;
        screen[82,165]:=10;
        screen[53,279]:=2;
@@ -1016,7 +1016,7 @@ begin
     begin
      for j:=28 to 142 do
       screen[i*2+18+a,j]:=random(16);
-     fillchar(screen[i*2+19-a,28],115,5);
+     scr_fillchar(screen[i*2+19-a,28],115,5);
     end;
    mouseshow;
    checkscandamages:=false;
@@ -1029,7 +1029,7 @@ begin
     begin
      for j:=28 to 142 do
       screen[i*2+18+a,j]:=random(16);
-     fillchar(screen[i*2+19-a,28],115,5);
+     scr_fillchar(screen[i*2+19-a,28],115,5);
     end;
    mouseshow;
    checkscandamages:=false;
@@ -1071,7 +1071,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i,27],screen[i,27],29*4);
+  scrto_move(starmapscreen^[i,27],screen[i,27],29*4);
  if target>0 then
   begin
    if index<0 then index:=0;
@@ -1106,7 +1106,7 @@ begin
   end;
  if a<98 then
   for i:=46 to 54 do
-   fillchar(screen[i,174+a],98-a,0);
+   scr_fillchar(screen[i,174+a],98-a,0);
  str(ship.hullintegrity,str1);
  printxy(219-round(length(str1)*2.5),47,str1);
  a:=round(ship.fuel/ship.fuelmax*98);
@@ -1119,7 +1119,7 @@ begin
   end;
  if a<98 then
   for i:=66 to 74 do
-   fillchar(screen[i,174+a],98-a,0);
+   scr_fillchar(screen[i,174+a],98-a,0);
  str(ship.fuel,str1);
  printxy(219-round(length(str1)*2.5),67,str1);
  a:=round(ship.battery/32000*98);
@@ -1132,7 +1132,7 @@ begin
   end;
  if a<98 then
   for i:=86 to 94 do
-   fillchar(screen[i,174+a],98-a,0);
+   scr_fillchar(screen[i,174+a],98-a,0);
  str(ship.battery,str1);
  printxy(219-round(length(str1)*2.5),87,str1);
  a:=round(ship.shieldlevel/100*98);
@@ -1145,7 +1145,7 @@ begin
   end;
  if a<98 then
   for i:=106 to 114 do
-   fillchar(screen[i,174+a],98-a,0);
+   scr_fillchar(screen[i,174+a],98-a,0);
  str(ship.shieldlevel,str1);
  printxy(219-round(length(str1)*2.5),107,str1);
  mouseshow;
@@ -1251,7 +1251,7 @@ begin
    1:if viewlevel>0 then
       begin
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[80,165]:=10;
        screen[81,279]:=2;
        screen[36,217]:=10;
@@ -1264,7 +1264,7 @@ begin
       begin
        inc(viewlevel);
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        tcolor:=191;
        bkcolor:=5;
        printxy(166,27,' System Information ');
@@ -1281,7 +1281,7 @@ begin
         else dec(target);
         if viewlevel=1 then
          for i:=37 to 114 do
-          fillchar(screen[i,166],113,5);
+          scr_fillchar(screen[i,166],113,5);
        end
       else target:=1;
    4: if target>0 then
@@ -1290,7 +1290,7 @@ begin
         if (target>nearbymax) or (nearby[target].index=0) then target:=1;
         if viewlevel=1 then
          for i:=37 to 114 do
-          fillchar(screen[i,166],113,5);
+          scr_fillchar(screen[i,166],113,5);
        end
       else target:=1;
    5: begin
@@ -1346,7 +1346,7 @@ begin
       until (index>nearbymax) or (y=13);
       if y<13 then
        for j:=38+y*6 to 116 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
       index:=target;
       y:=8;
       repeat
@@ -1373,7 +1373,7 @@ begin
       until (index<1) or (y=1);
       if y>1 then
        for j:=37 to 31+y*6 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
      end;
   1: genericsysinfo(nearby[target].index);
   end;
@@ -1563,7 +1563,7 @@ begin
   printxy(167,104,'Contact Established')
  else
   for i:=104 to 110 do
-   fillchar(screen[i,171],95,5);
+   scr_fillchar(screen[i,171],95,5);
  setcolor(2);
  line(217,37,217,73);
  line(165,74,278,74);
@@ -1639,7 +1639,7 @@ begin
          showpanel(logbut2);
         end;
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[80,165]:=10;
        screen[81,279]:=2;
        screen[74,165]:=10;
@@ -1655,7 +1655,7 @@ begin
         end;
        inc(viewlevel);
        for i:=37 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        screen[80,165]:=10;
        screen[81,279]:=2;
        screen[74,165]:=10;
@@ -1723,7 +1723,7 @@ begin
           showpanel(logbut1);
          end;
         for i:=37 to 114 do
-         fillchar(screen[i,166],113,5);
+         scr_fillchar(screen[i,166],113,5);
         screen[80,165]:=10;
         screen[81,279]:=2;
         screen[74,165]:=10;
@@ -1766,7 +1766,7 @@ begin
        until (index>250) or (y=13);
        if y<13 then
         for j:=38+y*6 to 116 do
-         fillchar(screen[j,166],113,5);
+         scr_fillchar(screen[j,166],113,5);
 
        { secondly, print our selected system (in different color), and all systems BEFORE it in normal color }
        index:=viewindex;
@@ -1783,7 +1783,7 @@ begin
        until (index<1) or (y=1);
        if y>1 then
         for j:=37 to 31+y*6 do
-         fillchar(screen[j,166],113,5);
+         scr_fillchar(screen[j,166],113,5);
       end;
   1: begin
       printxy(166,27,'Ship Logs:System Info');
@@ -1858,7 +1858,7 @@ begin
         removesystem(true);
         mousehide;
         compressfile(tempdir+'/current',@screen);
-        fillchar(screen,sizeof(screen),0);
+        scr_fillchar(screen,sizeof(screen),0);
         mouseshow;
         for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
         {fading;}
@@ -1876,7 +1876,7 @@ begin
          dec(viewlevel);
          mousehide;
          for i:=37 to 74 do
-          fillchar(screen[i,166],113,5);
+          scr_fillchar(screen[i,166],113,5);
          mouseshow;
         end;
    8: if viewlevel<2 then inc(viewlevel,2)
@@ -1885,7 +1885,7 @@ begin
          dec(viewlevel,2);
          mousehide;
          for i:=37 to 74 do
-          fillchar(screen[i,166],113,5);
+          scr_fillchar(screen[i,166],113,5);
          mouseshow;
         end;
  end;
@@ -2058,8 +2058,8 @@ begin
    y1:=65;
   end;
  for i:=1 to 13 do
-  fillchar(screen[round(y1)-2+i,round(x1)-2],15,5);
- fillchar(screen[round(y1)+12,round(x1)+3],5,5);
+  scr_fillchar(screen[round(y1)-2+i,round(x1)-2],15,5);
+ scr_fillchar(screen[round(y1)+12,round(x1)+3],5,5);
  mouseshow;
  j:=findfirstplanet(viewindex2);
  y:=-1;
@@ -2181,9 +2181,9 @@ begin
     begin
      if i>0 then x:=100-i
       else x:=100+i;      {164}
-     fillchar(screen[74+7+i+j*4,197],y,x);
+     scr_fillchar(screen[74+7+i+j*4,197],y,x);
      if y<77 then
-      fillchar(screen[74+7+i+j*4,197+y],77-y,2);
+      scr_fillchar(screen[74+7+i+j*4,197+y],77-y,2);
     end;
   end;
  mouseshow;
@@ -2315,7 +2315,7 @@ begin
       begin
        viewlevel:=0;
        for i:=26 to 114 do
-        fillchar(screen[i,16],263,5);
+        scr_fillchar(screen[i,16],263,5);
        screen[53,279]:=2;
        screen[83,279]:=2;
        screen[25,164]:=10;
@@ -2352,7 +2352,7 @@ begin
          while (viewindex2<251) and ((ship.cargo[viewindex2]<ID_DIRK) or (ship.cargo[viewindex2]>=ID_NOSHIELD)) do inc(viewindex2);
          if viewindex2=251 then viewindex2:=0;
          for i:=26 to 114 do
-          fillchar(screen[i,16],263,5);
+          scr_fillchar(screen[i,16],263,5);
          setcolor(10);
          line(165,25,165,114);
          setcolor(2);
@@ -2495,7 +2495,7 @@ begin
        until (y=12) or (x>250);
        if y<12 then
         for j:=38+y*6 to 114 do
-         fillchar(screen[j,30],113,5);
+         scr_fillchar(screen[j,30],113,5);
        x:=viewindex2;
        y:=7;
        repeat
@@ -2510,7 +2510,7 @@ begin
        until (y=1) or (x<1);
        if y>1 then
         for j:=37 to 31+y*6 do
-         fillchar(screen[j,30],113,5);
+         scr_fillchar(screen[j,30],113,5);
       end;
  end;
  mouseshow;
@@ -2651,7 +2651,7 @@ begin
             printxy(168,27,'    Add to Cache     ');
             viewlevel:=1;
             for i:=37 to 115 do
-             fillchar(screen[i,166],113,5);
+             scr_fillchar(screen[i,166],113,5);
             showpanel(botbut1);
            end;
         end;
@@ -2660,7 +2660,7 @@ begin
       begin
        printxy(169,27,'   Cache Contents    ');
        for i:=37 to 115 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        viewlevel:=0;
        showpanel(botbut0);
        viewindex:=1;
@@ -2679,7 +2679,7 @@ begin
       begin
        printxy(169,27,'   Cache Contents    ');
        for i:=37 to 115 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
        viewlevel:=0;
        if ship.cargo[viewindex2]>ID_ARTIFACT_OFFSET then
         begin
@@ -2709,7 +2709,7 @@ begin
 	  tempplan^[curplan].bots:=(tempplan^[curplan].bots and (255 - 7)) or viewindex2;
 	  removecargo(ID_PROBOT+viewindex2);
 	  for i:=37 to 115 do
-	     fillchar(screen[i,166],113,5);
+	     scr_fillchar(screen[i,166],113,5);
 	  viewlevel:=0;
 	  showpanel(botbut0);
        end;
@@ -2725,7 +2725,7 @@ begin
 	   begin
 	      printxy(164,27,'       Bot Info      ');
 	      for i:=37 to 114 do
-		 fillchar(screen[i,166],113,5);
+		 scr_fillchar(screen[i,166],113,5);
 	      if incargo(ID_MINEBOT)>0 then viewindex2:=1
 	      else if incargo(ID_MANUFACTORY)>0 then viewindex2:=2
 	      else viewindex2:=4;
@@ -2745,7 +2745,7 @@ begin
 	   begin
 	      printxy(164,27,'       Bot Info      ');
 	      for i:=37 to 114 do
-		 fillchar(screen[i,166],113,5);
+		 scr_fillchar(screen[i,166],113,5);
 	      viewindex2:=5;
 	      viewlevel:=2;
 	      showbotstuff;
@@ -2800,7 +2800,7 @@ begin
        end;
       if y<7 then
        for i:=42+y*10 to 114 do
-        fillchar(screen[i,166],113,5);
+        scr_fillchar(screen[i,166],113,5);
      end;
   1: begin
       x:=viewindex2+1;
@@ -2827,7 +2827,7 @@ begin
       until (y=12) or (x>250);
       if y<12 then
        for j:=43+y*6 to 116 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
       x:=viewindex2;
       y:=7;
       repeat
@@ -2853,7 +2853,7 @@ begin
       until (y=0) or (x<1);
       if y>0 then
        for j:=37 to 37+y*6 do
-        fillchar(screen[j,166],113,5);
+        scr_fillchar(screen[j,166],113,5);
      end;
   2: begin
 	y:=0;
@@ -2905,7 +2905,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  fillchar(screen[i,27],116,5);
+  scr_fillchar(screen[i,27],116,5);
  i:=0;
  for j:=1 to nearbymax do if nearby[j].index<>0 then
   begin
@@ -2949,7 +2949,7 @@ begin
  if t1>6.28 then t1:=0;
  mousehide;
  for i:=18 to 123 do
-  fillchar(screen[i,27],117,5);
+  scr_fillchar(screen[i,27],117,5);
  if showplanet then
   begin
    j:=curplan;
@@ -3072,7 +3072,7 @@ begin
  if (ship.damages[DMG_CPU]>0) and (not checkscandamages) then exit;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i,27],screen[i,27],29*4);
+  scrto_move(starmapscreen^[i,27],screen[i,27],29*4);
  computegraph;
  mouseshow;
  for i:=1 to 3 do

@@ -198,7 +198,7 @@ begin
     begin
      for j:=27 to 142 do
       screen[i*2+43+index,j]:=random(16);
-     fillchar(screen[i*2+44-index,27],115,0);
+     scr_fillchar(screen[i*2+44-index,27],115,0);
     end;
    mouseshow;
    exit;
@@ -211,7 +211,7 @@ begin
     begin
      for j:=27 to 142 do
       screen[i*2+43+index,j]:=random(16);
-     fillchar(screen[i*2+44-index,27],115,0);
+     scr_fillchar(screen[i*2+44-index,27],115,0);
     end;
    mouseshow;
    exit;
@@ -248,7 +248,7 @@ begin
   end;
  mousehide;
  for i:=18 to 123 do
-  move(starmapscreen^[i],screen[i+25,27],29*4);
+  scrto_move(starmapscreen^[i],screen[i+25,27],29*4);
  x1:=tarxr;
  y1:=tarzr;
  if rotatemode=-1 then
@@ -276,9 +276,9 @@ begin
  checkcanary;
  mousehide;
  for i:=20 to 88 do
-  fillchar(screen[i,160],141,5);
+  scr_fillchar(screen[i,160],141,5);
  for i:=91 to 158 do
-  fillchar(screen[i,160],141,5);
+  scr_fillchar(screen[i,160],141,5);
  setcolor(3);
  for j:=1 to 6 do
   begin
@@ -335,15 +335,15 @@ begin
  mousehide;
  graybutton(159,34,301,149);
  for i:=12 to 33 do
-  fillchar(screen[i,159],143,0);
+  scr_fillchar(screen[i,159],143,0);
  for i:=150 to 166 do
-  fillchar(screen[i,159],143,0);
+  scr_fillchar(screen[i,159],143,0);
  for i:=74 to 85 do
-  fillchar(screen[i,179],101,0);
+  scr_fillchar(screen[i,179],101,0);
  for i:=100 to 111 do
-  fillchar(screen[i,179],101,0);
+  scr_fillchar(screen[i,179],101,0);
  for i:=127 to 138 do
-  fillchar(screen[i,179],101,0);
+  scr_fillchar(screen[i,179],101,0);
  case sector of
   1: str1:='ALPHA';
   2: str1:='BETA';
@@ -392,7 +392,7 @@ begin
   begin
    if i>2 then j:=89-i
     else j:=83+i;
-   fillchar(screen[i+75,180],a,j);
+   scr_fillchar(screen[i+75,180],a,j);
   end;
  if planets>0 then a:=round(exploredplanets/planets*100)
   else a:=100;
@@ -400,7 +400,7 @@ begin
   begin
    if i>2 then j:=89-i
     else j:=83+i;
-   fillchar(screen[i+101,180],a,j);
+   scr_fillchar(screen[i+101,180],a,j);
   end;
  if planets>0 then a:=round(scansdone/planets*100)
   else a:=100;
@@ -408,7 +408,7 @@ begin
   begin
    if i>2 then j:=89-i
     else j:=83+i;
-   fillchar(screen[i+128,180],a,j);
+   scr_fillchar(screen[i+128,180],a,j);
   end;
  tcolor:=31;
  bkcolor:=0;
@@ -573,7 +573,7 @@ begin
    tarzr:=nearsec^[index].z;
   end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  str1:=systems[nearsec^[index].index].name;
  i:=11;
  while str1[i]=' ' do dec(i);
@@ -635,7 +635,7 @@ begin
    displaytargets;
   end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  mouseshow;
 end;
 
@@ -691,7 +691,7 @@ begin
    displaytargets;
   end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  mouseshow;
 end;
 
@@ -747,7 +747,7 @@ begin
    displaytargets;
   end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  mouseshow;
 end;
 
@@ -827,7 +827,7 @@ begin
  if infoindex=0 then displaysideview else readyhistoryview;
  mousehide;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  mouseshow;
 end;
 
@@ -857,7 +857,7 @@ begin
      i:=38;
     end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  if (curplan>0) and (index<>0) then str1:=systems[nearsec^[index].index].name
   else str1:='UNKNOWN     ';
  i:=12;
@@ -906,7 +906,7 @@ begin
     end;
   end;
  for i:=24 to 30 do
-  fillchar(screen[i,40],90,0);
+  scr_fillchar(screen[i,40],90,0);
  str1:=systems[nearsec^[index].index].name;
  i:=11;
  while str1[i]=' ' do dec(i);

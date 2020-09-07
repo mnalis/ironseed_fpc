@@ -715,7 +715,7 @@ begin
  move(nearby,nearbybackup,sizeof(nearbyarraytype));
  mousehide;
  compressfile(tempdir+'/current',@screen);
- fillchar(screen,sizeof(screen),0);
+ scr_fillchar(screen,sizeof(screen),0);
  tcolor:=47;
  bkcolor:=0;
  time:=round(dist*2)+1;
@@ -1255,8 +1255,8 @@ begin
   begin
    creategasplanet;
    new(t);
-   move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scrfrom_move(screen,t^,sizeof(screen));
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1266,7 +1266,7 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    for i:=6 to maxspherei do
     begin
@@ -1278,10 +1278,10 @@ begin
    tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    makegasplanet;
   end
  else if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then
@@ -1291,8 +1291,8 @@ begin
    backgry:=0;
    makeastoroidfield;
    new(t);
-   move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scrfrom_move(screen,t^,sizeof(screen));
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1302,12 +1302,12 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
  end
@@ -1318,8 +1318,8 @@ begin
    backgry:=0;
    makecloud;
    new(t);
-   move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scrfrom_move(screen,t^,sizeof(screen));
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1329,22 +1329,22 @@ begin
     begin
      str((200-i):3,str1);
      printxy(90,170,str1);
-     delay(tslice);
+     if not fastkeypressed then delay(tslice);
     end;
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    sphere:=3;
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    drawastoroid;
   end
  else
   begin
    new(t);
-   move(screen,t^,sizeof(screen));
-   fillchar(screen,sizeof(screen),0);
+   scrfrom_move(screen,t^,sizeof(screen));
+   scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    tcolor:=47;
    bkcolor:=0;
@@ -1357,7 +1357,7 @@ begin
    createplanet(120,60);
    fillchar(tpal,sizeof(paltype),0);
    set256colors(tpal);
-   move(t^,screen,sizeof(screen));
+   scrto_move(t^,screen,sizeof(screen));
    dispose(t);
    water:=50;
    case tempplan^[curplan].state of
@@ -1420,7 +1420,7 @@ begin
      ppart[i]:=r2/y;
     end;
    for i:=1 to 120 do
-    move(screen[i+12,28],planet^[i],30*4);
+    scrfrom_move(screen[i+12,28],planet^[i],30*4);
    makesphere;
    sphere:=1;
   end;
@@ -1488,8 +1488,8 @@ begin
  fillchar(planet^,14400,0);
  i2:=i+6;
  new(t);
- move(screen,t^,sizeof(screen));
- fillchar(screen,sizeof(screen),0);
+ scrfrom_move(screen,t^,sizeof(screen));
+ scr_fillchar(screen,sizeof(screen),0);
  set256colors(colors);
  tcolor:=47;
  bkcolor:=0;
@@ -1503,7 +1503,7 @@ begin
  tpal[0,1]:=0;	// to turn off warnings, variables are actually correctly initialized by function below
  fillchar(tpal,sizeof(paltype),0);
  set256colors(tpal);
- move(t^,screen,sizeof(screen));
+ scrto_move(t^,screen,sizeof(screen));
  dispose(t);
  loadscreen(tempdir+'/current',@screen);
  showtime;
@@ -1514,7 +1514,7 @@ begin
    ppart[i]:=r2/y;
   end;
  for i:=1 to 120 do
-  move(screen[i+12,28],planet^[i],30*4);
+  scrfrom_move(screen[i+12,28],planet^[i],30*4);
  makestar;
  checkstats;
  mouseshow;
@@ -1777,7 +1777,7 @@ begin
    ship.orbiting:=index;
    mousehide;
    compressfile(tempdir+'/current',@screen);
-   fillchar(screen,sizeof(screen),0);
+   scr_fillchar(screen,sizeof(screen),0);
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}
