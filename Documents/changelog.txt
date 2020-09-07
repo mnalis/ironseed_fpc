@@ -1,4 +1,6 @@
+- restore some missing conversation parts
 v 0.1.8
+- fix endgame running without pause to read text!
 - fix bug with removing wrong items sometimes!
 - fixed incorrect highlighting and leftover chars in logs sometimes
 - fix issue when >255 items of some type
