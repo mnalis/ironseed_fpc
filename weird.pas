@@ -67,6 +67,7 @@ procedure easteregg2;
 procedure easteregg3;
 procedure easteregg4;
 procedure easteregg5;
+procedure easteregg6;
 {$ENDIF}
 procedure bossmode;
 procedure deathsequence(n: integer);
@@ -834,7 +835,6 @@ begin
  mouseshow;
 end;
 
-(* NO SPACE!!!
 procedure easteregg6;
 begin
  while fastkeypressed do readkey;
@@ -851,7 +851,7 @@ begin
  fading;
  closegraph;
  halt(3);
-end;*)
+end;
 {$ENDIF}
 
 procedure bossmode;
@@ -887,7 +887,15 @@ begin
  fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
- while fastkeypressed do readkey;
+ delay(150);
+ while fastkeypressed do begin
+   if (upcase(readkey_utf8) = '7') and (mouse.getstatus) then
+       begin
+{$IFNDEF DEMO}
+        easteregg6;
+{$ENDIF}
+       end;
+ end;
 { setgraphmode(0);
  asm
   mov ax, 0013h
