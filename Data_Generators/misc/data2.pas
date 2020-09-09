@@ -171,7 +171,6 @@ end;
 
 procedure loadscreen(s: string; ts: pointer);
 var ftype: CPR_HEADER;
-    s2: string[30];
 begin
  uncompressfile(s+'.cpr',ts,@ftype);
  if ftype.version=CPR_ERROR then errorhandler(s,5);
@@ -348,4 +347,5 @@ end;
 
 
 begin
+   loadpal ('data/main.pal');	{ default pallete if not overriden }
 end.
