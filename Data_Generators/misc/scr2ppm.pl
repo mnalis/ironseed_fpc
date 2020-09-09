@@ -14,7 +14,7 @@ my $pal = shift;
 if (!defined $scr) {
   print "Usage: $0 <file.scr> [file.pal]\n";
   print "Converts Ironseed 320x200 SCR file to PPM on stdout\n";
-  print "Display with: $0 TEMP/current.scr | xli -zoom 200 -gamma 1 -dispgamma 1 stdin\n";
+  print "Display with: $0 TEMP/current.scr data/main.pal | xli -zoom 200 -gamma 1 -dispgamma 1 stdin\n";
   exit 1;
 }
 

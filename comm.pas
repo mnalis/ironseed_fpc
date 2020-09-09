@@ -723,6 +723,7 @@ begin
    parsestatement:=y;
 end;
 
+{ 2000x events set while conversing with some race, in Data_Generators/makedata/*con*.txt }
 procedure run20000event(n: integer);
 begin
  case n of
