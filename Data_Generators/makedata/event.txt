@@ -13,7 +13,7 @@ D'phak
 20046     0  Why are you here? The precious Sun is in danger! You should be finishing the scourge even as we speak. Go and do not return to the light until the dark within the dark is quelled.
 20018 20046  The light is not lost! You have brought us the path. Your device will take us into the light! The light of the sun is ours at last. We must reward you. Take the Thaumaturge... bring cleansing fire to the night, sear the darkness with Sun's light.
 20043     0  The little messenger has returned from the shadows.
-20030     0  We have learned that the Guild have thrown a friend into darkness. In the shadows they search in vein. We have their friend... in Eta sector the sun shines on the Sigonib system. Their you will find what they seek.
+20030     0  We have learned that the Guild have thrown a friend into darkness. In the shadows they search in vein. We have their friend... in Eta sector the sun shines on the Sigonib system. There you will find what they seek.
 20034     0  You have no merit. Your name is in shadows. We do not know you. Come first to us in the light. Then... then, we will join your Kendar.
 20001     0  Ah... you have returned. Speak to us.
     0     0
