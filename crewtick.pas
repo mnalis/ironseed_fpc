@@ -282,7 +282,10 @@ var
 	 begin
 	    RebuildCargoReserve;
 	    case job of
-	      ID_FUEL_NODULES : ship.fuel:=ship.fuelmax;
+	      ID_FUEL_NODULES : begin
+			       ship.fuel:=ship.fuelmax;
+			       event(1002);
+			     end;
 	      ID_REINFORCE_HULL : begin
 			     i:=ship.hullmax+25;
 			     if i>5000 then

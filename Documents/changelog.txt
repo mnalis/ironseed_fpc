@@ -1,3 +1,4 @@
+- restore some missing logs
 - restore some missing conversation parts
 v 0.1.8
 - fix endgame running without pause to read text!
