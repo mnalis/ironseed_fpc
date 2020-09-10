@@ -11,10 +11,12 @@ my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
 my $basename = $ARGV[0];
 my $pal_name = $ARGV[1];
 my $ppm_name = $basename;
+my $want_width = $ENV{WIDTH} || 320;
+my $want_height = $ENV{HEIGHT} || 200;
 
 if (!defined $ppm_name or !defined $pal_name) {
   print "Usage: $0 <BASENAME.ppm> <main.pal>\n";
-  print "Converts PPM file to Ironseed 320x200 BASENAME.scr using main.pal for existing pallete\n";
+  print "Converts PPM file to Ironseed 320x200 (or other specified size via ENV)  BASENAME.scr using main.pal for existing pallete\n";
   exit 1;
 }
 
@@ -30,7 +32,7 @@ open my $ppm_fd, '<', $ppm_name;
 my $format = <$ppm_fd>; chomp $format;
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
 my ($width, $height) = split ' ', <$ppm_fd>;
-die "ERROR: not 320x200 PPM file" unless $width==320 and $height==200;
+die "ERROR: not ${want_width}x${want_height} PPM file" unless $width==$want_width and $height==$want_height;
 my $bpp = <$ppm_fd>; chomp($bpp);
 die "ERROR: must have 255 colors" unless $bpp==255;
 

@@ -10,10 +10,12 @@ my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
 
 my $scr = shift;
 my $pal = shift;
+my $want_width = $ENV{WIDTH} || 320;
+my $want_height = $ENV{HEIGHT} || 200;
 
 if (!defined $scr) {
   print "Usage: $0 <file.scr> [file.pal]\n";
-  print "Converts Ironseed 320x200 SCR file to PPM on stdout\n";
+  print "Converts Ironseed 320x200 (or other specified size via ENV) SCR file to PPM on stdout\n";
   print "Display with: $0 TEMP/current.scr data/main.pal | xli -zoom 200 -gamma 1 -dispgamma 1 stdin\n";
   exit 1;
 }
@@ -26,7 +28,7 @@ if (defined $pal) {
   @PALLETE = unpack "C*", <$pal_fd>;
 }
 
-print "P3\n320 200\n255\n"; 	# see ppm(5)
+print "P3\n$want_width $want_height\n255\n"; 	# see ppm(5)
 
 open my $scr_fd, '<', $scr;
 
