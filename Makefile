@@ -53,7 +53,9 @@ DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artima
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
+CPR_MAIN := data/main.cpr
+CPR_COM := data/trade.cpr
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(CPR_MAIN) $(CPR_COM) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -194,6 +196,13 @@ data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/ne
 	Data_Generators/makedata/namemake
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
 	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
+
+data/main.cpr: Graphics_Assets/main.png data/main.pal Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr
+	convert $< TEMP/$(notdir $(basename $@)).ppm
+	cp -f $(word 2,$^) TEMP/$(notdir $(basename $@)).pal
+	Data_Generators/misc/ppmpal2scr.pl TEMP/$(notdir $(basename $@)).ppm TEMP/$(notdir $(basename $@)).pal
+	Data_Generators/misc/scr2cpr TEMP/$(notdir $(basename $@)) 1
+	mv -f TEMP/$(notdir $(basename $@)).cpr $@
 
 data/trade.cpr: data/com.cpr Graphics_Assets/trade.png Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
 	cp -f $< TEMP/$(notdir $<)
