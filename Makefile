@@ -53,9 +53,12 @@ DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artima
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
-CPR_MAIN := data/main.cpr
-CPR_COM := data/trade.cpr
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(CPR_MAIN) $(CPR_COM) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
+CPR_MAIN1 := data/main.cpr
+# FIXME data/main3.cpr
+CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr data/image05.cpr data/image06.cpr data/image07.cpr data/image08.cpr data/image09.cpr data/image10.cpr data/image11.cpr data/image12.cpr data/image13.cpr data/image14.cpr data/image15.cpr data/image16.cpr data/image17.cpr data/image18.cpr data/image19.cpr data/image20.cpr data/image21.cpr data/image22.cpr data/image23.cpr data/image24.cpr data/image25.cpr data/image26.cpr data/image27.cpr data/image28.cpr data/image29.cpr data/image30.cpr data/image31.cpr data/image32.cpr
+CPR_COM0 := data/trade.cpr
+IMG_FILES := data/main.pal $(CPR_MAIN1) $(CPR_CREW0) $(CPR_COM0)
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -197,21 +200,20 @@ data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/ne
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
 	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
 
-data/main.cpr: Graphics_Assets/main.png data/main.pal Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr
-	convert $< TEMP/$(notdir $(basename $@)).ppm
-	cp -f $(word 2,$^) TEMP/$(notdir $(basename $@)).pal
-	Data_Generators/misc/ppmpal2scr.pl TEMP/$(notdir $(basename $@)).ppm TEMP/$(notdir $(basename $@)).pal
-	Data_Generators/misc/scr2cpr TEMP/$(notdir $(basename $@)) 1
+data/main.pal: Graphics_Assets/main.pal
+	cp -f $< $@
+
+# FIXME main3 ima svoj PAL
+#data/main3.cpr:	Graphics_Assets/main3.png	data/main.pal Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr
+data/main.cpr:	data/main.pal	Graphics_Assets/main.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+	Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
 	mv -f TEMP/$(notdir $(basename $@)).cpr $@
 
-data/trade.cpr: data/com.cpr Graphics_Assets/trade.png Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
-	cp -f $< TEMP/$(notdir $<)
-	Data_Generators/misc/cpr2scr TEMP/$(notdir $(basename $<))
-	cp -f TEMP/$(notdir $(basename $<)).pal TEMP/$(notdir $(basename $@)).pal
-	convert $(word 2,$^) TEMP/$(notdir $(basename $@)).ppm
-	Data_Generators/misc/ppmpal2scr.pl TEMP/$(notdir $(basename $@)).ppm TEMP/$(notdir $(basename $@)).pal
-	Data_Generators/misc/scr2cpr TEMP/$(notdir $(basename $@)) 0
-	mv -f TEMP/$(notdir $(basename $@)).cpr $@
+data/image%.cpr:	data/char.cpr Graphics_Assets/image%.png	Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+	WIDTH=70 HEIGHT=70 Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
+
+data/trade.cpr:		data/com.cpr Graphics_Assets/trade.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+	Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
 
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind

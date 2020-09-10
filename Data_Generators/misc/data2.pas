@@ -37,7 +37,7 @@ var
 procedure quicksavescreen(s : String; scr : pscreentype; savepal : Boolean);
 procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 procedure loadscreen(s: string; ts: pointer);
-procedure compressfile(s: string; ts: pscreentype; fl: byte);
+procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
 procedure errorhandler(s: string; errtype: integer);
 
 
@@ -180,7 +180,7 @@ begin
  if ftype.version=CPR_ERROR then errorhandler(s,5);
 end;
 
-procedure compressfile(s: string; ts: pscreentype; fl: byte);
+procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
 type
  buftype= array[0..CPR_BUFFSIZE] of byte;
 var
@@ -197,15 +197,15 @@ var
   j:=ioresult;
  end;
 
- procedure setheader(fl:byte);
+ procedure setheader(w2,h2:word; fl:byte);
  begin
   with h do
    begin
     signature:=19794;
     version:=CPR_CURRENT;
     headersize:=sizeof(CPR_HEADER);
-    width:=320;
-    height:=200;
+    width:=w2;
+    height:=h2;
     flags:=fl;
    end;
   num:=sizeof(CPR_HEADER);
@@ -236,7 +236,7 @@ begin
  assign(f,s+'.cpr');
  rewrite(f,1);
  if ioresult<>0 then errorhandler(s,1);
- setheader(fl);
+ setheader(w2,h2,fl);
  databyte:=ts^[0,0];
  count:=0;
  index:=0;
@@ -244,7 +244,7 @@ begin
  repeat
   count:=0;
   databyte:=ts^[0,x];
-  while (ts^[0,x]=databyte) and (x<64000) do
+  while (ts^[0,x]=databyte) and (x<w2*h2) do
    begin
     inc(count);
     inc(x);
@@ -291,7 +291,7 @@ begin
       if index=CPR_BUFFSIZE then saveindex;
      end;
    end;
- until x=64000;
+ until x=w2*h2;
  saveindex;
  close(f);
  if buf<>nil then dispose(buf);
@@ -354,4 +354,5 @@ end;
 
 
 begin
+  //loadpal ('data/main.pal');  { default pallete if not overriden }
 end.

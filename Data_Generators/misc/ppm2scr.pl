@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
-my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+my $COLOR_FACTOR = $ENV{COLORF} || 4;	# game seems to be using <<2, which is *4
 
 my $basename = $ARGV[0];
 my $ppm_name = $basename;
@@ -45,6 +45,7 @@ my $pal_used = 0;
 open my $pal_fd, '>', $pal_tmp;
 open my $scr_fd, '>', $scr_tmp;
 
+my $remains=64000;
 for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $r = int($SCR[$i] / $COLOR_FACTOR);
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
@@ -60,7 +61,10 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   }
   
   print $scr_fd chr($val);
+  $remains--;
 }
+
+print $scr_fd chr(0) x $remains;	# fillup so scr2cpr.pas doesn't bail out
 
 print $pal_fd "\000\000\000" x ($bpp - $pal_used + 1);
 

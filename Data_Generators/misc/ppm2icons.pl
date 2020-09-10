@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
-my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+my $COLOR_FACTOR = $ENV{COLORF} || 4;	# game seems to be using <<2, which is *4
 
 my $pal_name = $ARGV[0];
 my $want_width = $ENV{WIDTH} || 17;
@@ -60,7 +60,7 @@ for (my $i = 0; $i < $height * $width * 3; $i+=3) {
 
   if (!defined $val) {		# entry not in pallete
      #use Data::Dumper;
-     #print Dumper(%PALLETE);
+     #print Dumper(\%PALLETE);
      die "invalid RGB: $pal_idx not found in $pal_name at idx: $i";
   }
 

@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
-my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+my $COLOR_FACTOR = $ENV{COLORF} || 4;	# game seems to be using <<2, which is *4
 
 my $basename = $ARGV[0];
 my $pal_name = $ARGV[1];
@@ -57,6 +57,7 @@ for (my $pal_used=0; $pal_used < 768; $pal_used+=3) {
 # write to SCR
 open my $scr_fd, '>', $scr_tmp;
 
+my $remains=64000;
 for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $r = int($SCR[$i] / $COLOR_FACTOR);
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
@@ -66,12 +67,15 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
 
   if (!defined $val) {		# entry not in pallete
      #use Data::Dumper;
-     #print Dumper(%PALLETE);
+     #print Dumper(\%PALLETE);
      die "invalid RGB: $pal_idx not found in $pal_name at idx: $i";
   }
 
   print $scr_fd chr($val);
+  $remains--;
 }
+
+print $scr_fd chr(0) x $remains;	# fillup so scr2cpr.pas doesn't bail out
 
 close $scr_fd;
 rename $scr_tmp, $scr_final;

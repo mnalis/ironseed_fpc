@@ -1,0 +1,48 @@
+#!/bin/sh
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+# converts .png to .cpr (without or without embedded PAL) using specified .pal
+
+TEMPDIR=TEMP
+PATH="$PATH:`dirname $0`"
+PNGSRC="$1"
+PALSRC="$2"
+EMBED_PAL="$3"
+if [ -z "$PNGSRC" -o -z "$PALSRC"  -o -z "$EMBED_PAL" ]
+then
+	echo "Usage: $0 <Graphic_Assets/SOMETHING.png> <data/main.pal> <embed_pal=0/1>"
+	echo "Converts SOMETHING.png using main.pal to $TEMPDIR/SOMETHING.cpr"
+	exit 11
+fi
+
+if [ ! -r "$PNGSRC" ]
+then
+	echo "Can't read: $PNGSRC"
+	exit 12
+fi
+
+if [ ! -r "$PALSRC" ]
+then
+	echo "Can't read: $PALSRC"
+	exit 13
+fi
+
+BASENAME=`basename $PNGSRC .png`
+
+TMPBASE="$TEMPDIR/$BASENAME"
+
+CPR="$TMPBASE.cpr"
+TMPPPM="$TMPBASE.ppm"
+TMPPAL="$TMPBASE.pal"
+
+echo "Converting $PNGSRC + $PALSRC to $CPR (EMBED_PAL=$EMBED_PAL WIDTH=$WIDTH HEIGHT=$HEIGHT)"
+
+convert "$PNGSRC" "$TMPPPM" || exit 14
+cp -f "$PALSRC" "$TMPPAL" || exit 15
+
+export WIDTH
+export HEIGHT
+ppmpal2scr.pl "$TMPPPM" "$TMPPAL" || exit 16
+scr2cpr "$TMPBASE" $EMBED_PAL $WIDTH $HEIGHT
+
+rm -f "$TMPPPM" "$TMPPAL" "$TMPBASE.scr"
+exit 0

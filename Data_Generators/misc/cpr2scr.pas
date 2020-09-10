@@ -14,6 +14,8 @@ begin
     halt(10);
   end;
  
+ fillchar(screen,sizeof(screen),0);
+
  writeln ('Loading compressed file ', basename, '.cpr');
  loadscreen(basename, @screen);
 
