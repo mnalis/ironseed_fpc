@@ -32,11 +32,12 @@ type
 var
  colors: paltype;
  screen: screentype;
+ has_pal: boolean;
 
 procedure quicksavescreen(s : String; scr : pscreentype; savepal : Boolean);
 procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 procedure loadscreen(s: string; ts: pointer);
-procedure compressfile(s: string; ts: pscreentype);
+procedure compressfile(s: string; ts: pscreentype; fl: byte);
 procedure errorhandler(s: string; errtype: integer);
 
 
@@ -91,9 +92,12 @@ var
  function handleversion(n: integer): boolean;
  begin
   handleversion:=false;
+  writeln ('  file using sig=',chr(lo(h^.signature)), chr(hi(h^.signature)), ' v=',h^.version, ' width=',h^.width, ' height=', h^.height, ' flags=', h^.flags);
   if n<>4 then exit;
+  has_pal := false;
   if h^.flags and 1>0 then
    begin
+    has_pal := true;
     num:=768;
     seek(f,h^.headersize);
     blockread(f,colors,num,err);
@@ -176,7 +180,7 @@ begin
  if ftype.version=CPR_ERROR then errorhandler(s,5);
 end;
 
-procedure compressfile(s: string; ts: pscreentype);
+procedure compressfile(s: string; ts: pscreentype; fl: byte);
 type
  buftype= array[0..CPR_BUFFSIZE] of byte;
 var
@@ -193,7 +197,7 @@ var
   j:=ioresult;
  end;
 
- procedure setheader;
+ procedure setheader(fl:byte);
  begin
   with h do
    begin
@@ -202,14 +206,17 @@ var
     headersize:=sizeof(CPR_HEADER);
     width:=320;
     height:=200;
-    flags:=1;
+    flags:=fl;
    end;
   num:=sizeof(CPR_HEADER);
   blockwrite(f,h,num,err);
   if (err<num) or (ioresult<>0) then errorhandler(s,5);
-  num:=768;
-  blockwrite(f,colors,num,err);
-  if (ioresult<>0) or (err<num) then errorhandler(s,5);
+  if h.flags and 1>0 then
+   begin
+    num:=768;
+    blockwrite(f,colors,num,err);
+    if (ioresult<>0) or (err<num) then errorhandler(s,5);
+   end;
  end;
 
  procedure saveindex;
@@ -229,7 +236,7 @@ begin
  assign(f,s+'.cpr');
  rewrite(f,1);
  if ioresult<>0 then errorhandler(s,1);
- setheader;
+ setheader(fl);
  databyte:=ts^[0,0];
  count:=0;
  index:=0;
@@ -347,5 +354,4 @@ end;
 
 
 begin
-   loadpal ('data/main.pal');	{ default pallete if not overriden }
 end.

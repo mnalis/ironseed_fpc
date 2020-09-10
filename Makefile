@@ -93,8 +93,10 @@ reallyclean: clean cleanbak
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags
 	rm -f test/test_0_c test/test_0_pas test/testdiv0 test/testkey1 test/testsize test/test_write test/filename
 
-mrproper: reallyclean data_destroy
+distclean: reallyclean
 	rm -f LPT1 TEMP/*
+
+mrproper: distclean data_destroy
 
 tags: *.c *.pas
 	ctags $^
@@ -193,6 +195,15 @@ data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/ne
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
 	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
 
+data/trade.cpr: data/com.cpr Graphics_Assets/trade.png Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
+	cp -f $< TEMP/$(notdir $<)
+	Data_Generators/misc/cpr2scr TEMP/$(notdir $(basename $<))
+	cp -f TEMP/$(notdir $(basename $<)).pal TEMP/$(notdir $(basename $@)).pal
+	convert $(word 2,$^) TEMP/$(notdir $(basename $@)).ppm
+	Data_Generators/misc/ppmpal2scr.pl TEMP/$(notdir $(basename $@)).ppm TEMP/$(notdir $(basename $@)).pal
+	Data_Generators/misc/scr2cpr TEMP/$(notdir $(basename $@)) 0
+	mv -f TEMP/$(notdir $(basename $@)).cpr $@
+
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind
 
@@ -200,4 +211,4 @@ data_build:   $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
 
 data_rebuild: data_destroy data_build
 
-.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper
+.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean

@@ -17,8 +17,17 @@ begin
  writeln ('Loading compressed file ', basename, '.cpr');
  loadscreen(basename, @screen);
 
- writeln ('Saving uncompressed files ', basename, '.scr and ', basename, '.pal');
- quicksavescreen (basename, @screen, true);
+ if has_pal
+ then
+  begin
+    writeln ('Saving uncompressed files ', basename, '.scr and ', basename, '.pal');
+    quicksavescreen (basename, @screen, true);
+  end
+ else
+  begin
+    writeln ('Saving uncompressed file ', basename, '.scr');
+    quicksavescreen (basename, @screen, false);
+  end;
 
  writeln ('Done!');
 end.
