@@ -918,6 +918,14 @@ begin
  close(f);
 end;
 
+procedure loadpaldbg;
+var s:string[50];
+begin
+  s:=tempdir+'/current.pal';
+  loadpal(s);
+  set256colors(colors);
+end;
+
 (*
 procedure loopscale(startx,starty,sizex,sizey,newx,newy: word; var s,t);
 var sety, py, pdy, px, pdx, dcx, dcy, ofsy: word;

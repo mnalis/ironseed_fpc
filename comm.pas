@@ -750,7 +750,7 @@ begin
           ship.wandering.rely:=500+random(100);
           ship.wandering.relz:=500+random(100);
          end;
-  20003: begin {increase anger by 1}
+  20003: begin {increase anger by 1} // FIXME: not used in *con*.txt ?
           if alien.anger<100 then inc(alien.anger);
           if infomode then
            begin
@@ -758,7 +758,7 @@ begin
             getinfo;
            end;
          end;
-  20004: begin {increase anger by 5}
+  20004: begin {increase anger by 5} // FIXME: not used in *con*.txt ?
           inc(alien.anger,5);
           if alien.anger>100 then alien.anger:=100;
            begin
@@ -766,7 +766,7 @@ begin
             getinfo;
            end;
          end;
-  20005: begin {increase congeniality by 1}
+  20005: begin {increase congeniality by 1} // FIXME: not used in *con*.txt ?
           if alien.congeniality<100 then inc(alien.congeniality);
           if infomode then
            begin
@@ -774,7 +774,7 @@ begin
             getinfo;
            end;
          end;
-  20006: begin {increase congeniality by 5}
+  20006: begin {increase congeniality by 5} // FIXME: not used in *con*.txt ?
           inc(alien.congeniality,5);
           if alien.congeniality>100 then alien.congeniality:=100;
            begin
