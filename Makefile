@@ -48,7 +48,7 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
@@ -57,7 +57,7 @@ CPR_MAIN1 := data/main.cpr
 CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr data/image05.cpr data/image06.cpr data/image07.cpr data/image08.cpr data/image09.cpr data/image10.cpr data/image11.cpr data/image12.cpr data/image13.cpr data/image14.cpr data/image15.cpr data/image16.cpr data/image17.cpr data/image18.cpr data/image19.cpr data/image20.cpr data/image21.cpr data/image22.cpr data/image23.cpr data/image24.cpr data/image25.cpr data/image26.cpr data/image27.cpr data/image28.cpr data/image29.cpr data/image30.cpr data/image31.cpr data/image32.cpr
 CPR_COM0 := data/trade.cpr
 CPR_SELFPAL1 := data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/end6.cpr
-IMG_FILES := data/main.pal $(CPR_MAIN1) $(CPR_CREW0) $(CPR_COM0) $(CPR_SELFPAL1)
+IMG_FILES := data/main.pal $(CPR_MAIN1)  $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_COM0)
 DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
 
 build:  $(PROG_FILES) $(DATA_FILES)
@@ -131,6 +131,7 @@ Data_Generators/makedata/namemake: Data_Generators/makedata/namemake.pas
 
 Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
+Data_Generators/misc/cpr2tga: Data_Generators/misc/cpr2tga.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
 	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $(p_link)  $<
@@ -203,18 +204,52 @@ data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data
 data/main.pal: Graphics_Assets/main.pal
 	cp -f $< $@
 
-data/main3.cpr:	Graphics_Assets/main3.png				Makefile Data_Generators/misc/ppm2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/png_to_cpr
-	Data_Generators/misc/png_to_cpr $< $@
+# canned command sequence -- PNG+PAL=CPR with embedded PAL
+define build-cpr1-via-pal
+Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
+mv -f TEMP/$(notdir $(basename $@)).cpr $@
+endef
+
+# canned command sequence -- PNG+PAL+extra_PAL=CPR with embedded PAL
+define build-cpr1-via-pal-update
+Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1 UPDATE
+mv -f TEMP/$(notdir $(basename $@)).cpr $@
+endef
+
+# canned command sequence -- PNG+PAL(from CPR w/PAL)=CPR without embedded PAL
+define build-cpr0-via-cpr1
+Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
+endef
+
+# canned command sequence -- PNG=CPR with embedded PAL
+define build-cpr1-via-self
+Data_Generators/misc/png_to_cpr $(word 2,$^) $@
+endef
+
 
 data/main.cpr:	data/main.pal	Graphics_Assets/main.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-	Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
-	mv -f TEMP/$(notdir $(basename $@)).cpr $@
+	$(build-cpr1-via-pal)
+
+data/end%.cpr:	Graphics_Assets/end.pal	Graphics_Assets/end%.png	Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+	$(build-cpr1-via-pal-update)
 
 data/image%.cpr:	data/char.cpr Graphics_Assets/image%.png	Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-	WIDTH=70 HEIGHT=70 Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
+	WIDTH=70 HEIGHT=70 $(build-cpr0-via-cpr1)
 
 data/trade.cpr:		data/com.cpr Graphics_Assets/trade.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-	Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
+	$(build-cpr0-via-cpr1)
+
+# FIXME - end*.cpr should use some common PAL ? which one?
+
+# FIXME: dependencies, need correct rules
+data/char.cpr:		Graphics_Assets/char.png ;
+data/com.cpr:		Graphics_Assets/com.png ;
+data/planicon.cpr:	Graphics_Assets/planicon.png ;
+
+# if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
+# FIXME - make sure we have if needed separate CORRECT rules for all mentioned CPR in dependencies: char.cpr, com.cpr, plaicon.cpr 
+data/%.cpr:	Graphics_Assets/%.png					Makefile Data_Generators/misc/ppm2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/png_to_cpr
+	Data_Generators/misc/png_to_cpr $< $@
 
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind

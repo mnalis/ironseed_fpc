@@ -1,0 +1,26 @@
+# https://en.wikipedia.org/wiki/Truevision_TGA, create binary header with:
+# perl -nE 's/#.*$//g; s/([0-9A-F]+)/print(chr(hex("$1")))/ge' tga_head.txt > tga_head.bin
+# details with: identify -ping -verbose -unique a.tga
+#
+	#Field no.	Length		Field name		Description				Our choice
+
+4	#1  		1 byte  	ID length  		Length of the image ID field		- 2 byte ID 0x4D, 0x4E
+1	#2  		1 byte  	Color map type		Whether a color map is included		- 1 if color-map present
+1	#3  		1 byte  	Image type		Compression and color types		- 1 uncompressed color-mapped image
+
+	#4  		5 bytes		Color map specification	Describes the color map
+0 0		#    First entry index (2 bytes): index of first color map entry that is included in the file
+0 1		#    Color map length (2 bytes): number of entries of the color map that are included in the file	- 0x100 = 256 entries
+18		#    Color map entry size (1 byte): number of bits per pixel				- 24 bpp (3 bytes each entry)	
+
+	#5  		10 bytes	Image specification	Image dimensions and format
+0 0		#    X-origin (2 bytes): absolute coordinate of lower-left corner for displays where origin is at the lower left
+0 0		#    Y-origin (2 bytes): as for X-origin
+40 1		#    Image width (2 bytes): width in pixels						- 320
+C8 0		#    Image height (2 bytes): height in pixels						- 200
+8		#    Pixel depth (1 byte): bits per pixel						- 8 bpp
+20		#    Image descriptor (1 byte): bits 3-0 give the alpha channel depth, bits 5-4 give direction		- 00100000 for top-left origin
+
+4D 4E 31 0	#6  	From image ID length field  		Image ID	Optional field containing identifying information	- empty, or some ID
+	#7	From color map specification field	Color map data	Look-up table containing color map data			- .pal
+	#8	From image specification field		Image data	Stored according to the image descriptor 		- .scr

@@ -1,5 +1,6 @@
 unit data2;
-{ mostly copied from data.pas and utils_.pas }
+{ Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+  CPR bits mostly copied from data.pas and utils_.pas, TARGA code is by Matija Nalis }
 
 {$I-}
 
@@ -25,6 +26,23 @@ type
  pCPR_HEADER= ^CPR_HEADER;
 
 type
+ TGA_HEADER=
+  record
+   id_len: byte;
+   cmap_type: byte;
+   img_type: byte;
+   cmap_ofs: word;
+   cmap_len: word;
+   cmap_esize: byte;
+   x_org, y_org: word;
+   width, height: word;
+   pixel_depth: byte;
+   img_descriptor_b: byte;
+   img_id: dword;
+  end;
+ pTGA_HEADER= ^TGA_HEADER;
+
+type
  screentype= array[0..199,0..319] of byte;
  paltype=array[0..255,1..3] of byte;
  pscreentype= ^screentype;
@@ -33,25 +51,31 @@ var
  colors: paltype;
  screen: screentype;
  has_pal: boolean;
+ cpr_head: CPR_HEADER;
+ tga_head: TGA_HEADER;
 
 procedure quicksavescreen(s : String; scr : pscreentype; savepal : Boolean);
 procedure quickloadscreen(s : String; scr : pscreentype; loadpal : Boolean);
 procedure loadscreen(s: string; ts: pointer);
 procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
 procedure errorhandler(s: string; errtype: integer);
+procedure loadpal(s: string);
+procedure savetga(s: string; ts: pscreentype);
 
 
 implementation
+
+uses sysutils;
 
 procedure errorhandler(s: string; errtype: integer);
 begin
  writeln;
  case errtype of
-  1: writeln('Open File Error: ',s);
+  1: writeln('Open File Error: ',s,' (ioresult=',ioresult,')');
   2: writeln('Mouse Error: ',s);
   3: writeln('Sound Error: ',s);
   4: writeln('EMS Error: ',s);
-  5: writeln('Fatal File Error: ',s);
+  5: writeln('Fatal File Error: ',s,' (ioresult=',ioresult,')');
   6: writeln('Program Error: ',s);
   7: writeln('Music Error: ',s);
  end;
@@ -174,10 +198,9 @@ begin
 end;
 
 procedure loadscreen(s: string; ts: pointer);
-var ftype: CPR_HEADER;
 begin
- uncompressfile(s+'.cpr',ts,@ftype);
- if ftype.version=CPR_ERROR then errorhandler(s,5);
+ uncompressfile(s+'.cpr',ts,@cpr_head);
+ if cpr_head.version=CPR_ERROR then errorhandler(s+'.cpr',5);
 end;
 
 procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
@@ -210,12 +233,12 @@ var
    end;
   num:=sizeof(CPR_HEADER);
   blockwrite(f,h,num,err);
-  if (err<num) or (ioresult<>0) then errorhandler(s,5);
+  if (err<num) or (ioresult<>0) then errorhandler(s+'.cpr',5);
   if h.flags and 1>0 then
    begin
     num:=768;
     blockwrite(f,colors,num,err);
-    if (ioresult<>0) or (err<num) then errorhandler(s,5);
+    if (ioresult<>0) or (err<num) then errorhandler(s+'.cpr',5);
    end;
  end;
 
@@ -235,7 +258,7 @@ begin
  new(buf);
  assign(f,s+'.cpr');
  rewrite(f,1);
- if ioresult<>0 then errorhandler(s,1);
+ if ioresult<>0 then errorhandler(s+'.cpr',1);
  setheader(w2,h2,fl);
  databyte:=ts^[0,0];
  count:=0;
@@ -350,6 +373,59 @@ begin
       if ioresult<>0 then errorhandler(s + '.pal', 5);
       close(fp);
    end;
+end;
+
+{ save TARGA file }
+procedure savetga(s: string; ts: pscreentype);
+var  written,num: LongInt;
+     f: file;
+
+ procedure setheader;
+ begin
+  with tga_head do
+   begin
+     id_len := 4; 		{ 4 byte ID field }
+     cmap_type := 1;		{ we use colormap/palette }
+     img_type := 1;		{ 1 = uncompressed color-mapped image }
+     cmap_ofs := 0;		{ we start at beginning of palette }
+     cmap_len := 256;		{ 256 palette entries... }
+     cmap_esize := 24;		{ ...of 3 bytes each }
+     x_org := 0;
+     y_org := 0;
+     width := cpr_head.width;	{ copy width from .CPR ... }
+     height := cpr_head.height;	{ ... and height }
+     pixel_depth := 8;		{ 8 bpp index }
+     img_descriptor_b := 32;	{ bit 5=1, bit 4=0: image origin is top-left }
+     img_id := 3231309;		{ ID }
+   end;
+  num:=sizeof(TGA_HEADER);
+  blockwrite(f,tga_head,num,written);
+  if (written<num) or (ioresult<>0) then errorhandler(s+'.tga header',5);
+ end;
+
+begin
+ assign(f,s+'.tga');
+ rewrite(f,1);
+ if ioresult<>0 then errorhandler(s+'.tga create',1);
+ setheader();
+
+ { write palette }
+ num:=768;
+ blockwrite(f,colors,num,written);
+ if (ioresult<>0) or (written<num) then errorhandler(s+'.tga palette',5);
+
+ { write image }
+ num:=tga_head.width * tga_head.height; { 64000 for 320x200 image }
+ repeat
+    blockwrite(f,ts^,num,written);
+    dec (num, written);
+    inc (ts, written);
+ until num=0;
+ if (ioresult<>0) or (written<num) then errorhandler(s+'.tga img '+IntToStr(written)+'<>'+IntToStr(num),5);
+
+ { finish }
+ close(f);
+ if (ioresult<>0) then errorhandler(s+'.tga finish',5);
 end;
 
 

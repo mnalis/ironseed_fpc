@@ -34,8 +34,8 @@ convert "$PNGSRC" "$TMPPPM" || exit 14
 
 export WIDTH
 export HEIGHT
-ppm2scr.pl "$TMPPPM" || exit 16
-scr2cpr "$TMPBASE" 1 $WIDTH $HEIGHT
+ppm2scr.pl "$TMPPPM" > /dev/null || exit 16
+scr2cpr "$TMPBASE" 1 $WIDTH $HEIGHT > /dev/null || exit 17
 
 rm -f "$TMPPPM" "$TMPPAL" "$TMPBASE.scr"
 mv -f "$TMPCPR" "$FINALCPR"

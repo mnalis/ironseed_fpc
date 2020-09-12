@@ -1,4 +1,4 @@
-- image conversion tools handle .cpr files without embedded PAL and with different sizes
+- image conversion tools handle .cpr files without embedded PAL and with different sizes, and partial PAL support
 - restore some easter eggs
 - restore some missing logs
 - restore some missing conversation parts
