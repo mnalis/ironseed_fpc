@@ -202,19 +202,22 @@ data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/ne
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
 	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
 
-data/main.pal: Graphics_Assets/main.pal
-	cp -f $< $@
+data/main.pal: data/main.cpr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/cpr2scr
+	Data_Generators/misc/cpr_extract_pal $<
+	mv -f TEMP/main.pal $@
 
 # canned command sequence -- PNG+PAL=CPR with embedded PAL
-define build-cpr1-via-pal
-Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
-mv -f TEMP/$(notdir $(basename $@)).cpr $@
-endef
+#define build-cpr1-via-pal
+#Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
+#mv -f TEMP/$(notdir $(basename $@)).cpr $@
+#endef
+# FIXME - generate both main.cpr and main.pal from main.png instead (and remove Graphics_Assets/main.pal)
+#data/main.cpr:	data/main.pal	Graphics_Assets/main.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+#	$(build-cpr1-via-pal)
 
-# canned command sequence -- PNG+PAL+extra_PAL=CPR with embedded PAL
-define build-cpr1-via-pal-update
-Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1 UPDATE
-mv -f TEMP/$(notdir $(basename $@)).cpr $@
+# canned command sequence -- PNG with embedded PAL=CPR with embedded PAL
+define build-cpr1-via-self
+Data_Generators/misc/png_to_cpr $< $@
 endef
 
 # canned command sequence -- PNG+PAL(from CPR w/PAL)=CPR without embedded PAL
@@ -222,22 +225,15 @@ define build-cpr0-via-cpr1
 Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
 endef
 
-# canned command sequence -- PNG=CPR with embedded PAL
-define build-cpr1-via-self
-Data_Generators/misc/png_to_cpr $(word 2,$^) $@
-endef
 
-
-data/main.cpr:	data/main.pal	Graphics_Assets/main.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-	$(build-cpr1-via-pal)
-
-data/end%.cpr:	Graphics_Assets/end.pal	Graphics_Assets/end%.png	Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-	$(build-cpr1-via-pal-update)
 
 data/image%.cpr:	data/char.cpr Graphics_Assets/image%.png	Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
 	WIDTH=70 HEIGHT=70 $(build-cpr0-via-cpr1)
 
 data/trade.cpr:		data/com.cpr Graphics_Assets/trade.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
+	$(build-cpr0-via-cpr1)
+
+data/end6.cpr:		data/end5.cpr Graphics_Assets/end6.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
 	$(build-cpr0-via-cpr1)
 
 # FIXME - end*.cpr should use some common PAL ? which one?
@@ -249,8 +245,8 @@ data/planicon.cpr:	Graphics_Assets/planicon.png ;
 
 # if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
 # FIXME - make sure we have if needed separate CORRECT rules for all mentioned CPR in dependencies: char.cpr, com.cpr, plaicon.cpr 
-data/%.cpr:	Graphics_Assets/%.png					Makefile Data_Generators/misc/ppm2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/png_to_cpr
-	Data_Generators/misc/png_to_cpr $< $@
+data/%.cpr:	Graphics_Assets/%.png					Makefile Data_Generators/misc/tga2cpr Data_Generators/misc/png_to_cpr
+	$(build-cpr1-via-self)
 
 data_destroy:
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES) data/conv*.ind

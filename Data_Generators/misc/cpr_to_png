@@ -27,12 +27,13 @@ TMPCPR="$TMPBASE.cpr"
 TMPTGA="$TMPBASE.tga"
 TMPTIFF="$TMPBASE.tiff"
 
-echo "Converting $CPRSRC to $FINALPNG (using embedded PAL, WIDTH=$WIDTH HEIGHT=$HEIGHT)"
+echo "Converting $CPRSRC to $FINALPNG (using embedded PAL)"
 
 cp -f "$CPRSRC" "$TMPCPR"
 cpr2tga "$TMPBASE" > /dev/null || exit 17
-convert "$TMPTGA" "$TMPTIFF" > /dev/null || exit 18
-gm convert "$TMPTIFF" "$FINALPNG" > /dev/null || exit 19
+# tiff intermediate step is there for a reason! see https://unix.stackexchange.com/q/609023/64590
+convert "$TMPTGA" "$TMPTIFF" || exit 18
+gm convert "$TMPTIFF" "$FINALPNG" || exit 19
 
 rm -f "$TMPCPR" "$TMPTGA" "$TMPTIFF"
 exit 0

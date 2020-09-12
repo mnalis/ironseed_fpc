@@ -10,6 +10,7 @@ const COLOR_FACTOR = 4;
 var basename, palname: String;
     i,j: word;
     temppal: paltype;
+    has_palette: boolean;
 
 begin
  basename := paramstr(1);
@@ -20,6 +21,7 @@ begin
     halt(10);
   end;
 
+ has_palette := false;
  fillchar(screen,sizeof(screen),0);
  fillchar(colors,sizeof(colors),0);
  palname := basename + '.pal';
@@ -27,10 +29,14 @@ begin
   begin
     writeln ('Loading default pallete from ', palname);
     loadpal (palname);  { load default pallete if it exists }
+    has_palette := true;
   end;
 
  writeln ('Loading compressed file ', basename, '.cpr');
  loadscreen(basename, @screen);
+ if (cpr_head.flags and 1)=1 then has_palette:=true;
+
+ if not has_palette then errorhandler(basename+'.cpr does not have palette, and .pal does not exist',5);
 
  { update brightness and fix TGA R/G/B little-endian ordering }
  temppal[0,1] := 0;	{ move will initialize it, this is just to keep compiler warnings happy }

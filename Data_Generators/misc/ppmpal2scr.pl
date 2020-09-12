@@ -30,12 +30,20 @@ my $scr_tmp = $scr_final . '.tmp';
 
 open my $ppm_fd, '<', $ppm_name;
 
+sub get_line()
+{
+  my $ret='';
+  do { $ret = <$ppm_fd>; } while $ret =~ /^\s*#/;	# skip comments
+  chomp $ret;
+  return $ret;
+}
+
 # FIXME: should support PPM comments, different whitespace etc. see ppm(5)
-my $format = <$ppm_fd>; chomp $format;
+my $format = get_line();
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
-my ($width, $height) = split ' ', <$ppm_fd>;
+my ($width, $height) = split ' ', get_line();
 die "ERROR: not ${want_width}x${want_height} PPM file" unless $width==$want_width and $height==$want_height;
-my $bpp = <$ppm_fd>; chomp($bpp);
+my $bpp = get_line();
 die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
