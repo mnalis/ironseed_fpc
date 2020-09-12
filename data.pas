@@ -634,6 +634,7 @@ var
 
 begin
  new(buffer);
+ //writeln('loadscreen: ', s);
  assign(f,s);
  reset(f,1);
  if (ioresult<>0) or (not checkversion) or (not decode) then
@@ -770,6 +771,7 @@ procedure loadpal(s: string);
 var palfile: file of paltype;
 begin
  assign(palfile,s);
+ //writeln('loadpal: ', s);
  reset(palfile);
  if ioresult<>0 then errorhandler(s,1);
  read(palfile,colors);
@@ -805,6 +807,7 @@ var
    fp : file of paltype;
 begin
    assign(fs, s + '.scr');
+   //writeln('quickloadscreen: ', s);
    reset(fs);
    if ioresult<>0 then errorhandler(s + '.scr', 1);
    read(fs, scr^);
