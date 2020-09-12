@@ -92,8 +92,9 @@ var
  total,totalsize,j: longint;
  buffer: ^buftype;
 
- procedure handleerror;
+ procedure handleerror(s:string);
  begin
+  writeln (StdErr, 'handleerror: '+s);
   h^.version:=CPR_ERROR;
   if buffer<>nil then dispose(buffer);
   buffer:=nil;
@@ -107,7 +108,7 @@ var
   blockread(f,buffer^,num,err);
   if (err<num) or (ioresult<>0) then
    begin
-    handleerror;
+    handleerror('getbuffer');
     exit;
    end;
   total:=total-num;
@@ -189,9 +190,14 @@ begin
  new(buffer);
  assign(f,s);
  reset(f,1);
- if (ioresult<>0) or (not checkversion) or (not decode) then
+ if (ioresult<>0) or (not checkversion) then
   begin
-   handleerror;
+   handleerror('checkversion');
+   exit;
+  end;
+ if not decode then
+  begin
+   handleerror('decode');
    exit;
   end;
  close(f);
@@ -201,7 +207,7 @@ end;
 procedure loadscreen(s: string; ts: pointer);
 begin
  uncompressfile(s+'.cpr',ts,@cpr_head);
- if cpr_head.version=CPR_ERROR then errorhandler(s+'.cpr',5);
+ if cpr_head.version=CPR_ERROR then errorhandler(s+'.cpr CPR_ERROR',5);
 end;
 
 procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
@@ -213,8 +219,9 @@ var
  buf: ^buftype;
  h: CPR_HEADER;
 
- procedure handleerror;
+ procedure handleerror(s:string);
  begin
+  writeln (StdErr, 'handleerror: '+s);
   if buf<>nil then dispose(buf);
   buf:=nil;
   close(f);
@@ -234,12 +241,12 @@ var
    end;
   num:=sizeof(CPR_HEADER);
   blockwrite(f,h,num,err);
-  if (err<num) or (ioresult<>0) then errorhandler(s+'.cpr',5);
+  if (err<num) or (ioresult<>0) then errorhandler(s+'.cpr setheader',5);
   if h.flags and 1>0 then
    begin
     num:=768;
     blockwrite(f,colors,num,err);
-    if (ioresult<>0) or (err<num) then errorhandler(s+'.cpr',5);
+    if (ioresult<>0) or (err<num) then errorhandler(s+'.cpr palette',5);
    end;
  end;
 
@@ -249,7 +256,7 @@ var
   blockwrite(f,buf^,num,err);
   if (ioresult<>0) or (num<>err) then
    begin
-    handleerror;
+    handleerror('saveindex');
     exit;
    end;
   index:=0;
