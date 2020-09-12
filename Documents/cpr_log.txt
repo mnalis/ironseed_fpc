@@ -23,24 +23,19 @@ Loading compressed file char2.cpr	file using sig=RM v=4 width=320 height=200 fla
 Loading compressed file charcom.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file char.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file com.cpr		file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file demoscr2.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file demoscr3.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file demoscr4.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file demoscrn.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file fight.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file intro2.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file intro5.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file intro6.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file landform.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file log.cpr		file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file main3.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file main.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file psyche.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file saver.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file sector.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file ship1.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file tech1.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file world.cpr	file using sig=RM v=4 width=320 height=200 flags=1
+
 
 
 cargtool.pas: loadscreen('data/cargo',@screen);
@@ -56,12 +51,7 @@ comm.pas: loadscreen('data/charcom',@screen);
 comm.pas: loadscreen('data/cloud',backgr);
 comm.pas: loadscreen('data/com',@screen);
 crew2.pas: loadscreen('data/psyche',@screen);
-crewgen.pas: loadscreen('data/char',@screen);
-crewgen.pas: loadscreen('data/demoscr3',@screen);
-crewgen.pas: loadscreen('data/demoscr3',@screen);
-crewgen.pas: loadscreen('data/demoscr3',@screen);
-crewgen.pas: loadscreen('data/demoscr4',@screen);
-crewgen.pas: loadscreen('data/demoscr4',@screen);
+crewgen.pas: loadscreen('data/char',@screen)
 crewinfo.pas: loadscreen('data/char2',@screen);
 ending.pas: loadscreen('data/intro2',@screen);
 explore.pas: loadscreen('data/cloud',backgr);
@@ -81,8 +71,6 @@ intro.pas: loadscreen('data/ship1',@screen);
 intro.pas: loadscreen('data/world',temp);
 saveload.pas: loadscreen('data/cloud',@screen);
 utils2.pas: loadscreen('data/cloud',backgr);
-utils.pas: loadscreen('data/demoscr2',@screen);
-utils.pas: loadscreen('data/demoscrn',@screen);
 weird.pas: loadscreen('data/cloud',backgr);
 weird.pas: loadscreen('data/intro3',@screen);
 weird.pas: loadscreen('data/saver',s2);
