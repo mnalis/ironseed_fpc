@@ -61,6 +61,7 @@ procedure compressfile(s: string; ts: pscreentype; w2,h2:word; fl: byte);
 procedure errorhandler(s: string; errtype: integer);
 procedure loadpal(s: string);
 procedure savetga(s: string; ts: pscreentype);
+procedure loadtga(s: string);
 
 
 implementation
@@ -396,7 +397,7 @@ var  written,num: LongInt;
      height := cpr_head.height;	{ ... and height }
      pixel_depth := 8;		{ 8 bpp index }
      img_descriptor_b := 32;	{ bit 5=1, bit 4=0: image origin is top-left }
-     img_id := 3231309;		{ ID }
+     img_id := 808603213;	{ ID }
    end;
   num:=sizeof(TGA_HEADER);
   blockwrite(f,tga_head,num,written);
@@ -418,6 +419,7 @@ begin
  num:=tga_head.width * tga_head.height; { 64000 for 320x200 image }
  repeat
     blockwrite(f,ts^,num,written);
+    if (ioresult<>0) then errorhandler(s+'.tga img write',5);
     dec (num, written);
     inc (ts, written);
  until num=0;
@@ -426,6 +428,59 @@ begin
  { finish }
  close(f);
  if (ioresult<>0) then errorhandler(s+'.tga finish',5);
+end;
+
+{ load TARGA file }
+procedure loadtga(s: string);
+var  err,num,y: LongInt;
+     f: file;
+
+ function checkversion: boolean;
+ begin
+  checkversion:=false;
+  num:=18;	// minimum size of used part of TGA_HEADER
+  blockread(f,tga_head,num,err);
+  if (err<num) or (ioresult<>0)
+   or (tga_head.cmap_type<>1) or (tga_head.img_type<>1) or (tga_head.cmap_ofs<>0) or (tga_head.cmap_len<>256) or (tga_head.cmap_esize<>24)
+   or (tga_head.x_org<>0) or (tga_head.y_org<>0) or (tga_head.width>320) or (tga_head.height>200) or (tga_head.pixel_depth<>8) or ((tga_head.img_descriptor_b and not (1 shl 5))<>0)
+   then exit;
+  checkversion:=true;
+ end;
+
+ procedure saferead(var f:file; ts:pbyte; num:LongInt);
+ begin
+  repeat
+     blockread(f,ts^,num,err);
+     if (ioresult<>0) then errorhandler(s+' img read',5);
+     dec (num, err);
+     inc (ts, err);
+  until num=0;
+  if (ioresult<>0) or (err<num) then errorhandler(s+' img read '+IntToStr(err)+'<>'+IntToStr(num),5);
+ end;
+
+begin
+ assign(f,s);
+ reset(f,1);
+ if (ioresult<>0) then errorhandler(s+' open',1);
+ if not checkversion then errorhandler(s+' must be 256-color 8-bit index-colored 24-bit palette TARGA file',5);
+
+ { read TGA palette }
+ seek(f,tga_head.id_len+18);	// skip required header and (optional) variable-sized image_id
+ num:=tga_head.cmap_esize div 8 * tga_head.cmap_len;
+ assert (num=768, 'palette size mismatch');
+ blockread(f,colors,num,err);
+ if (ioresult<>0) or (num<>err) then errorhandler (s+' palette read error',5);
+
+ { read image bitmap }
+ with tga_head do
+  for y := 0 to height-1 do
+    if (img_descriptor_b and (1 shl 5))=0
+    then		{ bottom left origin }
+      saferead(f, @screen[height-1-(y_org+y),x_org], width)
+    else		{ top left origin }
+      saferead(f, @screen[y_org+y,x_org], width);
+
+ close(f);
 end;
 
 

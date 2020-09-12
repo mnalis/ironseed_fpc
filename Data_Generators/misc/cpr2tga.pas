@@ -1,6 +1,6 @@
 program cpr2tga;
 { Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09 
-  Converts .CPR to .TGA, on which we can use ImageMagick convert(1) or netpm tga2ppm(1) etc. to convert further - https://en.wikipedia.org/wiki/Truevision_TGA
+  Converts .CPR to .TGA (while preserving palette), on which we can use ImageMagick convert(1) or netpm tga2ppm(1) etc. to convert further - https://en.wikipedia.org/wiki/Truevision_TGA
 }
 
 uses data2, sysutils;

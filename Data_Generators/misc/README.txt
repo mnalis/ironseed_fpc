@@ -34,4 +34,4 @@ Quick HOWTO:
 - convert foo.cpr to foo.png, while preserving color palette (needed for end*.cpr and many others!) - see https://unix.stackexchange.com/a/609049/64590
   cpr2tga foo && convert foo.tga tiff:- | gm convert - foo.png
 
-- FIXME helper shell scripts, make cpr_to_png and png_to_cpr (tga2cpr needed too) which preserve palette
+- FIXME document *tga* and helper shell scripts, make cpr_to_png and png_to_cpr (tga2cpr needed too) which preserve palette

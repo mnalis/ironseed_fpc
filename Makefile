@@ -48,7 +48,7 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga Data_Generators/misc/tga2cpr
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
@@ -132,6 +132,7 @@ Data_Generators/makedata/namemake: Data_Generators/makedata/namemake.pas
 Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2tga: Data_Generators/misc/cpr2tga.pas Data_Generators/misc/data2.pas
+Data_Generators/misc/tga2cpr: Data_Generators/misc/tga2cpr.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
 	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $(p_link)  $<
