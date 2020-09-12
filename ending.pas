@@ -241,7 +241,8 @@ begin
  fading;
  loadscreen('data/intro2',@screen);
  fadein;
- repeat until (fastkeypressed) or (not mouse.getstatus);
+ while fastkeypressed do readkey;
+ repeat delay(1) until (fastkeypressed) or (mouse.getstatus);
  fading;
 end;
 
