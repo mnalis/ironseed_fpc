@@ -29,7 +29,8 @@ TMPTIFF="$TMPBASE.tiff"
 
 echo "Converting $CPRSRC to $FINALPNG (using embedded PAL)"
 
-cp -f "$CPRSRC" "$TMPCPR"
+rm -f "$FINALPNG"
+cp -f "$CPRSRC" "$TMPCPR" || exit 16
 cpr2tga "$TMPBASE" > /dev/null || exit 17
 # tiff intermediate step is there for a reason! see https://unix.stackexchange.com/q/609023/64590
 convert "$TMPTGA" "$TMPTIFF" || exit 18

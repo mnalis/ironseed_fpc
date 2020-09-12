@@ -18,7 +18,7 @@ begin
   begin
     writeln ('Usage: cpr2tga <BASENAME>');
     writeln (' opens compressed BASENAME.cpr (and optionally BASENAME.pal if it exists) and creates uncompressed BASENAME.tga');
-    halt(10);
+    errorhandler('Wrong cmdline usage',6)
   end;
 
  has_palette := false;

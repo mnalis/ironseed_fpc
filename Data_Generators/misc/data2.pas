@@ -72,13 +72,13 @@ procedure errorhandler(s: string; errtype: integer);
 begin
  writeln;
  case errtype of
-  1: writeln('Open File Error: ',s,' (ioresult=',ioresult,')');
-  2: writeln('Mouse Error: ',s);
-  3: writeln('Sound Error: ',s);
-  4: writeln('EMS Error: ',s);
-  5: writeln('Fatal File Error: ',s,' (ioresult=',ioresult,')');
-  6: writeln('Program Error: ',s);
-  7: writeln('Music Error: ',s);
+  1: writeln(StdErr, 'Open File Error: ',s,' (ioresult=',ioresult,')');
+  2: writeln(StdErr, 'Mouse Error: ',s);
+  3: writeln(StdErr, 'Sound Error: ',s);
+  4: writeln(StdErr, 'EMS Error: ',s);
+  5: writeln(StdErr, 'Fatal File Error: ',s,' (ioresult=',ioresult,')');
+  6: writeln(StdErr, 'Program Error: ',s);
+  7: writeln(StdErr, 'Music Error: ',s);
  end;
  halt(4);
 end;

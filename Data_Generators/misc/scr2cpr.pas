@@ -14,7 +14,7 @@ begin
     writeln ('Usage: scr2cpr <BASENAME> [flags] [width height]');
     writeln (' opens uncompressed BASENAME.scr and BASENAME.pal, and creates compressed BASENAME.cpr');
     writeln (' default flags=1 include PAL in SCR, flags=0 does not.');
-    halt(10);
+    errorhandler('Wrong cmdline usage',6)
   end;
 
  flags := 1;

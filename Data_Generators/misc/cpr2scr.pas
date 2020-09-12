@@ -11,7 +11,7 @@ begin
   begin
     writeln ('Usage: cpr2scr <BASENAME>');
     writeln (' opens compressed BASENAME.cpr and creates uncompressed BASENAME.scr and BASENAME.pal, on which scr2ppm.pl can be used');
-    halt(10);
+    errorhandler('Wrong cmdline usage',6)
   end;
  
  fillchar(screen,sizeof(screen),0);

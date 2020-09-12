@@ -20,7 +20,7 @@ begin
   begin
     writeln ('Usage: tga2cpr <BASENAME>');
     writeln (' opens somewhat standard BASENAME.tga and creates compressed BASENAME.cpr');
-    halt(10);
+    errorhandler('Wrong cmdline usage',6)
   end;
 
  flags := 1;
