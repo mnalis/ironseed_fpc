@@ -53,11 +53,11 @@ DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artima
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
-CPR_MAIN1 := data/main.cpr
 CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr data/image05.cpr data/image06.cpr data/image07.cpr data/image08.cpr data/image09.cpr data/image10.cpr data/image11.cpr data/image12.cpr data/image13.cpr data/image14.cpr data/image15.cpr data/image16.cpr data/image17.cpr data/image18.cpr data/image19.cpr data/image20.cpr data/image21.cpr data/image22.cpr data/image23.cpr data/image24.cpr data/image25.cpr data/image26.cpr data/image27.cpr data/image28.cpr data/image29.cpr data/image30.cpr data/image31.cpr data/image32.cpr
-CPR_COM0 := data/trade.cpr
-CPR_SELFPAL1 := data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/end6.cpr
-IMG_FILES := data/main.pal $(CPR_MAIN1)  $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_COM0)
+CPR_MISC0 := data/trade.cpr data/end6.cpr
+CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr
+
+IMG_FILES := data/main.pal $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_MISC0)
 DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
 
 build:  $(PROG_FILES) $(DATA_FILES)
