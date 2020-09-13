@@ -1,4 +1,0 @@
-used for building charani.dat (ako taj tool jos postoji iz dos-git) ? i ne treba biti u data/ ?
-Loading compressed file charani.cpr	file using sig=RM v=4 width=320 height=200 flags=0
-
-
