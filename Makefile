@@ -205,15 +205,6 @@ data/main.pal: data/main.cpr Data_Generators/misc/cpr_extract_pal Data_Generator
 	Data_Generators/misc/cpr_extract_pal $<
 	mv -f TEMP/main.pal $@
 
-# canned command sequence -- PNG+PAL=CPR with embedded PAL
-#define build-cpr1-via-pal
-#Data_Generators/misc/pngpal_to_cpr $(word 2,$^) $< 1
-#mv -f TEMP/$(notdir $(basename $@)).cpr $@
-#endef
-# FIXME - generate both main.cpr and main.pal from main.png instead (and remove Graphics_Assets/main.pal)
-#data/main.cpr:	data/main.pal	Graphics_Assets/main.png		Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
-#	$(build-cpr1-via-pal)
-
 # canned command sequence -- PNG with embedded PAL=CPR with embedded PAL
 define build-cpr1-via-self
 Data_Generators/misc/png_to_cpr $< $@
@@ -239,21 +230,14 @@ data/end6.cpr:		data/end5.cpr Graphics_Assets/end6.png		$(dep-build-cpr0-via-cpr
 data/waricon.cpr:	data/fight.cpr Graphics_Assets/waricon.png	$(dep-build-cpr0-via-cpr1)
 	$(build-cpr0-via-cpr1)
 
-# FIXME or better use main.cpr instead of fight.cpr for PAL temple for cloud? it is used elsewhere, but first colors are the same...
+# NB - maybe should use main.cpr instead of fight.cpr for PAL temple for cloud? it is used elsewhere, but first colors are the same...
 data/cloud.cpr:		data/fight.cpr Graphics_Assets/cloud.png	$(dep-build-cpr0-via-cpr1)
 	$(build-cpr0-via-cpr1)
-
-# FIXME - end*.cpr should use some common PAL ? which one?
-
-# FIXME: dependencies, need correct rules
-data/char.cpr:		Graphics_Assets/char.png ;
-data/com.cpr:		Graphics_Assets/com.png ;
 
 Data_Generators/makedata/planicon.cpr:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
 # if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
-# FIXME - make sure we have if needed separate CORRECT rules for all mentioned CPR in dependencies: char.cpr, com.cpr, plaicon.cpr 
 data/%.cpr:	Graphics_Assets/%.png					$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
