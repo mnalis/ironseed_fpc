@@ -15,21 +15,7 @@ Loading compressed file back8.cpr	file using sig=RM v=4 width=320 height=200 fla
 Loading compressed file back9.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 Loading compressed file back10.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 
-Loading compressed file char2.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file char.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file com.cpr		file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file landform.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file log.cpr		file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file psyche.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file sector.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file tech1.cpr	file using sig=RM v=4 width=320 height=200 flags=1
 
-cargtool.pas: loadscreen('data/tech1',@screen);
-comm2.pas: loadscreen('data/log',@screen);
+
+
 comm.pas: loadscreen('data/back'+str1,backgr);
-comm.pas: loadscreen('data/com',@screen);
-crew2.pas: loadscreen('data/psyche',@screen);
-crewgen.pas: loadscreen('data/char',@screen)
-crewinfo.pas: loadscreen('data/char2',@screen);
-explore.pas: loadscreen('data/landform',@screen);
-info.pas: loadscreen('data/sector',@screen);
