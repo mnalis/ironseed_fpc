@@ -2,20 +2,3 @@ used for building charani.dat (ako taj tool jos postoji iz dos-git) ? i ne treba
 Loading compressed file charani.cpr	file using sig=RM v=4 width=320 height=200 flags=0
 
 
-Loading compressed file back11.cpr	file using sig=RM v=4 width=320 height=199 flags=1
-
-Loading compressed file back1.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back2.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back3.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back4.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back5.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back6.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back7.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back8.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back9.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-Loading compressed file back10.cpr	file using sig=RM v=4 width=320 height=200 flags=1
-
-
-
-
-comm.pas: loadscreen('data/back'+str1,backgr);
