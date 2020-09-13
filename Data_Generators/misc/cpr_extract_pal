@@ -1,0 +1,40 @@
+#!/bin/sh
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+# Extracts PAL data to TEMP/ directory from specific CPR image
+
+TEMPDIR=TEMP
+PATH="$PATH:`dirname $0`"
+CPR="$1"
+if [ -z "$CPR" ]
+then
+	echo "Usage: $0 <data/SOMETHING.cpr>"
+	echo "Extract PAL data from data/SOMETHING.cpr to $TEMPDIR/SOMETHING.pal"
+	exit 11
+fi
+
+if [ ! -r "$CPR" ]
+then
+	echo "Can't read: $CPR"
+	exit 12
+fi
+
+BASENAME=`basename $CPR .cpr`
+
+TMPBASE="$TEMPDIR/$BASENAME"
+TMPCPR="$TMPBASE.cpr"
+PAL="$TEMPDIR/$BASENAME.pal"
+
+echo "Extracting PAL data from $CPR to $PAL"
+
+cp -f "$CPR" "$TMPCPR" || exit 13
+
+cpr2scr "$TMPBASE"
+
+RET=$?
+if [ $RET -ne 0 ]
+then
+	exit $RET
+fi
+
+rm -f "$TMPCPR" "$TMPBASE.scr"
+exit 0

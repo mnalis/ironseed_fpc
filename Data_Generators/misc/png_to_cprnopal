@@ -1,0 +1,42 @@
+#!/bin/sh
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+# converts .png to .cpr (without embedded PAL) using PAL from specified CPR
+
+set -e
+
+TEMPDIR=TEMP
+PATH="$PATH:`dirname $0`"
+PNGSRC="$1"
+PALDONOR="$2"
+FINALCPR="$3"
+
+if [ -z "$PNGSRC" -o -z "$PALDONOR" -o -z "$FINALCPR" ]
+then
+	echo "Usage: $0 <Graphic_Assets/SOMETHING.png> <data/PAL_DONOR.cpr> <data/SOMETHING.cpr>"
+	echo "Converts SOMETHING.png using PAL from PAL_DONOR.cpr to $TEMPDIR/SOMETHING.cpr"
+	exit 11
+fi
+
+if [ ! -r "$PNGSRC" ]
+then
+	echo "Can't read: $PNGSRC"
+	exit 12
+fi
+
+if [ ! -r "$PALDONOR" ]
+then
+	echo "Can't read: $PALDONOR"
+	exit 13
+fi
+
+TMPPAL="$TEMPDIR/`basename $PALDONOR .cpr`.pal"
+TMPCPR="$TEMPDIR/`basename $PNGSRC .png`.cpr"
+
+
+export WIDTH
+export HEIGHT
+
+Data_Generators/misc/cpr_extract_pal "$PALDONOR" > /dev/null
+Data_Generators/misc/pngpal_to_cpr "$PNGSRC" "$TMPPAL" 0 > /dev/null
+rm -f $TMPPAL
+mv -f "$TMPCPR" "$FINALCPR"

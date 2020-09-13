@@ -67,6 +67,7 @@ procedure easteregg2;
 procedure easteregg3;
 procedure easteregg4;
 procedure easteregg5;
+procedure easteregg6;
 {$ENDIF}
 procedure bossmode;
 procedure deathsequence(n: integer);
@@ -167,7 +168,6 @@ end; { tickpending }
 procedure setevent(n: integer);
 var i,j: word;
 begin
-   assert (n < 8192, 'event index out of bounds2');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] or (1 shl (n and 7));
@@ -184,7 +184,6 @@ end;
 procedure clearevent(n: integer);
 var i,j: word;
 begin
-   assert (n < 8192, 'event index out of bounds3');
    if n >= 8192 then
       exit;
    events[n shr 3] := events[n shr 3] and not (1 shl (n and 7));
@@ -836,7 +835,6 @@ begin
  mouseshow;
 end;
 
-(* NO SPACE!!!
 procedure easteregg6;
 begin
  while fastkeypressed do readkey;
@@ -853,7 +851,7 @@ begin
  fading;
  closegraph;
  halt(3);
-end;*)
+end;
 {$ENDIF}
 
 procedure bossmode;
@@ -889,7 +887,15 @@ begin
  fillchar(temppal,sizeof(paltype),0);
  set256colors(temppal);
  repeat until (fastkeypressed) or (mouse.getstatus);
- while fastkeypressed do readkey;
+ delay(150);
+ while fastkeypressed do begin
+   if (upcase(readkey_utf8) = '7') and (mouse.getstatus) then
+       begin
+{$IFNDEF DEMO}
+        easteregg6;
+{$ENDIF}
+       end;
+ end;
 { setgraphmode(0);
  asm
   mov ax, 0013h
@@ -910,6 +916,14 @@ begin
  write(f,colors);
  if ioresult<>0 then errorhandler(tempdir+'/current.pal',5);
  close(f);
+end;
+
+procedure loadpaldbg;
+var s:string[50];
+begin
+  s:=tempdir+'/current.pal';
+  loadpal(s);
+  set256colors(colors);
 end;
 
 (*

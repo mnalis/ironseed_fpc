@@ -1,0 +1,38 @@
+#!/bin/sh
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+# converts .png to .cpr with embedded PAL
+
+TEMPDIR=TEMP
+PATH="$PATH:`dirname $0`"
+PNGSRC="$1"
+FINALCPR="$2"
+
+if [ -z "$PNGSRC" -o -z "$FINALCPR" ]
+then
+	echo "Usage: $0 <Graphic_Assets/SOMETHING.png> <data/SOMETHING.cpr>"
+	echo "Converts SOMETHING.png using embedded PAL to SOMETHING.cpr with embedded PAL"
+	exit 11
+fi
+
+if [ ! -r "$PNGSRC" ]
+then
+	echo "Can't read: $PNGSRC"
+	exit 12
+fi
+
+BASENAME=`basename $PNGSRC .png`
+
+TMPBASE="$TEMPDIR/$BASENAME"
+
+TMPCPR="$TMPBASE.cpr"
+TMPTGA="$TMPBASE.tga"
+
+echo "Converting $PNGSRC to $FINALCPR (using embedded PAL)"
+
+rm -f "$FINALCPR"
+convert "$PNGSRC" "$TMPTGA" || exit 14
+tga2cpr "$TMPBASE" > /dev/null || exit 16
+
+rm -f "$TMPTGA"
+mv -f "$TMPCPR" "$FINALCPR" || exit 18
+exit 0

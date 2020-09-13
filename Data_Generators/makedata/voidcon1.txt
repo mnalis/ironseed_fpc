@@ -16,7 +16,7 @@
 @-1      -1      1       17      SCAVENGERS SCAVS SCAVENGER
 @-1      -1      1       17      AARD
 @-1      -1      1       19      MALZATOIR
-@-1      -1      1       20      DARK KIND
+@-1      -1      3       20      DARK KIND
 @-1      -1      1       21      MURIEL
 @-1      -1      1       22      DERRAAK
 @-1      -1      1       23      TROJAN GATE GATES

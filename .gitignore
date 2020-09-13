@@ -14,6 +14,9 @@ test/testdiv0
 test/testkey1
 test/test_0_c
 test/test_0_pas
+test/testsize
+test/test_write
+test/test_replicate
 Data_Generators/makedata/aliemake
 Data_Generators/makedata/artimake
 Data_Generators/makedata/cargmake
@@ -32,3 +35,8 @@ Data_Generators/makedata/logmake
 Data_Generators/makedata/iconmake
 Data_Generators/makedata/getfont
 Data_Generators/makedata/namemake
+Data_Generators/misc/cpr2scr
+Data_Generators/misc/scr2cpr
+Data_Generators/misc/cpr2tga
+Data_Generators/misc/tga2cpr
+Data_Generators/misc/tga_head.bin

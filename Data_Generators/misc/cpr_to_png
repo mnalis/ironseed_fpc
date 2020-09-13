@@ -1,0 +1,40 @@
+#!/bin/sh
+# Matija Nalis <mnalis-git@voyager.hr>, GPLv3+ started 2020/09
+# converts .cpr to .png with same embedded palette
+
+TEMPDIR=TEMP
+PATH="$PATH:`dirname $0`"
+CPRSRC="$1"
+FINALPNG="$2"
+
+if [ -z "$CPRSRC" -o -z "$FINALPNG" ]
+then
+	echo "Usage: $0 <data/SOMETHING.cpr> <Graphic_Assets/SOMETHING.png>"
+	echo "Converts SOMETHING.cpr using embedded PAL to SOMETHING.png with embedded PAL"
+	exit 11
+fi
+
+if [ ! -r "$CPRSRC" ]
+then
+	echo "Can't read: $CPRSRC"
+	exit 12
+fi
+
+BASENAME=`basename $CPRSRC .cpr`
+
+TMPBASE="$TEMPDIR/$BASENAME"
+TMPCPR="$TMPBASE.cpr"
+TMPTGA="$TMPBASE.tga"
+TMPTIFF="$TMPBASE.tiff"
+
+echo "Converting $CPRSRC to $FINALPNG (using embedded PAL)"
+
+rm -f "$FINALPNG"
+cp -f "$CPRSRC" "$TMPCPR" || exit 16
+cpr2tga "$TMPBASE" > /dev/null || exit 17
+# tiff intermediate step is there for a reason! see https://unix.stackexchange.com/q/609023/64590
+convert "$TMPTGA" -type palette "$TMPTIFF" || exit 18
+gm convert "$TMPTIFF" -type palette "$FINALPNG" || exit 19
+
+rm -f "$TMPCPR" "$TMPTGA" "$TMPTIFF"
+exit 0

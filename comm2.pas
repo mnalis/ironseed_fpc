@@ -61,14 +61,14 @@ var
  alienstuff,tradestuff: ^alienstuffarray;
  trademode,cargoindex,tradeindex,stuffindex,alienworth,tradeworth: integer;
  str1: string[3];
+ bright	: boolean;
 
 procedure printxy2(x1,y1: integer; s: string);
 var i,j,a,x,y,t	: integer;
-   bright	: boolean;
 begin
    t:=tcolor;
-   bright := false;
    x1:=x1+4;
+   for i:=1 to 6 do scr_fillchar(screen[y1+i,x1+1],5*49,bkcolor);
    for j:=1 to length(s) do
    begin
       if bright then
@@ -1065,4 +1065,5 @@ begin
 end;
 
 begin
+  bright := false;
 end.

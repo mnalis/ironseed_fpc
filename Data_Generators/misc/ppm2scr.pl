@@ -6,14 +6,16 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
-my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+my $COLOR_FACTOR = $ENV{COLORF} || 4;	# game seems to be using <<2, which is *4
 
 my $basename = $ARGV[0];
 my $ppm_name = $basename;
+my $want_width = $ENV{WIDTH} || 320;
+my $want_height = $ENV{HEIGHT} || 200;
 
 if (!defined $ppm_name) {
   print "Usage: $0 <BASENAME.ppm>\n";
-  print "Converts PPM file to Ironseed 320x200 BASENAME.scr and BASENAME.pal files\n";
+  print "Converts PPM file to Ironseed 320x200 (or other specified size via ENV) BASENAME.scr and BASENAME.pal files\n";
   exit 1;
 }
 
@@ -27,12 +29,20 @@ my $scr_tmp = $scr_final . '.tmp';
 
 open my $ppm_fd, '<', $ppm_name;
 
+sub get_line()
+{
+  my $ret='';
+  do { $ret = <$ppm_fd>; } while $ret =~ /^\s*#/;	# skip comments
+  chomp $ret;
+  return $ret;
+}
+
 # FIXME: should support PPM comments, different whitespace etc. see ppm(5)
-my $format = <$ppm_fd>; chomp $format;
+my $format = get_line();
 die "ERROR: P6 PPM file needed, not $format" unless $format eq 'P6';
-my ($width, height) = split ' ', <$ppm_fd>;
-die "ERROR: not 320x200 PPM file" unless $width==320 and height==200;
-my $bpp = <$ppm_fd>; chomp($bpp);
+my ($width, $height) = split ' ', get_line();
+die "ERROR: not ${want_width}x${want_height} PPM file" unless $width==$want_width and $height==$want_height;
+my $bpp = get_line();
 die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
@@ -43,7 +53,8 @@ my $pal_used = 0;
 open my $pal_fd, '>', $pal_tmp;
 open my $scr_fd, '>', $scr_tmp;
 
-for (my $i = 0; $i < $width * height * 3; $i+=3) {
+my $remains=64000;
+for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $r = int($SCR[$i] / $COLOR_FACTOR);
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);
@@ -58,7 +69,10 @@ for (my $i = 0; $i < $width * height * 3; $i+=3) {
   }
   
   print $scr_fd chr($val);
+  $remains--;
 }
+
+print $scr_fd chr(0) x $remains;	# fillup so scr2cpr.pas doesn't bail out
 
 print $pal_fd "\000\000\000" x ($bpp - $pal_used + 1);
 

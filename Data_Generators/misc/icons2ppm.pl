@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use autodie qw/:all/;
 
-my $COLOR_FACTOR=4;	# game seems to be using <<2, which is *4
+my $COLOR_FACTOR = $ENV{COLORF} || 4;	# game seems to be using <<2, which is *4
 
 my $scr = shift;
 my $pal = shift;
