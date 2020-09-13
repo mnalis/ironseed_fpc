@@ -54,8 +54,8 @@ CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
 CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr data/image05.cpr data/image06.cpr data/image07.cpr data/image08.cpr data/image09.cpr data/image10.cpr data/image11.cpr data/image12.cpr data/image13.cpr data/image14.cpr data/image15.cpr data/image16.cpr data/image17.cpr data/image18.cpr data/image19.cpr data/image20.cpr data/image21.cpr data/image22.cpr data/image23.cpr data/image24.cpr data/image25.cpr data/image26.cpr data/image27.cpr data/image28.cpr data/image29.cpr data/image30.cpr data/image31.cpr data/image32.cpr
-CPR_MISC0 := data/trade.cpr data/end6.cpr
-CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr data/demoscr2.cpr data/demoscr3.cpr data/demoscr4.cpr data/demoscrn.cpr Data_Generators/makedata/planicon.cpr
+CPR_MISC0 := data/trade.cpr data/end6.cpr data/waricon.cpr data/cloud.cpr
+CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr data/demoscr2.cpr data/demoscr3.cpr data/demoscr4.cpr data/demoscrn.cpr Data_Generators/makedata/planicon.cpr data/cargo.cpr data/channel7.cpr data/fight.cpr data/intro2.cpr data/intro3.cpr data/intro5.cpr data/intro6.cpr
 
 IMG_FILES := data/main.pal $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_MISC0)
 DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
@@ -237,13 +237,20 @@ data/trade.cpr:		data/com.cpr Graphics_Assets/trade.png		$(dep-build-cpr0-via-cp
 data/end6.cpr:		data/end5.cpr Graphics_Assets/end6.png		$(dep-build-cpr0-via-cpr1)
 	$(build-cpr0-via-cpr1)
 
+data/waricon.cpr:	data/fight.cpr Graphics_Assets/waricon.png	$(dep-build-cpr0-via-cpr1)
+	$(build-cpr0-via-cpr1)
+
+# FIXME or better use main.cpr instead of fight.cpr for PAL temple for cloud? it is used elsewhere, but first colors are the same...
+data/cloud.cpr:		data/fight.cpr Graphics_Assets/cloud.png	$(dep-build-cpr0-via-cpr1)
+	$(build-cpr0-via-cpr1)
+
 # FIXME - end*.cpr should use some common PAL ? which one?
 
 # FIXME: dependencies, need correct rules
 data/char.cpr:		Graphics_Assets/char.png ;
 data/com.cpr:		Graphics_Assets/com.png ;
 
-:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
+Data_Generators/makedata/planicon.cpr:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
 # if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
