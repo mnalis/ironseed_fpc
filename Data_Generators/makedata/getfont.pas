@@ -86,7 +86,8 @@ end;
 
 begin
  //setvidmode($13);
- loadscreen('font0',@screen);
+ init_everything;
+ loadscreen('Data_Generators/makedata/font0',@screen);
  set256colors(colors);
  assign(ft,'fontdata');
  rewrite(ft);
@@ -100,6 +101,7 @@ begin
  writeln(ft);
  getfont2(90);
  close(ft);
+ while not fastkeypressed do delay(1);
  readkey;
  //setvidmode($03);
 end.

@@ -35,7 +35,7 @@ release_sdl: cleanbuild
 
 # SDL debug version
 debug_sdl1 demo_sdl1: tags
-debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake: cflags += -O0 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/getfont: cflags += -O0 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
 debug_sdl1:  fpc_flags  += $(fpc_debug)
@@ -118,7 +118,7 @@ Data_Generators/makedata/creamake: Data_Generators/makedata/creamake.pas
 Data_Generators/makedata/crewmake: Data_Generators/makedata/crewmake.pas
 Data_Generators/makedata/elemmake: Data_Generators/makedata/elemmake.pas
 Data_Generators/makedata/eventmak: Data_Generators/makedata/eventmak.pas
-Data_Generators/makedata/getfont: Data_Generators/makedata/getfont.pas
+Data_Generators/makedata/getfont: Data_Generators/makedata/getfont.pas c_utils.o data.pas utils_.pas
 Data_Generators/makedata/itemmake: Data_Generators/makedata/itemmake.pas
 Data_Generators/makedata/makename: Data_Generators/makedata/makename.pas
 Data_Generators/makedata/scanmake: Data_Generators/makedata/scanmake.pas

@@ -37,7 +37,9 @@ const
  eventstorun: array[0..maxeventsystems] of integer =
   ( 12, 13, 15, 14, 16, 17, 20, 24,14,10000,10002,25);
 
-{sys event        place
+{ NB: this comment is historic. see eventsystems[]/eventstorun[] above for real info.
+
+ sys event        place
  --- ----- -------------------
  211  202 satellite from is2
  119  203 phaedor moch 1
@@ -275,7 +277,7 @@ begin
 	     addlog(14);
 	     redoscreen(2389,1695,1314);
 	  end;
-   15	: addlog(15);      { planets dest }
+   15	: addlog(15);      { planets des. }
    16	: addlog(16);      { monks        }
    17	: begin            { derelict     }
 	     addcargo(ID_ART_THERMAL_PLATING, true);

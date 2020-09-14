@@ -190,7 +190,12 @@ begin
  new(buffer);
  assign(f,s);
  reset(f,1);
- if (ioresult<>0) or (not checkversion) then
+ if ioresult<>0 then
+  begin
+   handleerror('open');
+   exit;
+  end;
+ if not checkversion then
   begin
    handleerror('checkversion');
    exit;
