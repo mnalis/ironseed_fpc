@@ -16,11 +16,14 @@ begin
  begin
   init_everything;
   loadscreen('data/char',@screen);
+  if ioresult<>0 then errorhandler('data/char',1);
   while not fastkeypressed do delay(1);
   readkey;
  end;
  loadscreen('Data_Generators/makedata/charani',@screen);
+ if ioresult<>0 then errorhandler('Data_Generators/makedata/charani',1);
  assign(anifile,'data/charani.dta');
+ if ioresult<>0 then errorhandler('data/charani.dta',1);
  rewrite(anifile);
  ani[0,0]:=0;		{ move() will initialize it, this is just so compiler does not warn }
  for index:=0 to 29 do
