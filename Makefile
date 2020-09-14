@@ -35,7 +35,7 @@ release_sdl: cleanbuild
 
 # SDL debug version
 debug_sdl1 demo_sdl1: tags
-debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/getfont: cflags += -O0 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake: cflags += -O0 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
 debug_sdl1:  fpc_flags  += $(fpc_debug)
@@ -48,7 +48,7 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/getfont Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga Data_Generators/misc/tga2cpr
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga Data_Generators/misc/tga2cpr
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
@@ -118,7 +118,6 @@ Data_Generators/makedata/creamake: Data_Generators/makedata/creamake.pas
 Data_Generators/makedata/crewmake: Data_Generators/makedata/crewmake.pas
 Data_Generators/makedata/elemmake: Data_Generators/makedata/elemmake.pas
 Data_Generators/makedata/eventmak: Data_Generators/makedata/eventmak.pas
-Data_Generators/makedata/getfont: Data_Generators/makedata/getfont.pas c_utils.o data.pas utils_.pas
 Data_Generators/makedata/itemmake: Data_Generators/makedata/itemmake.pas
 Data_Generators/makedata/makename: Data_Generators/makedata/makename.pas
 Data_Generators/makedata/scanmake: Data_Generators/makedata/scanmake.pas
