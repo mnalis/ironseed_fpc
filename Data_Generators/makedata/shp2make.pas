@@ -9,7 +9,7 @@ procedure saveship(index,x1,y1: integer);
 var temp: ^shipdistype;
     i,j: integer;
 begin
- writeln ('saving ship ', index);
+ //writeln ('saving ship ', index);
  new(temp);
  for j:=x1 to x1+57 do
   for i:=0 to 74 do
