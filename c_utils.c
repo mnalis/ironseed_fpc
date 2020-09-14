@@ -359,8 +359,9 @@ void all_done(void)
 	musicDone();
 
 	do_video_stop = 1;
-	while (!is_video_finished)
-		sleep(0);
+	if (is_video_initialized)
+		while (!is_video_finished)
+			sleep(0);
 	SDL_Quit();
 }
 
