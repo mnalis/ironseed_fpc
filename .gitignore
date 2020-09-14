@@ -35,6 +35,7 @@ Data_Generators/makedata/logmake
 Data_Generators/makedata/iconmake
 Data_Generators/makedata/getfont
 Data_Generators/makedata/namemake
+Data_Generators/makedata/makeani
 Data_Generators/misc/cpr2scr
 Data_Generators/misc/scr2cpr
 Data_Generators/misc/cpr2tga

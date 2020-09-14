@@ -1,7 +1,7 @@
 program makeanimationforchar;
 
 
-uses crt, data;
+uses data, utils_;
 type
  aniscrtype= array[0..34,0..48] of byte;
  aniarray= array[0..30] of aniscrtype;
@@ -12,13 +12,21 @@ var
  allani: ^aniarray;
 
 begin
- loadscreen('makedata\charani.vga');
- assign(anifile,'data\charani.dta');
+ if paramstr(1)='/test' then
+ begin
+  init_everything;
+  loadscreen('data/char',@screen);
+  while not fastkeypressed do delay(1);
+  readkey;
+ end;
+ loadscreen('Data_Generators/makedata/charani',@screen);
+ assign(anifile,'data/charani.dta');
  rewrite(anifile);
+ ani[0,0]:=0;		{ move() will initialize it, this is just so compiler does not warn }
  for index:=0 to 29 do
   begin
    for i:=0 to 34 do
-    move(screen[i+(index div 6)*35,(index mod 6)*50],ani[i],49);
+     move(screen[i+(index div 6)*35,(index mod 6)*50],ani[i],49);
    write(anifile,ani);
   end;
  index:=0;
@@ -33,13 +41,16 @@ begin
  for j:=0 to 30 do
   read(anifile,allani^[j]);
  close(anifile);
- j:=0;
- repeat
-  inc(j);
-  if j=31 then j:=0;
-  for i:=0 to 34 do
-   move(allani^[j,i],screen[i],49);
-  delay(150);
- until fastkeypressed;
+ if paramstr(1)='/test' then
+ begin
+  j:=0;
+  repeat
+   inc(j);
+   if j=31 then j:=0;
+   for i:=0 to 34 do
+    move(allani^[j,i],screen[i],49);
+   delay(150);
+  until fastkeypressed;
+ end;
  dispose(allani);
 end.

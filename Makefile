@@ -35,7 +35,7 @@ release_sdl: cleanbuild
 
 # SDL debug version
 debug_sdl1 demo_sdl1: tags
-debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake: cflags += -O0 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani: cflags += -O0 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
 debug_sdl1:  fpc_flags  += $(fpc_debug)
@@ -48,16 +48,16 @@ demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
 DATA_TOOLS_D = Data_Generators/makedata/convmake Data_Generators/makedata/logmake
-DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/namemake Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga Data_Generators/misc/tga2cpr
+DATA_TOOLS_P = Data_Generators/makedata/aliemake Data_Generators/makedata/artimake Data_Generators/makedata/cargmake Data_Generators/makedata/creamake Data_Generators/makedata/crewmake Data_Generators/makedata/elemmake Data_Generators/makedata/eventmak Data_Generators/makedata/itemmake Data_Generators/makedata/makename Data_Generators/makedata/scanmake Data_Generators/makedata/shipmake Data_Generators/makedata/sysmake Data_Generators/makedata/weapmake  Data_Generators/makedata/iconmake Data_Generators/makedata/namemake Data_Generators/makedata/makeani Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr2tga Data_Generators/misc/tga2cpr
 
 CREWCONVS := data/conv0001.dta data/conv0002.dta data/conv0003.dta data/conv0004.dta data/conv0005.dta data/conv0006.dta
 RACECONVS := data/conv1001.dta data/conv1002.dta data/conv1003.dta data/conv1004.dta data/conv1005.dta data/conv1006.dta data/conv1007.dta data/conv1008.dta data/conv1009.dta data/conv1010.dta data/conv1011.dta
 SPECCONVS := data/conv1100.dta data/conv1101.dta data/conv1102.dta data/conv1103.dta data/conv1000.dta
 CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr data/image05.cpr data/image06.cpr data/image07.cpr data/image08.cpr data/image09.cpr data/image10.cpr data/image11.cpr data/image12.cpr data/image13.cpr data/image14.cpr data/image15.cpr data/image16.cpr data/image17.cpr data/image18.cpr data/image19.cpr data/image20.cpr data/image21.cpr data/image22.cpr data/image23.cpr data/image24.cpr data/image25.cpr data/image26.cpr data/image27.cpr data/image28.cpr data/image29.cpr data/image30.cpr data/image31.cpr data/image32.cpr
-CPR_MISC0 := data/trade.cpr data/end6.cpr data/waricon.cpr data/cloud.cpr
-CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr data/demoscr2.cpr data/demoscr3.cpr data/demoscr4.cpr data/demoscrn.cpr Data_Generators/makedata/planicon.cpr data/cargo.cpr data/channel7.cpr data/fight.cpr data/intro2.cpr data/intro3.cpr data/intro5.cpr data/intro6.cpr data/battle1.cpr data/charcom.cpr data/saver.cpr data/ship1.cpr data/world.cpr data/char.cpr data/tech1.cpr data/sector.cpr data/landform.cpr data/psyche.cpr data/char2.cpr data/com.cpr data/log.cpr  data/back1.cpr data/back2.cpr data/back3.cpr data/back4.cpr data/back5.cpr data/back6.cpr data/back7.cpr data/back8.cpr data/back9.cpr data/back10.cpr data/back11.cpr
+CPR_MISC0 := data/trade.cpr data/end6.cpr data/waricon.cpr data/cloud.cpr Data_Generators/makedata/charani.cpr
+CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr data/demoscr2.cpr data/demoscr3.cpr data/demoscr4.cpr data/demoscrn.cpr data/cargo.cpr data/channel7.cpr data/fight.cpr data/intro2.cpr data/intro3.cpr data/intro5.cpr data/intro6.cpr data/battle1.cpr data/charcom.cpr data/saver.cpr data/ship1.cpr data/world.cpr data/char.cpr data/tech1.cpr data/sector.cpr data/landform.cpr data/psyche.cpr data/char2.cpr data/com.cpr data/log.cpr  data/back1.cpr data/back2.cpr data/back3.cpr data/back4.cpr data/back5.cpr data/back6.cpr data/back7.cpr data/back8.cpr data/back9.cpr data/back10.cpr data/back11.cpr Data_Generators/makedata/planicon.cpr
 IMG_FILES := data/main.pal $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_MISC0)
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga data/charani.dta
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -126,6 +126,7 @@ Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
 Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o data.pas utils_.pas
 Data_Generators/makedata/namemake: Data_Generators/makedata/namemake.pas
+Data_Generators/makedata/makeani: Data_Generators/makedata/makeani.pas c_utils.o data.pas utils_.pas data/char.cpr Data_Generators/makedata/charani.cpr
 
 Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
@@ -169,6 +170,8 @@ data/conv1101.dta: Data_Generators/makedata/tek3con1.txt Data_Generators/makedat
 data/conv1102.dta: Data_Generators/makedata/tek4con1.txt Data_Generators/makedata/convmake
 data/conv1103.dta: Data_Generators/makedata/tek5con1.txt Data_Generators/makedata/convmake
 
+data/charani.dta:     Data_Generators/makedata/makeani Data_Generators/makedata/charani.cpr
+	Data_Generators/makedata/makeani
 data/iteminfo.dta: Data_Generators/makedata/itemmake Data_Generators/makedata/iteminfo.txt
 	Data_Generators/makedata/itemmake
 data/creation.dta: Data_Generators/makedata/creamake Data_Generators/makedata/creation.txt  data/cargo.dta
@@ -231,6 +234,9 @@ data/waricon.cpr:	data/fight.cpr Graphics_Assets/waricon.png	$(dep-build-cpr0-vi
 
 # NB - maybe should use main.cpr instead of fight.cpr for PAL temple for cloud? it is used elsewhere, but first colors are the same...
 data/cloud.cpr:		data/fight.cpr Graphics_Assets/cloud.png	$(dep-build-cpr0-via-cpr1)
+	$(build-cpr0-via-cpr1)
+
+Data_Generators/makedata/charani.cpr:	data/char.cpr Graphics_Assets/charani.png	$(dep-build-cpr0-via-cpr1)
 	$(build-cpr0-via-cpr1)
 
 Data_Generators/makedata/planicon.cpr:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
