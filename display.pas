@@ -1857,14 +1857,14 @@ begin
         ship.orbiting:=viewindex;
         removesystem(true);
         mousehide;
-        compressfile(tempdir+'/current',@screen);
+        compressfile(loc_tmp()+'current',@screen);
         scr_fillchar(screen,sizeof(screen),0);
         mouseshow;
         for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
         {fading;}
 	fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
         mousehide;
-        loadscreen(tempdir+'/current',@screen);
+        loadscreen(loc_tmp()+'current',@screen);
         mouseshow;
         if viewindex>0 then readyplanet else readystar;
         checkwandering;
@@ -2103,7 +2103,7 @@ var shipfile: file of shipdistype;
     x2: integer;
 begin
  new(temp);
- assign(shipfile,'data/shippix.dta');
+ assign(shipfile,loc_data()+'shippix.dta');
  reset(shipfile);
  if ioresult<>0 then errorhandler('data/shippix.dta',1);
  seek(shipfile,index);

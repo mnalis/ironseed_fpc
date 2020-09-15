@@ -67,10 +67,10 @@ var c		  : integer;
    i, j, k, x, y  : Integer;
 begin
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    bkcolor:=5;
    fading;
-   loadpal('data/main.pal');
+   loadpal(loc_data()+'main.pal');
    scr_fillchar(screen,sizeof(screen),0);
    for i:=0 to 199 do
       for j:=0 to 319 do
@@ -168,7 +168,7 @@ begin
       delay(tslice div 2+5);
    until (done) and (c=1);
    mousehide;
-   loadscreen(tempdir+'/current',@screen);
+   loadscreen(loc_tmp()+'current',@screen);
    set256colors(colors);
    bkcolor:=3;
    tcolor:=191;
@@ -182,7 +182,7 @@ begin
  new(portrait);
  str(n:2,s);
  if n<10 then s[1]:='0';
- loadscreen('data/image'+s+'',portrait);
+ loadscreen(loc_data()+'image'+s,portrait);
  for i:=0 to 34 do
   begin
    scrto_move(portrait^[i*2],screen[i*2+7,13],70);
@@ -269,7 +269,6 @@ procedure sublevel; forward;
 procedure savedata;
 var
    planfile	  : file of planarray;
-   nums		  : string[1];
    confile	  : file of alientype;
    eventfile	  : file of eventarray;
    logsfile	  : file of logarray;
@@ -296,9 +295,9 @@ begin
 	 san:=round(emo*0.60+men*0.40-phy*0.20);
 	 ship.encodes[j]:=ship.crew[j];
       end;
-   assign(confile,tempdir+'/contacts.dta');
+   assign(confile,loc_tmp()+'contacts.dta');
    rewrite(confile);
-   if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+   if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
    close(confile);
 
    if not savegamedata(160,191) then
@@ -309,17 +308,16 @@ begin
 
    quit:=true;
    code:=curfilenum+48;
-   str(curfilenum,nums);
-   assign(planfile,'save'+nums+'/PLANETS.DTA');
+   assign(planfile,loc_savegame(curfilenum)+'PLANETS.DTA');
    rewrite(planfile);
    if ioresult<>0 then errorhandler('PLANETS.DTA',1);
    write(planfile,planets^);
    if ioresult<>0 then errorhandler('PLANETS.DTA',5);
    close(planfile);
 
-   assign(confile,'save'+nums+'/CONTACTS.DTA');
+   assign(confile,loc_savegame(curfilenum)+'CONTACTS.DTA');
    rewrite(confile);
-   if ioresult<>0 then errorhandler('save'+nums+'/CONTACTS.DTA',1);
+   if ioresult<>0 then errorhandler('CONTACTS.DTA',1);
    close(confile);
 
    for i := 0 to 1023 do
@@ -329,21 +327,21 @@ begin
    for i := 0 to 255 do
       logs[i] := -1;
 
-   assign(eventfile,'save'+nums+'/EVENTS.DTA');
+   assign(eventfile,loc_savegame(curfilenum)+'EVENTS.DTA');
    rewrite(eventfile);
    if ioresult<>0 then errorhandler('EVENTS.DTA',1);
    write(eventfile,events);
    if ioresult<>0 then errorhandler('EVENTS.DTA',5);
    close(eventfile);
 
-   assign(logsfile,'save'+nums+'/LOGS.DTA');
+   assign(logsfile,loc_savegame(curfilenum)+'LOGS.DTA');
    rewrite(logsfile);
    if ioresult<>0 then errorhandler('LOGS.DTA',1);
    write(logsfile,logs);
    if ioresult<>0 then errorhandler('LOGS.DTA',5);
    close(logsfile);
 
-   assign(logpendingfile,'save'+nums+'/PENDING.DTA');
+   assign(logpendingfile,loc_savegame(curfilenum)+'PENDING.DTA');
    rewrite(logpendingfile);
    if ioresult<>0 then errorhandler('PENDING.DTA',1);
    write(logpendingfile,logpending);
@@ -877,7 +875,7 @@ begin
       armed:=false;
       wandering.alienid:=32000;
    end;
-   assign(systfile,'data/sysset.dta');
+   assign(systfile,loc_data()+'sysset.dta');
    reset(systfile);
    if ioresult<>0 then errorhandler('sysset.dta',1);
    for j:=1 to 250 do read(systfile,oldsys^[j]);
@@ -971,10 +969,10 @@ begin
  initcrew;
  fading;
  playmod(true,'sound/CHARGEN.MOD');
- loadscreen('data/char',@screen);
+ loadscreen(loc_data()+'char',@screen);
  for i:=0 to 69 do
   scrfrom_move(screen[i+7,13],birdpic^[i],70);
- assign(anifile,'data/charani.dta');
+ assign(anifile,loc_data()+'charani.dta');
  reset(anifile);
  if ioresult<>0 then errorhandler('charani.dta',1);
  read(anifile,ani^);
@@ -994,7 +992,7 @@ begin
  drawship;
  displayship2(121,13);
  new(crewdata);
- assign(crewfile,'data/crew.dta');
+ assign(crewfile,loc_data()+'crew.dta');
  reset(crewfile);
  if ioresult<>0 then errorhandler('crew.dta',1);
  read(crewfile,crewdata^);
@@ -1057,14 +1055,14 @@ var
                 begin
                  mode:=0;
                  mousehide;
-                 loadscreen('data/demoscr3',@screen);
+                 loadscreen(loc_data()+'demoscr3',@screen);
                  mouseshow;
                 end;
           #80: if mode=0 then
                 begin
                  mode:=1;
                  mousehide;
-                 loadscreen('data/demoscr4',@screen);
+                 loadscreen(loc_data()+'demoscr4',@screen);
                  mouseshow;
                 end;
          end;
@@ -1082,14 +1080,14 @@ var
                         begin
                          mode:=0;
                          mousehide;
-                         loadscreen('data/demoscr3',@screen);
+                         loadscreen(loc_data()+'demoscr3',@screen);
                          mouseshow;
                         end
                        else
                         begin
                          mode:=1;
                          mousehide;
-                         loadscreen('data/demoscr4',@screen);
+                         loadscreen(loc_data()+'demoscr4',@screen);
                          mouseshow;
                         end;
              end;
@@ -1114,7 +1112,7 @@ begin
  fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
  playmod(true,'sound/CHARGEN.MOD');
- loadscreen('data/demoscr3',@screen);
+ loadscreen(loc_data()+'demoscr3',@screen);
  mouseshow;
  fadein;
  mainloop;

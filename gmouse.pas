@@ -52,6 +52,7 @@ procedure mouseshow; cdecl; external;
 
 implementation
 
+uses utils_;
 
 function mouse_get_status: char;cdecl ; external;
 function mouse_get_x: dword;cdecl ; external;
@@ -102,7 +103,7 @@ var i: integer;
     tempicon: ^weaponicontype;
 begin
  new(tempicon);
- assign(f,'data/weapicon.dta');
+ assign(f,loc_data()+'weapicon.dta');
  reset(f);
  if ioresult<>0 then errorhandler('weapicon.dta',1);
  seek(f,n+87);

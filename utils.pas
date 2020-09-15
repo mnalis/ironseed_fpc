@@ -630,12 +630,12 @@ begin
    mousehide;
    playmod(true,'sound/VICTORY.MOD');
    fading;
-   loadscreen('data/demoscrn',@screen);
+   loadscreen(loc_data()+'demoscrn',@screen);
    fadein;
    repeat until (mouse.getstatus) or (fastkeypressed);
    while fastkeypressed do readkey;
    fading;
-   loadscreen('data/demoscr2',@screen);
+   loadscreen(loc_data()+'demoscr2',@screen);
    fadein;
    repeat until (mouse.getstatus) or (fastkeypressed);
    while fastkeypressed do readkey;
@@ -791,7 +791,7 @@ var cfile: file of createarray;
     j,i: integer;
 begin
  new(temp);
- assign(cfile,'data/creation.dta');
+ assign(cfile,loc_data()+'creation.dta');
  reset(cfile);
  if ioresult<>0 then errorhandler('creation.dta',1);
  read(cfile,temp^);
@@ -855,14 +855,14 @@ end;
 
 {procedure messagebox(s : String; shadow : Boolean);
 begin
-   quicksavescreen(tempdir+'/message',@screen, false);
+   quicksavescreen(loc_tmp()+'message',@screen, false);
    if shadow then
    begin
       shadowprintln;
       shadowprint(s1+' '+s2);
    end;
 
-   quickloadscreen(tempdir+'/current',@screen, false);
+   quickloadscreen(loc_tmp()+'current',@screen, false);
 end;}
 
 procedure printbigbox(s1,s2: string);
@@ -972,7 +972,7 @@ begin
  tcolor:=oldt;
  if ship.options[OPT_MSGS]=1 then exit;
  mousehide;
- compressfile(tempdir+'/current3',@screen);
+ compressfile(loc_tmp()+'current3',@screen);
  if (colors[31,3]=63) or (colors[32,2]=63) then t:=26
   else if colors[32,1]=0 then t:=197
   else t:=182;
@@ -987,7 +987,7 @@ begin
     n:=ship.crew[n].index;
     str(n:2,s);
     if n<10 then s[1]:='0';
-    loadscreen('data/image'+s,portrait);
+    loadscreen(loc_data()+'image'+s,portrait);
     x:=125;
     y:=10;
     if t=197 then
@@ -1050,7 +1050,7 @@ begin
   if fastkeypressed then ans:=readkey;
  until ((done) and (c=1)) or (ans=#27) or (ans=#13);
  mousehide;
- loadscreen(tempdir+'/current3',@screen);
+ loadscreen(loc_tmp()+'current3',@screen);
  mouseshow;
  tcolor:=oldt;
  bkcolor:=0;
@@ -1110,7 +1110,7 @@ end;
 procedure readweaicon(n: integer);
 var f: file of weaponicontype;
 begin
- assign(f,'data/weapicon.dta');
+ assign(f,loc_data()+'weapicon.dta');
  reset(f);
  if ioresult<>0 then errorhandler('weapicon.dta',1);
  seek(f,n);

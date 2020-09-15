@@ -207,39 +207,39 @@ end;
 
 procedure credits;
 begin
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('A','Destiny: Virtual','Designed Game');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Code Master:','Robert W.','Morgan III');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('World Design:','Jeremy','Holt');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Soundtrak:','Andrew G. Sega',' Necros of the Psychic Monks');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Sound Code:','Otto','Chrons');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Design Consultant:','Chris P.','Cash');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Scientific Advisor:','Jeff','Smith');
  wait(3);
  fading;
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  writestr2('Special Thanks:','PJ Beachem, Ben Vandergrift,','and Alex Boster');
  wait(3);
  fading;
- loadscreen('data/intro2',@screen);
+ loadscreen(loc_data()+'intro2',@screen);
  fadein;
  while fastkeypressed do readkey;
  repeat delay(1) until (fastkeypressed) or (mouse.getstatus);
@@ -251,9 +251,9 @@ var t: pscreentype;
     k,k2,b: word;
 begin
  new(t);
- loadscreen('data/end6',backgr);
+ loadscreen(loc_data()+'end6',backgr);
  scrto_move(backgr^,screen,sizeof(screen));
- loadscreen('data/end5',t);
+ loadscreen(loc_data()+'end5',t);
  fadein;
  k:=0;
  k2:=0;
@@ -294,7 +294,7 @@ begin
  scr_fillchar(screen,sizeof(screen),0);
 
  playmod(true,'sound/DIMENSIO.MOD');
- loadscreen('data/end1',@screen);
+ loadscreen(loc_data()+'end1',@screen);
  fadein;
  wait(3);
  halffading;
@@ -319,7 +319,7 @@ begin
  while not fastkeypressed do delay(1);
  fading;
 
- loadscreen('data/end2',@screen);
+ loadscreen(loc_data()+'end2',@screen);
  fadein;
  wait(3);
  halffading;
@@ -346,7 +346,7 @@ begin
  while not fastkeypressed do delay(1);
  fading;
 
- loadscreen('data/end3',@screen);
+ loadscreen(loc_data()+'end3',@screen);
  fadein;
  wait(3);
  halffading;
@@ -380,7 +380,7 @@ begin
  while not fastkeypressed do delay(1);
  fading;
 
- loadscreen('data/end4',@screen);
+ loadscreen(loc_data()+'end4',@screen);
  fadein;
  wait(3);
  halffading;

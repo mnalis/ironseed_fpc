@@ -47,6 +47,11 @@ procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 procedure scrfrom_move(const source; var dest; count: SizeInt);
 procedure scrto_move(const source; var dest; count: SizeInt);
 procedure scrfromto_move(const source; var dest; count: SizeInt);
+function loc_tmp:string;
+function loc_data:string;
+function loc_savedir:string;
+function loc_savegame (const num:byte):string;
+function loc_prn:string;
 
 implementation
 uses sysutils;
@@ -133,6 +138,33 @@ begin
   screen_addr := _address(@scr);
   SDL_init_video(scr);
 end;
+
+function loc_data:string;
+begin
+  loc_data := ('./data' + '/');
+end;
+
+function loc_tmp:string;
+begin
+  loc_tmp := './TEMP' + '/';
+end;
+
+
+function loc_savedir:string;
+begin
+  loc_savedir := loc_data() + 'savegame.dir';
+end;
+
+function loc_savegame (const num:byte):string;
+begin
+  loc_savegame := './' + 'save' + chr(48+num) + '/';
+end;
+
+function loc_prn:string;
+begin
+  loc_prn := './' + 'LPT1';
+end;
+
 
 begin
 

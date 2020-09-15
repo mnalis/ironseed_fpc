@@ -133,7 +133,7 @@ var
    s : string[10];
 begin
    str(n, s);
-   assign(f,'data/log.dta');
+   assign(f,loc_data()+'log.dta');
    reset(f);
    if ioresult<>0 then errorhandler('data/log.dta',1);
    seek(f,n);
@@ -378,24 +378,24 @@ var
    f2 : file of titlebody;
    i  : Integer;
 begin
- assign(f,tempdir+'/current2.pal');
+ assign(f,loc_tmp()+'current2.pal');
  rewrite(f);
- if ioresult<>0 then errorhandler(tempdir+'/current2.pal',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current2.pal',1);
  write(f,colors);
- if ioresult<>0 then errorhandler(tempdir+'/current2.pal',5);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current2.pal',5);
  close(f);
  mousehide;
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWEVAL.MOD');
- loadscreen('data/log',@screen);
+ loadscreen(loc_data()+'log',@screen);
  index:=0;
  qmode:=false;
  new(tmpm);
  new(l);
  new(titles);
- assign(f2,'data/titles.dta');
+ assign(f2,loc_data()+'titles.dta');
  reset(f2);
  if ioresult<>0 then errorhandler('data/titles.dta',1);
    i := 0;
@@ -439,7 +439,7 @@ begin
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mouse.setmousecursor(random(3));
- loadscreen(tempdir+'/current2',@screen);
+ loadscreen(loc_tmp()+'current2',@screen);
  bkcolor:=3;
  if n=0 then
   begin
@@ -1005,18 +1005,18 @@ var f: file of paltype;
     crfile: file of createarray;
 begin
  wait(1);
- assign(f,tempdir+'/current2.pal');
+ assign(f,loc_tmp()+'current2.pal');
  rewrite(f);
- if ioresult<>0 then errorhandler(tempdir+'/current2.pal',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current2.pal',1);
  write(f,colors);
- if ioresult<>0 then errorhandler(tempdir+'/current2.pal',5);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current2.pal',5);
  close(f);
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  done:=false;
- compressfile(tempdir+'/current3',backgr);
- loadscreen('data/trade',backgr);
+ compressfile(loc_tmp()+'current3',backgr);
+ loadscreen(loc_data()+'trade',backgr);
  scrto_move(backgr^[111],screen[111,0],(200-111)*320);
- loadscreen(tempdir+'/current3',backgr);
+ loadscreen(loc_tmp()+'current3',backgr);
  mouseshow;
  trademode:=0;
  tradeindex:=1;
@@ -1024,7 +1024,7 @@ begin
  new(alienstuff);
  new(tradestuff);
  new(cr);
- assign(crfile,'data/creation.dta');
+ assign(crfile,loc_data()+'creation.dta');
  reset(crfile);
  if ioresult<>0 then errorhandler('creation.dta',1);
  read(crfile,cr^);
@@ -1050,10 +1050,10 @@ begin
  dispose(tradestuff);
  dispose(cr);
  mousehide;
- compressfile(tempdir+'/current3',backgr);
- loadscreen(tempdir+'/current2',backgr);
+ compressfile(loc_tmp()+'current3',backgr);
+ loadscreen(loc_tmp()+'current2',backgr);
  scrto_move(backgr^[111],screen[111,0],(200-111)*320);
- loadscreen(tempdir+'/current3',backgr);
+ loadscreen(loc_tmp()+'current3',backgr);
  bkcolor:=3;
 end;
 

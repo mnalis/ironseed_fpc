@@ -1371,7 +1371,7 @@ var cfile: file of createarray;
     j,i: integer;
 begin
  new(temp);
- assign(cfile,'data/creation.dta');
+ assign(cfile,loc_data()+'creation.dta');
  reset(cfile);
  if ioresult<>0 then errorhandler('creation.dta',1);
  read(cfile,temp^);

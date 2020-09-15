@@ -130,7 +130,7 @@ procedure checkwandering;
 var confile: file of alientype;
 begin
  if ship.wandering.alienid<16000 then exit;
- assign(confile,tempdir+'/contacts.dta');
+ assign(confile,loc_tmp()+'contacts.dta');
  reset(confile);
  if ioresult<>0 then errorhandler('contacts.dta',1);
  repeat
@@ -207,7 +207,7 @@ var str1: nametype;
     f: file of nametype;
 begin
  n:=n-tempplan^[n].system;
- assign(f,'data/planname.txt');
+ assign(f,loc_data()+'planname.txt');
  reset(f);
  if ioresult<>0 then errorhandler('data/planname.txt',1);
  seek(f,n);
@@ -224,7 +224,7 @@ var confile: file of alientype;
     temp: alientype;
     index: integer;
 begin
- assign(confile,tempdir+'/contacts.dta');
+ assign(confile,loc_tmp()+'contacts.dta');
  reset(confile);
  if ioresult<>0 then errorhandler('contacts.dta (adding new alien)',1);
  err:=false;
@@ -239,9 +239,9 @@ begin
  if err then                       { add to end }
   begin
    seek(confile,index);
-   if ioresult<>0 then errorhandler(tempdir+'/contacts.dta (appending alien)',5);
+   if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta (appending alien)',5);
    write(confile,alien);
-   if ioresult<>0 then errorhandler(tempdir+'/contacts.dta (appending alien)',5);
+   if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta (appending alien)',5);
   end;
  close(confile);
 end;
@@ -255,7 +255,7 @@ begin
    alien.id:=contactindex;
    exit;
   end;
- assign(f,'data/contact0.dta');
+ assign(f,loc_data()+'contact0.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/contact0.dta',1);
  seek(f,n-1);
@@ -426,7 +426,7 @@ begin
    if contactindex<1000 then str1[1]:='0';
    if contactindex<100 then str1[2]:='0';
    if contactindex<10 then str1[3]:='0';
-   assign(fc,'data/conv'+str1+'.ind');
+   assign(fc,loc_data()+'conv'+str1+'.ind');
    reset(fc);
    if ioresult<>0 then errorhandler('data/conv'+str1+'.ind',1);
    i:=0;
@@ -435,7 +435,7 @@ begin
       read(fc,c^[i]);
    until ioresult<>0;
    close(fc);
-   assign(fr,'data/conv'+str1+'.dta');
+   assign(fr,loc_data()+'conv'+str1+'.dta');
    reset(fr);
    if ioresult<>0 then errorhandler('data/conv'+str1+'.dta',1);
    i:=0;
@@ -453,7 +453,7 @@ begin
  new(portrait);
  str(n:2,s);
  if n<10 then s[1]:='0';
- loadscreen('data/image'+s,portrait);
+ loadscreen(loc_data()+'image'+s,portrait);
  for i:=0 to 34 do
   begin
    scrto_move(portrait^[i*2],screen[i*2+41,126],70);
@@ -1048,11 +1048,11 @@ end;
 procedure readycrewdata;
 begin
  mousehide;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  playmod(true,'sound/CREWCOMM.MOD');
- loadscreen('data/charcom',@screen);
+ loadscreen(loc_data()+'charcom',@screen);
  oldt1:=t1;
  bkcolor:=0;
  tcolor:=170;
@@ -1092,7 +1092,7 @@ procedure loadbackground(n: integer);
 var str1: string[2];
 begin
  str(((n-1) div 2)+1,str1);
- loadscreen('data/back'+str1,backgr);
+ loadscreen(loc_data()+'back'+str1,backgr);
  {new(p);}
  move(colors,p^,sizeof(paltype));
  y:=(n-1) mod 2;
@@ -1109,7 +1109,7 @@ var str1: string[2];
 begin
  new(aliens);
  str(n,str1);
- loadscreen('data/alien'+str1,aliens);
+ loadscreen(loc_data()+'alien'+str1,aliens);
  for j:=0 to 159 do colors[j]:=p^[j];
  {dispose(p);}
  if n=10 then exit;
@@ -1153,9 +1153,9 @@ var confile: file of alientype;
     temp: alientype;
     str1: string[11];
 begin
- assign(confile,tempdir+'/contacts.dta');
+ assign(confile,loc_tmp()+'contacts.dta');
  reset(confile);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
  done:=false;
  repeat
   read(confile,temp);
@@ -1566,9 +1566,9 @@ begin
    contactindex:=-1;
    exit;
   end;
- assign(confile,tempdir+'/contacts.dta');
+ assign(confile,loc_tmp()+'contacts.dta');
  reset(confile);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
  done:=false;
  repeat
   read(confile,alien);
@@ -1595,9 +1595,9 @@ begin
    contactsequence(-1,random(3));
    exit;
   end;
- assign(confile,tempdir+'/contacts.dta');
+ assign(confile,loc_tmp()+'contacts.dta');
  reset(confile);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
  done:=false;
  repeat
   read(confile,alien);
@@ -1646,7 +1646,7 @@ begin
    n:=alien.conindex-1;
    if n>10 then exit;
    new(t);
-   assign(f,'data/event.dta');
+   assign(f,loc_data()+'event.dta');
    reset(f);
    if ioresult<>0 then errorhandler('data/event.dta',1);
    seek(f,n);
@@ -1690,10 +1690,10 @@ end;
 procedure readydata3(hail: boolean);
 begin
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   loadscreen('data/com',@screen);
+   loadscreen(loc_data()+'com',@screen);
    {fadein;}
    new(tmpm);
    for i:=0 to 15 do
@@ -1792,7 +1792,7 @@ var t: ^eventarray;
     f: file of eventarray;
 begin
    new(t);
-   assign(f,'data/event.dta');
+   assign(f,loc_data()+'event.dta');
    reset(f);
    if ioresult<>0 then errorhandler('data/event.dta',1);
    seek(f,n);
@@ -1885,7 +1885,7 @@ begin
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
 
- loadscreen('data/cloud',backgr);
+ loadscreen(loc_data()+'cloud',backgr);
  if showplanet then
   begin
    if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
@@ -1893,7 +1893,7 @@ begin
   end;
  mousehide;
  mouse.setmousecursor(random(3));
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_tmp()+'current',@screen);
  bkcolor:=3;
  displaytextbox(false);
  textindex:=25;

@@ -493,7 +493,7 @@ var
     portrait: ^portraittype;
 begin
  mousehide;
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  bkcolor:=5;
  fading;
  scr_fillchar(screen,sizeof(screen),0);
@@ -517,14 +517,14 @@ begin
  revgraybutton(200,68,271,139);
  printxy(91,150,'DON''T TOUCH THIS BUTTON!!!');
  new(portrait);
- loadscreen('data/image31',portrait);
+ loadscreen(loc_data()+'image31',portrait);
  for i:=0 to 69 do
   for j:=0 to 69 do
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
    else portrait^[i,j]:=(portrait^[i,j]-128) div 2;
  for i:=0 to 69 do
   scrto_move(portrait^[i],screen[i+69,50],70);
- loadscreen('data/image32',portrait);
+ loadscreen(loc_data()+'image32',portrait);
  for i:=0 to 69 do
   for j:=0 to 69 do
    if portrait^[i,j]<32 then portrait^[i,j]:=portrait^[i,j] div 2
@@ -567,7 +567,7 @@ begin
  until (done) and (c=1);
  fading;
  mousehide;
- loadscreen(tempdir+'/current2',@screen);
+ loadscreen(loc_tmp()+'current2',@screen);
  set256colors(colors);
  bkcolor:=3;
  mouseshow;
@@ -580,7 +580,7 @@ var
     s2: string[3];
 begin
  mousehide;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  tcolor:=92;
  bkcolor:=5;
  graybutton(0,0,319,199);
@@ -670,7 +670,7 @@ begin
  until (done) and (c=1);
  fading;
  mousehide;
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_tmp()+'current',@screen);
  set256colors(colors);
  mouseshow;
 end;
@@ -679,7 +679,7 @@ procedure easteregg4;
 var i,j,c: integer;
 begin
  mousehide;
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  bkcolor:=5;
  fading;
  scr_fillchar(screen,sizeof(screen),0);
@@ -750,7 +750,7 @@ begin
  until (done) and (c=1);
  fading;
  mousehide;
- loadscreen(tempdir+'/current2',@screen);
+ loadscreen(loc_tmp()+'current2',@screen);
  set256colors(colors);
  bkcolor:=3;
  mouseshow;
@@ -760,7 +760,7 @@ procedure easteregg5;
 var i,j,c: integer;
 begin
  mousehide;
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  bkcolor:=5;
  fading;
  scr_fillchar(screen,sizeof(screen),0);
@@ -831,7 +831,7 @@ begin
  until (done) and (c=1);
  fading;
  mousehide;
- loadscreen(tempdir+'/current2',@screen);
+ loadscreen(loc_tmp()+'current2',@screen);
  set256colors(colors);
  bkcolor:=0;
  mouseshow;
@@ -842,7 +842,7 @@ begin
  while fastkeypressed do readkey;
  fading;
  mousehide;
- loadscreen('data/intro3',@screen);
+ loadscreen(loc_data()+'intro3',@screen);
  soundeffect('explode3.sam',9500);
  fadein;
  mouseshow;
@@ -866,7 +866,7 @@ var
  temppal: paltype;
 begin
 { mousehide;
- compressfile(tempdir+'/current3',@screen);
+ compressfile(loc_tmp()+'current3',@screen);
  //textmode(co80);
  case random(2) of
   0: begin
@@ -878,7 +878,7 @@ begin
       gotoxy(10,25);
      end;
  end;
- assign(f,'data/'+s);
+ assign(f,loc_data()+s);
  reset(f);
  if ioresult<>0 then errorhandler('data/boss1.dta',1);
  read(f,textscreen);
@@ -905,30 +905,28 @@ begin
  end; }
  set256colors(colors);
  continuemod;
-{ loadscreen(tempdir+'/current3',@screen);
+{ loadscreen(loc_tmp()+'current3',@screen);
  mouseshow;}
 end;
 
 procedure savepal;
 var f: file of paltype;
 begin
- assign(f,tempdir+'/current.pal');
+ assign(f,loc_tmp()+'current.pal');
  rewrite(f);
- if ioresult<>0 then errorhandler(tempdir+'/current.pal',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current.pal',1);
  write(f,colors);
- if ioresult<>0 then errorhandler(tempdir+'/current.pal',5);
+ if ioresult<>0 then errorhandler(loc_tmp()+'current.pal',5);
  close(f);
 end;
 
+(*
 procedure loadpaldbg;
-var s:string[50];
 begin
-  s:=tempdir+'/current.pal';
-  loadpal(s);
+  loadpal(loc_tmp()+'current.pal';);
   set256colors(colors);
 end;
 
-(*
 procedure loopscale(startx,starty,sizex,sizey,newx,newy: word; var s,t);
 var sety, py, pdy, px, pdx, dcx, dcy, ofsy: word;
 begin
@@ -1122,7 +1120,7 @@ procedure screensaver;
 begin
 { if (ship.options[OPT_SCREENSAVER]=0) or (memavail<74000) or (ship.options[OPT_ANIMATION]=0) then exit;
  mousehide;
- compressfile(tempdir+'/current3',@screen);
+ compressfile(loc_tmp()+'current3',@screen);
  if memavail<140000 then i:=random(2) else i:=random(3);
  new(s);
  savepal;
@@ -1201,7 +1199,7 @@ begin
  else if i=2 then
   begin
    new(s2);
-   loadscreen('data/saver',s2);
+   loadscreen(loc_data()+'saver',s2);
    scr_fillchar(screen,sizeof(screen),0);
    set256colors(colors);
    for i:=0 to 199 do
@@ -1276,13 +1274,13 @@ begin
  while fastkeypressed do readkey;
  dispose(s);
  fading;
- loadscreen('data/cloud',backgr);
+ loadscreen(loc_data()+'cloud',backgr);
  if showplanet then
   begin
    if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
     else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
   end;
- loadscreen(tempdir+'/current3',@screen);
+ loadscreen(loc_tmp()+'current3',@screen);
  fadein;
  mouseshow;
 }

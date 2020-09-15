@@ -898,7 +898,7 @@ procedure readygraph;
 begin
  SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  init_video(screen);
- loadpal('data/main.pal');
+ loadpal(loc_data()+'main.pal');
  set256colors(colors);
 end;
 

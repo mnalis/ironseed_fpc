@@ -1350,7 +1350,7 @@ begin
   else errorhandler('Invalid alien ship ID.',6);
  end;
  if i=10 then picy:=0 else picy:=i*20;
- assign(f,'data/ships.dta');
+ assign(f,loc_data()+'ships.dta');
  reset(f);
  if ioresult<>0 then errorhandler('ships.dta',1);
  seek(f,j+i*11);
@@ -1384,12 +1384,12 @@ begin
   end
  else
   begin
-   assign(f,tempdir+'/contacts.dta');
+   assign(f,loc_tmp()+'contacts.dta');
    reset(f);
-   if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+   if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
    repeat
     read(f,t);
-    if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',5);
+    if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',5);
    until t.id=ship.wandering.alienid;
    close(f);
   end;
@@ -1432,12 +1432,12 @@ var
    j : Integer;
 begin
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    playmod(true,'sound/COMBAT.MOD');
-   loadscreen('data/fight',@screen);
-   loadscreen('data/cloud',backgr);
+   loadscreen(loc_data()+'fight',@screen);
+   loadscreen(loc_data()+'cloud',backgr);
    done_:=false;
    new(ships);
    new(statpic);
@@ -1485,7 +1485,7 @@ begin
    for i:=9 to 117 do
       for j:=6 to 260 do
 	 if screen[i,j]=0 then screen[i,j]:=backgr^[i,j];
-   loadscreen('data/waricon',backgr);
+   loadscreen(loc_data()+'waricon',backgr);
    stats[1]:=0;
    stats[2]:=0;
    stats[3]:=0;
@@ -1533,17 +1533,17 @@ var f : file of alientype;
    t  : alientype;
    j  : Integer;
 begin
- assign(f,tempdir+'/contacts.dta');
+ assign(f,loc_tmp()+'contacts.dta');
  reset(f);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
  i:=-1;
  repeat
   inc(i);
   read(f,t);
-  if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',4);
+  if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',4);
  until t.id=ship.wandering.alienid;
  seek(f,i);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',4);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',4);
  i:=nships div 4;
  if i=0 then i:=1;
  inc(t.victory,i);
@@ -1554,7 +1554,7 @@ begin
  else if t.congeniality>0 then dec(t.congeniality);
  if t.victory>20000 then t.victory:=20000;
  write(f,t);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',4);
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',4);
  close(f);
 end;
 
@@ -1606,7 +1606,7 @@ procedure initiatecombat;
 begin
  readydata;
  mainloop;
- loadscreen('data/cloud',backgr);
+ loadscreen(loc_data()+'cloud',backgr);
  if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
   else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
  dispose(msgs);

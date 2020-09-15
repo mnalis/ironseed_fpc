@@ -31,13 +31,14 @@ program intro;
 ***************************}
 
 uses utils_, sysutils, gmouse, modplay, version, math;
-//var   sdl_scr: PSDL_Surface;
-{* begin
+(* 
+ var   sdl_scr: PSDL_Surface;
+ begin
   SDL_Init(SDL_INIT_VIDEO); // Initialize the video SDL subsystem
-  scr:=SDL_SetVideoMode(640, 480, 8, SDL_SWSURFACE); // Create a software window of 640x480x8 and assign to scr
+  scr:=SDL_SetVideoMode(640, 480, 8, SDL_SWSURFACE); // Create a software window of 640x480x8 and use it for screen
 
   SDL_Quit; // close the subsystems and SDL
-*}
+*)
 
 const
  CPR_NONE=0;                    {   0 no compresion            }
@@ -184,7 +185,7 @@ end;
 
 
 
-procedure uncompressfile(s: string; ts: pscreentype; h: pCPR_HEADER);
+procedure uncompressfile_data(s: string; ts: pscreentype; h: pCPR_HEADER);
 type
    buftype = array[0..CPR_BUFFSIZE] of byte;
 var
@@ -286,7 +287,7 @@ var
 
 begin
    new(buffer);
-   assign(f,s);
+   assign(f,loc_data()+s);
    reset(f,1);
    if (ioresult<>0) or (not checkversion) then
    begin
@@ -303,23 +304,23 @@ begin
    if buffer<>nil then dispose(buffer);
 end;
 
-procedure loadpalette(s: string);
+procedure loadmainpalette;
 var palfile: file of paltype;
 begin
- //writeln('intro loadpalette ', s);
- assign(palfile,s);
+ //writeln('intro loadmainpalette');
+ assign(palfile,loc_data()+'main.pal');
  reset(palfile);
- if ioresult<>0 then errorhandler(s,1);
+ if ioresult<>0 then errorhandler('data/main.pal',1);
  read(palfile,colors);
- if ioresult<>0 then errorhandler(s,5);
+ if ioresult<>0 then errorhandler('data/main.pal',5);
  close(palfile);
 end;
 
-procedure loadscreen(s: string; ts: pointer);
+procedure loadscreen_data(s: string; ts: pointer);
 var ftype: CPR_HEADER;
 begin
- //writeln('intro loadscreen ', s);
- uncompressfile(s+'.cpr',ts,@ftype);
+ //writeln('intro loadscreen_data ', s);
+ uncompressfile_data(s+'.cpr',ts,@ftype);
 // writeln('uncompressed');
  if ftype.version=CPR_ERROR then errorhandler(s,5);
 end;
@@ -421,7 +422,7 @@ procedure readygraph;       // init video
 begin
  SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);   // fix for EDivByZero error in software OpenGL, see https://github.com/mnalis/ironseed_fpc/issues/26
  init_video(screen);
- loadpalette('data/main.pal');
+ loadmainpalette;
  set256colors(colors);
 end;
 
@@ -520,7 +521,7 @@ begin
  mousehide;
  scrfrom_move(screen,s2^,sizeof(screen));
  mouseshow;
- loadscreen('data/cloud',s1);
+ loadscreen_data('cloud',s1);
 end;
 
 procedure startit;
@@ -702,9 +703,9 @@ var temp: pscreentype;
 begin
  fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
- loadscreen('data/cloud',@screen);
+ loadscreen_data('cloud',@screen);
  new(temp);
- loadscreen('data/world',temp);
+ loadscreen_data('world',temp);
  colors[29]:=colors[0];
  colors[30]:=colors[0];
  set256colors(colors);
@@ -823,9 +824,9 @@ end;
 procedure domainscreen;
 var backgr: pscreentype;
 begin
- loadscreen('data/main',@screen);
+ loadscreen_data('main',@screen);
  new(backgr);
- loadscreen('data/cloud',backgr);
+ loadscreen_data('cloud',backgr);
 { asm                      // mix 2 images 255 - mask color
   push es
   push ds
@@ -856,8 +857,8 @@ var temp,backgr: pscreentype;
 begin
  new(temp);
  new(backgr);
- loadscreen('data/main',temp);
- loadscreen('data/cloud',backgr);
+ loadscreen_data('main',temp);
+ loadscreen_data('cloud',backgr);
  set256colors(colors);
  for i:=1 to 120 do
   move(planet^[i],backgr^[i+12,28],30*4);
@@ -933,7 +934,7 @@ procedure generateplanet;
 var f: file of landtype;
 begin
  randomize;
- assign(f,'data/plan1.dta');
+ assign(f,loc_data()+'plan1.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/plan1.dta',1);
  read(f,landform^);
@@ -1105,7 +1106,7 @@ begin
  tslice:=tslice div 2;
  fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
- loadscreen('data/channel7',t);
+ loadscreen_data('channel7',t);
  for i:=0 to 199 do
   for j:=0 to 319 do
    screen[i,j]:=random(16)+200+(i mod 2)*16;
@@ -1312,7 +1313,7 @@ begin
  for i:=142 to 176 do
   scrfrom_move(screen[i,234],t^[i,234],18*4);
  set256colors(temppal);
- loadscreen('data/alien',@screen);
+ loadscreen_data('alien',@screen);
  for i:=142 to 176 do
   scrto_move(t^[i,234],screen[i,234],18*4);
  dispose(t);
@@ -1379,8 +1380,8 @@ procedure getbackgroundforis2;
 var backgr: pscreentype;
 begin
  new(backgr);
- loadscreen('data/cloud',backgr);
- loadscreen('data/main3',@screen);
+ loadscreen_data('cloud',backgr);
+ loadscreen_data('main3',@screen);
  for j:=0 to 319 do
   for i:=0 to 199 do
    if screen[i,j]=255 then screen[i,j]:=backgr^[i,j];
@@ -1493,7 +1494,7 @@ begin
  c7logo;
 {#1.2}
  if fastkeypressed then goto continue;
- loadpalette('data/main.pal');
+ loadmainpalette;
  writestr2('A','Destiny: Virtual','Designed Game');
  if fastkeypressed then goto continue;
  wait(2);
@@ -1522,8 +1523,8 @@ begin
  fading;
  if fastkeypressed then goto continue;
 {#1.4}
- loadpalette('data/main.pal');
- loadscreen('data/cloud',@screen);
+ loadmainpalette;
+ loadscreen_data('cloud',@screen);
  for i:=1 to 120 do
   scrfrom_move(screen[i+12,28],planet^[i],30*4);
  sleep(0);
@@ -1539,7 +1540,7 @@ begin
  makeplanet(12,true);
  fading;
 {**************}
- loadscreen('data/charcom',@screen);
+ loadscreen_data('charcom',@screen);
  fadein;
  readyencode;
  tcolor:=191;
@@ -1559,7 +1560,7 @@ begin
  fadecharcom;
  if fastkeypressed then goto continue;
 {*************}
- loadscreen('data/battle1',@screen);
+ loadscreen_data('battle1',@screen);
  for i:=1 to 120 do
   for j:=1 to 240 do
    landform^[j,i]:=255-landform^[j,i];
@@ -1580,7 +1581,7 @@ begin
  makeplanet(10,false);
 {**************}
 skip:
- loadscreen('data/ship1',@screen);
+ loadscreen_data('ship1',@screen);
  set256colors(colors);
  tcolor:=255;
 //goto skip2;
@@ -1623,8 +1624,8 @@ skip2:
  fading;
  if fastkeypressed then goto continue;
 {**************}
- loadpalette('data/main.pal');
- loadscreen('data/cloud',@screen);
+ loadmainpalette;
+ loadscreen_data('cloud',@screen);
  water:=50;
  part2:=28/(255-water);
  c:=0;
@@ -1650,9 +1651,9 @@ skip2:
  makeplanet(12,false);
  fading;
 {$IFNDEF DEMO}
- loadscreen('data/intro5',@screen);
+ loadscreen_data('intro5',@screen);
 {$ELSE}
- loadscreen('data/intro6',@screen);
+ loadscreen_data('intro6',@screen);
 {$ENDIF}
  fadein;
  while fastkeypressed do readkey;
@@ -1669,9 +1670,9 @@ continue:
    fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
-   loadscreen('data/intro5',@screen);
+   loadscreen_data('intro5',@screen);
 {$ELSE}
-   loadscreen('data/intro6',@screen);
+   loadscreen_data('intro6',@screen);
 {$ENDIF}
    fadein;
   end;
@@ -1694,9 +1695,9 @@ begin
    fillchar(colors,sizeof(paltype),0);
    set256colors(colors);
 {$IFNDEF DEMO}
-   loadscreen('data/intro5',@screen);
+   loadscreen_data('intro5',@screen);
 {$ELSE}
-   loadscreen('data/intro6',@screen);
+   loadscreen_data('intro6',@screen);
 {$ENDIF}
    fadein;
    mouseshow;
