@@ -8,9 +8,10 @@ uses data2, sysutils;
 const COLOR_FACTOR = 4;
 
 var basename, palname: String;
-    i,j: word;
+    x,y,i,j: word;
     temppal: paltype;
     has_palette: boolean;
+    subscreen: screentype;
 
 begin
  basename := paramstr(1);
@@ -49,8 +50,30 @@ begin
      end;
 
  { write TARGA to disk }
- writeln ('Outputing uncompressed indexed TGA file to ', basename, '.tga');
- savetga(basename, @screen);
+ 
+ if (cpr_head.width=320) and (cpr_head.height=200) then
+   begin
+     writeln ('Outputing full-size 320x200 uncompressed indexed TGA file to ', basename, '.tga');
+     savetga(basename, @screen);
+   end
+ else
+   begin
+     cpr_head.height:=200;
+     cpr_head.width:=320;
+     savetga(basename,@screen);
+     halt(0); { FIXME ===^^^ }
+     writeln ('Outputing reduced-size ', cpr_head.width,'x', cpr_head.height,' uncompressed indexed TGA file to ', basename, '.tga');
+     subscreen[0,0]:=0;		{ fillchar will initialize it below, but this is just to get compiler warnings to shut up }
+     fillchar(subscreen,sizeof(subscreen),0);
+     i:=0;
+     for y:=0 to cpr_head.height-1 do
+       for x:= 0 to cpr_head.width-1 do
+          begin
+            subscreen[0,i] := screen[y,x];
+            inc(i);
+          end;
+     savetga(basename, @subscreen);
+   end;
 
  writeln ('Done!');
 end.

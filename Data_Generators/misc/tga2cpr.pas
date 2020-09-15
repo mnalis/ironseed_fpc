@@ -9,10 +9,11 @@ uses data2, sysutils;
 const COLOR_FACTOR = 4;
 
 var basename: String;
-    i,j: word;
+    x,y,i,j: word;
     temppal: paltype;
     flags: byte;
     w,h: word;
+    subscreen: screentype;
 
 begin
  basename := paramstr(1);
@@ -43,8 +44,27 @@ begin
      colors[i,j] := temppal[i,4-j] div COLOR_FACTOR;
 
  { write CPR to disk }
- writeln ('Saving compressed file ', basename, '.cpr with flags=', flags,' w=',w,' h=',h);
- compressfile (basename, @screen,w,h,flags);
+ if (w=320) and (h=200) then
+   begin
+     writeln ('Saving full-size 320x200 compressed file ', basename, '.cpr with flags=', flags);
+     compressfile (basename, @screen,w,h,flags);
+   end
+ else
+   begin
+     (* compressfile (basename, @screen,320,200,flags); halt(0); *)
+     writeln ('Saving reduced-size ', w,'x', h,' compressed file ', basename, '.cpr with flags=', flags);
+     subscreen[0,0]:=0;		{ fillchar will initialize it below, but this is just to get compiler warnings to shut up }
+     fillchar(subscreen,sizeof(subscreen),0);
+     i:=0;
+     for y:=0 to h-1 do
+       for x:= 0 to w-1 do
+          begin
+            subscreen[0,i] := screen[y,x];
+            inc(i);
+          end;
+     compressfile (basename, @subscreen,w,h,flags);
+   end;
 
  writeln ('Done!');
 end.
+
