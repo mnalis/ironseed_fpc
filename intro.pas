@@ -306,6 +306,7 @@ end;
 procedure loadpalette(s: string);
 var palfile: file of paltype;
 begin
+ //writeln('intro loadpalette ', s);
  assign(palfile,s);
  reset(palfile);
  if ioresult<>0 then errorhandler(s,1);
@@ -317,6 +318,7 @@ end;
 procedure loadscreen(s: string; ts: pointer);
 var ftype: CPR_HEADER;
 begin
+ //writeln('intro loadscreen ', s);
  uncompressfile(s+'.cpr',ts,@ftype);
 // writeln('uncompressed');
  if ftype.version=CPR_ERROR then errorhandler(s,5);

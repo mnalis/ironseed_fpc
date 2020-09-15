@@ -223,6 +223,12 @@ Data_Generators/misc/png_to_cprnopal $(word 2,$^) $< $@
 endef
 dep-build-cpr0-via-cpr1 := Makefile Data_Generators/misc/ppmpal2scr.pl Data_Generators/misc/scr2cpr Data_Generators/misc/cpr2scr Data_Generators/misc/cpr_extract_pal Data_Generators/misc/pngpal_to_cpr Data_Generators/misc/png_to_cprnopal
 
+data/plan1.dta:		Graphics_Assets/plan1.png			Makefile Data_Generators/misc/ppm2scr.pl
+	convert Graphics_Assets/plan1.png TEMP/plan1.ppm
+	WIDTH=240 HEIGHT=120 ppm2scr.pl TEMP/plan1.ppm
+	dd bs=240 count=120 if=TEMP/plan1.scr of=$@
+	
+
 
 data/image%.cpr:	data/char.cpr Graphics_Assets/image%.png	$(dep-build-cpr0-via-cpr1)
 	WIDTH=70 HEIGHT=70 $(build-cpr0-via-cpr1)
