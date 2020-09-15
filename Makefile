@@ -57,7 +57,7 @@ CPR_CREW0 := data/image01.cpr data/image02.cpr data/image03.cpr data/image04.cpr
 CPR_MISC0 := data/trade.cpr data/end6.cpr data/waricon.cpr data/cloud.cpr Data_Generators/makedata/charani.cpr Data_Generators/makedata/shippart.cpr
 CPR_SELFPAL1 := data/main.cpr data/main3.cpr data/end1.cpr data/end2.cpr data/end3.cpr data/end4.cpr data/end5.cpr data/alien.cpr data/alien1.cpr data/alien2.cpr data/alien3.cpr data/alien4.cpr data/alien5.cpr data/alien6.cpr data/alien7.cpr data/alien8.cpr data/alien9.cpr data/alien10.cpr data/demoscr2.cpr data/demoscr3.cpr data/demoscr4.cpr data/demoscrn.cpr data/cargo.cpr data/channel7.cpr data/fight.cpr data/intro2.cpr data/intro3.cpr data/intro5.cpr data/intro6.cpr data/battle1.cpr data/charcom.cpr data/saver.cpr data/ship1.cpr data/world.cpr data/char.cpr data/tech1.cpr data/sector.cpr data/landform.cpr data/psyche.cpr data/char2.cpr data/com.cpr data/log.cpr  data/back1.cpr data/back2.cpr data/back3.cpr data/back4.cpr data/back5.cpr data/back6.cpr data/back7.cpr data/back8.cpr data/back9.cpr data/back10.cpr data/back11.cpr Data_Generators/makedata/planicon.cpr
 IMG_FILES := data/main.pal $(CPR_SELFPAL1) $(CPR_CREW0) $(CPR_MISC0)
-DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga data/charani.dta data/shippix.dta data/plan1.dta
+DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONVS) $(IMG_FILES) data/iteminfo.dta  data/cargo.dta data/creation.dta data/scan.dta data/sysname.dta data/contact0.dta data/crew.dta data/artifact.dta data/elements.dta data/event.dta data/weapon.dta data/weapicon.dta data/planicon.dta data/ships.dta data/planname.txt data/icons.vga data/charani.dta data/shippix.dta data/plan1.dta data/sysset.dta
 
 build:  $(PROG_FILES) $(DATA_FILES)
 
@@ -184,7 +184,7 @@ data/cargo.dta:    Data_Generators/makedata/cargmake Data_Generators/makedata/ca
 	Data_Generators/makedata/cargmake
 data/scan.dta:     Data_Generators/makedata/scanmake Data_Generators/makedata/scandata.txt
 	Data_Generators/makedata/scanmake
-data/sysname.dta Data_Generators/other/sysdata.txt:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt data/sysset.dta
+data/sysname.dta data/sysset.dta Data_Generators/other/sysdata.txt:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt Data_Generators/makedata/sysset.txt
 	Data_Generators/makedata/sysmake
 data/contact0.dta: Data_Generators/makedata/aliemake Data_Generators/makedata/contact.txt
 	Data_Generators/makedata/aliemake

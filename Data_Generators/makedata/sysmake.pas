@@ -30,10 +30,10 @@ var
  a, j: integer;
  f: file of nametype;
  ft: text;
- f4: text;
  t: array[1..250] of nametype;
  f2: file of oldsystype;
  s: array[1..250] of oldsystype;
+ {f4: text;}
  {i, index: integer;
  tempt: nametype;
  temps: oldsystype;}
@@ -47,16 +47,14 @@ begin
  reset(f2);
  assign(ft,'Data_Generators/other/sysdata.txt');
  rewrite(ft);
- 
- assign(f4,'Data_Generators/makedata/sysset.txt');
- rewrite(f4);
+{ assign(f4,'Data_Generators/makedata/sysset.txt');
+ rewrite(f4);}
 
- 
  for a:=1 to 250 do
   begin
    read(f,t[a]);
    read(f2,s[a]);
-   writeln(f4, s[a].x, #9, s[a].y, #9, s[a].z, #9, s[a].numplanets);
+   {writeln(f4, s[a].x, #9, s[a].y, #9, s[a].z, #9, s[a].numplanets);}
   end;
 {
  for i:=1 to 250 do
@@ -80,7 +78,7 @@ begin
  close(ft);
  close(f);
  close(f2);
- close(f4);
+ {close(f4);}
 end;
 
 { generate sysname.dta from names.txt }
@@ -109,18 +107,18 @@ var o: oldsystype;
 begin
  assign(ft,'Data_Generators/makedata/sysset.txt');
  reset(ft);
- assign(f,'data/sysset.dta');
- reset(f);
- //FIXME rewrite(f);
- 
+ assign(f2,'data/sysset.dta');
+ rewrite(f2);
+
  for a:=1 to 250 do
   begin
    o.lastdate:=0;
    o.visits:=0;
    readln(ft, o.x, o.y, o.z, o.numplanets);
+   write(f2,o);
   end;
- 
- close(f);
+
+ close(f2);
  close(ft);
 end;
 

@@ -1,3 +1,4 @@
+- build: scripts to regenerate last of data/* binary files
 v 0.1.9
 - Makefile: regenerate most .cpr images from .png
 - image conversion tools handle .tga & .cpr files without embedded PAL and with different sizes, and partial PAL support
