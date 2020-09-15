@@ -1,6 +1,7 @@
 Unit utils_;
 
 {$L c_utils.o}
+{$I-}
 
 Interface
 
@@ -47,6 +48,7 @@ procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 procedure scrfrom_move(const source; var dest; count: SizeInt);
 procedure scrto_move(const source; var dest; count: SizeInt);
 procedure scrfromto_move(const source; var dest; count: SizeInt);
+procedure init_tmpdir;
 function loc_tmp:string;
 function loc_data:string;
 function loc_savedir:string;
@@ -54,7 +56,8 @@ function loc_savegame (const num:byte):string;
 function loc_prn:string;
 
 implementation
-uses sysutils;
+uses sysutils, dos;
+
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
 procedure SDL_init_video(var scr:screentype); cdecl ; external;
@@ -76,6 +79,23 @@ function fastkeypressed: boolean;   // not so fast anymore
 begin
  fastkeypressed:=boolean(key_pressed);
 end;
+
+
+procedure errorhandler(s: string; errtype: integer);
+begin
+ writeln;
+ case errtype of
+  1: writeln('File Error: ',s);
+  2: writeln('Mouse Error: ',s);
+  3: writeln('Sound Error: ',s);
+  4: writeln('EMS Error: ',s);
+  5: writeln('Fatal File Error: ',s);
+  6: writeln('Program Error: ',s);
+  7: writeln('Music Error: ',s);
+ end;
+ halt(4);
+end;
+
 
 type addr_type = qword;		// NB: word should be enough to hold memory address ?! https://www.tutorialspoint.com/pascal/pascal_pointers.htm
 const screen_size = 320*200;
@@ -144,11 +164,41 @@ begin
   loc_data := ('./data' + '/');
 end;
 
+var tempdir: string[255];	// NB: hopefully long enough
+
 function loc_tmp:string;
 begin
-  loc_tmp := './TEMP' + '/';
+  loc_tmp := tempdir + '/';
 end;
 
+procedure init_tmpdir;
+var
+  curdir: string[255];		// NB: hopefully long enough
+  diskfreespace: longint;
+begin
+  curdir := '.';
+  tempdir:=getenv('TEMP');
+  if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
+  if tempdir='' then tempdir:='TEMP';
+  getdir(0,curdir);
+  chdir(tempdir);
+  if ioresult<>0 then tempdir:='TEMP';
+  chdir(curdir);
+  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
+  tempdir:=fexpand(tempdir);
+  diskfreespace:=diskfree(ord(tempdir[1])-64);
+  if ioresult<>0 then errorhandler('Failure accessing drive '+tempdir[1],5);
+  if diskfreespace<128000 then tempdir:='TEMP';
+  chdir(tempdir);
+  if ioresult<>0 then
+   begin
+    mkdir(tempdir);
+    if ioresult<>0 then errorhandler('Creating directory error,'+tempdir,5);
+   end;
+  chdir(curdir);
+  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
+  if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
+end;
 
 function loc_savedir:string;
 begin

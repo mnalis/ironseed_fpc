@@ -467,7 +467,6 @@ var
  artifacts: ^artifacttype;
  tempicon: ^weaponicontype;
  planicons: ^planicontype;
- tempdir: string[80];
  textdisplay: ^textdisplaytype;
  colordisplay: ^colordisplaytype;
  cubesrc,cubetar: ^cubetype;

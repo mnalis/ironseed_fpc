@@ -1004,37 +1004,14 @@ end;
 {$ENDIF}
 
 procedure checkparams;
-var
-    //diskfreespace: longint;
-    curdir: string[255];	// NB: hopefully 255 is enough
 begin
- curdir := '.';
  if (paramstr(1)<>'/makeseed') then
   begin
    closegraph();
    writeln('Do not run this program separately.  Please run IS.EXE.');
    halt(4);
   end;
- tempdir:='';
- if tempdir='' then tempdir:='TEMP';
- getdir(0,curdir);
- chdir(tempdir);
- if ioresult<>0 then tempdir:='TEMP';
- chdir(curdir);
- if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- //tempdir:=fexpand(tempdir);
- //diskfreespace:=diskfree(ord(tempdir[1])-64);
- if ioresult<>0 then errorhandler('Failure accessing drive '+tempdir[1],5);
- //if diskfreespace<128000 then tempdir:='TEMP';
- chdir(tempdir);
- if ioresult<>0 then
-  begin
-   mkdir(tempdir);
-   if ioresult<>0 then errorhandler('Creating directory error,'+tempdir,5);
-  end;
- chdir(curdir);
- if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
+ init_tmpdir;
 end;
 
 {$IFDEF DEMO}
