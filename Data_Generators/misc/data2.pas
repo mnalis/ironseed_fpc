@@ -488,9 +488,9 @@ begin
   for y := 0 to height-1 do
     if (img_descriptor_b and (1 shl 5))=0
     then		{ bottom left origin }
-      saferead(f, @screen[height-1-(y_org+y),x_org], width)
+      saferead(f, @screen[0,(height-1-y)*width], width)
     else		{ top left origin }
-      saferead(f, @screen[y_org+y,x_org], width);
+      saferead(f, @screen[0,y*width], width);
 
  close(f);
 end;
