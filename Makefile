@@ -184,7 +184,7 @@ data/cargo.dta:    Data_Generators/makedata/cargmake Data_Generators/makedata/ca
 	Data_Generators/makedata/cargmake
 data/scan.dta:     Data_Generators/makedata/scanmake Data_Generators/makedata/scandata.txt
 	Data_Generators/makedata/scanmake
-data/sysname.dta:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt data/sysset.dta
+data/sysname.dta Data_Generators/other/sysdata.txt:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt data/sysset.dta
 	Data_Generators/makedata/sysmake
 data/contact0.dta: Data_Generators/makedata/aliemake Data_Generators/makedata/contact.txt
 	Data_Generators/makedata/aliemake
