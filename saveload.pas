@@ -140,11 +140,11 @@ begin
  assign(planfile,loc_savegame(curfilenum)+'PLANETS.DTA');
  rewrite(planfile);
  write(planfile,tempplan^);
- if ioresult<>0 then errorhandler('PLANETS.DTA',5);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',5);
  close(planfile);
  assign(tarfile,loc_savegame(curfilenum)+'CONTACTS.DTA');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler('save'+chr(curfilenum+48)+'/CONTACTS.DTA',1);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'/CONTACTS.DTA',1);
  assign(srcfile,loc_tmp()+'contacts.dta');
  reset(srcfile);
  err:=false;
@@ -170,37 +170,37 @@ var shipfile : file of shiptype;
 begin
    assign(shipfile,loc_savegame(num)+'SHIP.DTA');
    rewrite(shipfile);
-   if ioresult<>0 then errorhandler('SHIP.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',1);
    write(shipfile,ship);
-   if ioresult<>0 then errorhandler('SHIP.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',5);
    close(shipfile);
 
    assign(systfile,loc_savegame(num)+'SYSTEMS.DTA');
    rewrite(systfile);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',1);
    write(systfile,systems);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',5);
    close(systfile);
 
    assign(eventfile,loc_savegame(num)+'EVENTS.DTA');
    rewrite(eventfile);
-   if ioresult<>0 then errorhandler('EVENTS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',1);
    write(eventfile,events);
-   if ioresult<>0 then errorhandler('EVENTS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',5);
    close(eventfile);
 
    assign(logsfile,loc_savegame(num)+'LOGS.DTA');
    rewrite(logsfile);
-   if ioresult<>0 then errorhandler('LOGS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',1);
    write(logsfile,logs);
-   if ioresult<>0 then errorhandler('LOGS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',5);
    close(logsfile);
 
    assign(logpendingfile,loc_savegame(num)+'PENDING.DTA');
    rewrite(logpendingfile);
-   if ioresult<>0 then errorhandler('PENDING.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',1);
    write(logpendingfile,logpending);
-   if ioresult<>0 then errorhandler('PENDING.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',5);
    close(logpendingfile);
 
    curfilenum:=num;
@@ -215,16 +215,16 @@ var planfile: file of planarray;
 begin
  assign(planfile,loc_savegame(curfilenum)+'PLANETS.DTA');
  reset(planfile);
- if ioresult<>0 then errorhandler('PLANETS.DTA',1);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',1);
  read(planfile,tempplan^);
- if ioresult<>0 then errorhandler('PLANETS.DTA',5);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',5);
  close(planfile);
  assign(tarfile,loc_tmp()+'contacts.dta');
  rewrite(tarfile);
  if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
  assign(srcfile,loc_savegame(curfilenum)+'CONTACTS.DTA');
  reset(srcfile);
- if ioresult<>0 then errorhandler('CONTACTS.DTA',1);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'CONTACTS.DTA',1);
  err:=false;
  repeat
   read(srcfile,temp);
@@ -277,16 +277,16 @@ var shipfile: file of shiptype;
 begin
    assign(shipfile,loc_savegame(num)+'SHIP.DTA');
    reset(shipfile);
-   if ioresult<>0 then errorhandler('SHIP.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',1);
    read(shipfile,ship);
-   if ioresult<>0 then errorhandler('SHIP.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',5);
    close(shipfile);
 
    assign(systfile,loc_savegame(num)+'SYSTEMS.DTA');
    reset(systfile);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',1);
    read(systfile,systems);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',5);
    close(systfile);
 
    assign(eventfile,loc_savegame(num)+'EVENTS.DTA');
@@ -295,21 +295,21 @@ begin
       convertevents
    else begin
       read(eventfile,events);
-      if ioresult<>0 then errorhandler('EVENTS.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',5);
       close(eventfile);
 
       assign(logsfile,loc_savegame(num)+'LOGS.DTA');
       reset(logsfile);
-      if ioresult<>0 then errorhandler('LOGS.DTA',1);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',1);
       read(logsfile,logs);
-      if ioresult<>0 then errorhandler('LOGS.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',5);
       close(logsfile);
 
       assign(logpendingfile,loc_savegame(num)+'PENDING.DTA');
       reset(logpendingfile);
-      if ioresult<>0 then errorhandler('PENDING.DTA',1);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',1);
       read(logpendingfile,logpending);
-      if ioresult<>0 then errorhandler('PENDING.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',5);
       close(logpendingfile);
    end;
 
