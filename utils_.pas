@@ -159,17 +159,8 @@ begin
   SDL_init_video(scr);
 end;
 
-function loc_data:string;
-begin
-  loc_data := ('./data' + '/');
-end;
 
 var tempdir: string[255];	// NB: hopefully long enough
-
-function loc_tmp:string;
-begin
-  loc_tmp := tempdir + '/';
-end;
 
 
 function UserName: string;
@@ -239,7 +230,7 @@ procedure init_tmpdir;
 begin
   if try_tmpdir(getenv('TMPDIR')) then exit;
   if try_tmpdir('~/.cache') then exit;
-  if try_tmpdir('~/.local/share/') then exit;
+  if try_tmpdir('~/.local/share/Trash') then exit;
   if try_tmpdir(getenv('TEMP')) then exit;
   if try_tmpdir('/tmp') then exit;
   if try_tmpdir('./TEMP') then exit;
@@ -250,19 +241,29 @@ begin
   errorhandler('Failed to find usable tempdir',5);
 end;
 
+function loc_tmp:string;
+begin
+  loc_tmp := tempdir + '/';
+end;
+
+function loc_data:string;
+begin
+  loc_data := './' + 'data' + '/';			// FIXME: allow makefile to specify /usr/share/games/ironseed etc.
+end;
+
 function loc_savedir:string;
 begin
-  loc_savedir := loc_data() + 'savegame.dir';
+  loc_savedir := loc_data() + 'savegame.dir';		// FIXME: should be in user homedir somewhere
 end;
 
 function loc_savegame (const num:byte):string;
 begin
-  loc_savegame := './' + 'save' + chr(48+num) + '/';
+  loc_savegame := './' + 'save' + chr(48+num) + '/';	// FIXME: should be in user homedir somewhere
 end;
 
 function loc_prn:string;
 begin
-  loc_prn := './' + 'LPT1';
+  loc_prn := loc_tmp() + 'LPT1';
 end;
 
 
