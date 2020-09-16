@@ -188,7 +188,7 @@ begin
 
   curdir := '.';
   getdir(0,curdir);
-  writeln ('currently in curdir=', curdir, ', trying tempdir=', t, ' user=', UserName());
+  //writeln ('currently in curdir=', curdir, ', trying tempdir=', t, ' user=', UserName());
 
   { handle '~' in PATH }
   if (t[1]='~') and (t[2]='/') then
@@ -221,7 +221,7 @@ begin
          end;
         tempdir := tempdir + '/' + subdir;
         try_tmpdir := true;
-        writeln ('  OK, using final tempdir=', tempdir);
+        //writeln ('  OK, using final tempdir=', tempdir);
       end;
    end;
 
@@ -240,7 +240,7 @@ begin
 
   curdir := '.';
   getdir(0,curdir);
-  writeln ('currently in curdir=', curdir, ', trying savedir=', s, ' user=', UserName());
+  //writeln ('currently in curdir=', curdir, ', trying savedir=', s, ' user=', UserName());
 
   savedir := fexpand(s);	{ handle '~' in PATH }
   if savedir[length(savedir)]='/' then dec(savedir[0]);
@@ -265,7 +265,7 @@ begin
            savedir := savedir + '/' + subdir;
          end;
          try_savedir := true;
-         writeln ('  OK, using final savedir=', savedir);
+         //writeln ('  OK, using final savedir=', savedir);
       end;
    end;
 
@@ -291,7 +291,14 @@ end;
 function detect_savedir(path:string):boolean;
 begin
   savedir := fexpand(path);
-  detect_savedir := FileExists (savedir+'/save1/SHIP.DTA');
+  detect_savedir := FileExists (savedir+'/save1/SHIP.DTA') or
+                    FileExists (savedir+'/save2/SHIP.DTA') or
+                    FileExists (savedir+'/save3/SHIP.DTA') or
+                    FileExists (savedir+'/save4/SHIP.DTA') or
+                    FileExists (savedir+'/save5/SHIP.DTA') or
+                    FileExists (savedir+'/save6/SHIP.DTA') or
+                    FileExists (savedir+'/save7/SHIP.DTA') or
+                    FileExists (savedir+'/save8/SHIP.DTA');
 end;
 
 procedure init_savedirs;
@@ -301,14 +308,10 @@ begin
   if detect_savedir ('~/.ironseed') then exit;
 
   { no existing savegames under $HOME, try to create a new place for them }
-  //FIXME if try_savedir('~/.local/share', 'ironseed') then exit;
-  //FIXME if try_savedir('~', '.ironseed') then exit;
+  if try_savedir('~/.local/share', 'ironseed') then exit;
+  if try_savedir('~', '.ironseed') then exit;
 
-  { can't create place for savegames in $HOME, last resort try if running a game from current dir }
-  if detect_savedir('.') then
-     savedir := '.'
-  else
-     errorhandler('Failed to find usable savedir',5);
+  errorhandler('Failed to find usable savedir',5);
 end;
 
 procedure init_dirs;
@@ -357,12 +360,8 @@ end;
 
 
 function loc_savenames:string;
-var s:string;
 begin
-  s := savedir + '/savegame.dir';
-  loc_savenames := s;
-  if FileExists(s) then exit;
-  loc_savenames := loc_data() + 'savegame.dir';		{ fall back to running game in current directory, where it is in ./data/savegame.dir }
+  loc_savenames := savedir + '/savegame.dir';
 end;
 
 function loc_savegame (const num:byte):string;

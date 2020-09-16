@@ -36,9 +36,18 @@ are not recommended at the moment as they do not have anti-data-corruption
 checks, so bugs could creep up in your savefiles! Or, just for fun, you can also
 build `demo_sdl`, which is original shareware demo restricted version.
 
-Running
-=======
+Running from build directory for test
+=====================================
 `./is`
+
+Installing
+==========
+`make all install`
+
+Old savegames
+=============
+Previously, savegames resided in `data/savegame.dir` and `save?` subdirectories
+in build directory. They now reside in `~/.local/share/ironseed` (or `~/.ironseed`).
 
 Debug
 =====

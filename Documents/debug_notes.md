@@ -5,6 +5,10 @@ For example, to debug savegame #2:
 
 `make debug_sdl && gdb -ex 'break fpc_raiseexception' -ex 'break fpc_assert' -ex 'set non-stop on' -ex 'run' --args ./main /playseed 2`
 
+Extra
+=====
+
+add `-dTrace` to `fpc_debug` in `Makefile` to print more debug info.
 
 GDB bugs displaying RECORD
 ==========================

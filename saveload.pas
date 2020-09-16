@@ -43,7 +43,7 @@ procedure loadgame(num: integer);
 
 implementation
 
-uses utils_, gmouse, data, utils, weird, version, crewtick;
+uses utils_, gmouse, data, utils, weird, version, crewtick, sysutils;
 {$PACKRECORDS 1}
 type
  nametype= string[20];
@@ -108,7 +108,7 @@ begin
  for j:=1 to 8 do
   with names^[j] do
   begin
-   name:='Quick Start         ';
+   name:='                    ';
    yearstamp:=3784;
    monthstamp:=2;
   end;
@@ -168,6 +168,9 @@ var shipfile : file of shiptype;
    logsfile : file of logarray;
    logpendingfile : file of logpendingarray;
 begin
+   if not FileExists(loc_savegame(num)+'SHIP.DTA') then
+      mkdir (loc_savegame(num));	{ save slot was never used before, create it on first use }
+
    assign(shipfile,loc_savegame(num)+'SHIP.DTA');
    rewrite(shipfile);
    if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',1);
@@ -522,10 +525,16 @@ begin
     scrto_move(tempscr^[i,74],screen[i,74],43*4);
   end;
  result:=mainloop(tofadein);			{ result = which saveslot was selected for load }
- if result=9 then loadgamedata:=false else
-  begin
+ if result=9 then loadgamedata:=false
+ else if FileExists(loc_savegame(result)+'SHIP.DTA') then 
+  begin						{ game slot seems OK, load game }
    loadgamedata:=true;
    loadgame(result);
+  end
+ else
+  begin						{ this game slot does not exist yet, so fake "cancel" }
+   result:=9;
+   loadgamedata:=false;
   end;
  mousehide;
  if tofadein then dispose(s)
@@ -618,11 +627,11 @@ begin
 redo:
  loadfilenames;
  displayfilenames;
- result:=mainloop(false);
+ result:=mainloop(false);			{ choose save game slot }
  if result=9 then savegamedata:=false
  else
   begin
-   if not readname then
+   if not readname then				{ edit savegame name for chosen slot }
     begin
      undocursor;
      goto redo;

@@ -1,3 +1,6 @@
+v 0.2.1
+- able to be installed and run from any dir
+- savegames now reside in ~/.local/share/ironseed or ~/.ironseed !
 v 0.2.0
 - build: allow installing game to final location
 - code: use TMPDIR for temp files

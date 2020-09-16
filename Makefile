@@ -12,8 +12,8 @@ d_compiler = gdc -g -o $@
 
 fpc_flags:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049 -dTrace
-# -Cr -CR -Ct   -gh  -gc -dDEBUG
+fpc_debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049
+# -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
 cflags:= -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion
 includes=`sdl-config --cflags` -I /usr/X11R6/include
@@ -120,7 +120,7 @@ reallyclean: clean cleanbak
 distclean: reallyclean data_destroy
 
 mrproper: distclean
-	rm -f data/savegame.dir
+	rm -rf data/savegame.dir save?
 
 tags: *.c *.pas
 	ctags $^
