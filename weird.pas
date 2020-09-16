@@ -658,7 +658,7 @@ begin
     end;
    if s<>'' then
     begin
-     playmod(true,'sound/'+s);
+     playmod(true,loc_sound()+s);
      s2:='  ';
      mousehide;
      printxy(130,155,'/'+s2);
@@ -843,11 +843,11 @@ begin
  fading;
  mousehide;
  loadscreen(loc_data()+'intro3',@screen);
- soundeffect('explode3.sam',9500);
+ soundeffect(loc_sound()+'explode3.sam',9500);
  fadein;
  mouseshow;
  repeat
-  if mouse.getstatus then soundeffect('explode3.sam',9500);
+  if mouse.getstatus then soundeffect(loc_sound()+'explode3.sam',9500);
  until fastkeypressed;
  stopmod;
  fading;

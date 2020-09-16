@@ -2,7 +2,7 @@ DESTDIR  ?=
 prefix   ?= /usr/local
 bindir   ?= $(prefix)/games
 libdir   ?= $(prefix)/lib/games/ironseed
-datadir  ?= $(prefix)/share/games/ironseed
+sharedir ?= $(prefix)/share/games/ironseed
 docdir   ?= $(prefix)/share/doc/ironseed
 
 fpc_compiler:= fpc
@@ -90,10 +90,10 @@ _paths_.pas: Makefile
 	echo "Unit _paths_;" >> $@
 	echo "INTERFACE" >> $@
 	echo "function prog_libdir:string;" >> $@
-	echo "function prog_datadir:string;" >> $@
+	echo "function prog_sharedir:string;" >> $@
 	echo "IMPLEMENTATION" >> $@
 	echo "function prog_libdir:string; begin; prog_libdir:='$(libdir)'; end;" >> $@
-	echo "function prog_datadir:string; begin; prog_datadir:='$(datadir)'; end;" >> $@
+	echo "function prog_sharedir:string; begin; prog_sharedir:='$(sharedir)'; end;" >> $@
 	echo "begin end." >> $@
 
 clearpaths:
@@ -289,10 +289,12 @@ install: all
 	install $(PROG_FILES) $(DESTDIR)$(libdir)
 	test -d $(DESTDIR)$(bindir) || mkdir -p $(DESTDIR)$(bindir)
 	mv -f $(DESTDIR)$(libdir)/is $(DESTDIR)$(bindir)
-	test -d $(DESTDIR)$(datadir) || mkdir -p $(DESTDIR)$(datadir)
-	install -m 0644 data/* $(DESTDIR)$(datadir)
+	test -d $(DESTDIR)$(sharedir)/data || mkdir -p $(DESTDIR)$(sharedir)/data
+	install -m 0644 data/* $(DESTDIR)$(sharedir)/data
+	test -d $(DESTDIR)$(sharedir)/sound || mkdir -p $(DESTDIR)$(sharedir)/sound
+	install -m 0644 sound/* $(DESTDIR)$(sharedir)/sound
 	test -d $(DESTDIR)$(docdir) || mkdir -p $(DESTDIR)$(docdir)
-	install -m 0644 Documents/* $(DESTDIR)$(docdir)
+	install -m 0644 README.md Documents/* $(DESTDIR)$(docdir)
 
 
 .PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install clearpaths

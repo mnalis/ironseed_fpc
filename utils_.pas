@@ -51,6 +51,7 @@ procedure scrfromto_move(const source; var dest; count: SizeInt);
 procedure init_dirs;
 function loc_tmp:string;
 function loc_data:string;
+function loc_sound:string;
 function loc_savenames:string;
 function loc_savegame (const num:byte):string;
 function loc_prn:string;
@@ -317,7 +318,8 @@ begin
 {$IFDEF Trace}
   writeln('EXE='#9, loc_exe());
   writeln('DATA='#9, loc_data());
-  writeln('SAVENAMES='#9, loc_savenames());
+  writeln('SOUND='#9, loc_sound());
+  writeln('SAVENA='#9, loc_savenames());
   writeln('SAVE1='#9, loc_savegame(1));
   writeln('TMP='#9, loc_tmp());
   writeln('PRN='#9, loc_prn());
@@ -333,11 +335,21 @@ end;
 function loc_data:string;
 var s:string;
 begin
-  s := prog_datadir() + '/';
+  s := prog_sharedir() + '/data/';
   loc_data := s;
   if FileExists(s + 'weapicon.dta') then exit;
-  loc_data := './' + 'data' + '/';			{ fall back to running game in current directory, where it is in data/ }
+  loc_data := './' + 'data' + '/';			{ fall back to running game in current directory, where it is in ./data/ }
 end;
+
+function loc_sound:string;
+var s:string;
+begin
+  s := prog_sharedir() + '/sound/';
+  loc_sound := s;
+  if FileExists(s + 'LASER5.SAM') then exit;
+  loc_sound := './' + 'sound' + '/';			{ fall back to running game in current directory, where it is in ./sound/ }
+end;
+
 
 function loc_savenames:string;
 var s:string;
@@ -345,7 +357,7 @@ begin
   s := savedir + '/savegame.dir';
   loc_savenames := s;
   if FileExists(s) then exit;
-  loc_savenames := loc_data() + 'savegame.dir';		{ fall back to running game in current directory, where it is in data/savegame.dir }
+  loc_savenames := loc_data() + 'savegame.dir';		{ fall back to running game in current directory, where it is in ./data/savegame.dir }
 end;
 
 function loc_savegame (const num:byte):string;

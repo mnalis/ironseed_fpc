@@ -388,7 +388,7 @@ begin
  compressfile(loc_tmp()+'current2',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- playmod(true,'sound/CREWEVAL.MOD');
+ playmod(true,loc_sound()+'CREWEVAL.MOD');
  loadscreen(loc_data()+'log',@screen);
  index:=0;
  qmode:=false;

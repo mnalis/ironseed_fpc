@@ -1051,7 +1051,7 @@ begin
  compressfile(loc_tmp()+'current',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- playmod(true,'sound/CREWCOMM.MOD');
+ playmod(true,loc_sound()+'CREWCOMM.MOD');
  loadscreen(loc_data()+'charcom',@screen);
  oldt1:=t1;
  bkcolor:=0;
@@ -1196,7 +1196,7 @@ begin
    i:=1069+alien.conindex;
    randseed:=alien.conindex;
    loadbackground(random(numback)+1);
-   playmod(true,'sound/PROBE.MOD');
+   playmod(true,loc_sound()+'PROBE.MOD');
   end
  else
   begin
@@ -1216,8 +1216,8 @@ begin
     11: s:='VOID.MOD';
    else s:='';
    end;
-   {if ioresult<>0 then printxy(217,20,'sound/'+s);}
-   if s<>'' then playmod(true,'sound/'+s);
+   {if ioresult<>0 then printxy(217,20,loc_sound()+s);}
+   if s<>'' then playmod(true,loc_sound()+s);
    {if checkerror then printxy(217,20,'checkerror');
    if not playing then printxy(217,20,'not playing');
    if ModuleError = MERR_MEMORY then printxy(217,20,'MERR_MEMORY');

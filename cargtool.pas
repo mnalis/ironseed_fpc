@@ -352,7 +352,7 @@ begin
    quicksavescreen(loc_tmp()+'current',@screen, true);
    {fading;}
    fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/CARGO.MOD');
+   playmod(true,loc_sound()+'CARGO.MOD');
    loadscreen(loc_data()+'cargo',@screen);
    new(cargobuttons);
    for i:=110 to 126 do
@@ -1075,7 +1075,7 @@ begin
    {fading;}
    {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/COMPONT.MOD');
+   playmod(true,loc_sound()+'COMPONT.MOD');
    loadscreen(loc_data()+'tech1',@screen);
    drawfilters2;
    new(iteminfo);

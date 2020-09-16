@@ -293,7 +293,7 @@ begin
  mousehide;
  scr_fillchar(screen,sizeof(screen),0);
 
- playmod(true,'sound/DIMENSIO.MOD');
+ playmod(true,loc_sound()+'DIMENSIO.MOD');
  loadscreen(loc_data()+'end1',@screen);
  fadein;
  wait(3);
@@ -406,7 +406,7 @@ begin
  while not fastkeypressed do delay(1);
  fading;
 
- playmod(false,'sound/LOVE.MOD');
+ playmod(false,loc_sound()+'LOVE.MOD');
  scrollend5;
  wait(3);
  halffading;

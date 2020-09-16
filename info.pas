@@ -1046,7 +1046,7 @@ begin
    compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/GENER1.MOD');
+   playmod(true,loc_sound()+'GENER1.MOD');
    loadscreen(loc_data()+'sector',@screen);
    {fadein;}
    new(nearsec);

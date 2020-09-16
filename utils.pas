@@ -628,7 +628,7 @@ begin
  if ship.crew[crewnum].level>7 then
   begin
    mousehide;
-   playmod(true,'sound/VICTORY.MOD');
+   playmod(true,loc_sound()+'VICTORY.MOD');
    fading;
    loadscreen(loc_data()+'demoscrn',@screen);
    fadein;

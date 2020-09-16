@@ -432,7 +432,7 @@ begin
    compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/PSYEVAL.MOD');
+   playmod(true,loc_sound()+'PSYEVAL.MOD');
    loadscreen(loc_data()+'psyche',@screen);
    new(bubbles);
    newbubbles;

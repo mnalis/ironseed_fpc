@@ -1998,7 +1998,7 @@ begin
  new(zoomscr);
  new(msgs);
  new(probeicons);
- playmod(true,'sound/PROBE.MOD');
+ playmod(true,loc_sound()+'PROBE.MOD');
  setcolors;
  generatescanlist;
  for j:=1 to 7 do

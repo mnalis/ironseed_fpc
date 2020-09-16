@@ -537,7 +537,7 @@ begin
       scr_fillchar(screen,sizeof(screen),0);
       stopmod;
       runintro;
-      playmod(true,'sound/INTRO2.MOD');
+      playmod(true,loc_sound()+'INTRO2.MOD');
       loadstarfield;
       setcolor(207);
      end;
@@ -606,7 +606,7 @@ begin
  code:=0;
  cursor:=0;
  keymode:=false;
- playmod(true,'sound/INTRO2.MOD');
+ playmod(true,loc_sound()+'INTRO2.MOD');
  loadstarfield;
  k:=random(32000);
  setcolor(207);
@@ -1485,7 +1485,7 @@ begin
  if fastkeypressed then goto continue;
  generateplanet;
  if fastkeypressed then goto continue;
- playmod(true,'sound/INTRO1.MOD');
+ playmod(true,loc_sound()+'INTRO1.MOD');
  mouse.setmousecursor(1);
 // goto skip2;
  if fastkeypressed then goto continue;

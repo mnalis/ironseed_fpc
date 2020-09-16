@@ -1467,7 +1467,7 @@ begin
   fadestep(FADESTEP_STEP);
   findmouse;
   if fastkeypressed then processkey;
-  if not playing then playmod(true,'sound/'+defaultsong);
+  if not playing then playmod(true,loc_sound()+defaultsong);
   inc(idletime);
   if idletime=2*maxidle then screensaver;
   if ship.wandering.alienid<16000 then movewandering;

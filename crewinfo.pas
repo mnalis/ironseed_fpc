@@ -191,7 +191,7 @@ begin
  compressfile(loc_tmp()+'current',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- playmod(true,'sound/CREWCOMM.MOD');
+ playmod(true,loc_sound()+'CREWCOMM.MOD');
  loadscreen(loc_data()+'char2',@screen);
  new(holo);
  new(msgs);

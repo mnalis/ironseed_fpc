@@ -968,7 +968,7 @@ begin
  toggle:=false;
  initcrew;
  fading;
- playmod(true,'sound/CHARGEN.MOD');
+ playmod(true,loc_sound()+'CHARGEN.MOD');
  loadscreen(loc_data()+'char',@screen);
  for i:=0 to 69 do
   scrfrom_move(screen[i+7,13],birdpic^[i],70);
@@ -1088,7 +1088,7 @@ begin
  done:=false;
  fillchar(colors,sizeof(paltype),0);
  set256colors(colors);
- playmod(true,'sound/CHARGEN.MOD');
+ playmod(true,loc_sound()+'CHARGEN.MOD');
  loadscreen(loc_data()+'demoscr3',@screen);
  mouseshow;
  fadein;
