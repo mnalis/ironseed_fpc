@@ -48,15 +48,16 @@ procedure scr_fillchar(var dest; count: SizeInt; Value: Byte);
 procedure scrfrom_move(const source; var dest; count: SizeInt);
 procedure scrto_move(const source; var dest; count: SizeInt);
 procedure scrfromto_move(const source; var dest; count: SizeInt);
-procedure init_tmpdir;
+procedure init_dirs;
 function loc_tmp:string;
 function loc_data:string;
-function loc_savedir:string;
+function loc_savenames:string;
 function loc_savegame (const num:byte):string;
 function loc_prn:string;
+function loc_exe:string;
 
 implementation
-uses sysutils, dos, users, baseunix;
+uses sysutils, dos, users, baseunix, _paths_;
 
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
@@ -161,6 +162,7 @@ end;
 
 
 var tempdir: string[255];	// NB: hopefully long enough
+    savedir: string[255];	// NB: hopefully long enough
 
 
 function UserName: string;
@@ -226,6 +228,50 @@ begin
   if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
 end;
 
+
+function try_savedir(s,subdir:string):boolean;
+var
+  diskfreespace: longint;
+  curdir: string[255];		// NB: hopefully long enough
+begin
+  try_savedir := false;
+  if (s='') then exit;
+
+  curdir := '.';
+  getdir(0,curdir);
+  writeln ('currently in curdir=', curdir, ', trying savedir=', s, ' user=', UserName());
+
+  savedir := fexpand(s);	{ handle '~' in PATH }
+  if savedir[length(savedir)]='/' then dec(savedir[0]);
+
+  chdir(savedir);
+  if ioresult=0 then
+   begin			{ if directory exists }
+     diskfreespace:=diskfree(0);
+     if ioresult<>0 then errorhandler('Failure accessing savedir '+s,5);
+     if diskfreespace>600000 then
+      begin			{ ... and has more than 8 * 73 KiB free, then it looks OK }
+        if subdir<>'' then
+         begin
+           chdir (subdir);
+           if (ioresult<>0) then
+            begin
+              chdir(savedir);
+              mkdir (subdir);
+              chdir (subdir);
+              if ioresult<>0 then exit;	{ can't chdir nor mkdir our 'ironseed' subdir, abort }
+            end;
+           savedir := savedir + '/' + subdir;
+         end;
+         try_savedir := true;
+         writeln ('  OK, using final savedir=', savedir);
+      end;
+   end;
+
+  chdir(curdir);		{ restore previous current directory }
+  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
+end;
+
 procedure init_tmpdir;
 begin
   if try_tmpdir(getenv('TMPDIR')) then exit;
@@ -241,24 +287,70 @@ begin
   errorhandler('Failed to find usable tempdir',5);
 end;
 
+function detect_savedir(path:string):boolean;
+begin
+  savedir := fexpand(path);
+  detect_savedir := FileExists (savedir+'/save1/SHIP.DTA');
+end;
+
+procedure init_savedirs;
+begin
+  { first try if we have existing savegames in home }
+  if detect_savedir ('~/.local/share/ironseed') then exit;
+  if detect_savedir ('~/.ironseed') then exit;
+
+  { no existing savegames under $HOME, try to create a new place for them }
+  //FIXME if try_savedir('~/.local/share', 'ironseed') then exit;
+  //FIXME if try_savedir('~', '.ironseed') then exit;
+
+  { can't create place for savegames in $HOME, last resort try if running a game from current dir }
+  if detect_savedir('.') then
+     savedir := '.'
+  else
+     errorhandler('Failed to find usable savedir',5);
+end;
+
+procedure init_dirs;
+begin
+  init_savedirs;
+  init_tmpdir;
+{$IFDEF Trace}
+  writeln('EXE='#9, loc_exe());
+  writeln('DATA='#9, loc_data());
+  writeln('SAVENAMES='#9, loc_savenames());
+  writeln('SAVE1='#9, loc_savegame(1));
+  writeln('TMP='#9, loc_tmp());
+  writeln('PRN='#9, loc_prn());
+{$ENDIF}
+end;
+
+
 function loc_tmp:string;
 begin
   loc_tmp := tempdir + '/';
 end;
 
 function loc_data:string;
+var s:string;
 begin
-  loc_data := './' + 'data' + '/';			// FIXME: allow makefile to specify /usr/share/games/ironseed etc.
+  s := prog_datadir() + '/';
+  loc_data := s;
+  if FileExists(s + 'weapicon.dta') then exit;
+  loc_data := './' + 'data' + '/';			{ fall back to running game in current directory, where it is in data/ }
 end;
 
-function loc_savedir:string;
+function loc_savenames:string;
+var s:string;
 begin
-  loc_savedir := loc_data() + 'savegame.dir';		// FIXME: should be in user homedir somewhere
+  s := savedir + '/savegame.dir';
+  loc_savenames := s;
+  if FileExists(s) then exit;
+  loc_savenames := loc_data() + 'savegame.dir';		{ fall back to running game in current directory, where it is in data/savegame.dir }
 end;
 
 function loc_savegame (const num:byte):string;
 begin
-  loc_savegame := './' + 'save' + chr(48+num) + '/';	// FIXME: should be in user homedir somewhere
+  loc_savegame := savedir + '/save' + chr(48+num) + '/';
 end;
 
 function loc_prn:string;
@@ -266,6 +358,14 @@ begin
   loc_prn := loc_tmp() + 'LPT1';
 end;
 
+function loc_exe:string;
+var s:string;
+begin
+  s := prog_libdir() + '/';
+  loc_exe := s;
+  if FileExists(s + 'crewgen') then exit;
+  loc_exe := '.' + '/';					{ fall back to current dir if no executables in $libdir }
+end;
 
 begin
 

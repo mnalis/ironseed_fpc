@@ -95,11 +95,11 @@ end;
 procedure savefilenames;
 var namefile: file of namearray;
 begin
- assign(namefile,loc_savedir());
+ assign(namefile,loc_savenames());
  rewrite(namefile);
- if ioresult<>0 then errorhandler(loc_savedir(),1);
+ if ioresult<>0 then errorhandler(loc_savenames(),1);
  write(namefile,names^);
- if ioresult<>0 then errorhandler(loc_savedir(),5);
+ if ioresult<>0 then errorhandler(loc_savenames(),5);
  close(namefile);
 end;
 
@@ -117,17 +117,17 @@ end;
 procedure loadfilenames;
 var namefile: file of namearray;
 begin
- assign(namefile,loc_savedir());
+ assign(namefile,loc_savenames());
  reset(namefile);
  if ioresult<>0 then
   begin
    initializenames;
    savefilenames;
    reset(namefile);
-   if ioresult<>0 then errorhandler(loc_savedir(),1);
+   if ioresult<>0 then errorhandler(loc_savenames(),1);
   end;
  read(namefile,names^);
- if ioresult<>0 then errorhandler(loc_savedir(),5);
+ if ioresult<>0 then errorhandler(loc_savenames(),5);
  close(namefile);
 end;
 

@@ -75,7 +75,7 @@ begin
    endgame;
   end;
 {$ENDIF}
- init_tmpdir;
+ init_dirs;
 end;
 
 procedure readybuildtimes;

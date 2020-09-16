@@ -42,3 +42,4 @@ Data_Generators/misc/scr2cpr
 Data_Generators/misc/cpr2tga
 Data_Generators/misc/tga2cpr
 Data_Generators/misc/tga_head.bin
+_paths_.pas

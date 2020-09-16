@@ -1011,7 +1011,7 @@ begin
    writeln('Do not run this program separately.  Please run IS.EXE.');
    halt(4);
   end;
- init_tmpdir;
+ init_dirs;
 end;
 
 {$IFDEF DEMO}
