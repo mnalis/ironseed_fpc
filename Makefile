@@ -144,10 +144,10 @@ Data_Generators/makedata/scanmake: Data_Generators/makedata/scanmake.pas
 Data_Generators/makedata/shipmake: Data_Generators/makedata/shipmake.pas
 Data_Generators/makedata/sysmake: Data_Generators/makedata/sysmake.pas
 Data_Generators/makedata/weapmake: Data_Generators/makedata/weapmake.pas
-Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o data.pas utils_.pas
+Data_Generators/makedata/iconmake: Data_Generators/makedata/iconmake.pas c_utils.o data.pas utils_.pas _paths_.pas
 Data_Generators/makedata/namemake: Data_Generators/makedata/namemake.pas
-Data_Generators/makedata/makeani: Data_Generators/makedata/makeani.pas   c_utils.o data.pas utils_.pas
-Data_Generators/makedata/shp2make: Data_Generators/makedata/shp2make.pas c_utils.o data.pas utils_.pas
+Data_Generators/makedata/makeani: Data_Generators/makedata/makeani.pas   c_utils.o data.pas utils_.pas _paths_.pas
+Data_Generators/makedata/shp2make: Data_Generators/makedata/shp2make.pas c_utils.o data.pas utils_.pas _paths_.pas
 
 Data_Generators/misc/scr2cpr: Data_Generators/misc/scr2cpr.pas Data_Generators/misc/data2.pas
 Data_Generators/misc/cpr2scr: Data_Generators/misc/cpr2scr.pas Data_Generators/misc/data2.pas
