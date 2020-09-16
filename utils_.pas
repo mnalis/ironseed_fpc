@@ -316,6 +316,10 @@ begin
   init_savedirs;
   init_tmpdir;
 {$IFDEF Trace}
+  writeln;
+  writeln('Using paths:');
+  writeln('P_LIB='#9, prog_libdir());
+  writeln('P_SHR='#9, prog_sharedir());
   writeln('EXE='#9, loc_exe());
   writeln('DATA='#9, loc_data());
   writeln('SOUND='#9, loc_sound());
@@ -323,6 +327,7 @@ begin
   writeln('SAVE1='#9, loc_savegame(1));
   writeln('TMP='#9, loc_tmp());
   writeln('PRN='#9, loc_prn());
+  writeln;
 {$ENDIF}
 end;
 

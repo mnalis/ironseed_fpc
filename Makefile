@@ -284,17 +284,26 @@ data_build:   $(DATA_TOOLS_D) $(DATA_TOOLS_P) $(DATA_FILES)
 
 data_rebuild: data_destroy data_build
 
-install: all
+install: cleanbak
 	test -d $(DESTDIR)$(libdir) || mkdir -p $(DESTDIR)$(libdir)
 	install $(PROG_FILES) $(DESTDIR)$(libdir)
 	test -d $(DESTDIR)$(bindir) || mkdir -p $(DESTDIR)$(bindir)
 	mv -f $(DESTDIR)$(libdir)/is $(DESTDIR)$(bindir)
 	test -d $(DESTDIR)$(sharedir)/data || mkdir -p $(DESTDIR)$(sharedir)/data
 	install -m 0644 data/* $(DESTDIR)$(sharedir)/data
+	rm -f $(DESTDIR)$(sharedir)/data/savegame.dir
 	test -d $(DESTDIR)$(sharedir)/sound || mkdir -p $(DESTDIR)$(sharedir)/sound
 	install -m 0644 sound/* $(DESTDIR)$(sharedir)/sound
 	test -d $(DESTDIR)$(docdir) || mkdir -p $(DESTDIR)$(docdir)
 	install -m 0644 README.md Documents/* $(DESTDIR)$(docdir)
 
+uninstall:
+	cd $(DESTDIR)$(bindir) && rm -f is
+	cd $(DESTDIR)$(libdir) && rm -f $(PROG_FILES)
+	rmdir $(DESTDIR)$(libdir)
+	cd $(DESTDIR)$(sharedir) && rm -f README.md $(wildcard data/* sound/*)
+	rmdir $(DESTDIR)$(sharedir)/data $(DESTDIR)$(sharedir)/sound $(DESTDIR)$(sharedir)
+	cd $(DESTDIR)$(docdir) && rm -f README.md $(notdir $(wildcard Documents/*))
+	rmdir $(DESTDIR)$(docdir)
 
-.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install clearpaths
+.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths
