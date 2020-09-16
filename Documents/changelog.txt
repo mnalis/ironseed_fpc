@@ -1,3 +1,4 @@
+- code: use TMPDIR for temp files
 - code: consolidate filepaths to code to allow custom dirs
 - build: scripts to regenerate last of data/* binary files
 v 0.1.9

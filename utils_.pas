@@ -56,7 +56,7 @@ function loc_savegame (const num:byte):string;
 function loc_prn:string;
 
 implementation
-uses sysutils, dos;
+uses sysutils, dos, users, baseunix;
 
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
@@ -171,33 +171,83 @@ begin
   loc_tmp := tempdir + '/';
 end;
 
-procedure init_tmpdir;
-var
-  curdir: string[255];		// NB: hopefully long enough
-  diskfreespace: longint;
+
+function UserName: string;
+// Get Operating System user name
+var s: string;
 begin
+  s := '';
+  s := GetUserName(fpgetuid);
+  if s='' then s := getenv('USER'); //fallback or other unixes which export $USER and don't support GetUserName
+  UserName := s;
+end;
+
+function try_tmpdir(t:string):boolean;
+var
+  diskfreespace: longint;
+  curdir: string[255];		// NB: hopefully long enough
+  subdir: string[255];		// NB: hopefully long enough
+begin
+  try_tmpdir := false;
+  if (t='') then exit;
+  subdir := 'ironseed';
+
   curdir := '.';
-  tempdir:=getenv('TEMP');
-  if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
-  if tempdir='' then tempdir:='TEMP';
   getdir(0,curdir);
-  chdir(tempdir);
-  if ioresult<>0 then tempdir:='TEMP';
-  chdir(curdir);
-  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
-  tempdir:=fexpand(tempdir);
-  diskfreespace:=diskfree(ord(tempdir[1])-64);
-  if ioresult<>0 then errorhandler('Failure accessing drive '+tempdir[1],5);
-  if diskfreespace<128000 then tempdir:='TEMP';
-  chdir(tempdir);
-  if ioresult<>0 then
+  writeln ('currently in curdir=', curdir, ', trying tempdir=', t, ' user=', UserName());
+
+  { handle '~' in PATH }
+  if (t[1]='~') and (t[2]='/') then
+   begin			{ tempdir in user $HOME }
+     //tempdir := StringReplace(t, '~/', getenv('HOME')+'/', []);
+     tempdir := fexpand(t);
+     //writeln ('  homedir reference found, new tempdir=',tempdir);
+   end
+  else				{ tempdir not in $HOME }
    begin
-    mkdir(tempdir);
-    if ioresult<>0 then errorhandler('Creating directory error,'+tempdir,5);
+     tempdir := fexpand(t);
+     subdir := subdir + '-' + UserName();
    end;
-  chdir(curdir);
-  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
+
   if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
+  chdir(tempdir);
+  if ioresult=0 then
+   begin			{ if directory exists }
+     diskfreespace:=diskfree(0);
+     if ioresult<>0 then errorhandler('Failure accessing tempdir '+t,5);
+     if diskfreespace>128000 then
+      begin			{ ... and has more than 128KiB free, then it looks OK }
+        chdir (subdir);
+        if (ioresult<>0) then
+         begin
+           chdir(tempdir);
+           mkdir (subdir);
+           chdir (subdir);
+           if ioresult<>0 then exit;	{ can't chdir nor mkdir our 'ironseed' subdir, abort }
+         end;
+        tempdir := tempdir + '/' + subdir;
+        try_tmpdir := true;
+        writeln ('  OK, using final tempdir=', tempdir);
+      end;
+   end;
+
+  chdir(curdir);		{ restore previous current directory }
+  if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
+end;
+
+procedure init_tmpdir;
+begin
+  if try_tmpdir(getenv('TMPDIR')) then exit;
+  if try_tmpdir('~/.cache') then exit;
+  if try_tmpdir('~/.local/share/') then exit;
+  if try_tmpdir(getenv('TEMP')) then exit;
+  if try_tmpdir('/tmp') then exit;
+  if try_tmpdir('./TEMP') then exit;
+
+  { nothing seems to work, try to create our own TEMP dir as everything else failed }
+  mkdir('./TEMP');
+  if try_tmpdir('./TEMP') then exit;
+  errorhandler('Failed to find usable tempdir',5);
 end;
 
 function loc_savedir:string;
