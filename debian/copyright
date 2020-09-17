@@ -1,0 +1,1669 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: ironseed
+Source: <https://github.com/mnalis/ironseed_fpc>
+#
+# Please double check copyright with the licensecheck(1) command.
+
+Files:     .gitignore
+           Data_Generators/makedata/aardcon1.txt
+           Data_Generators/makedata/aliemake.pas
+           Data_Generators/makedata/alienshp.txt
+           Data_Generators/makedata/anom.txt
+           Data_Generators/makedata/artimake.pas
+           Data_Generators/makedata/cargmake.pas
+           Data_Generators/makedata/cargo.txt
+           Data_Generators/makedata/contact.txt
+           Data_Generators/makedata/conv0000.txt
+           Data_Generators/makedata/convmake.d
+           Data_Generators/makedata/creamake.pas
+           Data_Generators/makedata/creation.txt
+           Data_Generators/makedata/crew.txt
+           Data_Generators/makedata/crewcon1.txt
+           Data_Generators/makedata/crewcon2.txt
+           Data_Generators/makedata/crewcon3.txt
+           Data_Generators/makedata/crewcon4.txt
+           Data_Generators/makedata/crewcon5.txt
+           Data_Generators/makedata/crewcon6.txt
+           Data_Generators/makedata/crewmake.pas
+           Data_Generators/makedata/data.d
+           Data_Generators/makedata/dpahcon1.txt
+           Data_Generators/makedata/element.txt
+           Data_Generators/makedata/elemmake.pas
+           Data_Generators/makedata/ermicon1.txt
+           Data_Generators/makedata/event.txt
+           Data_Generators/makedata/eventmak.pas
+           Data_Generators/makedata/getfont.pas
+           Data_Generators/makedata/guilcon1.txt
+           Data_Generators/makedata/iconcon1.txt
+           Data_Generators/makedata/iconmake.pas
+           Data_Generators/makedata/iteminfo.txt
+           Data_Generators/makedata/itemmake.pas
+           Data_Generators/makedata/logmake.d
+           Data_Generators/makedata/logs.txt
+           Data_Generators/makedata/makeani.pas
+           Data_Generators/makedata/makename.pas
+           Data_Generators/makedata/mochcon1.txt
+           Data_Generators/makedata/namemake.pas
+           Data_Generators/makedata/names.txt
+           Data_Generators/makedata/newnames.txt
+           Data_Generators/makedata/quacon1.txt
+           Data_Generators/makedata/scandata.txt
+           Data_Generators/makedata/scanmake.pas
+           Data_Generators/makedata/scavcon1.txt
+           Data_Generators/makedata/sengcon1.txt
+           Data_Generators/makedata/shipmake.pas
+           Data_Generators/makedata/shp2make.pas
+           Data_Generators/makedata/sysmake.pas
+           Data_Generators/makedata/sysset.txt
+           Data_Generators/makedata/tek2con1.txt
+           Data_Generators/makedata/tek3con1.txt
+           Data_Generators/makedata/tek4con1.txt
+           Data_Generators/makedata/tek5con1.txt
+           Data_Generators/makedata/template.txt
+           Data_Generators/makedata/titecon1.txt
+           Data_Generators/makedata/voidcon1.txt
+           Data_Generators/makedata/weapmake.pas
+           Data_Generators/makedata/weapon.txt
+           Data_Generators/misc/.gitignore
+           Data_Generators/misc/README.txt
+           Data_Generators/misc/cpr2scr.pas
+           Data_Generators/misc/cpr2tga.pas
+           Data_Generators/misc/cpr_extract_pal
+           Data_Generators/misc/cpr_to_png
+           Data_Generators/misc/data2.pas
+           Data_Generators/misc/icons2ppm.pl
+           Data_Generators/misc/png_to_cpr
+           Data_Generators/misc/png_to_cprnopal
+           Data_Generators/misc/pngpal_to_cpr
+           Data_Generators/misc/ppm2icons.pl
+           Data_Generators/misc/ppm2scr.pl
+           Data_Generators/misc/ppmpal2scr.pl
+           Data_Generators/misc/scr2cpr.pas
+           Data_Generators/misc/scr2ppm.pl
+           Data_Generators/misc/tga2cpr.pas
+           Data_Generators/misc/tga_head.txt
+           Data_Generators/other/evolve.txt
+           Data_Generators/other/itemdata.txt
+           Data_Generators/other/items.txt
+           Data_Generators/other/shipdata.txt
+           Data_Generators/other/stuff.txt
+           Data_Generators/other/sysdata.txt
+           Data_Generators/other/sysdata_unsorted.txt
+           Data_Generators/other/xp.txt
+           Documents/changelog.txt
+           Documents/debug_notes.md
+           Documents/old_todo.txt
+           Documents/old_version.txt
+           Graphics_Assets/alien.png
+           Graphics_Assets/alien1.png
+           Graphics_Assets/alien10.png
+           Graphics_Assets/alien2.png
+           Graphics_Assets/alien3.png
+           Graphics_Assets/alien4.png
+           Graphics_Assets/alien5.png
+           Graphics_Assets/alien6.png
+           Graphics_Assets/alien7.png
+           Graphics_Assets/alien8.png
+           Graphics_Assets/alien9.png
+           Graphics_Assets/back1.png
+           Graphics_Assets/back10.png
+           Graphics_Assets/back11.png
+           Graphics_Assets/back2.png
+           Graphics_Assets/back3.png
+           Graphics_Assets/back4.png
+           Graphics_Assets/back5.png
+           Graphics_Assets/back6.png
+           Graphics_Assets/back7.png
+           Graphics_Assets/back8.png
+           Graphics_Assets/back9.png
+           Graphics_Assets/battle1.png
+           Graphics_Assets/cargo.png
+           Graphics_Assets/channel7.png
+           Graphics_Assets/char.png
+           Graphics_Assets/char2.png
+           Graphics_Assets/charani.png
+           Graphics_Assets/charcom.png
+           Graphics_Assets/cloud.png
+           Graphics_Assets/com.png
+           Graphics_Assets/demoscr2.png
+           Graphics_Assets/demoscr3.png
+           Graphics_Assets/demoscr4.png
+           Graphics_Assets/demoscrn.png
+           Graphics_Assets/end1.png
+           Graphics_Assets/end2.png
+           Graphics_Assets/end3.png
+           Graphics_Assets/end4.png
+           Graphics_Assets/end5.png
+           Graphics_Assets/end6.png
+           Graphics_Assets/fight.png
+           Graphics_Assets/font.png
+           Graphics_Assets/icons.png
+           Graphics_Assets/image01.png
+           Graphics_Assets/image02.png
+           Graphics_Assets/image03.png
+           Graphics_Assets/image04.png
+           Graphics_Assets/image05.png
+           Graphics_Assets/image06.png
+           Graphics_Assets/image07.png
+           Graphics_Assets/image08.png
+           Graphics_Assets/image09.png
+           Graphics_Assets/image10.png
+           Graphics_Assets/image11.png
+           Graphics_Assets/image12.png
+           Graphics_Assets/image13.png
+           Graphics_Assets/image14.png
+           Graphics_Assets/image15.png
+           Graphics_Assets/image16.png
+           Graphics_Assets/image17.png
+           Graphics_Assets/image18.png
+           Graphics_Assets/image19.png
+           Graphics_Assets/image20.png
+           Graphics_Assets/image21.png
+           Graphics_Assets/image22.png
+           Graphics_Assets/image23.png
+           Graphics_Assets/image24.png
+           Graphics_Assets/image25.png
+           Graphics_Assets/image26.png
+           Graphics_Assets/image27.png
+           Graphics_Assets/image28.png
+           Graphics_Assets/image29.png
+           Graphics_Assets/image30.png
+           Graphics_Assets/image31.png
+           Graphics_Assets/image32.png
+           Graphics_Assets/intro2.png
+           Graphics_Assets/intro3.png
+           Graphics_Assets/intro5.png
+           Graphics_Assets/intro6.png
+           Graphics_Assets/landform.png
+           Graphics_Assets/log.png
+           Graphics_Assets/main-cube.png
+           Graphics_Assets/main-status-bulb.png
+           Graphics_Assets/main.png
+           Graphics_Assets/main3.png
+           Graphics_Assets/mouse--char.png
+           Graphics_Assets/mouse--com.png
+           Graphics_Assets/mouse-1.png
+           Graphics_Assets/mouse-2.png
+           Graphics_Assets/mouse-3.png
+           Graphics_Assets/plan1.png
+           Graphics_Assets/planet-icons.png
+           Graphics_Assets/planicon.png
+           Graphics_Assets/psyche.png
+           Graphics_Assets/saver.png
+           Graphics_Assets/sector.png
+           Graphics_Assets/shield-icons.png
+           Graphics_Assets/ship1.png
+           Graphics_Assets/shippart.png
+           Graphics_Assets/tech1.png
+           Graphics_Assets/trade.png
+           Graphics_Assets/waricon.png
+           Graphics_Assets/weapon-icons.png
+           Graphics_Assets/world.png
+           Makefile
+           README.md
+           TEMP/keep.c
+           crewtick.pas
+           heapchk.pas
+           modplay.pas
+           sound/AARD.MOD
+           sound/CARGO.MOD
+           sound/CHARGEN.MOD
+           sound/COMBAT.MOD
+           sound/COMPONT.MOD
+           sound/CREWCOMM.MOD
+           sound/CREWEVAL.MOD
+           sound/DIMENSIO.MOD
+           sound/DPAK.MOD
+           sound/ERMIGEN.MOD
+           sound/EXPLODE1.SAM
+           sound/EXPLODE2.SAM
+           sound/EXPLODE3.SAM
+           sound/GAME.MOD
+           sound/GENER1.MOD
+           sound/GUILD.MOD
+           sound/GUN1.SAM
+           sound/GUN4.SAM
+           sound/ICON.MOD
+           sound/INTRO1.MOD
+           sound/INTRO2.MOD
+           sound/LASER1.SAM
+           sound/LASER2.SAM
+           sound/LASER3.SAM
+           sound/LASER4.SAM
+           sound/LASER5.SAM
+           sound/LASER6.SAM
+           sound/LASER7.SAM
+           sound/LOVE.MOD
+           sound/PHADOR.MOD
+           sound/PROBE.MOD
+           sound/PSYEVAL.MOD
+           sound/QUAI.MOD
+           sound/SCANNER.MOD
+           sound/SCAVENG.MOD
+           sound/SECTOR.MOD
+           sound/SENGZHAC.MOD
+           sound/TITARIAN.MOD
+           sound/VICTORY.MOD
+           sound/VOID.MOD
+           test/test_0_c.c
+           test/test_0_pas.pas
+           test/test_replicate.d
+           test/test_write.d
+           test/testdiv0.pas
+           test/testkey1.pas
+           test/testsize.pas
+           utils_.pas
+           version.pas
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
+
+Files:     crewgen.pas
+           intro.pas
+           is.pas
+Copyright: __NO_COPYRIGHT__ in: crewgen.pas
+           __NO_COPYRIGHT__ in: intro.pas
+           __NO_COPYRIGHT__ in: is.pas
+License:   __UNKNOWN__
+ ***************************}
+
+Files:     gmouse.pas
+           utils.pas
+Copyright: __NO_COPYRIGHT__ in: gmouse.pas
+           __NO_COPYRIGHT__ in: utils.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ interface
+ .
+ type
+
+Files:     c_utils.c
+Copyright: __NO_COPYRIGHT__ in: c_utils.c
+License:   GPL-2.0+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301, USA.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files:     main.pas
+Copyright: __NO_COPYRIGHT__ in: main.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ uses starter, data;
+ .
+ begin
+
+Files:     weird.pas
+Copyright: __NO_COPYRIGHT__ in: weird.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ interface
+ .
+ const
+
+Files:     usecode.pas
+Copyright: __NO_COPYRIGHT__ in: usecode.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ .
+ interface
+ .
+ procedure readystarmap(mode: integer);
+ procedure removesystem(erase: boolean);
+ procedure readystatus;
+ procedure readyshipinfo;
+ procedure processcube(face: integer);
+ procedure targetstar(tarx,tary: integer);
+ procedure addlotstime(background, dayticks :Boolean; t: integer);
+ procedure showbotstuff;
+ procedure armweapons;
+ procedure powerdownweapons;
+ procedure raiseshields;
+ procedure lowershields;
+ procedure readytarget;
+ procedure engage(x,y,z: integer);
+ procedure removestarmap;
+ procedure cleanright(erasepanel: boolean);
+ procedure showresearchlights;
+ procedure readysysteminfo;
+ procedure readylongscan;
+ procedure readyconfigure;
+ procedure readybots;
+ .
+ implementation
+
+Files:     combat.pas
+Copyright: __NO_COPYRIGHT__ in: combat.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ {$PACKRECORDS 1}
+ interface
+ .
+ procedure initiatecombat;
+ .
+ implementation
+
+Files:     crew2.pas
+Copyright: __NO_COPYRIGHT__ in: crew2.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ .
+ interface
+ .
+ procedure psyche;
+ .
+ implementation
+
+Files:     crewinfo.pas
+Copyright: __NO_COPYRIGHT__ in: crewinfo.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ .
+ interface
+ .
+ procedure crewstats;
+ .
+ implementation
+
+Files:     starter.pas
+Copyright: __NO_COPYRIGHT__ in: starter.pas
+License:   __UNKNOWN__
+ ***************************}
+ {$O+}
+ {$I-}
+ interface
+ .
+ procedure cleartextdisplay;
+ procedure journeyon;
+ procedure checkparams;
+ procedure readydata;
+ .
+ implementation
+
+Files:     journey.pas
+Copyright: __NO_COPYRIGHT__ in: journey.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ interface
+ .
+ procedure print(s: string);
+ procedure println;
+ procedure showtime;
+ procedure addtime;
+
+Files:     comm2.pas
+Copyright: __NO_COPYRIGHT__ in: comm2.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ interface
+ .
+ uses data;
+ .
+ procedure computerlogs(n: integer);
+ procedure trade;
+ .
+ implementation
+
+Files:     ending.pas
+Copyright: __NO_COPYRIGHT__ in: ending.pas
+License:   __UNKNOWN__
+ ***************************}
+ {$O+}
+ .
+ interface
+ .
+ procedure endgame;
+ .
+ implementation
+
+Files:     info.pas
+Copyright: __NO_COPYRIGHT__ in: info.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ .
+ interface
+ .
+ procedure sectorinfo;
+ .
+ implementation
+
+Files:     cargtool.pas
+Copyright: __NO_COPYRIGHT__ in: cargtool.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ interface
+ .
+ procedure inventory;
+ procedure creation;
+ function StartBuild(background : Boolean; root, item, team : Integer) :Integer;
+ .
+ implementation
+
+Files:     Documents/ironseed-manual.txt
+Copyright: Communications
+License:   __UNKNOWN__
+ These values are the same as those on your own ship all are explained in
+ greater detail below (see Primary and Auxiliary Status Bars).
+ .
+ Visual Mode:
+ .
+ When the TargetBox is in Visual Mode you will see a vid clip of the target
+ vessel at the left of the TargetBox.  Above that should be other information
+ about the ship.  From top to bottom that list is as follows:
+ .
+ Race
+ .
+ The race indicator will tell you which alien empire you're clashing horns with.
+ .
+ Ship Type (and ship index)
+ .
+ Depending on the estimated weaponry and hull strength the ship's computer will
+ attempt to classify alien vessels in one of 15 categories (in order of least to
+ greatest).
+ .
+ Shuttle
+ Scout
+ Fighter
+ Assault Scout
+ Patrol Craft
+ Corvette
+ Frigate
+ Lt. Destroyer
+ Hv. Destroyer
+ Lt. Cruiser
+ Hv. Cruiser
+ Battle Cruiser
+ Flagship
+ Battleship
+ Dreadnaught
+ .
+ The ship index (the letter that follows a ship's type) distinguishes between
+ the different ships as they approach you.  Each ship has a different index
+ letter.  The index for a ship will stay constant throughout a battle.
+ .
+ Range
+ .
+ This is the targeted ship's distance from your ship in thousands of Kilometers
+ (k km).
+ .
+ Tech Level
+ .
+ This is the estimated Tech Level of the targeted ship (see Science Planet Scan
+ for list of Tech Levels).
+ .
+ (Accel) Acceleration
+ .
+ This is a rating of how many units of velocity may be accumulated per second by
+ the targeted vessel.
+ .
+ (Prev) Previous/Next
+ .
+ Selecting Next will move the TargetBox through the index list of ships.
+ Previous will move you in the opposite direction through the list.  These may
+ become useful when the enemy is tightly clumped making directly selecting them
+ from the Battle Display difficult.
+ .
+ Weapon Configuration
+ .
+ This is the bottom middle of the battle screen.  In this Area you should see
+ your gun nodes and the weapons installed in them.  Next to each weapon should
+ be a green light.  This light is the Power Light for that weapon.
+ .
+ PowerUp Sequence
+ .
+ Each time a weapon is fired the system checks to see if the Power Light is
+ active for that weapon.  If the light is green and sufficient power is
+ available in the battery that weapon will begin powering.  If the light is red
+ after the weapon is fired that weapon will not begin to power until the light
+ is again green.
+ .
+ After long battles when your batteries are low it may become necessary to
+ remove power hungry weapons from the PowerUp Sequence.  This leaves your
+ batteries free to power less powerful weapons which can fire more frequently.
+ Ultimately, what weapons are left in the PowerUp Sequence is up to you.  Too
+ many weapon configurations exist to explain the best technique for each.  The
+ best suggestion is to experiment with the Power Lights until you are familiar
+ with the best setup for your ship.
+ .
+ Firing a weapon
+ .
+ Once power from the battery is allocated to a weapon it will begin to power.
+ This will turn the border of the weapon icon from dark red to bright read then
+ into dark green and eventually to bright green.  If the targeted vessel located
+ in the TargetBox is also within range of a fully powered weapon the border for
+ that weapon will turn blue.  If Active Fire is disabled you must click on the
+ weapon before it will fire. Active Fire is explained below.
+ .
+ Active Fire
+ .
+ The cross-hair icon is responsible for toggling Active Fire and is located to
+ the right of the Weapon Configuration Area beneath the word "Active."  The
+ Active Fire status bar is above the Weapon Configuration Area.   When Active
+ Fire is enabled the Active Fire status bar should be red.  While this function
+ is active all powered weapons within range of a targeted enemy will fire.  For
+ ease of play this feature is often enabled and left on for the rest of the
+ battle.
+ .
+ Active Scanner
+ .
+ In order to increase the accuracy of the weapons when engaging an enemy it is
+ possible to initiate an active scan of the ships you target.  The Active
+ Scanner toggle button is immediately to the right of  the Active Fire toggle
+ button.  When enabled the Active Scanner status bar beneath the Weapon
+ Configuration Area should be red.  This function will increase your hit
+ accuracy by 20%.  Unfortunately, all those high energy ship scans have a cost.
+ In order to pinpoint a ship you have to reveal your own position.  This
+ subsequently increases the enemy's hit accuracy by 20%.  This is most useful
+ when you've armed yourself with long range weapons or when the enemy is weakly
+ armed.
+ .
+ Primary Status Bars
+ .
+ The three red bars on the right hand side of the battle screen are the Primary
+ Status Bars.  These keep you aware of your ship's most crucial system levels
+ and damages.  Those three, from right to left, are as follows.
+ .
+ Shield Control
+ .
+ Clicking on this bar will adjust the shield level of your ship.  The higher you
+ go on the bar the greater the allotted shield power will be. Notice the tick
+ marker that appears near the top and to the right of the Shield Control bar.
+ The height of this marker is the maximum power value the shield may assume.  As
+ your shield system takes more damage this marker will move down.  A powered
+ shield will continue to draw energy from your battery.  For this reason, it is
+ a good idea to keep the shield on zero power unless you are in immediate
+ danger.
+ .
+ Ground State Pulse Effect
+ .
+ When your batteries have been exhausted and your shields are still powered you
+ may experience a Ground State Pulse (GSP).  Your shield power will fluctuate
+ madly as a result.  The reason for this lies behind the physics which drive
+ your ship.  The matter converters in the ship's drive core are step generators.
+ They produce discrete packets of energy that the power buffers to the auxiliary
+ storage batteries convert to continuous power.  This is analogous to the
+ difference between digital power and analog power.  When the battery is
+ exhausted the shield begins effectively feeding from the step generators.  The
+ resulting field instability can cause damage to the shield generator itself.
+ The chance is small but leaving a shield in a GSP is not recommended.
+ .
+ Auxiliary Power
+ .
+ The second red status bar is the Auxiliary Power level.  This represents the
+ amount of power available in your batteries.  For this gauge the height of the
+ tick marker to the right of it is the maximum power the battery may store.  As
+ you take damage to this system the marker will move down reducing the amount of
+ storable power.  Keep an eye on this gauge.  When it starts getting low you'll
+ want adjust your shield level to avoid a GSP (see Ground State Pulse Effect).
+ .
+ Hull Damage
+ .
+ The Hull Damage is self explanatory.  When this gauge reaches zero game over,
+ adios, ciao, do not pass go, do not collect $200.
+ .
+ Auxiliary Status Bars
+ .
+ The Auxiliary Status Bars are located at the bottom right side of the battle
+ screen.  These status bars give you a read out of your ship systems and their
+ associated damage levels.  A list of these and the effects of damage are given
+ below.  From top to bottom they are as follows:
+ .
+ Power
+ .
+ Power system damage will reduce the recharge rate of your battery (i.e.
+ auxiliary power)
+ .
+ Shield
+ .
+ Shield damage will reduce the maximum power that your shield may assume.
+ .
+ Weapons
+ .
+ Damage to the weapon systems will reduce your hit accuracy.
+ .
+ Engines
+ .
+ Significant engine system damage will render the engines inoperable. This is
+ decidedly bad in combat as you will be a sitting duck.  That's not bad as
+ sitting ducks lie... but then again, I never believed a liar... it's like they
+ always say...
+ .
+ Life Support
+ .
+ Significant damage to life support systems will erase backup encodes. This also
+ very bad.  Restoring your security officer after battle to regain his sanity
+ will be impossible at that point.  Obviously restoring or re-encoding your crew
+ would be penultimately stupid following encode loss.  It would be the same as
+ saving a blank file over a good file. Dumb.  Yes, very dumb.
+ .
+ Communication
+ .
+ Damage to communication systems will make talking with aliens impossible.
+ .
+ CPU
+ .
+ If the (CPU) Central Processing Unit onboard your ship is damaged many of the
+ displays will not function correctly.  Damage to the ship's computer will not
+ kill the crew but will make most of the displays and menus difficult if not
+ impossible to use.
+ .
+ Zoom (+-)
+ .
+ Above the Active Fire and Scanner buttons you will see the Zoom In/Out buttons.
+ Zooming in and out will change the maximum scan range for the Battle Display.
+ When enemies are very near it is useful to Zoom in, while distant enemies will
+ only be visible from several Zooms out. Play around with these until you are
+ familiar with their function. TimeSlice (+-)
+ .
+ The TimeSlice control for battle is at the top right of the battle screen.  The
+ effect and control of the TimeSlice value is the same as it is for the Main
+ Screen (see Medical, Options, TimeSlice)
+ .
+ I've read all of this and I'm still lost.
+ .
+ For the simplest battle control you need to remember FIVE
+ controls:
+ 1. Scanners and Fire Control must be active.
+ 2. TimeSlice must be large (20 - 30)
+ 3. Head away from everything close to you in the Battle Plane by using
+ the ThrustPad (Run away! Run away!).
+ 4. Set your Shield Level to one quarter of its total power.
+ 5. Keep selecting all the vessels closest to you on the Battle Display
+ until they are all destroyed.
+ .
+ Beginners should use these five rules only for as long as they have to. These
+ controls are effective against simpler enemies, but it is important to remember
+ complex situations require complex strategies.  Use these tips only as a
+ foundation for your own schemes.
+ .
+ 7. Release Drones
+ .
+ This function creates a dummy enemy in the computer for you to fight in mock
+ combat.  Originally the battles from this simulation were harmless practice
+ encounters.  However, damage taken before your encodes were revived has made
+ drone combat potentially dangerous. While the damage taken by your ship in
+ these simulations is not physcially real the computer is unable to tell the
+ difference.  When encode containment reaches zero during mock combat the
+ computer was to exit the combat environment.  Now, the computer believes the
+ damage it has taken has actually erased the crew.  In the event of an encode
+ breach the computer was also programmed to reload the crew from cold storage.
+ Unfortunately only six hot slots remain for the thousands of crew back ups that
+ exist.  Confused, the computer will compress the data and stuff it into those
+ slots anyway.  This spells death for you.
+ .
+ Take this as a warning.  While drone battle is relatively inane it can be
+ fatal.  Do not attempt drone warfare unless you are armed with at least two
+ Dirks.  It is also suggested that you play in Easy mode (see Medical, Options,
+ Difficulty) before you get yourself killed.
+ .
+ Astrogation
+ .
+ 1 Star Map
+ 2 Sector Codex
+ 3 Local Travel Hist.
+ 4 Quick Ship Status
+ 5 Target a System
+ 6 Astrogation Rsrch.
+ 7 Full Ship Status
+ 8 Local System Info.
+ .
+ 1. Local Area Star Map
+ .
+ This star map will appear in the left side of the Primary Display.  It will
+ reveal all stars within a 40 light year radius.
+ .
+ 2. Sector Codex
+ .
+ Within the Sector Codex any star that is selected is automatically targeted.
+ Due to the number of stars per sector the rotating sector map on the left is
+ too dense for you to make accurate selections.  You may only select a star from
+ the x-y and y-z plane views.  Selecting the engage engines icon will take you
+ to whatever location you have selected without the targeting procedure. Origin:
+ This button will return you to your present location within the Sector Codex.
+ .
+ X-Loc, Y-Loc, and Z-Loc: These are your X, Y, and Z coordinates (respectively).
+ You can enter coordinates into these by selecting the number area with your
+ pointer.  When inputting coordinates from log entries the Sector Codex will
+ take you as close to that system as possible.  The targeting computer is
+ fallible, however. It may be necessary to select the system from the x-y and
+ y-z plane views once you know a star's approximate position.
+ .
+ Sectors (1-8): These buttons allow you to view the areas you have explored in
+ the eight sectors that make up the local star cluster.
+ .
+ Arrow Keys: These keys will allow you to change the perspective of the rotating
+ sector map.
+ .
+ Travel Log: This button will provide you with a history of the sector you have
+ selected.  White stars in the sector map are those you have been to.  Red stars
+ in the sector map are those you have seen in the Local Area Star Map but have
+ not travelled to.  The Scans Completed gauge in this area is not entirely
+ accurate.  As planets age and fall into new stages of development so do their
+ scans become out of date.  This percentage may be smaller than you thought it
+ should be.  The percent difference is a result of these changes.
+ .
+ Sector Map: Selecting this button will take you out of the Travel Log Mode.  If
+ you aren't in this mode when you select this button nothing will happen.
+ .
+ 3. Local Travel History
+ .
+ Local Travel History is not a true path of travel.  What it will tell you is
+ the order in which you have visited the stars in the Local Area Star Map.
+ .
+ 4. Quick Ship Status
+ .
+ Quick Ship Status will give you the info associated with the Alert Bulbs on the
+ right of the main screen.  This is a list of hull integrity, primary power,
+ auxiliary power, and shield power levels.  You may also access this screen by
+ selecting the Alert Bulbs themselves in the Main Screen.
+ .
+ 5. Target a System
+ .
+ To target a system you must have selected a system from either the Local Area
+ Star Map or the Local System Info menu.  When a system from either of these is
+ selected you may then enter that system into the targeting computer by
+ selecting this function.  Once a location is targeted you may travel to it by
+ engaging the engines from the button bar at the top of the Primary Display.
+ .
+ 6. Astrogation Research
+ .
+ This toggles your Astrogation officer's research status. Researching will
+ increase their knowledge base, or experience points. Do this whenever possible.
+ .
+ 7. Full Ship Status
+ .
+ Full Ship Status will give you a breakdown of damages to the primary systems on
+ board, the hull, fuel, and cargo statuses as well as the ship coordinates.
+ .
+ 8. Local System Information
+ .
+ This is the sister display to Local Area Star Map.  When both displays are
+ active they affect each other.  Scrolling through the list of stars in the
+ Local System Information menu will cause the target circle on the Local Area
+ Star Map to move from star to star depending on the one selected.  This menu
+ has two primary functions which are as follows:
+ .
+ Printouts of all visited systems
+ .
+ Selecting the Printer icon from the far right of the button bar will provide
+ you with a complete printout of all stars you have visited.  As with the Cargo
+ printer function you must have a printer on-line and connected to your computer
+ for this to work.
+ .
+ Targeting stars and engaging engines
+ .
+ To move to another star you must first target the system you wish to travel to.
+ Each star in the list has a distance in light years to the right of it.  Stars
+ whose distance value is white are within travelling distance (i.e. you have the
+ fuel to get there).  Select a star from this list that is within your reach.
+ To target that system select the arrow-and-x icon from the button bar.  To
+ travel to a targeted system select the engage engines icon from the button bar.
+ .
+ Medical
+ .
+ 1 Game Options
+ 2 Begin Time Burst
+ 3 Clear All Displays
+ 4 Save Game
+ 5 Load Game
+ 6 Medical Research
+ 7 Encode Crew Member
+ 8 Decode Crew Member
+ 9 Quit to Dos
+ .
+ 1. Game Options
+ .
+ The Notepad icon will bring up a list of features that you can change about the
+ interface.
+ .
+ Screen Saver (On/Off)
+ .
+ When this function is on and the system is idle for 750 loops through the main
+ routine (750 loops is officially defined to be "a little while" in Channel7-
+ ese)
+ .
+ Time Slice (1-250)
+ .
+ The Time Slice is the delay in milliseconds that is inserted into each scan
+ cycle.  Suffice it to say that increasing the Time Slice slows the program
+ down.  Depending on the speed of your machine you'll need to change the value
+
+Files:     explore.pas
+Copyright: __NO_COPYRIGHT__ in: explore.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {R+}
+ .
+ interface
+ .
+ procedure exploreplanet;
+ .
+ implementation
+
+Files:     utils2.pas
+Copyright: __NO_COPYRIGHT__ in: utils2.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ interface
+ .
+ procedure adjustplanets(t: integer);
+ procedure adjustsystem;
+ procedure redoscreen(x,y,z: integer);
+ procedure createplanet(xc,yc: integer);
+ procedure readyplanet;
+ procedure createstar(c,xc,yc: integer);
+ procedure readystar;
+ procedure removedata;
+ procedure dothatartifactthing(n: integer);
+ procedure reloadbackground;
+ procedure makeastoroidfield;
+ procedure makecloud;
+ procedure drawastoroid;
+ procedure getname(n: integer);
+ procedure addgunnode;
+ procedure addstuff(n, limit: integer);
+ procedure getstuffamounts(
+ const state	: Integer;
+ var ele	: array{[0..16]} of integer;
+ var mat	: array{[0..20]} of Integer;
+ var cmp	: array{[0..22]} of Integer);
+ .
+ function getplanetorbit(planet : Integer): Integer;
+ function getplanetbyorbit(sys, orbit : Integer): Integer;
+ procedure planettravel(sys, index : Integer);
+ procedure gotoorbit(sys, n : Integer);
+ function GetTechnologyLevel(plan : Integer) : Integer;
+ .
+ implementation
+
+Files:     saveload.pas
+Copyright: __NO_COPYRIGHT__ in: saveload.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ interface
+ .
+ function loadgamedata(tofadein: boolean): boolean;
+ function savegamedata(alt,text: integer): boolean;
+ function yesnorequest(s: string; alt,text: integer): boolean;
+ procedure button(x1,y1,x2,y2,alt: integer);
+ procedure encodecrew(tc: integer);
+ procedure decodecrew;
+ procedure printinfo;
+ procedure printcargo;
+ procedure loadgame(num: integer);
+ .
+ implementation
+
+Files:     comm.pas
+Copyright: __NO_COPYRIGHT__ in: comm.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ {$O+}
+ {$I-}
+ .
+ interface
+
+Files:     data.pas
+Copyright: __NO_COPYRIGHT__ in: data.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ interface
+ {$PACKRECORDS 1}
+
+Files:     display.pas
+Copyright: __NO_COPYRIGHT__ in: display.pas
+License:   __UNKNOWN__
+ ***************************}
+ .
+ interface
+ .
+ procedure displayoptions(com: integer);
+ procedure displaystarmap;
+ procedure displaystatus;
+ procedure displaysysteminfo(com: integer);
+ procedure displayshieldopts(com: integer);
+ procedure displayweaponinfo(com: integer);
+ procedure displaydamagecontrol(com: integer);
+ procedure displaylogs(com: integer);
+ procedure displaysystem(com: integer);
+ procedure displayship2(x1,y1: integer);
+ procedure displayshipinfo;
+ procedure checkstats;
+ procedure targetplanet(xt,yt: integer);
+ procedure displayconfigure(com: integer);
+ procedure findgunnode(x,y:integer);
+ procedure displaybotinfo(com: integer);
+ procedure displayhistorymap;
+ procedure displayshortscan;
+ procedure displaylongscan;
+ function checkloc(l: integer): boolean;
+ .
+ implementation
+
+#----------------------------------------------------------------------------
+# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
+# license/copyright files.
+
+#----------------------------------------------------------------------------
+# License file: LICENSE
+ GNU GENERAL PUBLIC LICENSE
+                        Version 3, 29 June 2007
+ .
+  Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
+ .
+                             Preamble
+ .
+   The GNU General Public License is a free, copyleft license for
+ software and other kinds of works.
+ .
+   The licenses for most software and other practical works are designed
+ to take away your freedom to share and change the works.  By contrast,
+ the GNU General Public License is intended to guarantee your freedom to
+ share and change all versions of a program--to make sure it remains free
+ software for all its users.  We, the Free Software Foundation, use the
+ GNU General Public License for most of our software; it applies also to
+ any other work released this way by its authors.  You can apply it to
+ your programs, too.
+ .
+   When we speak of free software, we are referring to freedom, not
+ price.  Our General Public Licenses are designed to make sure that you
+ have the freedom to distribute copies of free software (and charge for
+ them if you wish), that you receive source code or can get it if you
+ want it, that you can change the software or use pieces of it in new
+ free programs, and that you know you can do these things.
+ .
+   To protect your rights, we need to prevent others from denying you
+ these rights or asking you to surrender the rights.  Therefore, you have
+ certain responsibilities if you distribute copies of the software, or if
+ you modify it: responsibilities to respect the freedom of others.
+ .
+   For example, if you distribute copies of such a program, whether
+ gratis or for a fee, you must pass on to the recipients the same
+ freedoms that you received.  You must make sure that they, too, receive
+ or can get the source code.  And you must show them these terms so they
+ know their rights.
+ .
+   Developers that use the GNU GPL protect your rights with two steps:
+ (1) assert copyright on the software, and (2) offer you this License
+ giving you legal permission to copy, distribute and/or modify it.
+ .
+   For the developers' and authors' protection, the GPL clearly explains
+ that there is no warranty for this free software.  For both users' and
+ authors' sake, the GPL requires that modified versions be marked as
+ changed, so that their problems will not be attributed erroneously to
+ authors of previous versions.
+ .
+   Some devices are designed to deny users access to install or run
+ modified versions of the software inside them, although the manufacturer
+ can do so.  This is fundamentally incompatible with the aim of
+ protecting users' freedom to change the software.  The systematic
+ pattern of such abuse occurs in the area of products for individuals to
+ use, which is precisely where it is most unacceptable.  Therefore, we
+ have designed this version of the GPL to prohibit the practice for those
+ products.  If such problems arise substantially in other domains, we
+ stand ready to extend this provision to those domains in future versions
+ of the GPL, as needed to protect the freedom of users.
+ .
+   Finally, every program is threatened constantly by software patents.
+ States should not allow patents to restrict development and use of
+ software on general-purpose computers, but in those that do, we wish to
+ avoid the special danger that patents applied to a free program could
+ make it effectively proprietary.  To prevent this, the GPL assures that
+ patents cannot be used to render the program non-free.
+ .
+   The precise terms and conditions for copying, distribution and
+ modification follow.
+ .
+                        TERMS AND CONDITIONS
+ .
+   0. Definitions.
+ .
+   "This License" refers to version 3 of the GNU General Public License.
+ .
+   "Copyright" also means copyright-like laws that apply to other kinds of
+ works, such as semiconductor masks.
+ .
+   "The Program" refers to any copyrightable work licensed under this
+ License.  Each licensee is addressed as "you".  "Licensees" and
+ "recipients" may be individuals or organizations.
+ .
+   To "modify" a work means to copy from or adapt all or part of the work
+ in a fashion requiring copyright permission, other than the making of an
+ exact copy.  The resulting work is called a "modified version" of the
+ earlier work or a work "based on" the earlier work.
+ .
+   A "covered work" means either the unmodified Program or a work based
+ on the Program.
+ .
+   To "propagate" a work means to do anything with it that, without
+ permission, would make you directly or secondarily liable for
+ infringement under applicable copyright law, except executing it on a
+ computer or modifying a private copy.  Propagation includes copying,
+ distribution (with or without modification), making available to the
+ public, and in some countries other activities as well.
+ .
+   To "convey" a work means any kind of propagation that enables other
+ parties to make or receive copies.  Mere interaction with a user through
+ a computer network, with no transfer of a copy, is not conveying.
+ .
+   An interactive user interface displays "Appropriate Legal Notices"
+ to the extent that it includes a convenient and prominently visible
+ feature that (1) displays an appropriate copyright notice, and (2)
+ tells the user that there is no warranty for the work (except to the
+ extent that warranties are provided), that licensees may convey the
+ work under this License, and how to view a copy of this License.  If
+ the interface presents a list of user commands or options, such as a
+ menu, a prominent item in the list meets this criterion.
+ .
+   1. Source Code.
+ .
+   The "source code" for a work means the preferred form of the work
+ for making modifications to it.  "Object code" means any non-source
+ form of a work.
+ .
+   A "Standard Interface" means an interface that either is an official
+ standard defined by a recognized standards body, or, in the case of
+ interfaces specified for a particular programming language, one that
+ is widely used among developers working in that language.
+ .
+   The "System Libraries" of an executable work include anything, other
+ than the work as a whole, that (a) is included in the normal form of
+ packaging a Major Component, but which is not part of that Major
+ Component, and (b) serves only to enable use of the work with that
+ Major Component, or to implement a Standard Interface for which an
+ implementation is available to the public in source code form.  A
+ "Major Component", in this context, means a major essential component
+ (kernel, window system, and so on) of the specific operating system
+ (if any) on which the executable work runs, or a compiler used to
+ produce the work, or an object code interpreter used to run it.
+ .
+   The "Corresponding Source" for a work in object code form means all
+ the source code needed to generate, install, and (for an executable
+ work) run the object code and to modify the work, including scripts to
+ control those activities.  However, it does not include the work's
+ System Libraries, or general-purpose tools or generally available free
+ programs which are used unmodified in performing those activities but
+ which are not part of the work.  For example, Corresponding Source
+ includes interface definition files associated with source files for
+ the work, and the source code for shared libraries and dynamically
+ linked subprograms that the work is specifically designed to require,
+ such as by intimate data communication or control flow between those
+ subprograms and other parts of the work.
+ .
+   The Corresponding Source need not include anything that users
+ can regenerate automatically from other parts of the Corresponding
+ Source.
+ .
+   The Corresponding Source for a work in source code form is that
+ same work.
+ .
+   2. Basic Permissions.
+ .
+   All rights granted under this License are granted for the term of
+ copyright on the Program, and are irrevocable provided the stated
+ conditions are met.  This License explicitly affirms your unlimited
+ permission to run the unmodified Program.  The output from running a
+ covered work is covered by this License only if the output, given its
+ content, constitutes a covered work.  This License acknowledges your
+ rights of fair use or other equivalent, as provided by copyright law.
+ .
+   You may make, run and propagate covered works that you do not
+ convey, without conditions so long as your license otherwise remains
+ in force.  You may convey covered works to others for the sole purpose
+ of having them make modifications exclusively for you, or provide you
+ with facilities for running those works, provided that you comply with
+ the terms of this License in conveying all material for which you do
+ not control copyright.  Those thus making or running the covered works
+ for you must do so exclusively on your behalf, under your direction
+ and control, on terms that prohibit them from making any copies of
+ your copyrighted material outside their relationship with you.
+ .
+   Conveying under any other circumstances is permitted solely under
+ the conditions stated below.  Sublicensing is not allowed; section 10
+ makes it unnecessary.
+ .
+   3. Protecting Users' Legal Rights From Anti-Circumvention Law.
+ .
+   No covered work shall be deemed part of an effective technological
+ measure under any applicable law fulfilling obligations under article
+ 11 of the WIPO copyright treaty adopted on 20 December 1996, or
+ similar laws prohibiting or restricting circumvention of such
+ measures.
+ .
+   When you convey a covered work, you waive any legal power to forbid
+ circumvention of technological measures to the extent such circumvention
+ is effected by exercising rights under this License with respect to
+ the covered work, and you disclaim any intention to limit operation or
+ modification of the work as a means of enforcing, against the work's
+ users, your or third parties' legal rights to forbid circumvention of
+ technological measures.
+ .
+   4. Conveying Verbatim Copies.
+ .
+   You may convey verbatim copies of the Program's source code as you
+ receive it, in any medium, provided that you conspicuously and
+ appropriately publish on each copy an appropriate copyright notice;
+ keep intact all notices stating that this License and any
+ non-permissive terms added in accord with section 7 apply to the code;
+ keep intact all notices of the absence of any warranty; and give all
+ recipients a copy of this License along with the Program.
+ .
+   You may charge any price or no price for each copy that you convey,
+ and you may offer support or warranty protection for a fee.
+ .
+   5. Conveying Modified Source Versions.
+ .
+   You may convey a work based on the Program, or the modifications to
+ produce it from the Program, in the form of source code under the
+ terms of section 4, provided that you also meet all of these conditions:
+ .
+     a) The work must carry prominent notices stating that you modified
+     it, and giving a relevant date.
+ .
+     b) The work must carry prominent notices stating that it is
+     released under this License and any conditions added under section
+     7.  This requirement modifies the requirement in section 4 to
+     "keep intact all notices".
+ .
+     c) You must license the entire work, as a whole, under this
+     License to anyone who comes into possession of a copy.  This
+     License will therefore apply, along with any applicable section 7
+     additional terms, to the whole of the work, and all its parts,
+     regardless of how they are packaged.  This License gives no
+     permission to license the work in any other way, but it does not
+     invalidate such permission if you have separately received it.
+ .
+     d) If the work has interactive user interfaces, each must display
+     Appropriate Legal Notices; however, if the Program has interactive
+     interfaces that do not display Appropriate Legal Notices, your
+     work need not make them do so.
+ .
+   A compilation of a covered work with other separate and independent
+ works, which are not by their nature extensions of the covered work,
+ and which are not combined with it such as to form a larger program,
+ in or on a volume of a storage or distribution medium, is called an
+ "aggregate" if the compilation and its resulting copyright are not
+ used to limit the access or legal rights of the compilation's users
+ beyond what the individual works permit.  Inclusion of a covered work
+ in an aggregate does not cause this License to apply to the other
+ parts of the aggregate.
+ .
+   6. Conveying Non-Source Forms.
+ .
+   You may convey a covered work in object code form under the terms
+ of sections 4 and 5, provided that you also convey the
+ machine-readable Corresponding Source under the terms of this License,
+ in one of these ways:
+ .
+     a) Convey the object code in, or embodied in, a physical product
+     (including a physical distribution medium), accompanied by the
+     Corresponding Source fixed on a durable physical medium
+     customarily used for software interchange.
+ .
+     b) Convey the object code in, or embodied in, a physical product
+     (including a physical distribution medium), accompanied by a
+     written offer, valid for at least three years and valid for as
+     long as you offer spare parts or customer support for that product
+     model, to give anyone who possesses the object code either (1) a
+     copy of the Corresponding Source for all the software in the
+     product that is covered by this License, on a durable physical
+     medium customarily used for software interchange, for a price no
+     more than your reasonable cost of physically performing this
+     conveying of source, or (2) access to copy the
+     Corresponding Source from a network server at no charge.
+ .
+     c) Convey individual copies of the object code with a copy of the
+     written offer to provide the Corresponding Source.  This
+     alternative is allowed only occasionally and noncommercially, and
+     only if you received the object code with such an offer, in accord
+     with subsection 6b.
+ .
+     d) Convey the object code by offering access from a designated
+     place (gratis or for a charge), and offer equivalent access to the
+     Corresponding Source in the same way through the same place at no
+     further charge.  You need not require recipients to copy the
+     Corresponding Source along with the object code.  If the place to
+     copy the object code is a network server, the Corresponding Source
+     may be on a different server (operated by you or a third party)
+     that supports equivalent copying facilities, provided you maintain
+     clear directions next to the object code saying where to find the
+     Corresponding Source.  Regardless of what server hosts the
+     Corresponding Source, you remain obligated to ensure that it is
+     available for as long as needed to satisfy these requirements.
+ .
+     e) Convey the object code using peer-to-peer transmission, provided
+     you inform other peers where the object code and Corresponding
+     Source of the work are being offered to the general public at no
+     charge under subsection 6d.
+ .
+   A separable portion of the object code, whose source code is excluded
+ from the Corresponding Source as a System Library, need not be
+ included in conveying the object code work.
+ .
+   A "User Product" is either (1) a "consumer product", which means any
+ tangible personal property which is normally used for personal, family,
+ or household purposes, or (2) anything designed or sold for incorporation
+ into a dwelling.  In determining whether a product is a consumer product,
+ doubtful cases shall be resolved in favor of coverage.  For a particular
+ product received by a particular user, "normally used" refers to a
+ typical or common use of that class of product, regardless of the status
+ of the particular user or of the way in which the particular user
+ actually uses, or expects or is expected to use, the product.  A product
+ is a consumer product regardless of whether the product has substantial
+ commercial, industrial or non-consumer uses, unless such uses represent
+ the only significant mode of use of the product.
+ .
+   "Installation Information" for a User Product means any methods,
+ procedures, authorization keys, or other information required to install
+ and execute modified versions of a covered work in that User Product from
+ a modified version of its Corresponding Source.  The information must
+ suffice to ensure that the continued functioning of the modified object
+ code is in no case prevented or interfered with solely because
+ modification has been made.
+ .
+   If you convey an object code work under this section in, or with, or
+ specifically for use in, a User Product, and the conveying occurs as
+ part of a transaction in which the right of possession and use of the
+ User Product is transferred to the recipient in perpetuity or for a
+ fixed term (regardless of how the transaction is characterized), the
+ Corresponding Source conveyed under this section must be accompanied
+ by the Installation Information.  But this requirement does not apply
+ if neither you nor any third party retains the ability to install
+ modified object code on the User Product (for example, the work has
+ been installed in ROM).
+ .
+   The requirement to provide Installation Information does not include a
+ requirement to continue to provide support service, warranty, or updates
+ for a work that has been modified or installed by the recipient, or for
+ the User Product in which it has been modified or installed.  Access to a
+ network may be denied when the modification itself materially and
+ adversely affects the operation of the network or violates the rules and
+ protocols for communication across the network.
+ .
+   Corresponding Source conveyed, and Installation Information provided,
+ in accord with this section must be in a format that is publicly
+ documented (and with an implementation available to the public in
+ source code form), and must require no special password or key for
+ unpacking, reading or copying.
+ .
+   7. Additional Terms.
+ .
+   "Additional permissions" are terms that supplement the terms of this
+ License by making exceptions from one or more of its conditions.
+ Additional permissions that are applicable to the entire Program shall
+ be treated as though they were included in this License, to the extent
+ that they are valid under applicable law.  If additional permissions
+ apply only to part of the Program, that part may be used separately
+ under those permissions, but the entire Program remains governed by
+ this License without regard to the additional permissions.
+ .
+   When you convey a copy of a covered work, you may at your option
+ remove any additional permissions from that copy, or from any part of
+ it.  (Additional permissions may be written to require their own
+ removal in certain cases when you modify the work.)  You may place
+ additional permissions on material, added by you to a covered work,
+ for which you have or can give appropriate copyright permission.
+ .
+   Notwithstanding any other provision of this License, for material you
+ add to a covered work, you may (if authorized by the copyright holders of
+ that material) supplement the terms of this License with terms:
+ .
+     a) Disclaiming warranty or limiting liability differently from the
+     terms of sections 15 and 16 of this License; or
+ .
+     b) Requiring preservation of specified reasonable legal notices or
+     author attributions in that material or in the Appropriate Legal
+     Notices displayed by works containing it; or
+ .
+     c) Prohibiting misrepresentation of the origin of that material, or
+     requiring that modified versions of such material be marked in
+     reasonable ways as different from the original version; or
+ .
+     d) Limiting the use for publicity purposes of names of licensors or
+     authors of the material; or
+ .
+     e) Declining to grant rights under trademark law for use of some
+     trade names, trademarks, or service marks; or
+ .
+     f) Requiring indemnification of licensors and authors of that
+     material by anyone who conveys the material (or modified versions of
+     it) with contractual assumptions of liability to the recipient, for
+     any liability that these contractual assumptions directly impose on
+     those licensors and authors.
+ .
+   All other non-permissive additional terms are considered "further
+ restrictions" within the meaning of section 10.  If the Program as you
+ received it, or any part of it, contains a notice stating that it is
+ governed by this License along with a term that is a further
+ restriction, you may remove that term.  If a license document contains
+ a further restriction but permits relicensing or conveying under this
+ License, you may add to a covered work material governed by the terms
+ of that license document, provided that the further restriction does
+ not survive such relicensing or conveying.
+ .
+   If you add terms to a covered work in accord with this section, you
+ must place, in the relevant source files, a statement of the
+ additional terms that apply to those files, or a notice indicating
+ where to find the applicable terms.
+ .
+   Additional terms, permissive or non-permissive, may be stated in the
+ form of a separately written license, or stated as exceptions;
+ the above requirements apply either way.
+ .
+   8. Termination.
+ .
+   You may not propagate or modify a covered work except as expressly
+ provided under this License.  Any attempt otherwise to propagate or
+ modify it is void, and will automatically terminate your rights under
+ this License (including any patent licenses granted under the third
+ paragraph of section 11).
+ .
+   However, if you cease all violation of this License, then your
+ license from a particular copyright holder is reinstated (a)
+ provisionally, unless and until the copyright holder explicitly and
+ finally terminates your license, and (b) permanently, if the copyright
+ holder fails to notify you of the violation by some reasonable means
+ prior to 60 days after the cessation.
+ .
+   Moreover, your license from a particular copyright holder is
+ reinstated permanently if the copyright holder notifies you of the
+ violation by some reasonable means, this is the first time you have
+ received notice of violation of this License (for any work) from that
+ copyright holder, and you cure the violation prior to 30 days after
+ your receipt of the notice.
+ .
+   Termination of your rights under this section does not terminate the
+ licenses of parties who have received copies or rights from you under
+ this License.  If your rights have been terminated and not permanently
+ reinstated, you do not qualify to receive new licenses for the same
+ material under section 10.
+ .
+   9. Acceptance Not Required for Having Copies.
+ .
+   You are not required to accept this License in order to receive or
+ run a copy of the Program.  Ancillary propagation of a covered work
+ occurring solely as a consequence of using peer-to-peer transmission
+ to receive a copy likewise does not require acceptance.  However,
+ nothing other than this License grants you permission to propagate or
+ modify any covered work.  These actions infringe copyright if you do
+ not accept this License.  Therefore, by modifying or propagating a
+ covered work, you indicate your acceptance of this License to do so.
+ .
+   10. Automatic Licensing of Downstream Recipients.
+ .
+   Each time you convey a covered work, the recipient automatically
+ receives a license from the original licensors, to run, modify and
+ propagate that work, subject to this License.  You are not responsible
+ for enforcing compliance by third parties with this License.
+ .
+   An "entity transaction" is a transaction transferring control of an
+ organization, or substantially all assets of one, or subdividing an
+ organization, or merging organizations.  If propagation of a covered
+ work results from an entity transaction, each party to that
+ transaction who receives a copy of the work also receives whatever
+ licenses to the work the party's predecessor in interest had or could
+ give under the previous paragraph, plus a right to possession of the
+ Corresponding Source of the work from the predecessor in interest, if
+ the predecessor has it or can get it with reasonable efforts.
+ .
+   You may not impose any further restrictions on the exercise of the
+ rights granted or affirmed under this License.  For example, you may
+ not impose a license fee, royalty, or other charge for exercise of
+ rights granted under this License, and you may not initiate litigation
+ (including a cross-claim or counterclaim in a lawsuit) alleging that
+ any patent claim is infringed by making, using, selling, offering for
+ sale, or importing the Program or any portion of it.
+ .
+   11. Patents.
+ .
+   A "contributor" is a copyright holder who authorizes use under this
+ License of the Program or a work on which the Program is based.  The
+ work thus licensed is called the contributor's "contributor version".
+ .
+   A contributor's "essential patent claims" are all patent claims
+ owned or controlled by the contributor, whether already acquired or
+ hereafter acquired, that would be infringed by some manner, permitted
+ by this License, of making, using, or selling its contributor version,
+ but do not include claims that would be infringed only as a
+ consequence of further modification of the contributor version.  For
+ purposes of this definition, "control" includes the right to grant
+ patent sublicenses in a manner consistent with the requirements of
+ this License.
+ .
+   Each contributor grants you a non-exclusive, worldwide, royalty-free
+ patent license under the contributor's essential patent claims, to
+ make, use, sell, offer for sale, import and otherwise run, modify and
+ propagate the contents of its contributor version.
+ .
+   In the following three paragraphs, a "patent license" is any express
+ agreement or commitment, however denominated, not to enforce a patent
+ (such as an express permission to practice a patent or covenant not to
+ sue for patent infringement).  To "grant" such a patent license to a
+ party means to make such an agreement or commitment not to enforce a
+ patent against the party.
+ .
+   If you convey a covered work, knowingly relying on a patent license,
+ and the Corresponding Source of the work is not available for anyone
+ to copy, free of charge and under the terms of this License, through a
+ publicly available network server or other readily accessible means,
+ then you must either (1) cause the Corresponding Source to be so
+ available, or (2) arrange to deprive yourself of the benefit of the
+ patent license for this particular work, or (3) arrange, in a manner
+ consistent with the requirements of this License, to extend the patent
+ license to downstream recipients.  "Knowingly relying" means you have
+ actual knowledge that, but for the patent license, your conveying the
+ covered work in a country, or your recipient's use of the covered work
+ in a country, would infringe one or more identifiable patents in that
+ country that you have reason to believe are valid.
+ .
+   If, pursuant to or in connection with a single transaction or
+ arrangement, you convey, or propagate by procuring conveyance of, a
+ covered work, and grant a patent license to some of the parties
+ receiving the covered work authorizing them to use, propagate, modify
+ or convey a specific copy of the covered work, then the patent license
+ you grant is automatically extended to all recipients of the covered
+ work and works based on it.
+ .
+   A patent license is "discriminatory" if it does not include within
+ the scope of its coverage, prohibits the exercise of, or is
+ conditioned on the non-exercise of one or more of the rights that are
+ specifically granted under this License.  You may not convey a covered
+ work if you are a party to an arrangement with a third party that is
+ in the business of distributing software, under which you make payment
+ to the third party based on the extent of your activity of conveying
+ the work, and under which the third party grants, to any of the
+ parties who would receive the covered work from you, a discriminatory
+ patent license (a) in connection with copies of the covered work
+ conveyed by you (or copies made from those copies), or (b) primarily
+ for and in connection with specific products or compilations that
+ contain the covered work, unless you entered into that arrangement,
+ or that patent license was granted, prior to 28 March 2007.
+ .
+   Nothing in this License shall be construed as excluding or limiting
+ any implied license or other defenses to infringement that may
+ otherwise be available to you under applicable patent law.
+ .
+   12. No Surrender of Others' Freedom.
+ .
+   If conditions are imposed on you (whether by court order, agreement or
+ otherwise) that contradict the conditions of this License, they do not
+ excuse you from the conditions of this License.  If you cannot convey a
+ covered work so as to satisfy simultaneously your obligations under this
+ License and any other pertinent obligations, then as a consequence you may
+ not convey it at all.  For example, if you agree to terms that obligate you
+ to collect a royalty for further conveying from those to whom you convey
+ the Program, the only way you could satisfy both those terms and this
+ License would be to refrain entirely from conveying the Program.
+ .
+   13. Use with the GNU Affero General Public License.
+ .
+   Notwithstanding any other provision of this License, you have
+ permission to link or combine any covered work with a work licensed
+ under version 3 of the GNU Affero General Public License into a single
+ combined work, and to convey the resulting work.  The terms of this
+ License will continue to apply to the part which is the covered work,
+ but the special requirements of the GNU Affero General Public License,
+ section 13, concerning interaction through a network will apply to the
+ combination as such.
+ .
+   14. Revised Versions of this License.
+ .
+   The Free Software Foundation may publish revised and/or new versions of
+ the GNU General Public License from time to time.  Such new versions will
+ be similar in spirit to the present version, but may differ in detail to
+ address new problems or concerns.
+ .
+   Each version is given a distinguishing version number.  If the
+ Program specifies that a certain numbered version of the GNU General
+ Public License "or any later version" applies to it, you have the
+ option of following the terms and conditions either of that numbered
+ version or of any later version published by the Free Software
+ Foundation.  If the Program does not specify a version number of the
+ GNU General Public License, you may choose any version ever published
+ by the Free Software Foundation.
+ .
+   If the Program specifies that a proxy can decide which future
+ versions of the GNU General Public License can be used, that proxy's
+ public statement of acceptance of a version permanently authorizes you
+ to choose that version for the Program.
+ .
+   Later license versions may give you additional or different
+ permissions.  However, no additional obligations are imposed on any
+ author or copyright holder as a result of your choosing to follow a
+ later version.
+ .
+   15. Disclaimer of Warranty.
+ .
+   THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+ APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+ HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+ OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+ THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+ IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+ .
+   16. Limitation of Liability.
+ .
+   IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+ WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+ THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+ GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+ USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+ DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+ PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+ EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGES.
+ .
+   17. Interpretation of Sections 15 and 16.
+ .
+   If the disclaimer of warranty and limitation of liability provided
+ above cannot be given local legal effect according to their terms,
+ reviewing courts shall apply local law that most closely approximates
+ an absolute waiver of all civil liability in connection with the
+ Program, unless a warranty or assumption of liability accompanies a
+ copy of the Program in return for a fee.
+ .
+                      END OF TERMS AND CONDITIONS
+ .
+             How to Apply These Terms to Your New Programs
+ .
+   If you develop a new program, and you want it to be of the greatest
+ possible use to the public, the best way to achieve this is to make it
+ free software which everyone can redistribute and change under these terms.
+ .
+   To do so, attach the following notices to the program.  It is safest
+ to attach them to the start of each source file to most effectively
+ state the exclusion of warranty; and each file should have at least
+ the "copyright" line and a pointer to where the full notice is found.
+ .
+     {one line to give the program's name and a brief idea of what it does.}
+     Copyright (C) {year}  {name of author}
+ .
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+ .
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+ .
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see {http://www.gnu.org/licenses/}.
+ .
+ Also add information on how to contact you by electronic and paper mail.
+ .
+   If the program does terminal interaction, make it output a short
+ notice like this when it starts in an interactive mode:
+ .
+     ironseed      Copyright (C) 1994  Channel 7
+     ironseed_fpc  Copyright (C) 2013  y-salnikov
+     ironseed_fpc  Copyright (C) 2016  Nuke Bloodaxe
+     ironseed_fpc  Copyright (C) 2020  Matija Nalis
+ .
+     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+     This is free software, and you are welcome to redistribute it
+     under certain conditions; type `show c' for details.
+ .
+ The hypothetical commands `show w' and `show c' should show the appropriate
+ parts of the General Public License.  Of course, your program's commands
+ might be different; for a GUI interface, you would use an "about box".
+ .
+   You should also get your employer (if you work as a programmer) or school,
+ if any, to sign a "copyright disclaimer" for the program, if necessary.
+ For more information on this, and how to apply and follow the GNU GPL, see
+ {http://www.gnu.org/licenses/}.
+ .
+   The GNU General Public License does not permit incorporating your program
+ into proprietary programs.  If your program is a subroutine library, you
+ may consider it more useful to permit linking proprietary applications with
+ the library.  If this is what you want to do, use the GNU Lesser General
+ Public License instead of this License.  But first, please read
+ {http://www.gnu.org/philosophy/why-not-lgpl.html}.

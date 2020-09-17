@@ -1,0 +1,17 @@
+Source: ironseed
+Section: games
+Priority: optional
+Maintainer: Matija Nalis <mnalis-deb@voyager.hr>
+Build-Depends: debhelper (>=11~)
+Standards-Version: 4.1.4
+Homepage: https://github.com/mnalis/ironseed_fpc
+
+Package: ironseed
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Iron Seed is a science-fiction DOS game from 1994.
+ It was both developed and published by Channel 7.  Gameplay is real-time,
+ featuring trading, diplomacy, and strategy.  This version has been changed
+ to make it possible to compile it with the freepascal compiler under Linux, 
+ and many bugs were fixed.
