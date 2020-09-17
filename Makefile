@@ -294,7 +294,7 @@ install: cleanbak
 	install -m 0644 data/* $(DESTDIR)$(sharedir)/data
 	rm -f $(DESTDIR)$(sharedir)/data/savegame.dir
 	test -d $(DESTDIR)$(sharedir)/sound || mkdir -p $(DESTDIR)$(sharedir)/sound
-	install -m 0644 sound/* $(DESTDIR)$(sharedir)/sound
+	install -m 0644 sound/*.SAM sound/*.MOD $(DESTDIR)$(sharedir)/sound
 	test -d $(DESTDIR)$(docdir) || mkdir -p $(DESTDIR)$(docdir)
 	install -m 0644 README.md Documents/* $(DESTDIR)$(docdir)
 
@@ -307,4 +307,7 @@ uninstall:
 	cd $(DESTDIR)$(docdir) && rm -f README.md $(notdir $(wildcard Documents/*))
 	rmdir $(DESTDIR)$(docdir)
 
-.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths
+deb:
+	debuild
+
+.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths deb

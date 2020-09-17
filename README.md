@@ -44,6 +44,10 @@ Installing
 ==========
 `make all install`
 
+Creating Debian package
+=======================
+`sudo apt-get install devscripts; debuild`
+
 Old savegames
 =============
 Previously, savegames resided in `data/savegame.dir` and `save?` subdirectories
