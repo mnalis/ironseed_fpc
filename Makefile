@@ -112,13 +112,13 @@ cleanbak:
 	find . -iname "*~" -print0 | xargs -0r rm -f
 	find . -iname "*.bak" -print0 | xargs -0r rm -f
 
-reallyclean: clean cleanbak
+distclean: clean cleanbak
 	rm -f $(DATA_TOOLS_D) $(DATA_TOOLS_P) tags
 	rm -f test/test_0_c test/test_0_pas test/testdiv0 test/testkey1 test/testsize test/test_write test/filename
 	rm -f LPT1 TEMP/* Data_Generators/misc/tga_head.bin
 	touch TEMP/keep.c
 
-distclean: reallyclean data_destroy
+reallyclean: distclean data_destroy
 
 mrproper: distclean
 	rm -rf data/savegame.dir save?
