@@ -337,12 +337,14 @@ end;
 
 function loc_tmp:string;
 begin
+  FileMode := 2; { Read/Write }
   loc_tmp := tempdir + '/';
 end;
 
 function loc_data:string;
 var s:string;
 begin
+  FileMode := 0; { Read-only }
   s := prog_sharedir() + '/data/';
   loc_data := s;
   if FileExists(s + 'weapicon.dta') then exit;
@@ -352,6 +354,7 @@ end;
 function loc_sound:string;
 var s:string;
 begin
+  FileMode := 0; { Read-only }
   s := prog_sharedir() + '/sound/';
   loc_sound := s;
   if FileExists(s + 'LASER5.SAM') then exit;
@@ -361,22 +364,26 @@ end;
 
 function loc_savenames:string;
 begin
+  FileMode := 2; { Read/Write }
   loc_savenames := savedir + '/savegame.dir';
 end;
 
 function loc_savegame (const num:byte):string;
 begin
+  FileMode := 2; { Read/Write }
   loc_savegame := savedir + '/save' + chr(48+num) + '/';
 end;
 
 function loc_prn:string;
 begin
+  FileMode := 2; { Read/Write }
   loc_prn := loc_tmp() + 'LPT1';
 end;
 
 function loc_exe:string;
 var s:string;
 begin
+  FileMode := 0; { Read-only }
   s := prog_libdir() + '/';
   loc_exe := s;
   if FileExists(s + 'crewgen') then exit;

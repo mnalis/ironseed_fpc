@@ -2,7 +2,8 @@ Source: ironseed
 Section: games
 Priority: optional
 Maintainer: Matija Nalis <mnalis-deb@voyager.hr>
-Build-Depends: debhelper (>=11~)
+Build-Depends: debhelper (>=11~), fpc, gcc, libsdl1.2-dev, libsdl-mixer1.2-dev, gdc|ldc, perl, graphicsmagick, imagemagick
+# mesa-common-dev
 Standards-Version: 4.1.4
 Homepage: https://github.com/mnalis/ironseed_fpc
 

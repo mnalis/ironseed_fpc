@@ -1,3 +1,6 @@
+v 0.2.2
+- open files read-only when changes not needed (so we can have root-owned system data files!)
+- create Debian package via 'make deb'
 v 0.2.1
 - able to be installed and run from any dir
 - savegames now reside in ~/.local/share/ironseed or ~/.ironseed !

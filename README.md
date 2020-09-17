@@ -23,7 +23,7 @@ For compiling, you need:
 
 For making changes to game, you may also need:
 - (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get intsall gdc` or http://digitalmars.com/d/2.0/)
-- (optionally) perl (for screen convertsion utilities, `apt-get install perl`)
+- (optionally) perl, imagemagick, graphicsmagick (for screen convertsion utilities, `apt-get install perl graphicsmagick imagemagick`)
 
 Compilation
 ===========
