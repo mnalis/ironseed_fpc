@@ -135,8 +135,8 @@ begin
  new(temp);
  backgrx:=random(320);
  backgry:=random(200);
- loadscreen('data/main',temp);
- loadscreen('data/cloud',backgr);
+ loadscreen(loc_data()+'main',temp);
+ loadscreen(loc_data()+'cloud',backgr);
  for j:=0 to 319 do
   begin
    x:=j+backgrx;
@@ -199,7 +199,7 @@ var
 begin
    {load scan data}
    new(temp);
-   assign(scanfile,'data/scan.dta');
+   assign(scanfile,loc_data()+'scan.dta');
    reset(scanfile);
    if ioresult<>0 then errorhandler('scan.dta',1);
    read(scanfile,temp^);
@@ -370,7 +370,7 @@ end;
    {s			     : string[10];}
 begin
    new(temp);
-   assign(scanfile,'data/scan.dta');
+   assign(scanfile,loc_data()+'scan.dta');
    reset(scanfile);
    if ioresult<>0 then errorhandler('scan.dta',1);
    read(scanfile,temp^);
@@ -399,7 +399,7 @@ begin
    else if (tempplan^[n].bots and 7)=2 then
    begin
       new(tempcreate);
-      assign(creafile,'data/creation.dta');
+      assign(creafile,loc_data()+'creation.dta');
       reset(creafile);
       if ioresult<>0 then errorhandler('creation.dta',1);
       total:=0;
@@ -642,7 +642,7 @@ type nametype= string[12];
 var str1: nametype;
     f: file of nametype;
 begin
- assign(f,'data/sysname.dta');
+ assign(f,loc_data()+'sysname.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/sysname.txt',1);
  seek(f,n-1);
@@ -714,7 +714,7 @@ begin
   end;
  move(nearby,nearbybackup,sizeof(nearbyarraytype));
  mousehide;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  scr_fillchar(screen,sizeof(screen),0);
  tcolor:=47;
  bkcolor:=0;
@@ -736,7 +736,7 @@ begin
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  mousehide;
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_tmp()+'current',@screen);
  showtime;
  index:=0;
  for j:=1 to nearbymax do
@@ -1201,7 +1201,7 @@ procedure drawastoroid;
 var temp: pscreentype;
 begin
  new(temp);
- loadscreen('data/main',temp);
+ loadscreen(loc_data()+'main',temp);
  for j:=0 to 319 do
   begin
    x:=j+backgrx;
@@ -1472,7 +1472,7 @@ begin
  reloadbackground;
  showplanet:=true;
  randseed:=tempplan^[curplan].seed;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  index:=0;
  case tempplan^[curplan].mode of
   1: begin radius:=2000; i:=120; end;
@@ -1505,7 +1505,7 @@ begin
  set256colors(tpal);
  scrto_move(t^,screen,sizeof(screen));
  dispose(t);
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_tmp()+'current',@screen);
  showtime;
  for i:=6 to 2*r2+4 do
   begin
@@ -1532,7 +1532,7 @@ begin
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
-   loadscreen(tempdir+'/current',@screen);
+   loadscreen(loc_tmp()+'current',@screen);
    showresearchlights;
    bkcolor:=3;
    displaytextbox(false);
@@ -1776,14 +1776,14 @@ begin
    tempplan^[j].datem:=ship.stardate[1];
    ship.orbiting:=index;
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    scr_fillchar(screen,sizeof(screen),0);
    mouseshow;
    for j:=1 to random(40)+60 do addlotstime(false, true, 100+random(100));
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mousehide;
-   loadscreen(tempdir+'/current',@screen);
+   loadscreen(loc_tmp()+'current',@screen);
    mouseshow;
    if index>0 then readyplanet else readystar;
    checkwandering;

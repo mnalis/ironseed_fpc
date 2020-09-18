@@ -56,7 +56,7 @@ begin
  new(portrait);
  str(n:2,s);
  if n<10 then s[1]:='0';
- loadscreen('data/image'+s+'',portrait);
+ loadscreen(loc_data()+'image'+s,portrait);
  for i:=0 to 69 do
   scrto_move(portrait^[i],screen[i+16,220],70);
  dispose(portrait);
@@ -128,7 +128,7 @@ var
 begin
  mousehide;
  drawstats(crewindex);
- assign(crewfile,'data/crew.dta');
+ assign(crewfile,loc_data()+'crew.dta');
  reset(crewfile);
  if ioresult<>0 then errorhandler('crew.dta',1);
  seek(crewfile,ship.crew[crewindex].index-1);
@@ -188,11 +188,11 @@ procedure readydata;
 begin
  oldt1:=t1;
  mousehide;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- playmod(true,'sound/CREWCOMM.MOD');
- loadscreen('data/char2',@screen);
+ playmod(true,loc_sound()+'CREWCOMM.MOD');
+ loadscreen(loc_data()+'char2',@screen);
  new(holo);
  new(msgs);
  new(mcursor);

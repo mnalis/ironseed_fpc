@@ -43,7 +43,7 @@ procedure loadgame(num: integer);
 
 implementation
 
-uses utils_, gmouse, data, utils, weird, version, crewtick;
+uses utils_, gmouse, data, utils, weird, version, crewtick, sysutils;
 {$PACKRECORDS 1}
 type
  nametype= string[20];
@@ -95,11 +95,11 @@ end;
 procedure savefilenames;
 var namefile: file of namearray;
 begin
- assign(namefile,'data/savegame.dir');
+ assign(namefile,loc_savenames());
  rewrite(namefile);
- if ioresult<>0 then errorhandler('data/savegame.dir',1);
+ if ioresult<>0 then errorhandler(loc_savenames(),1);
  write(namefile,names^);
- if ioresult<>0 then errorhandler('data/savegame.dir',5);
+ if ioresult<>0 then errorhandler(loc_savenames(),5);
  close(namefile);
 end;
 
@@ -108,7 +108,7 @@ begin
  for j:=1 to 8 do
   with names^[j] do
   begin
-   name:='Quick Start         ';
+   name:='                    ';
    yearstamp:=3784;
    monthstamp:=2;
   end;
@@ -117,17 +117,17 @@ end;
 procedure loadfilenames;
 var namefile: file of namearray;
 begin
- assign(namefile,'data/savegame.dir');
+ assign(namefile,loc_savenames());
  reset(namefile);
  if ioresult<>0 then
   begin
    initializenames;
    savefilenames;
    reset(namefile);
-   if ioresult<>0 then errorhandler('data/savegame.dir',1);
+   if ioresult<>0 then errorhandler(loc_savenames(),1);
   end;
  read(namefile,names^);
- if ioresult<>0 then errorhandler('data/savegame.dir',5);
+ if ioresult<>0 then errorhandler(loc_savenames(),5);
  close(namefile);
 end;
 
@@ -137,15 +137,15 @@ var planfile: file of planarray;
     err: boolean;
     temp: alientype;
 begin
- assign(planfile,'save'+chr(curfilenum+48)+'/PLANETS.DTA');
+ assign(planfile,loc_savegame(curfilenum)+'PLANETS.DTA');
  rewrite(planfile);
  write(planfile,tempplan^);
- if ioresult<>0 then errorhandler('PLANETS.DTA',5);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',5);
  close(planfile);
- assign(tarfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
+ assign(tarfile,loc_savegame(curfilenum)+'CONTACTS.DTA');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler('save'+chr(curfilenum+48)+'/CONTACTS.DTA',1);
- assign(srcfile,tempdir+'/contacts.dta');
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'/CONTACTS.DTA',1);
+ assign(srcfile,loc_tmp()+'contacts.dta');
  reset(srcfile);
  err:=false;
  repeat
@@ -168,39 +168,42 @@ var shipfile : file of shiptype;
    logsfile : file of logarray;
    logpendingfile : file of logpendingarray;
 begin
-   assign(shipfile,'save'+chr(num+48)+'/SHIP.DTA');
+   if not FileExists(loc_savegame(num)+'SHIP.DTA') then
+      mkdir (loc_savegame(num));	{ save slot was never used before, create it on first use }
+
+   assign(shipfile,loc_savegame(num)+'SHIP.DTA');
    rewrite(shipfile);
-   if ioresult<>0 then errorhandler('SHIP.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',1);
    write(shipfile,ship);
-   if ioresult<>0 then errorhandler('SHIP.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',5);
    close(shipfile);
 
-   assign(systfile,'save'+chr(num+48)+'/SYSTEMS.DTA');
+   assign(systfile,loc_savegame(num)+'SYSTEMS.DTA');
    rewrite(systfile);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',1);
    write(systfile,systems);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',5);
    close(systfile);
 
-   assign(eventfile,'save'+chr(num+48)+'/EVENTS.DTA');
+   assign(eventfile,loc_savegame(num)+'EVENTS.DTA');
    rewrite(eventfile);
-   if ioresult<>0 then errorhandler('EVENTS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',1);
    write(eventfile,events);
-   if ioresult<>0 then errorhandler('EVENTS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',5);
    close(eventfile);
 
-   assign(logsfile,'save'+chr(num+48)+'/LOGS.DTA');
+   assign(logsfile,loc_savegame(num)+'LOGS.DTA');
    rewrite(logsfile);
-   if ioresult<>0 then errorhandler('LOGS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',1);
    write(logsfile,logs);
-   if ioresult<>0 then errorhandler('LOGS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',5);
    close(logsfile);
 
-   assign(logpendingfile,'save'+chr(num+48)+'/PENDING.DTA');
+   assign(logpendingfile,loc_savegame(num)+'PENDING.DTA');
    rewrite(logpendingfile);
-   if ioresult<>0 then errorhandler('PENDING.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',1);
    write(logpendingfile,logpending);
-   if ioresult<>0 then errorhandler('PENDING.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',5);
    close(logpendingfile);
 
    curfilenum:=num;
@@ -213,18 +216,18 @@ var planfile: file of planarray;
     err: boolean;
     temp: alientype;
 begin
- assign(planfile,'save'+chr(curfilenum+48)+'/PLANETS.DTA');
+ assign(planfile,loc_savegame(curfilenum)+'PLANETS.DTA');
  reset(planfile);
- if ioresult<>0 then errorhandler('PLANETS.DTA',1);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',1);
  read(planfile,tempplan^);
- if ioresult<>0 then errorhandler('PLANETS.DTA',5);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'PLANETS.DTA',5);
  close(planfile);
- assign(tarfile,tempdir+'/contacts.dta');
+ assign(tarfile,loc_tmp()+'contacts.dta');
  rewrite(tarfile);
- if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',1);
- assign(srcfile,'save'+chr(curfilenum+48)+'/CONTACTS.DTA');
+ if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',1);
+ assign(srcfile,loc_savegame(curfilenum)+'CONTACTS.DTA');
  reset(srcfile);
- if ioresult<>0 then errorhandler('CONTACTS.DTA',1);
+ if ioresult<>0 then errorhandler(loc_savegame(curfilenum)+'CONTACTS.DTA',1);
  err:=false;
  repeat
   read(srcfile,temp);
@@ -232,7 +235,7 @@ begin
   if (not err) and ((temp.id>1000) or (tempplan^[temp.id].notes and 2>0)) then
    begin
     write(tarfile,temp);
-    if ioresult<>0 then errorhandler(tempdir+'/contacts.dta',5);
+    if ioresult<>0 then errorhandler(loc_tmp()+'contacts.dta',5);
    end;
  until err;
  close(tarfile);
@@ -275,41 +278,41 @@ var shipfile: file of shiptype;
    logsfile : file of logarray;
    logpendingfile : file of logpendingarray;
 begin
-   assign(shipfile,'save'+chr(num+48)+'/SHIP.DTA');
+   assign(shipfile,loc_savegame(num)+'SHIP.DTA');
    reset(shipfile);
-   if ioresult<>0 then errorhandler('SHIP.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',1);
    read(shipfile,ship);
-   if ioresult<>0 then errorhandler('SHIP.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SHIP.DTA',5);
    close(shipfile);
 
-   assign(systfile,'save'+chr(num+48)+'/SYSTEMS.DTA');
+   assign(systfile,loc_savegame(num)+'SYSTEMS.DTA');
    reset(systfile);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',1);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',1);
    read(systfile,systems);
-   if ioresult<>0 then errorhandler('SYSTEMS.DTA',5);
+   if ioresult<>0 then errorhandler(loc_savegame(num)+'SYSTEMS.DTA',5);
    close(systfile);
 
-   assign(eventfile,'save'+chr(num+48)+'/EVENTS.DTA');
+   assign(eventfile,loc_savegame(num)+'EVENTS.DTA');
    reset(eventfile);
    if ioresult<>0 then
       convertevents
    else begin
       read(eventfile,events);
-      if ioresult<>0 then errorhandler('EVENTS.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'EVENTS.DTA',5);
       close(eventfile);
 
-      assign(logsfile,'save'+chr(num+48)+'/LOGS.DTA');
+      assign(logsfile,loc_savegame(num)+'LOGS.DTA');
       reset(logsfile);
-      if ioresult<>0 then errorhandler('LOGS.DTA',1);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',1);
       read(logsfile,logs);
-      if ioresult<>0 then errorhandler('LOGS.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'LOGS.DTA',5);
       close(logsfile);
 
-      assign(logpendingfile,'save'+chr(num+48)+'/PENDING.DTA');
+      assign(logpendingfile,loc_savegame(num)+'PENDING.DTA');
       reset(logpendingfile);
-      if ioresult<>0 then errorhandler('PENDING.DTA',1);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',1);
       read(logpendingfile,logpending);
-      if ioresult<>0 then errorhandler('PENDING.DTA',5);
+      if ioresult<>0 then errorhandler(loc_savegame(num)+'PENDING.DTA',5);
       close(logpendingfile);
    end;
 
@@ -516,16 +519,22 @@ begin
    new(s);
    for i:=40 to 140 do
     scrfrom_move(screen[i,74],tempscr^[i,74],43*4);
-   loadscreen('data/cloud',@screen);
+   loadscreen(loc_data()+'cloud',@screen);
    scrfrom_move(screen,backgr^,sizeof(screen));
    for i:=40 to 140 do
     scrto_move(tempscr^[i,74],screen[i,74],43*4);
   end;
  result:=mainloop(tofadein);			{ result = which saveslot was selected for load }
- if result=9 then loadgamedata:=false else
-  begin
+ if result=9 then loadgamedata:=false
+ else if FileExists(loc_savegame(result)+'SHIP.DTA') then 
+  begin						{ game slot seems OK, load game }
    loadgamedata:=true;
    loadgame(result);
+  end
+ else
+  begin						{ this game slot does not exist yet, so fake "cancel" }
+   result:=9;
+   loadgamedata:=false;
   end;
  mousehide;
  if tofadein then dispose(s)
@@ -618,11 +627,11 @@ begin
 redo:
  loadfilenames;
  displayfilenames;
- result:=mainloop(false);
+ result:=mainloop(false);			{ choose save game slot }
  if result=9 then savegamedata:=false
  else
   begin
-   if not readname then
+   if not readname then				{ edit savegame name for chosen slot }
     begin
      undocursor;
      goto redo;
@@ -905,7 +914,7 @@ begin
  b:=bkcolor;
  encoding:=true;
  mousehide;
- compressfile(tempdir+'/current2',@screen);
+ compressfile(loc_tmp()+'current2',@screen);
  tcolor:=tc;
  if tc>31 then alt:=38 else alt:=0;
  button(42,30,270,152,alt);
@@ -934,7 +943,7 @@ begin
    for j:=1 to 6 do ship.encodes[j]:=ship.crew[j];
   end;
  mousehide;
- loadscreen(tempdir+'/current2',@screen);
+ loadscreen(loc_tmp()+'current2',@screen);
  mouseshow;
  tcolor:=t;
  bkcolor:=b;
@@ -944,7 +953,7 @@ procedure decodecrew;
 begin
  encoding:=false;
  mousehide;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  tcolor:=26;
  button(42,30,270,152,0);
  for a:=1 to 6 do button(50,33+a*15,260,44+a*15,2);
@@ -962,7 +971,7 @@ begin
     end;
   end;
  mousehide;
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_tmp()+'current',@screen);
  mouseshow;
 end;
 
@@ -973,7 +982,7 @@ var index,j,max,total: integer;
     scanfile: file of scantype;
 begin
  new(temp);
- assign(scanfile,'data/scan.dta');
+ assign(scanfile,loc_data()+'scan.dta');
  reset(scanfile);
  if ioresult<>0 then errorhandler('scan.dta',1);
  read(scanfile,temp^);
@@ -1010,7 +1019,7 @@ var s: string[12];
     str1,str4: string[20];
     line,techlvl,last,sec,a,b: integer;
 begin
- assign(ft,'LPT1');
+ assign(ft, loc_prn());
  rewrite(ft);
  if ioresult<>0 then exit;
  if ioresult<>0 then exit;
@@ -1246,7 +1255,7 @@ begin
  lasty:=0;
  bkcolor:=5;
  printxy(132,92,'PRINTING...');
- assign(ft,'LPT1');
+ assign(ft, loc_prn());
  rewrite(ft);
  writeln(ft,'IRONSEED CARGO FILE:');
  writeln(ft);

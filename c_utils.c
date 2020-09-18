@@ -51,7 +51,6 @@
 #define TIMESCALE 1.0
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
-#define SOUNDS_PATH "sound/"
 #define TURBO_FACTOR 60
 
 static const double ratio = 640.0 / 480;
@@ -359,8 +358,9 @@ void all_done(void)
 	musicDone();
 
 	do_video_stop = 1;
-	while (!is_video_finished)
-		sleep(0);
+	if (is_video_initialized)
+		while (!is_video_finished)
+			sleep(0);
 	SDL_Quit();
 }
 
@@ -1010,8 +1010,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		*s = (char) toupper(*s);	// toupper(3) works with int, but only defined on char
 		s++;
 	}
-	strcpy(fn, SOUNDS_PATH);
-	strcat(fn, s1);
+	strcpy(fn, s1);
 	f = fopen(fn, "rb");
 	if (f == NULL) {
 		printf("Can't open file %s\r\n", fn);

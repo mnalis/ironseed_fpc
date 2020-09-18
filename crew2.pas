@@ -53,7 +53,7 @@ begin
  new(portrait);
  str(n:2,s);
  if n<10 then s[1]:='0';
- loadscreen('data/image'+s+'',portrait);
+ loadscreen(loc_data()+'image'+s,portrait);
  for i:=0 to 69 do
   scrto_move(portrait^[i],screen[i+110,210],70);
  dispose(portrait);
@@ -429,11 +429,11 @@ procedure readydata;
 begin
    oldt1:=t1;
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/PSYEVAL.MOD');
-   loadscreen('data/psyche',@screen);
+   playmod(true,loc_sound()+'PSYEVAL.MOD');
+   loadscreen(loc_data()+'psyche',@screen);
    new(bubbles);
    newbubbles;
    graphindex:=31;

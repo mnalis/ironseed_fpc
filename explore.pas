@@ -237,13 +237,13 @@ begin
  {if tempplan^[curplan].state=7 then exit;}
  new(temp);
  new(namelist);
- assign(scanfile,'data/scan.dta');
+ assign(scanfile,loc_data()+'scan.dta');
  reset(scanfile);
  if ioresult<>0 then errorhandler('scan.dta',1);
  read(scanfile,temp^);
  if ioresult<>0 then errorhandler('scan.dta',5);
  close(scanfile);
- assign(elemfile,'data/elements.dta');
+ assign(elemfile,loc_data()+'elements.dta');
  reset(elemfile);
  if ioresult<>0 then errorhandler('elements.dta',1);
  read(elemfile,namelist^);
@@ -1987,10 +1987,10 @@ begin
     numprobes:=incargo(ID_STARDIVER);
 
  if numprobes>4 then numprobes:=4;
- compressfile(tempdir+'/current',@screen);
+ compressfile(loc_tmp()+'current',@screen);
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- loadscreen('data/landform',@screen);
+ loadscreen(loc_data()+'landform',@screen);
  new(summarypic);
 // new(landcolors);
  new(scaninfo);
@@ -1998,7 +1998,7 @@ begin
  new(zoomscr);
  new(msgs);
  new(probeicons);
- playmod(true,'sound/PROBE.MOD');
+ playmod(true,loc_sound()+'PROBE.MOD');
  setcolors;
  generatescanlist;
  for j:=1 to 7 do
@@ -2061,8 +2061,8 @@ begin
  new(backgr);}
  {fading;}
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
- loadscreen('data/cloud',backgr);
- loadscreen(tempdir+'/current',@screen);
+ loadscreen(loc_data()+'cloud',backgr);
+ loadscreen(loc_tmp()+'current',@screen);
  if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
   else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
  anychange:=true;

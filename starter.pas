@@ -37,7 +37,7 @@ procedure readydata;
 
 implementation
 
-uses utils_, dos, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird {$IFNDEF DEMO}, ending{$ENDIF};
+uses utils_, data, gmouse, saveload, usecode, journey, display, utils, utils2, weird {$IFNDEF DEMO}, ending{$ENDIF};
 
 procedure showcube;
 var i,j: word;
@@ -59,11 +59,7 @@ begin
 end;
 
 procedure checkparams;
-var
-    curdir: string[255];	// NB: hopefully long enough
-    diskfreespace: longint;
 begin
- curdir := '.';
  if (paramstr(1)<>'/playseed') and (paramstr(1)<>'/killseed') then
   begin
    //textmode(co80);
@@ -79,27 +75,7 @@ begin
    endgame;
   end;
 {$ENDIF}
- tempdir:=getenv('TEMP');
- if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
- if tempdir='' then tempdir:='TEMP';
- getdir(0,curdir);
- chdir(tempdir);
- if ioresult<>0 then tempdir:='TEMP';
- chdir(curdir);
- if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- tempdir:=fexpand(tempdir);
- diskfreespace:=diskfree(ord(tempdir[1])-64);
- if ioresult<>0 then errorhandler('Failure accessing drive '+tempdir[1],5);
- if diskfreespace<128000 then tempdir:='TEMP';
- chdir(tempdir);
- if ioresult<>0 then
-  begin
-   mkdir(tempdir);
-   if ioresult<>0 then errorhandler('Creating directory error,'+tempdir,5);
-  end;
- chdir(curdir);
- if ioresult<>0 then errorhandler('Changing directory error,'+curdir,5);
- if tempdir[length(tempdir)]='/' then dec(tempdir[0]);
+ init_dirs;
 end;
 
 procedure readybuildtimes;
@@ -117,7 +93,7 @@ begin
 	 lvlcargo[i, j] := 1;
    end;
    new(tempcreate);
-   assign(creafile,'data/creation.dta');
+   assign(creafile,loc_data()+'creation.dta');
    reset(creafile);
    if ioresult<>0 then errorhandler('creation.dta',1);
    for j:=1 to totalcreation do
@@ -153,31 +129,31 @@ begin
  new(artifacts);
  if (paramstr(1)='/playseed') or (paramstr(1)='/killseed') then
   begin
-   assign(iconfile,'data/icons.vga');
+   assign(iconfile,loc_data()+'icons.vga');
    reset(iconfile);
    if ioresult<>0 then errorhandler('icons',1);
    read(iconfile,icons^);
    if ioresult<>0 then errorhandler('icons',5);
    close(iconfile);
-   assign(weapfile,'data/weapon.dta');
+   assign(weapfile,loc_data()+'weapon.dta');
    reset(weapfile);
    if ioresult<>0 then errorhandler('weapon.dta',1);
    read(weapfile,weapons);
    if ioresult<>0 then errorhandler('weapon.dta',5);
    close(weapfile);
-   assign(cargfile,'data/cargo.dta');
+   assign(cargfile,loc_data()+'cargo.dta');
    reset(cargfile);
    if ioresult<>0 then errorhandler('cargo.dta',1);
    read(cargfile,cargo);
    if ioresult<>0 then errorhandler('cargo.dta',5);
    close(cargfile);
-   assign(artfile,'data/artifact.dta');
+   assign(artfile,loc_data()+'artifact.dta');
    reset(artfile);
    if ioresult<>0 then errorhandler('artifact.dta',1);
    read(artfile,artifacts^);
    if ioresult<>0 then errorhandler('artifact.dta',5);
    close(artfile);
-   assign(planfile,'data/planicon.dta');
+   assign(planfile,loc_data()+'planicon.dta');
    reset(planfile);
    if ioresult<>0 then errorhandler('planicon.dta',1);
    read(planfile,planicons^);
@@ -310,7 +286,7 @@ begin
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  palettedirty := true;
  fadestep(-64);
- loadscreen('data/main',@screen);
+ loadscreen(loc_data()+'main',@screen);
  reloadbackground;
  showtime;
  quit:=false;

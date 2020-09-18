@@ -1,5 +1,5 @@
-    ITEM TO CREATE             PART #1             PART #2              PART#3 WORTH LEVELS            
------------------- ------------------- ------------------- ------------------- ----- ------------------
+    ITEM TO CREATE             PART #1                 PART #2                 PART #3          WORTH                    LEVELS                   
+---------------------- ----------------------- ----------------------- ----------------------- ------- -------------------------------------------
 Dirk                	StrataMount         	Ion Cache           	Flux Lens           	58	1	2	2	3	2	1	
 Scimitar            	Dirk                	Solonoid            	Ion Cache           	98	1	2	3	4	3	2	
 Broadsword          	Scimitar            	Scimitar            	StrataMount         	218	2	2	4	4	4	2	

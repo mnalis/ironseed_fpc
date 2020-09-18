@@ -23,7 +23,7 @@ For compiling, you need:
 
 For making changes to game, you may also need:
 - (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get intsall gdc` or http://digitalmars.com/d/2.0/)
-- (optionally) perl (for screen convertsion utilities, `apt-get install perl`)
+- (optionally) perl, imagemagick, graphicsmagick (for screen convertsion utilities, `apt-get install perl graphicsmagick imagemagick`)
 
 Compilation
 ===========
@@ -36,9 +36,22 @@ are not recommended at the moment as they do not have anti-data-corruption
 checks, so bugs could creep up in your savefiles! Or, just for fun, you can also
 build `demo_sdl`, which is original shareware demo restricted version.
 
-Running
-=======
+Running from build directory for test
+=====================================
 `./is`
+
+Installing
+==========
+`make all install`
+
+Creating Debian package
+=======================
+`sudo apt-get install devscripts; debuild`
+
+Old savegames
+=============
+Previously, savegames resided in `data/savegame.dir` and `save?` subdirectories
+in build directory. They now reside in `~/.local/share/ironseed` (or `~/.ironseed`).
 
 Debug
 =====

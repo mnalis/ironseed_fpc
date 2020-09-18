@@ -49,7 +49,7 @@ begin
      end;
 
  { write TARGA to disk }
- writeln ('Outputing uncompressed indexed TGA file to ', basename, '.tga');
+ writeln ('Outputing ', cpr_head.width,'x', cpr_head.height,' uncompressed indexed TGA file to ', basename, '.tga');
  savetga(basename, @screen);
 
  writeln ('Done!');

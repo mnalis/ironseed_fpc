@@ -285,7 +285,7 @@ begin
  if ship.options[OPT_ANIMATION]=0 then exit;
  mousehide;
  new(temp);
- loadscreen('data/cargo',temp);
+ loadscreen(loc_data()+'cargo',temp);
  for i:=110 to 126 do
   fillchar(temp^[i,94],133,0);
  for a:=1 to 110 do
@@ -348,12 +348,12 @@ end;
 procedure readydata;
 begin
    mousehide;
-   {compressfile(tempdir+'/current',@screen);}
-   quicksavescreen(tempdir+'/current',@screen, true);
+   {compressfile(loc_tmp()+'current',@screen);}
+   quicksavescreen(loc_tmp()+'current',@screen, true);
    {fading;}
    fadefull(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/CARGO.MOD');
-   loadscreen('data/cargo',@screen);
+   playmod(true,loc_sound()+'CARGO.MOD');
+   loadscreen(loc_data()+'cargo',@screen);
    new(cargobuttons);
    for i:=110 to 126 do
    begin
@@ -910,8 +910,8 @@ begin
    {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
-   {loadscreen(tempdir+'/current',@screen);}
-   quickloadscreen(tempdir+'/current',@screen, true);
+   {loadscreen(loc_tmp()+'current',@screen);}
+   quickloadscreen(loc_tmp()+'current',@screen, true);
    showresearchlights;
    bkcolor:=3;
    displaytextbox(false);
@@ -1070,13 +1070,13 @@ var crfile: file of createarray;
 begin
    if not chevent(18) then maxcreation:=totalcreation-1 else maxcreation:=totalcreation;
    mousehide;
-   {compressfile(tempdir+'/current',@screen);}
-   quicksavescreen(tempdir+'/current',@screen, true);
+   {compressfile(loc_tmp()+'current',@screen);}
+   quicksavescreen(loc_tmp()+'current',@screen, true);
    {fading;}
    {fadefull(-FADEFULL_STEP, FADEFULL_DELAY);}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/COMPONT.MOD');
-   loadscreen('data/tech1',@screen);
+   playmod(true,loc_sound()+'COMPONT.MOD');
+   loadscreen(loc_data()+'tech1',@screen);
    drawfilters2;
    new(iteminfo);
    done:=false;
@@ -1087,7 +1087,7 @@ begin
    oldt1:=t1;
    tcolor:=31;
    new(createinfo);
-   assign(crfile,'data/creation.dta');
+   assign(crfile,loc_data()+'creation.dta');
    reset(crfile);
    if ioresult<>0 then errorhandler('creation.dta',1);
    read(crfile,createinfo^);
@@ -1239,7 +1239,7 @@ var f	 : file of iteminfotype;
 {   s	 : String;}
 begin
  if cargoindex=0 then exit;
- assign(f,'data/iteminfo.dta');
+ assign(f,loc_data()+'iteminfo.dta');
  reset(f);
  if ioresult<>0 then errorhandler('iteminfo.dta',1);
  if cargomode=0 then index:=createinfo^[cargoindex].index

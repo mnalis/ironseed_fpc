@@ -1,3 +1,13 @@
+v 0.2.2
+- open files read-only when changes not needed (so we can have root-owned system data files!)
+- create Debian package via 'make deb'
+v 0.2.1
+- able to be installed and run from any dir
+- savegames now reside in ~/.local/share/ironseed or ~/.ironseed !
+v 0.2.0
+- build: allow installing game to final location
+- code: use TMPDIR for temp files
+- build: scripts to regenerate last of data/* binary files
 v 0.1.9
 - Makefile: regenerate most .cpr images from .png
 - image conversion tools handle .tga & .cpr files without embedded PAL and with different sizes, and partial PAL support

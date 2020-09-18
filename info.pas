@@ -100,7 +100,7 @@ var systfile: file of oldsystype;
 begin
    new(oldsys);
 
-   assign(systfile,'data/sysset.dta');
+   assign(systfile,loc_data()+'sysset.dta');
    reset(systfile);
    if ioresult<>0 then errorhandler('sysset.dta',1);
    for j:=1 to 250 do read(systfile,oldsys^[j]);
@@ -1043,11 +1043,11 @@ end;
 procedure readydata;
 begin
    mousehide;
-   compressfile(tempdir+'/current',@screen);
+   compressfile(loc_tmp()+'current',@screen);
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
-   playmod(true,'sound/GENER1.MOD');
-   loadscreen('data/sector',@screen);
+   playmod(true,loc_sound()+'GENER1.MOD');
+   loadscreen(loc_data()+'sector',@screen);
    {fadein;}
    new(nearsec);
    done:=false;
@@ -1070,7 +1070,7 @@ begin
    {fading;}
    fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
    mouse.setmousecursor(random(3));
-   loadscreen(tempdir+'/current',@screen);
+   loadscreen(loc_tmp()+'current',@screen);
    bkcolor:=3;
    displaytextbox(false);
    textindex:=25;

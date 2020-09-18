@@ -328,7 +328,7 @@ begin
    end;
    y:=0;
    new(temp);
-   assign(scanfile,'data/scan.dta');
+   assign(scanfile,loc_data()+'scan.dta');
    reset(scanfile);
    if ioresult<>0 then errorhandler('scan.dta',1);
    read(scanfile,temp^);
@@ -363,7 +363,7 @@ begin
    if incargo(ID_MANUFACTORY)>0 then
    begin
       new(tempcreate);
-      assign(creafile,'data/creation.dta');
+      assign(creafile,loc_data()+'creation.dta');
       reset(creafile);
       if ioresult<>0 then errorhandler('creation.dta',1);
       x:=0;

@@ -43,8 +43,9 @@ begin
      colors[i,j] := temppal[i,4-j] div COLOR_FACTOR;
 
  { write CPR to disk }
- writeln ('Saving compressed file ', basename, '.cpr with flags=', flags,' w=',w,' h=',h);
+ writeln ('Saving ', w,'x', h,' compressed file ', basename, '.cpr with flags=', flags);
  compressfile (basename, @screen,w,h,flags);
 
  writeln ('Done!');
 end.
+

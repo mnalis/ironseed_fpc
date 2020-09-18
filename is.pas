@@ -30,7 +30,7 @@ program ironseed;
 
 ***************************}
 
-uses dos, version;
+uses dos, version, utils_;
 
 const
  p: array[0..4] of string[6]=
@@ -45,15 +45,16 @@ procedure getdoserror;
 var j: integer;
 begin
  case doserror of
-  2,18,3: j:=0;
-  8: j:=1;
+  1,2,5,8,9,13,16,21,26: j:=0;	{ EPERM, ENOENT, EIO, ENOEXEC, EBADF, EACCES, EBUSY, EISDIR, ETXTBUSY }
+  12, 7, 14, 23, 24, 27: j:=1;	{ ENOMEM, E2BIG, EFAULT, ENFILE, EMFILE, EFBIG }
   else j:=2;
  end;
- writeln('DOS Error: ',s[j]);
- if j=0 then writeln('Current directory does not contain the proper IS files.');
+ writeln('OS Error(',doserror,'): ',s[j]);
+ if j=0 then writeln('Program directory ', loc_exe(), ' does not contain the proper IS files.');
 end;
 
 begin
+ init_dirs();
 {$IFDEF DEMO}
  writeln('IronSeed ' + versionstring + ' Demo');
 {$ELSE}
@@ -64,16 +65,17 @@ begin
  writeln('ironseed_fpc  Copyright (C) 2013  y-salnikov');
  writeln('ironseed_fpc  Copyright (C) 2016  Nuke Bloodaxe');
  writeln('ironseed_fpc  Copyright (C) 2020  Matija Nalis');
+
  str1:=paramstr(1)+' '+paramstr(2)+' '+paramstr(3)+' '+paramstr(4);
  code:=5;
  repeat
   case code of
-   1: exec('crewgen',p[0]+p[4]+str1);
-   2: exec('main',p[1]+p[4]+str1);
-   3: exec('intro',p[2]+p[4]+p[3]+str1);
+   1: exec(loc_exe()+'crewgen',p[0]+p[4]+str1);
+   2: exec(loc_exe()+'main',p[1]+p[4]+str1);
+   3: exec(loc_exe()+'intro',p[2]+p[4]+p[3]+str1);
    4:;
-   5: exec('intro',p[2]+p[4]+str1);
-   49..56: exec('main',p[1]+p[4]+' '+chr(Lo(code))+' '+str1);
+   5: exec(loc_exe()+'intro',p[2]+p[4]+str1);
+   49..56: exec(loc_exe()+'main',p[1]+p[4]+' '+chr(Lo(code))+' '+str1);
    else
    begin
       str(code, str1);
