@@ -32,7 +32,6 @@ release_ogl: cleanbuild
 
 # OpenGL debug version
 debug_ogl:   clean debug_ogl1 cleantmp
-debug_ogl1:  tags
 debug_ogl1:  cflags += -O0 -Werror
 debug_ogl1:  fpc_flags  += $(fpc_debug)
 debug_ogl1:  build
@@ -42,7 +41,6 @@ release_sdl: cflags += -O -DNDEBUG -DNO_OGL
 release_sdl: cleanbuild
 
 # SDL debug version
-debug_sdl1 demo_sdl1: tags
 debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani Data_Generators/makedata/shp2make: cflags += -O0 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
