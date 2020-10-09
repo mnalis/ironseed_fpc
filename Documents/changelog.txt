@@ -1,3 +1,5 @@
+v 0.2.3
+- update debian package info
 v 0.2.2
 - open files read-only when changes not needed (so we can have root-owned system data files!)
 - create Debian package via 'make deb'
