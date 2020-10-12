@@ -118,7 +118,7 @@ distclean: clean cleanbak
 
 reallyclean: distclean data_destroy
 
-mrproper: distclean
+mrproper: reallyclean
 	rm -rf data/savegame.dir save?
 
 tags: *.c *.pas
@@ -219,7 +219,7 @@ data/weapon.dta:   Data_Generators/makedata/weapmake Data_Generators/makedata/we
 data/ships.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/alienshp.txt
 	Data_Generators/makedata/shipmake
 data/weapicon.dta data/planicon.dta: Data_Generators/makedata/iconmake Data_Generators/makedata/planicon.cpr
-	Data_Generators/makedata/iconmake
+	Data_Generators/makedata/iconmake > /dev/null
 data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/newnames.txt
 	Data_Generators/makedata/namemake
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
