@@ -16,10 +16,22 @@ unit version;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
+{*********************************************
+   Version string for IronSeed
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
 interface
+
 var
    versionstring :string[20];
+
 implementation
+
 begin
    versionstring :=
    {12345678901234567890}

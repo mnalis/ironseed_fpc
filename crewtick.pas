@@ -16,9 +16,20 @@ unit crewtick;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
+{*********************************************
+   Crew Psychometry for IronSeed
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
 {$O+}
 {$I-}
+
 interface
+
 procedure GameTick(background : Boolean; ticks : Integer);
 function SkillTest(background : Boolean; crew, difficulty, learn : Integer): Boolean;
 function SkillRange(background : Boolean; crew, difficulty, learn : Integer): Integer;
@@ -31,6 +42,7 @@ procedure DayTick(background	: Boolean);
 procedure ResetCrew;
 
 implementation
+
 uses data, utils, utils2, journey, weird, cargtool, utils_;
 var
    lastalienid : Integer;

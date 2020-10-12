@@ -1,5 +1,4 @@
 unit data;
-{$I-}
 (********************************************************************
     This file is part of Ironseed.
 
@@ -17,18 +16,19 @@ unit data;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Data unit for IronSeed
 
-   Channel 7
-   Destiny: Virtual
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
-
-   Copyright 1994
-
-***************************}
+{$I-}
 
 interface
+
 {$PACKRECORDS 1}
 uses utils_;
 const

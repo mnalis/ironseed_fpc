@@ -16,22 +16,19 @@ program main;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
+{*********************************************
+   Outer Shell/Initialization for IronSeed
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
 {$M 6500,335000,655360} (*390000*)
 {$S-,D-}
 
-{***************************
-   Outer Shell/Initialization for IronSeed
-
-   Channel 7
-   Destiny: Virtual
-
-
-   Copyright 1994
-
-***************************}
-
 uses starter, data;
-
 
 begin
  init_everything;

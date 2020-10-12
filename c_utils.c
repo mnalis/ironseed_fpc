@@ -1,4 +1,4 @@
-/* by y.salnikov, mnalis
+/*
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
+ *
+ *  Copyright:
+ *   2013 y-salnikov
+ *   2020 Matija Nalis <mnalis-git@voyager.hr>
  */
 
 

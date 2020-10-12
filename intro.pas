@@ -16,19 +16,15 @@ program intro;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-//{$M 5500,436000,436000}
-//{$S-,D-}
+{*********************************************
+   Introduction Sequence for IronSeed
 
-{***************************
-
-  Introduction Sequence for IronSeed
-
-  Channel 7
-  Destiny: Virtual
-
-  Copyright 1994
-
-***************************}
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2018 Nuke Bloodaxe
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
 uses utils_, sysutils, gmouse, modplay, version, math;
 (* 

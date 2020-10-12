@@ -16,7 +16,17 @@ unit heapchk;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
+{*********************************************
+   Heap Debugging Utilities for IronSeed
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
 interface
+
 procedure WriteHexWord(w: Word);
 procedure HeapStats;
 function GetHeapStats:String;
@@ -24,6 +34,7 @@ function GetHeapStats1:String;
 function GetHeapStats2:String;
 
 implementation
+
 procedure WriteHexWord(w: Word);
 const
  hexChars: array [0..$F] of Char =
