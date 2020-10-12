@@ -310,3 +310,6 @@ deb:
 	dh clean
 
 .PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths deb
+
+# fpc does not really work nicely with parallel builds, as for example `fpc main` and `fpc intro` can try to produce 'data.ppu' etc. simultaneously
+.NOTPARALLEL:
