@@ -1,17 +1,16 @@
 #!/usr/bin/make -f
-# You must remove unused comment lines for the released package.
-#export DH_VERBOSE = 1
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# we want debug info for stacktrace bugreports
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all nostrip
 
 # fpc(1) does not like to be run in parallel
-export DEB_BUILD_OPTIONS = parallel=1 nostrip
-
 %:
-	dh $@  
+	dh $@ --no-parallel
 
 override_dh_auto_install:
 	dh_auto_install -- prefix=/usr
 
 override_dh_auto_build:
 	dh_auto_build -- prefix=/usr
+
+.PHONY: override_dh_auto_install override_dh_auto_build
