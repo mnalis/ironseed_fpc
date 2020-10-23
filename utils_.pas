@@ -200,7 +200,7 @@ end;
 
 function try_tmpdir(t:string):boolean;
 var
-  diskfreespace: longint;
+  diskfreespace: Int64;
   curdir: string[255];		// NB: hopefully long enough
   subdir: string[255];		// NB: hopefully long enough
 begin
@@ -244,6 +244,10 @@ begin
         tempdir := tempdir + '/' + subdir;
         try_tmpdir := true;
         //writeln ('  OK, using final tempdir=', tempdir);
+      end
+     else
+      begin
+        writeln ('not enough free space (', diskfreespace, ') in tempdir ', tempdir, ' - skipping');
       end;
    end;
 
@@ -254,7 +258,7 @@ end;
 
 function try_savedir(s,subdir:string):boolean;
 var
-  diskfreespace: longint;
+  diskfreespace: Int64;
   curdir: string[255];		// NB: hopefully long enough
 begin
   try_savedir := false;
@@ -288,6 +292,10 @@ begin
          end;
          try_savedir := true;
          //writeln ('  OK, using final savedir=', savedir);
+      end
+     else
+      begin
+        writeln ('not enough free space (', diskfreespace, ') in savedir ', savedir, ' - skipping');
       end;
    end;
 
