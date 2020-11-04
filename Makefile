@@ -20,7 +20,7 @@ CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
 p_link += -k'-z relro' -k'-z now' -k-pie
-fpc_debug += -fPIC
+PFLAGS += -fPIC
 CFLAGS += -fpic
 
 rebuild: clean all cleantmp
