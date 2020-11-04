@@ -15,6 +15,15 @@ program convertplanicons;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
+
+{*********************************************
+   Data Generator: Icons generator
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
 {$PACKRECORDS 1}
 
 uses crt, data, utils_;

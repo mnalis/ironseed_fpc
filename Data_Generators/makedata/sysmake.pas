@@ -15,8 +15,16 @@ program displaysystems;
     You should have received a copy of the GNU General Public License
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
-{$PACKRECORDS 1}
 
+{*********************************************
+   Data Generator: Systems names / coordinates
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
+
+{$PACKRECORDS 1}
 
 uses crt;
 

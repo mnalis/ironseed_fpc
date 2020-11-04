@@ -15,6 +15,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  *
+ *  On Debian systems, the complete text of the GNU General Public
+ *  License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+ *
  *  Copyright:
  *   2013 y-salnikov
  *   2020 Matija Nalis <mnalis-git@voyager.hr>

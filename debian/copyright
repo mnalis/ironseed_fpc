@@ -18,8 +18,7 @@ Copyright:
  2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc/>
 License: GPL-2+
 
-Files: Data_Generators/misc/*
- debian/*
+Files: debian/*
 Copyright:
  2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc/>
 License: GPL-3+
