@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Matija Nalis <mnalis-deb@voyager.hr>
 Build-Depends: debhelper (>=11~), fpc, libsdl1.2-dev, libsdl-mixer1.2-dev, gdc|ldc, perl, graphicsmagick, imagemagick, libipc-system-simple-perl, exuberant-ctags|universal-ctags
 # mesa-common-dev
-Standards-Version: 4.1.4
+Standards-Version: 4.3.0
 Homepage: https://github.com/mnalis/ironseed_fpc
 
 Package: ironseed
