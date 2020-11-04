@@ -1566,7 +1566,7 @@ begin
            1: begin
                ship.accelmax:=ship.accelmax+(random(20)+1)*5;
                if ship.accelmax>1100 then ship.accelmax:=1100;
-               showchar(2,'We have improved thrust efficency.');
+               showchar(2,'We have improved thrust efficiency.');
               end;
            2: begin
                ship.hullmax:=ship.hullmax+(random(40)+11)*10;

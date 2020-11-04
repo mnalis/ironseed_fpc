@@ -1551,7 +1551,7 @@ begin
  charcomstuff(1);
  printxy(20,171,'Terminating Transmission.');
  charcomstuff(1);
- printxy(20,177,'Control Protocol Transfered to Human Encode "PRIME".');
+ printxy(20,177,'Control Protocol Transferred to Human Encode "PRIME".');
  charcomstuff(1);
  fadecharcom;
  if fastkeypressed then goto continue;

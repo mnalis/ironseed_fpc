@@ -877,7 +877,7 @@ begin
               case random(3) of
                0: str1:='Chaosms';
                1: str1:='Communes';
-               2: str1:='Heirarchies';
+               2: str1:='Hierarchies';
               end;
               printxy(175 - length(str1)*5,57,'Singlecelled '+str1);
              end;
@@ -1388,7 +1388,7 @@ begin
               case random(3) of
                0: printxy(14,175,'Chaosms');
                1: printxy(14,175,'Communes');
-               2: printxy(14,175,'Heirarchies');
+               2: printxy(14,175,'Hierarchies');
               end;
              end;
          end;

@@ -486,7 +486,7 @@ begin
   end
  else
   begin				{ item to remove not found }
-   writeln ('warning: trying to remove nonexistant cargo ',item);
+   writeln ('warning: trying to remove nonexistent cargo ',item);
    //assert(item=ID_ART_SHUNT_DRIVE, 'debug removecargo: item to remove does not exits - probable game logic bug'); 	{ we know about ID_ART_SHUNT_DRIVE issue: see https://github.com/mnalis/ironseed_fpc/issues/80 }
    exit;
   end;

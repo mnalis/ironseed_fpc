@@ -1534,7 +1534,7 @@ begin
                 case random(3) of
                  0: str4:='Chaosms    ';
                  1: str4:='Communes   ';
-                 2: str4:='Heirarchies';
+                 2: str4:='Hierarchies';
                 end;
                 str1:='Singlecelled        ';
                end;
