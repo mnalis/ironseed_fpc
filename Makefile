@@ -21,7 +21,7 @@ CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
 p_link += -k'-z relro' -k'-z now' -k-pie
 PFLAGS += -fPIC
-CFLAGS += -fpic
+CFLAGS += -fpic -D_FORTIFY_SOURCE=2
 
 rebuild: clean all cleantmp
 # default target to build, best is debug_sdl / debug_ogl (NOT "release_xxx" AKA "no-checks" versions!)
