@@ -1,5 +1,5 @@
 ironseed (0.2.5) UNRELEASED; urgency=medium
 
-  * Not yet in Debian, Debian RFP #971924
+  * Create a Debian package, closes: #971924
 
  -- Matija Nalis <mnalis-deb@voyager.hr>  Fri, 23 Oct 2020 04:35:47 +0200

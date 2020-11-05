@@ -6,6 +6,8 @@ Build-Depends: debhelper (>=11~), fpc, libsdl1.2-dev, libsdl-mixer1.2-dev, gdc|l
 # mesa-common-dev
 Standards-Version: 4.3.0
 Homepage: https://github.com/mnalis/ironseed_fpc
+Vcs-Git: https://github.com/mnalis/ironseed_fpc.git
+Vcs-Browser: https://github.com/mnalis/ironseed_fpc/tree/master
 
 Package: ironseed
 Architecture: any

@@ -5,22 +5,22 @@ License: GPL-3+
 
 Files: *
 Copyright:
- 1994  Channel 7 <https://ironseed.net/>
+ 1994  Channel 7 <http://ironseed.net/>
  2013  karynax <https://github.com/karynax/ironseed>
  2013  y-salnikov <https://github.com/y-salnikov/ironseed_fpc>
- 2016  Nuke Bloodaxe <https://github.com/nukebloodaxe/ironseed_fpc/>
- 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc/>
+ 2016  Nuke Bloodaxe <https://github.com/nukebloodaxe/ironseed_fpc>
+ 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc>
 License: GPL-3+
 
 Files: c_utils.c
 Copyright:
  2013  y-salnikov <https://github.com/y-salnikov/ironseed_fpc>
- 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc/>
+ 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc>
 License: GPL-2+
 
 Files: debian/*
 Copyright:
- 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc/>
+ 2020  Matija Nalis <https://github.com/mnalis/ironseed_fpc>
 License: GPL-3+
 
 License: GPL-3+
@@ -35,7 +35,7 @@ License: GPL-3+
  GNU General Public License for more details.
  .
  You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
  .
  On Debian systems the full text of the GNU General Public
  License can be found in the `/usr/share/common-licenses/GPL-3' file.
@@ -52,7 +52,7 @@ License: GPL-2+
  GNU General Public License for more details.
  .
  You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
  .
  On Debian systems the full text of the GNU General Public
  License can be found in the `/usr/share/common-licenses/GPL-2' file.
