@@ -1,3 +1,6 @@
+v 0.2.6
+- Debian menu, and other debian packaging tweaks
+- add compile flags for hardening (see https://wiki.debian.org/Hardening)
 - fix wrong diskfree calculation leading to failing to find tempdir/savedir
 v 0.2.5
 - update debian package info only, no code changes
