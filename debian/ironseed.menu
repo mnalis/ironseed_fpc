@@ -1,2 +1,0 @@
-?package(ironseed):needs="X11" section="Games/Strategy"\
-  title="ironseed" command="/usr/games/is"

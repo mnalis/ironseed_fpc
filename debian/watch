@@ -1,8 +1,0 @@
-version=4
-
-# PGP signature mangle, so foo.tar.gz has foo.tar.gz.sig
-#opts="pgpsigurlmangle=s%$%.sig%"
-
-opts="filenamemangle=s%(?:.*?)?fpc_(\d+)_(\d+)_(\d+)\.tar\.gz%ironseed_fpc-$1.$2.$3.tar.gz%" \
-   https://github.com/mnalis/ironseed_fpc/tags \
-   (?:.*?/)?fpc_(\d+)_(\d+)_(\d+)\.tar\.gz debian uupdate
