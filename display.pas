@@ -16,16 +16,14 @@ unit display;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Ship Display Control unit for IronSeed
 
-   Channel 7
-   Destiny: Virtual
-
-
-   Copyright 1994
-
-***************************}
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
 interface
 
@@ -1536,7 +1534,7 @@ begin
                 case random(3) of
                  0: str4:='Chaosms    ';
                  1: str4:='Communes   ';
-                 2: str4:='Heirarchies';
+                 2: str4:='Hierarchies';
                 end;
                 str1:='Singlecelled        ';
                end;

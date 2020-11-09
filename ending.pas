@@ -16,16 +16,15 @@ unit ending;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
+   Endgame Sequence for IronSeed
 
-  Endgame Sequence for IronSeed
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
-  Channel 7
-  Destiny: Virtual
-
-  Copyright 1994
-
-***************************}
 {$O+}
 
 interface

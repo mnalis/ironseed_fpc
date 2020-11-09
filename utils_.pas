@@ -1,4 +1,29 @@
 Unit utils_;
+(********************************************************************
+    This file is part of Ironseed.
+
+    Ironseed is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Ironseed is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+********************************************************************)
+
+{*********************************************
+   SDL on GNU/Linux, porting Utilities for IronSeed
+
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
 {$L c_utils.o}
 {$I-}
@@ -8,15 +33,11 @@ Interface
  type
  screentype= array[0..199,0..319] of byte;
  paltype=array[0..255,1..3] of byte;
-const
+
+ const
 	Pan_Surround=0;
 	xorput=1;
 	copyput=0;
-
-
-
-
-
 
 procedure delay(const MS:Word); cdecl ; external;
 procedure setcolor(const Color: Word); cdecl ; external;
@@ -58,6 +79,7 @@ function loc_prn:string;
 function loc_exe:string;
 
 implementation
+
 uses sysutils, dos, users, baseunix, _paths_;
 
 
@@ -178,7 +200,7 @@ end;
 
 function try_tmpdir(t:string):boolean;
 var
-  diskfreespace: longint;
+  diskfreespace: Int64;
   curdir: string[255];		// NB: hopefully long enough
   subdir: string[255];		// NB: hopefully long enough
 begin
@@ -222,6 +244,10 @@ begin
         tempdir := tempdir + '/' + subdir;
         try_tmpdir := true;
         //writeln ('  OK, using final tempdir=', tempdir);
+      end
+     else
+      begin
+        writeln ('not enough free space (', diskfreespace, ') in tempdir ', tempdir, ' - skipping');
       end;
    end;
 
@@ -232,7 +258,7 @@ end;
 
 function try_savedir(s,subdir:string):boolean;
 var
-  diskfreespace: longint;
+  diskfreespace: Int64;
   curdir: string[255];		// NB: hopefully long enough
 begin
   try_savedir := false;
@@ -266,6 +292,10 @@ begin
          end;
          try_savedir := true;
          //writeln ('  OK, using final savedir=', savedir);
+      end
+     else
+      begin
+        writeln ('not enough free space (', diskfreespace, ') in savedir ', savedir, ' - skipping');
       end;
    end;
 

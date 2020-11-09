@@ -1,5 +1,5 @@
-ironseed (0.2.2) UNRELEASED; urgency=low
+ironseed (0.2.6-1) UNRELEASED; urgency=medium
 
-  * Not yet in Debian.
+  * Initial release. Closes: #971924
 
- -- Matija Nalis <mnalis-deb@voyager.hr>  Thu, 17 Sep 2020 01:39:11 +0200
+ -- Matija Nalis <mnalis-deb@voyager.hr>  Sat, 07 Nov 2020 19:59:07 +0100

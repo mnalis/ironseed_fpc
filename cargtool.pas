@@ -16,19 +16,18 @@ unit cargtool;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Cargo/Creation unit for IronSeed
 
-   Channel 7
-   Destiny: Virtual
-
-
-   Copyright 1994
-
-***************************}
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
 {$O+}
 {$I-}
+
 interface
 
 procedure inventory;

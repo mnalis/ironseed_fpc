@@ -16,19 +16,18 @@ unit utils2;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Overlayable Utilites for IronSeed
 
-   Channel 7
-   Destiny: Virtual
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
-
-   Copyright 1994
-
-***************************}
-
-{$O+}
 {$I-}
+{$O+}
+
 interface
 
 procedure adjustplanets(t: integer);
@@ -1567,7 +1566,7 @@ begin
            1: begin
                ship.accelmax:=ship.accelmax+(random(20)+1)*5;
                if ship.accelmax>1100 then ship.accelmax:=1100;
-               showchar(2,'We have improved thrust efficency.');
+               showchar(2,'We have improved thrust efficiency.');
               end;
            2: begin
                ship.hullmax:=ship.hullmax+(random(40)+11)*10;

@@ -16,19 +16,17 @@ unit explore;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Planet Exploration unit for IronSeed
 
-   Channel 7
-   Destiny: Virtual
-
-
-   Copyright 1994
-
-***************************}
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
 {$O+}
-{R+}
+//{$R+}
 
 interface
 
@@ -879,7 +877,7 @@ begin
               case random(3) of
                0: str1:='Chaosms';
                1: str1:='Communes';
-               2: str1:='Heirarchies';
+               2: str1:='Hierarchies';
               end;
               printxy(175 - length(str1)*5,57,'Singlecelled '+str1);
              end;
@@ -1390,7 +1388,7 @@ begin
               case random(3) of
                0: printxy(14,175,'Chaosms');
                1: printxy(14,175,'Communes');
-               2: printxy(14,175,'Heirarchies');
+               2: printxy(14,175,'Hierarchies');
               end;
              end;
          end;

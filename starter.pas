@@ -16,18 +16,18 @@ unit starter;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    Initialization for IronSeed
 
-   Channel 7
-   Destiny: Virtual
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
-
-   Copyright 1994
-
-***************************}
-{$O+}
 {$I-}
+{$O+}
+
 interface
 
 procedure cleartextdisplay;

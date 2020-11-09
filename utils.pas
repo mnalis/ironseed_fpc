@@ -1,5 +1,4 @@
 unit utils;
-{$I-}
 (********************************************************************
     This file is part of Ironseed.
 
@@ -17,16 +16,16 @@ unit utils;
     along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
 ********************************************************************)
 
-{***************************
+{*********************************************
    General Utilities for IronSeed
 
-   Channel 7
-   Destiny: Virtual
+   Copyright:
+    1994 Channel 7, Destiny: Virtual
+    2013 y-salnikov
+    2020 Matija Nalis <mnalis-git@voyager.hr>
+**********************************************}
 
-
-   Copyright 1994
-
-***************************}
+{$I-}
 
 interface
 
@@ -487,7 +486,7 @@ begin
   end
  else
   begin				{ item to remove not found }
-   writeln ('warning: trying to remove nonexistant cargo ',item);
+   writeln ('warning: trying to remove nonexistent cargo ',item);
    //assert(item=ID_ART_SHUNT_DRIVE, 'debug removecargo: item to remove does not exits - probable game logic bug'); 	{ we know about ID_ART_SHUNT_DRIVE issue: see https://github.com/mnalis/ironseed_fpc/issues/80 }
    exit;
   end;

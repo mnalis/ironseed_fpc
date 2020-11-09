@@ -1,3 +1,9 @@
+v 0.2.6
+- Debian menu, and other debian packaging tweaks
+- add compile flags for hardening (see https://wiki.debian.org/Hardening)
+- fix wrong diskfree calculation leading to failing to find tempdir/savedir
+v 0.2.5
+- update debian package info only, no code changes
 v 0.2.2
 - open files read-only when changes not needed (so we can have root-owned system data files!)
 - create Debian package via 'make deb'

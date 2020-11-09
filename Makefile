@@ -5,18 +5,23 @@ libdir   ?= $(prefix)/lib/games/ironseed
 sharedir ?= $(prefix)/share/games/ironseed
 docdir   ?= $(prefix)/share/doc/ironseed
 
-fpc_compiler:= fpc
-c_compiler:= gcc
+CC	 ?= gcc
+p_compiler:= fpc
 d_compiler = gdc -g -o $@
 #d_compiler = ldc2 -g -check-printf-calls
 
-fpc_flags:= -Mtp -g -gl -gv
+PFLAGS:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O- -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049
-# -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
+fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049
+# -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
-cflags:= -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion
-includes=`sdl-config --cflags` -I /usr/X11R6/include
+c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
+CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
+
+# PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
+p_link += -k'-z relro' -k'-z now' -k-pie
+PFLAGS += -fPIC
+CFLAGS += -fpic -D_FORTIFY_SOURCE=2
 
 rebuild: clean all cleantmp
 # default target to build, best is debug_sdl / debug_ogl (NOT "release_xxx" AKA "no-checks" versions!)
@@ -27,31 +32,29 @@ cleanbuild: clean build cleantmp
 # OpenGL no-checks version
 release_ogl debug_ogl1: p_link += -k-lGL -k-lGLU
 
-release_ogl: cflags += -O -DNDEBUG
+release_ogl: CFLAGS += -O -DNDEBUG
 release_ogl: cleanbuild
 
 # OpenGL debug version
 debug_ogl:   clean debug_ogl1 cleantmp
-debug_ogl1:  tags
-debug_ogl1:  cflags += -O0 -Werror
-debug_ogl1:  fpc_flags  += $(fpc_debug)
+debug_ogl1:  CFLAGS += -O1 -Werror
+debug_ogl1:  PFLAGS += $(fpc_debug)
 debug_ogl1:  build
 
 # SDL no-checks version
-release_sdl: cflags += -O -DNDEBUG -DNO_OGL
+release_sdl: CFLAGS += -O -DNDEBUG -DNO_OGL
 release_sdl: cleanbuild
 
 # SDL debug version
-debug_sdl1 demo_sdl1: tags
-debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani Data_Generators/makedata/shp2make: cflags += -O0 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani Data_Generators/makedata/shp2make: CFLAGS += -O1 -DNO_OGL -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
-debug_sdl1:  fpc_flags  += $(fpc_debug)
+debug_sdl1:  PFLAGS += $(fpc_debug)
 debug_sdl1:  build
 
 # DEMO SDL debug version
 demo_sdl:    clean demo_sdl1 cleantmp
-demo_sdl1:   fpc_flags  += $(fpc_debug) -dDEMO
+demo_sdl1:   PFLAGS += $(fpc_debug) -dDEMO
 demo_sdl1:   build
 
 PROG_FILES = is crewgen intro main
@@ -70,19 +73,19 @@ DATA_FILES := data/log.dta  data/titles.dta $(CREWCONVS) $(RACECONVS) $(SPECCONV
 build:  $(PROG_FILES) $(DATA_FILES)
 
 c_utils.o: Makefile c_utils.c
-	$(c_compiler) $(includes) $(cflags) -c c_utils.c
+	$(CC) $(CFLAGS) -c c_utils.c
 
 $(PROG_FILES): Makefile c_utils.o _paths_.pas *.pas
-	$(fpc_compiler) $(fpc_flags) $(p_link) $@.pas
+	$(p_compiler) $(PFLAGS) $(p_link) $@.pas
 
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
-	$(c_compiler) $(includes) $(cflags) -O0 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
+	$(CC) $(CFLAGS) -O1 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
 
-test/test_0_pas: cflags += -O0 -Werror
-test/test_0_pas: fpc_flags  += $(fpc_debug)
+test/test_0_pas: CFLAGS += -O1 -Werror
+test/test_0_pas: PFLAGS += $(fpc_debug)
 test/test_0_pas: p_link += -k-lGL -k-lGLU
 test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
-	$(fpc_compiler) $(fpc_flags) $(p_link) test/test_0_pas.pas
+	$(p_compiler) $(PFLAGS) $(p_link) test/test_0_pas.pas
 
 # needed because fpc does not have gcc-like -dVAR=VALUE syntax :(
 _paths_.pas: Makefile
@@ -120,7 +123,7 @@ distclean: clean cleanbak
 
 reallyclean: distclean data_destroy
 
-mrproper: distclean
+mrproper: reallyclean
 	rm -rf data/savegame.dir save?
 
 tags: *.c *.pas
@@ -156,7 +159,7 @@ Data_Generators/misc/cpr2tga: Data_Generators/misc/cpr2tga.pas Data_Generators/m
 Data_Generators/misc/tga2cpr: Data_Generators/misc/tga2cpr.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
-	$(fpc_compiler) $(fpc_flags) $(fpc_debug) $(p_link)  $<
+	$(p_compiler) $(PFLAGS) $(p_link)  $<
 
 data/log.dta  data/titles.dta: Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt
 	Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt data/titles.dta data/log.dta
@@ -197,33 +200,33 @@ data/charani.dta:     Data_Generators/makedata/makeani data/char.cpr Data_Genera
 data/shippix.dta:     Data_Generators/makedata/shp2make Data_Generators/makedata/shippart.cpr
 	Data_Generators/makedata/shp2make
 data/iteminfo.dta: Data_Generators/makedata/itemmake Data_Generators/makedata/iteminfo.txt
-	Data_Generators/makedata/itemmake
+	Data_Generators/makedata/itemmake > /dev/null
 data/creation.dta: Data_Generators/makedata/creamake Data_Generators/makedata/creation.txt  data/cargo.dta
-	Data_Generators/makedata/creamake
+	Data_Generators/makedata/creamake > /dev/null
 data/cargo.dta:    Data_Generators/makedata/cargmake Data_Generators/makedata/cargo.txt
-	Data_Generators/makedata/cargmake
+	Data_Generators/makedata/cargmake > /dev/null
 data/scan.dta:     Data_Generators/makedata/scanmake Data_Generators/makedata/scandata.txt
 	Data_Generators/makedata/scanmake
 data/sysname.dta data/sysset.dta Data_Generators/other/sysdata.txt:  Data_Generators/makedata/sysmake  Data_Generators/makedata/names.txt Data_Generators/makedata/sysset.txt
-	Data_Generators/makedata/sysmake
+	Data_Generators/makedata/sysmake > /dev/null
 data/contact0.dta: Data_Generators/makedata/aliemake Data_Generators/makedata/contact.txt
-	Data_Generators/makedata/aliemake
+	Data_Generators/makedata/aliemake > /dev/null
 data/crew.dta:     Data_Generators/makedata/crewmake Data_Generators/makedata/crew.txt
-	Data_Generators/makedata/crewmake
+	Data_Generators/makedata/crewmake > /dev/null
 data/artifact.dta: Data_Generators/makedata/artimake Data_Generators/makedata/anom.txt
-	Data_Generators/makedata/artimake
+	Data_Generators/makedata/artimake > /dev/null
 data/elements.dta: Data_Generators/makedata/elemmake Data_Generators/makedata/element.txt
-	Data_Generators/makedata/elemmake
+	Data_Generators/makedata/elemmake > /dev/null
 data/event.dta:    Data_Generators/makedata/eventmak Data_Generators/makedata/event.txt
-	Data_Generators/makedata/eventmak
+	Data_Generators/makedata/eventmak > /dev/null
 data/weapon.dta:   Data_Generators/makedata/weapmake Data_Generators/makedata/weapon.txt
-	Data_Generators/makedata/weapmake
+	Data_Generators/makedata/weapmake > /dev/null
 data/ships.dta:    Data_Generators/makedata/shipmake Data_Generators/makedata/alienshp.txt
-	Data_Generators/makedata/shipmake
+	Data_Generators/makedata/shipmake > /dev/null
 data/weapicon.dta data/planicon.dta: Data_Generators/makedata/iconmake Data_Generators/makedata/planicon.cpr
-	Data_Generators/makedata/iconmake
+	Data_Generators/makedata/iconmake > /dev/null
 data/planname.txt: Data_Generators/makedata/namemake Data_Generators/makedata/newnames.txt
-	Data_Generators/makedata/namemake
+	Data_Generators/makedata/namemake > /dev/null
 data/icons.vga: Graphics_Assets/icons.png Data_Generators/misc/ppm2icons.pl data/main.pal
 	convert $< ppm:- | Data_Generators/misc/ppm2icons.pl  data/main.pal > $@
 
@@ -309,6 +312,10 @@ uninstall:
 
 deb:
 	debuild
+	lintian --check --fail-on-warnings --info
 	dh clean
 
 .PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths deb
+
+# fpc does not really work nicely with parallel builds, as for example `fpc main` and `fpc intro` can try to produce 'data.ppu' etc. simultaneously
+.NOTPARALLEL:
