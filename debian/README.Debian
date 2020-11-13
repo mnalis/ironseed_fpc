@@ -1,5 +1,0 @@
-ironseed for Debian
-
-This version is debug_sdl variant, without OpenGL and with safety checks.
-
- -- Matija Nalis <mnalis-deb@voyager.hr>  Thu, 17 Sep 2020 01:39:11 +0200

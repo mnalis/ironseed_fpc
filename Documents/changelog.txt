@@ -1,3 +1,5 @@
+v 0.2.7
+- move debian/* packaging to https://salsa.debian.org/mnalis/ironseed
 v 0.2.6
 - Debian menu, and other debian packaging tweaks
 - add compile flags for hardening (see https://wiki.debian.org/Hardening)
