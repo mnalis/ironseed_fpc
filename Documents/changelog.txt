@@ -1,3 +1,5 @@
+v 0.2.8
+- use 'gm' for conversion to .tga, due to Debian bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=974750
 v 0.2.7
 - move debian/* packaging to https://salsa.debian.org/mnalis/ironseed
 v 0.2.6
