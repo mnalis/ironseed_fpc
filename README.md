@@ -25,6 +25,16 @@ For making changes to game, you may also need:
 - (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get intsall gdc` or http://digitalmars.com/d/2.0/)
 - (optionally) perl, imagemagick, graphicsmagick (for screen convertsion utilities, `apt-get install perl graphicsmagick imagemagick`)
 
+Debian packages and prebuilt game
+=================================
+- source for Debian packages can be found on https://mentors.debian.net/package/ironseed/
+  Just do `dget -x https://mentors.debian.net/debian/pool/main/i/ironseed/ironseed_XXXX.dsc`
+  on the latest `.dsc` file, and `debuild` (from `devscripts` package) to rebuild.
+  Packaging information is being maintained on  https://salsa.debian.org/mnalis/ironseed
+
+- prebuild .deb packages for Debian Buster can also often be found at
+  https://github.com/mnalis/ironseed_fpc/releases
+
 Compilation
 ===========
 Just typing `make` will compile whichever developers think is currently the best.
