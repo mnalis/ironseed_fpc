@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Ironseed
+GenericName=Strategy Game
+Comment=An interstellar adventure game
+Keywords=combat;tactic;real-time;aliens;space;strategy;adventure;fiction;
+Categories=Game;StrategyGame;
+Exec=is
+Icon=ironseed
+Terminal=false

@@ -1,3 +1,5 @@
+v 0.2.9
+- added FreeDesktop menu entry
 - remove unused .ogg sounds to save space in this fork
 v 0.2.8
 - use 'gm' for conversion to .tga, due to Debian bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=974750

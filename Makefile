@@ -4,6 +4,8 @@ bindir   ?= $(prefix)/games
 libdir   ?= $(prefix)/lib/games/ironseed
 sharedir ?= $(prefix)/share/games/ironseed
 docdir   ?= $(prefix)/share/doc/ironseed
+deskdir  ?= $(prefix)/share/applications
+icondir  ?= $(prefix)/share/icons/hicolor/128x128/apps
 
 CC	 ?= gcc
 p_compiler:= fpc
@@ -300,6 +302,10 @@ install: cleanbak
 	install -m 0644 sound/*.SAM sound/*.MOD $(DESTDIR)$(sharedir)/sound
 	test -d $(DESTDIR)$(docdir) || mkdir -p $(DESTDIR)$(docdir)
 	install -m 0644 README.md Documents/* $(DESTDIR)$(docdir)
+	test -d $(DESTDIR)$(deskdir) || mkdir -p $(DESTDIR)$(deskdir)
+	install -m 0644 ironseed.desktop $(DESTDIR)$(deskdir)
+	test -d $(DESTDIR)$(icondir) || mkdir -p $(DESTDIR)$(icondir)
+	install -m 0644 ironseed.png $(DESTDIR)$(icondir)
 
 uninstall:
 	cd $(DESTDIR)$(bindir) && rm -f is
@@ -309,6 +315,10 @@ uninstall:
 	rmdir $(DESTDIR)$(sharedir)/data $(DESTDIR)$(sharedir)/sound $(DESTDIR)$(sharedir)
 	cd $(DESTDIR)$(docdir) && rm -f README.md $(notdir $(wildcard Documents/*))
 	rmdir $(DESTDIR)$(docdir)
+	cd $(DESTDIR)$(deskdir) && rm -f ironseed.desktop
+	rmdir $(DESTDIR)$(deskdir)
+	cd $(DESTDIR)$(icondir) && rm -f ironseed.png
+	rmdir $(DESTDIR)$(icondir)
 
 deb:
 	debuild
