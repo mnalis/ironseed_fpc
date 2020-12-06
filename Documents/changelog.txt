@@ -1,3 +1,4 @@
+- document location of manual in manpage
 v 0.2.9
 - added FreeDesktop menu entry
 - remove unused .ogg sounds to save space in this fork
