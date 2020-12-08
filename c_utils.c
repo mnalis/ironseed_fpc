@@ -1003,7 +1003,7 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	int8_t *sound_raw, chan;
 	float k;
 	int16_t *sound, smp;
-	char *fn, *s, *s1;
+	char *fn, *s1;
 
 	if (!audio_open)
 		return;
@@ -1012,11 +1012,6 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	assert(fn != NULL);
 	s1 = strdup(filename);
 	assert(s1 != NULL);
-	s = s1;
-	while (*s) {
-		*s = (char) toupper(*s);	// toupper(3) works with int, but only defined on char
-		s++;
-	}
 	strcpy(fn, s1);
 	f = fopen(fn, "rb");
 	if (f == NULL) {

@@ -840,11 +840,11 @@ begin
  fading;
  mousehide;
  loadscreen(loc_data()+'intro3',@screen);
- soundeffect(loc_sound()+'explode3.sam',9500);
+ soundeffect(loc_sound()+'EXPLODE3.SAM',9500);
  fadein;
  mouseshow;
  repeat
-  if mouse.getstatus then soundeffect(loc_sound()+'explode3.sam',9500);
+  if mouse.getstatus then soundeffect(loc_sound()+'EXPLODE3.SAM',9500);
  until fastkeypressed;
  stopmod;
  fading;

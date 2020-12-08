@@ -227,15 +227,15 @@ var j,i,a,b,c,d: integer;
 begin
  c:=ship.gunnodes[n];					// c = our current weapon index
  case weapons[c].dmgtypes[DMGTYP_ENERGY] of
-   0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect(loc_sound()+'gun4.sam',7000)
-           else soundeffect(loc_sound()+'gun1.sam',7000);
-   24..34: soundeffect(loc_sound()+'laser1.sam',7000);
-   35..45: soundeffect(loc_sound()+'laser2.sam',7000);
-   46..56: soundeffect(loc_sound()+'laser3.sam',7000);
-   57..67: soundeffect(loc_sound()+'laser4.sam',7000);
-   68..78: soundeffect(loc_sound()+'laser5.sam',7000);
-   79..89: soundeffect(loc_sound()+'laser6.sam',7000);
-   90..100: soundeffect(loc_sound()+'laser7.sam',7000);
+   0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect(loc_sound()+'GUN4.SAM',7000)
+           else soundeffect(loc_sound()+'GUN1.SAM',7000);
+   24..34: soundeffect(loc_sound()+'LASER1.SAM',7000);
+   35..45: soundeffect(loc_sound()+'LASER2.SAM',7000);
+   46..56: soundeffect(loc_sound()+'LASER3.SAM',7000);
+   57..67: soundeffect(loc_sound()+'LASER4.SAM',7000);
+   68..78: soundeffect(loc_sound()+'LASER5.SAM',7000);
+   79..89: soundeffect(loc_sound()+'LASER6.SAM',7000);
+   90..100: soundeffect(loc_sound()+'LASER7.SAM',7000);
  end;
  delay(tslice);
  {if (skillcheck(4)) or ((scanning) and (random(100)<20)) then}
@@ -610,7 +610,7 @@ var j: integer;
 begin
  //writeln ('    takedamage(type=',n,', damage=', d, ')');
  if dead then exit;
- soundeffect(loc_sound()+'explode'+chr(49+random(2))+'.sam',9000);
+ soundeffect(loc_sound()+'EXPLODE'+chr(49+random(2))+'.SAM',9000);
  delay(tslice div 2);
  if d<1 then d:=1;
  case n of
