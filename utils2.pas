@@ -644,7 +644,7 @@ begin
  assign(f,loc_data()+'sysname.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/sysname.txt',1);
- seek(f,n-1);
+ seek(f,Int64(n)-1);
  if ioresult<>0 then errorhandler('data/sysname.txt',6);
  read(f,str1);
  if ioresult<>0 then errorhandler('data/sysname.txt',6);

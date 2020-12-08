@@ -58,7 +58,7 @@
 #define TIMESCALE 1.0
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
-#define TURBO_FACTOR 60
+#define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
 
 static const double ratio = 640.0 / 480;
 
@@ -752,7 +752,7 @@ void delay(const fpc_word_t ms)
 	delta_usec();
 	us = (int64_t) (ms * 1000 * TIMESCALE) - (int64_t) err;	// we're always small enough so convert to int64 is not a problem
 	if (turbo_mode)
-		us /= TURBO_FACTOR;
+		us = us >> TURBO_FACTOR;
 	while (us > 0) {
 		us -= (int64_t) delta_usec();	// delta_usec() will always be small, so 63bits are always OK
 		_nanosleep(5000);

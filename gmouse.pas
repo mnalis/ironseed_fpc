@@ -105,7 +105,7 @@ begin
  assign(f,loc_data()+'weapicon.dta');
  reset(f);
  if ioresult<>0 then errorhandler('weapicon.dta',1);
- seek(f,n+87);
+ seek(f,Int64(n)+87);
  if ioresult<>0 then errorhandler('weapicon.dta',5);
  read(f,tempicon^);
  if ioresult<>0 then errorhandler('weapicon.dta',5);

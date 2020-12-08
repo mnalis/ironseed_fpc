@@ -122,12 +122,13 @@ end;
 
 
 type addr_type = qword;		// NB: word should be enough to hold memory address ?! https://www.tutorialspoint.com/pascal/pascal_pointers.htm
+				// it is at least dword on i386 and qword on x86_64, so we go with bigger value
 const screen_size = 320*200;
 var screen_addr: addr_type;
 
 function _address (const someaddress: pointer): addr_type;
 begin
-  _address := {$hints-}addr_type(someaddress);{$hints+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We shoud be using FarAddr (fpc 3.2.0+) instaed of "@"/addr() anyway
+  _address := {$warnings-}{$hints-}addr_type(someaddress);{$hints+}{$warnings+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" and "Warning: (4056) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We shoud be using FarAddr (fpc 3.2.0+) instead of "@"/addr() anyway
 end;
 
 { bounds checking fillchar(), when dest is screen[] }
@@ -136,8 +137,9 @@ var dest_addr: addr_type;
 begin
  dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scr_fillchar: count is negative');
  assert (dest_addr >= screen_addr, 'scr_fillchar: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
  fillchar(dest, count, value);
 end;
 
@@ -147,8 +149,9 @@ var dest_addr: addr_type;
 begin
  dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrto_move: count is negative');
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
 end;
 
@@ -158,8 +161,9 @@ var src_addr: addr_type;
 begin
  src_addr := _address(@source);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrfrom_move: count is negative');
  assert (src_addr >= screen_addr, 'scrfrom_move: screen source below 0');
- assert (src_addr + count <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
+ assert (src_addr + addr_type(count) <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
  move (source, dest, count);
 end;
 
@@ -170,10 +174,11 @@ begin
  src_addr := _address(@source);
  dest_addr := _address(@dest);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrfromto_move: count is negative');
  assert (src_addr >= screen_addr, 'scrfromto_move: screen source below 0');
- assert (src_addr + count <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
+ assert (src_addr + addr_type(count) <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
 end;
 

@@ -256,7 +256,7 @@ begin
  assign(f,loc_data()+'contact0.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/contact0.dta',1);
- seek(f,n-1);
+ seek(f,Int64(n)-1);
  if ioresult<>0 then errorhandler('data/contact0.dta',5);
  read(f,alien);
  if ioresult<>0 then errorhandler('data/contact0.dta',5);

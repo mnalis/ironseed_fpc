@@ -3038,7 +3038,7 @@ error:
 end;
 
 procedure computegraph;
-var dist,tech,signaly,signalx,noise: integer;
+var dist,tech,signaly,signalx,noise,offset: integer;
 begin
  if ship.wandering.alienid<16000 then
   begin
@@ -3060,7 +3060,11 @@ begin
  signalx:=round((tech-40)/30*98);
  if signalx>98 then signalx:=98;
  for j:=36 to 134 do
-  screen[34-random(noise)+round(noise/2),j]:=28;
+  begin
+   offset:=random(noise)-round(noise/2);
+   assert (offset <= 34, 'screen noise offset out of range');
+   screen[34-offset,j]:=28;
+  end;
  if ship.wandering.alienid<16000 then screen[34-signaly,signalx+36]:=31;
 end;
 

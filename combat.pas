@@ -1352,7 +1352,7 @@ begin
  assign(f,loc_data()+'ships.dta');
  reset(f);
  if ioresult<>0 then errorhandler('ships.dta',1);
- seek(f,j+i*11);
+ seek(f,Int64(j)+Int64(i)*11);
  if ioresult<>0 then errorhandler('ships.dta',5);
  read(f,ships^[n]);
  if ioresult<>0 then errorhandler('ships.dta',5);

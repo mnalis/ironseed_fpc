@@ -290,10 +290,10 @@ begin
 end;
 
 function checkweight(background	: boolean): boolean;
-var weight : longint;
+var weight : Int64;
     i,j	   : integer;
     str1   : string[4];
-   str2	   : string[5];
+    str2   : string[5];
 begin
  weight:=0;
  for j:=1 to 250 do
@@ -309,7 +309,7 @@ begin
       i:=1;
       while (cargo[i].index<>ship.cargo[j]) and (i<maxcargo) do inc(i);
      end;
-    weight:=weight+cargo[i].size*ship.numcargo[j];
+    weight:=weight+Int64(cargo[i].size)*Int64(ship.numcargo[j]);
    end;
  weight:=weight div 10;
  if weight>ship.cargomax then
@@ -337,7 +337,7 @@ begin
 end;
 
 function addcargo(item: integer; force : boolean): boolean;
-var weight: longint;
+var weight: Int64;
     i,j: integer;
     str1: string[4];
 begin
@@ -355,7 +355,7 @@ begin
 	    i:=1;
 	    while (cargo[i].index<>ship.cargo[j]) and (i<maxcargo) do inc(i);
 	 end;
-	 weight:=weight+cargo[i].size*ship.numcargo[j];
+	 weight:=weight+Int64(cargo[i].size)*Int64(ship.numcargo[j]);
       end;
    if item>ID_ARTIFACT_OFFSET then
    begin
@@ -718,7 +718,7 @@ begin
 end;
 
 function addcargo2(item	: integer; force : boolean): boolean;
-var weight: longint;
+var weight: Int64;
     i,j: integer;
     str1,str2: string[4];
 begin
@@ -738,7 +738,7 @@ begin
      end;
     assert (i<=maxcargo, 'addcargo2: out of cargo bounds');
     assert (cargo[i].index=ship.cargo[j], 'addcargo2: cargo not found');
-    weight:=weight+cargo[i].size*ship.numcargo[j];
+    weight:=weight+Int64(cargo[i].size)*Int64(ship.numcargo[j]);
    end;
 
  if item>ID_ARTIFACT_OFFSET then

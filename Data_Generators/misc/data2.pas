@@ -501,7 +501,7 @@ begin
  if not checkversion then errorhandler(s+' must be 256-color 8-bit index-colored 24-bit palette TARGA file',5);
 
  { read TGA palette }
- seek(f,tga_head.id_len+18);	// skip required header and (optional) variable-sized image_id
+ seek(f,Int64(tga_head.id_len)+18);	// skip required header and (optional) variable-sized image_id
  num:=tga_head.cmap_esize div 8 * tga_head.cmap_len;
  assert (num=768, 'palette size mismatch');
  blockread(f,colors,num,err);

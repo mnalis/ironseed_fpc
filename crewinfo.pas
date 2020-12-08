@@ -129,7 +129,7 @@ begin
  assign(crewfile,loc_data()+'crew.dta');
  reset(crewfile);
  if ioresult<>0 then errorhandler('crew.dta',1);
- seek(crewfile,ship.crew[crewindex].index-1);
+ seek(crewfile,Int64(ship.crew[crewindex].index)-1);
  if ioresult<>0 then errorhandler('crew.dta',5);
  read(crewfile,crewdata);
  if ioresult<>0 then errorhandler('crew.dta',5);

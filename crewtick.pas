@@ -710,7 +710,7 @@ var
 	    end else begin
 	       if (d > 0) and (random(100) < 5) then dec(d);
 	    end;
-	    tempplan^[i].bots := (tempplan^[i].bots and 7) or (d shl 3);
+	    tempplan^[i].bots := (tempplan^[i].bots and 7) or Byte(d shl 3);
 	 end;
    end;
 
