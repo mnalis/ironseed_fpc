@@ -2,7 +2,8 @@ ironseed_fpc
 ============
 Iron Seed is a science-fiction DOS game from 1994, which was both developed and published by Channel 7.
 Gameplay is real-time, featuring trading, diplomacy, and strategy.
-This repository contains a free pascal version of the original source code, so the game can now be compiled and run on GNU/Linux.
+This repository contains a free pascal version of the original source code which has been released under GPL-3.0-or-later (see LICENSE file),
+so the game can now be compiled and run on GNU/Linux on architectures supported by fpc (tested on x86_64 and i386).
 Mnalis is providing ongoing bug fixes which are being integrated into this repository, further bug fixing and contributors are welcome.
 
 Documentation
