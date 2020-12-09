@@ -1,3 +1,5 @@
+v 0.3.2
+- 'ironseed' symlinks for binary and manpage
 v 0.3.1
 - fix sound effects filename case
 v 0.3.0

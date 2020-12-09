@@ -295,6 +295,7 @@ install: cleanbak
 	install $(PROG_FILES) $(DESTDIR)$(libdir)
 	test -d $(DESTDIR)$(bindir) || mkdir -p $(DESTDIR)$(bindir)
 	mv -f $(DESTDIR)$(libdir)/is $(DESTDIR)$(bindir)
+	ln -s is $(DESTDIR)$(bindir)/ironseed
 	test -d $(DESTDIR)$(sharedir)/data || mkdir -p $(DESTDIR)$(sharedir)/data
 	install -m 0644 data/* $(DESTDIR)$(sharedir)/data
 	rm -f $(DESTDIR)$(sharedir)/data/savegame.dir
@@ -308,7 +309,7 @@ install: cleanbak
 	install -m 0644 ironseed.png $(DESTDIR)$(icondir)
 
 uninstall:
-	cd $(DESTDIR)$(bindir) && rm -f is
+	cd $(DESTDIR)$(bindir) && rm -f is ironseed
 	cd $(DESTDIR)$(libdir) && rm -f $(PROG_FILES)
 	rmdir $(DESTDIR)$(libdir)
 	cd $(DESTDIR)$(sharedir) && rm -f README.md $(wildcard data/* sound/*)
