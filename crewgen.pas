@@ -1007,7 +1007,7 @@ begin
  if (paramstr(1)<>'/makeseed') then
   begin
    closegraph();
-   writeln('Do not run this program separately.  Please run IS.EXE.');
+   writeln('Do not run this program separately.  Please run "is".');
    halt(4);
   end;
  init_dirs;

@@ -1683,7 +1683,7 @@ begin
    closegraph;
      for i := 1 to paramcount do
 	writeln(paramstr(i));
-   writeln('Do not run this program separately.  Please run is.');
+   writeln('Do not run this program separately.  Please run "is".');
    halt(4);
   end;
  if (paramstr(2)='/done') then
