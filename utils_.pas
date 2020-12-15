@@ -39,6 +39,8 @@ Interface
 	xorput=1;
 	copyput=0;
 
+ var use_audio: boolean;
+
 procedure delay(const MS:Word); cdecl ; external;
 procedure setcolor(const Color: Word); cdecl ; external;
 procedure rectangle(const x1: word; y1:word; x2: word; y2:word);cdecl ; external;
@@ -84,14 +86,14 @@ uses sysutils, dos, users, baseunix, _paths_;
 
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
-procedure SDL_init_video(var scr:screentype); cdecl ; external;
+procedure SDL_init_video(var scr:screentype; const use_audio: boolean); cdecl ; external;
 
 procedure closegraph;   // close video
 begin
     all_done;
 //    SDL_Quit();
-
 end;
+
 procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
 var rp,gp,bp:byte;
 begin
@@ -185,7 +187,7 @@ end;
 procedure init_video(var scr:screentype);
 begin
   screen_addr := _address(@scr);
-  SDL_init_video(scr);
+  SDL_init_video(scr, use_audio);
 end;
 
 
@@ -360,7 +362,7 @@ begin
   if getenv('DEBUG')='1' then
    begin
     writeln;
-    if getenv('NOSOUND')='1' then writeln('SOUND: Disabled via NOSOUND=1');
+    if not use_audio then writeln('SOUND: Disabled via environment variable NOSOUND=1');
     writeln('Using paths:');
     writeln('P_LIB='#9, prog_libdir());
     writeln('P_SHR='#9, prog_sharedir());
@@ -432,6 +434,7 @@ begin
 end;
 
 begin
-
+  use_audio := True;
+  if getenv('NOSOUND')='1' then use_audio := False;
 end.
 

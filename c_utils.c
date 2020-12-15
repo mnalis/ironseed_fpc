@@ -89,6 +89,7 @@ static pal_color_type palette[256];
 
 static volatile uint8_t is_video_initialized = 0;
 static volatile uint8_t is_audio_initialized = 0;
+static volatile uint8_t do_sdl_audio = 0;
 static uint8_t *v_buf = NULL;
 static volatile uint8_t do_video_stop = 0;	// command video to stop
 static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
@@ -399,17 +400,23 @@ static void abort_if_abnormal_exit(void)
 static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
+	uint32_t SDL_flags = SDL_INIT_VIDEO;
 	static volatile uint8_t is_sdl_initialized = 0;
 
 	//printf ("SDL_init_video_real called, is_sdl_initialized=%d, is_audio_initialized=%d, is_video_initialized=%d\r\n", is_sdl_initialized, is_audio_initialized, is_video_initialized);
 	assert (!is_sdl_initialized);		/* do not allow double init, or terrible bugs happen down the line! */
 
-	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
+	if (do_sdl_audio)
+		SDL_flags |= SDL_INIT_AUDIO;
+
+	if (SDL_Init(SDL_flags) != 0) {
 		printf("Unable to initialize SDL: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	is_sdl_initialized = 1;
-	is_audio_initialized = 1;
+
+	if (do_sdl_audio)
+		is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	SDL_EnableUNICODE(1);
@@ -633,9 +640,10 @@ static int event_thread(void *notused)
 
 
 
-void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
+void SDL_init_video(fpc_screentype_t vga_buf, const fpc_boolean_t use_audio)	/* called from pascal; vga_buf is 320x200 bytes */
 {
 	v_buf = vga_buf;
+	do_sdl_audio = use_audio;
 	do_video_stop = 0;
 	is_video_finished = 0;
 	_sdl_events = SDL_CreateThread(event_thread, NULL);

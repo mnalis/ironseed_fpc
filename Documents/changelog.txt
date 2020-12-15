@@ -1,3 +1,4 @@
+- fix for SDL initializing the soundcard even with NOSOUND=1
 v 0.3.3
 - DEBUG=1 environment variable to show initialization info
 - NOSOUND=1 environment variable to skip initializing audio

@@ -64,9 +64,7 @@ end;
 
 procedure initializemod;  //SDL mod
 begin
-    nosound := False;
-    if getenv('NOSOUND')='1' then nosound := True;
-    if (not nosound) then sdl_mixer_init;
+    if use_audio then sdl_mixer_init;
 end;
 
 procedure stopmod;       // stop music + unload

@@ -464,7 +464,6 @@ var
  nearby,nearbybackup: nearbyarraytype;
  tempplan: ^planarray;
  done: boolean;
- nosound: boolean;
  artifacts: ^artifacttype;
  tempicon: ^weaponicontype;
  planicons: ^planicontype;
