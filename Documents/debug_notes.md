@@ -8,7 +8,9 @@ For example, to debug savegame #2:
 Extra
 =====
 
-add `-dTrace` to `fpc_debug` in `Makefile` to print more debug info.
+Add `-dTrace` to `fpc_debug` in `Makefile` to possibly print more debug info.
+
+Set `DEBUG=1` environment variable to display startup info.
 
 GDB bugs displaying RECORD
 ==========================

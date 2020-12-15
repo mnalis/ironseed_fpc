@@ -1,3 +1,7 @@
+v 0.3.3
+- DEBUG=1 environment variable to show initialization info
+- NOSOUND=1 environment variable to skip initializing audio
+- cosmetic fixes in error messages and docs update
 v 0.3.2
 - 'ironseed' symlinks for binary and manpage
 v 0.3.1

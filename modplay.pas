@@ -42,7 +42,7 @@ interface
 
 implementation
 
-uses strings, data, utils_;
+uses strings, data, dos, utils_;
 
 	procedure sdl_mixer_init;cdecl ; external;
 	procedure musicDone;cdecl ; external;
@@ -64,7 +64,9 @@ end;
 
 procedure initializemod;  //SDL mod
 begin
-    sdl_mixer_init;
+    nosound := False;
+    if getenv('NOSOUND')='1' then nosound := True;
+    if (not nosound) then sdl_mixer_init;
 end;
 
 procedure stopmod;       // stop music + unload

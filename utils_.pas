@@ -248,7 +248,9 @@ begin
          end;
         tempdir := tempdir + '/' + subdir;
         try_tmpdir := true;
-        //writeln ('  OK, using final tempdir=', tempdir);
+{$IFDEF Trace}
+        writeln ('  OK, using final tempdir=', tempdir);
+{$ENDIF}
       end
      else
       begin
@@ -296,7 +298,9 @@ begin
            savedir := savedir + '/' + subdir;
          end;
          try_savedir := true;
-         //writeln ('  OK, using final savedir=', savedir);
+{$IFDEF Trace}
+         writeln ('  OK, using final savedir=', savedir);
+{$ENDIF}
       end
      else
       begin
@@ -353,20 +357,22 @@ procedure init_dirs;
 begin
   init_savedirs;
   init_tmpdir;
-{$IFDEF Trace}
-  writeln;
-  writeln('Using paths:');
-  writeln('P_LIB='#9, prog_libdir());
-  writeln('P_SHR='#9, prog_sharedir());
-  writeln('EXE='#9, loc_exe());
-  writeln('DATA='#9, loc_data());
-  writeln('SOUND='#9, loc_sound());
-  writeln('SAVENA='#9, loc_savenames());
-  writeln('SAVE1='#9, loc_savegame(1));
-  writeln('TMP='#9, loc_tmp());
-  writeln('PRN='#9, loc_prn());
-  writeln;
-{$ENDIF}
+  if getenv('DEBUG')='1' then
+   begin
+    writeln;
+    if getenv('NOSOUND')='1' then writeln('SOUND: Disabled via NOSOUND=1');
+    writeln('Using paths:');
+    writeln('P_LIB='#9, prog_libdir());
+    writeln('P_SHR='#9, prog_sharedir());
+    writeln('EXE='#9, loc_exe());
+    writeln('DATA='#9, loc_data());
+    writeln('SOUND='#9, loc_sound());
+    writeln('SAVENA='#9, loc_savenames());
+    writeln('SAVE1='#9, loc_savegame(1));
+    writeln('TMP='#9, loc_tmp());
+    writeln('PRN='#9, loc_prn());
+    writeln;
+   end;
 end;
 
 

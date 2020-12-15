@@ -8,6 +8,7 @@ Mnalis is providing ongoing bug fixes which are being integrated into this repos
 
 Documentation
 =============
+- `Documents/is.6` is a man page
 - `Documents/ironseed-manual.txt` is old ironseed manual, not completely up-to-date
 - `Documents/changelog.txt` contains current SDL/fpc development log.
 - `Documents/old_version.txt` is original developers historic (DOS) version list.
