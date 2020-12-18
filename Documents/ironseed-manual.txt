@@ -702,7 +702,7 @@
 
              Start by selecting a gun node without a weapon already installed in it. (Gun
              nodes are the locations along your ship hull at which a weapon may be placed.)
-             An empty node will appear as an black grey square on the Weapon Configuration
+             An empty node will appear as a black grey square on the Weapon Configuration
              menu.  Select one of these nodes.  A selected node will have a red border along
              its edge.
 

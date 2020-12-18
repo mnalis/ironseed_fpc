@@ -149,7 +149,7 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a interesting piece of hardware and how it operates is quite fascinating. However I think you want to talk to engineering for the more practical discussion of its use.
+-1	It's an interesting piece of hardware and how it operates is quite fascinating. However I think you want to talk to engineering for the more practical discussion of its use.
 
 @12      -1      1       93      HELP ADVICE
 93	We need to scan and catalog as many planets as we can. It's the only way we can find a _world to make our new _home.

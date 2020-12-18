@@ -131,7 +131,7 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a useful bit of equipment but I think you want to ask @2 about it.
+-1	It's an useful bit of equipment but I think you want to ask @2 about it.
 
 @12      -1      1       93      HELP ADVICE
 93	We need to explore this region of the galaxy.

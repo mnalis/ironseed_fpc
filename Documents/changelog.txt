@@ -1,3 +1,4 @@
+- lots of spellcheck fixes in code and docs
 v 0.3.4
 - fix for SDL initializing the soundcard even with NOSOUND=1
 v 0.3.3
