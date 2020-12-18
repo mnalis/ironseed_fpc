@@ -70,8 +70,8 @@ die "ERROR: must have 255 colors" unless $bpp==255;
 undef $/; 	# slurp the rest of the file in one go
 my @SCR = unpack "C*", <$ppm_fd>;
 
-# read in palette to %PALLETE
-my %PALLETE = ();
+# read in palette to %PALETTE
+my %PALETTE = ();
 
 open my $pal_fd, $is_update? '+<' : '<', $pal_name;
 my @_pal = unpack "C*", <$pal_fd>;
@@ -82,7 +82,7 @@ for (my $pal_used=0; $pal_used < $pal_orig_max; $pal_used+=3) {
   my $g = $_pal[$pal_used+1];
   my $b = $_pal[$pal_used+2];
   my $pal_idx = "$r:$g:$b";
-  $PALLETE{$pal_idx} = int($pal_used / 3) if !defined $PALLETE{$pal_idx};
+  $PALETTE{$pal_idx} = int($pal_used / 3) if !defined $PALETTE{$pal_idx};
 }
 
 my $pal_used = $pal_orig_max / 3;
@@ -96,17 +96,17 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);
   my $pal_idx = "$r:$g:$b";
-  my $val = $PALLETE{$pal_idx};
+  my $val = $PALETTE{$pal_idx};
 
   if (!defined $val) {		# entry not in palette
      if ($is_update) {
        $val = $pal_used++;
        die "ERROR: palette overflow: $pal_used" if $val > $bpp;
-       $PALLETE{$pal_idx} = $val;
+       $PALETTE{$pal_idx} = $val;
        print $pal_fd chr($r).chr($g).chr($b);
      } else {
        #use Data::Dumper;
-       #print Dumper(\%PALLETE);
+       #print Dumper(\%PALETTE);
        die "invalid RGB: $pal_idx not found in $pal_name at idx: $i, and UPDATE not specified";
      }
   }

@@ -435,7 +435,7 @@ begin
 	    printxy(60,(tempcreate^.index - ID_UNKNOWN_MATERIAL) * 6, s);}
 	 end;
       end;
-      {give a chance for unkowns and worthless junk}
+      {give a chance for unknowns and worthless junk}
       inc(amounts[0]);
       inc(amounts[20]);
       inc(total, 2);

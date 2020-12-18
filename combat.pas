@@ -185,7 +185,7 @@ begin
  mouseshow;
 end;
 
-{ n=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage inflicted }
+{ n=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage inflicted }
 procedure givedamage(n,d: integer);
 var j: integer;
 begin
@@ -243,7 +243,7 @@ begin
   begin
    b:=ships^[targetindex].shield-ID_SHIELDS_OFFSET;	// b = alien's shield index
    assert (b>0);					// aliens always have *some* shield, see Data_Generators/makedata/alienshp.txt
-   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then	// j = our weapon damage types: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy
+   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then	// j = our weapon damage types: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy
     begin
      i:=round(weapons[c].dmgtypes[j]/100*weapons[c].damage*5);	// i = maximum damage our weapon can deal (for this dmgtype "j")
      //writeln ('successfully firing weapon',c,'(node',n,') with dmgtype',j,' and maxdamage i=',i,' GJ on alien',targetindex, ' with shield', ships^[targetindex].shield, ' at ', ships^[targetindex].shieldlevel ,'%');
@@ -604,7 +604,7 @@ begin
 end;
 
 
-{ n=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage received }
+{ n=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage received }
 procedure takedamage(n,d: integer);
 var j: integer;
 begin
@@ -616,7 +616,7 @@ begin
  case n of
   DMGTYP_PSIONIC: inc(ship.damages[DMG_LIFESUPPORT],d);		{ n=1 Psionioc inflicts damage to damages[DMG_LIFESUPPORT] = Lifesupport }
   DMGTYP_PARTICLE: dec(ship.hullintegrity,d);		{ n=2 Particle damage damages hull }
-  DMGTYP_INERTIAL: dec(ship.hullintegrity,d div 2);	{ n=3 Intertial damage damages hull more slowly }
+  DMGTYP_INERTIAL: dec(ship.hullintegrity,d div 2);	{ n=3 Inertial damage damages hull more slowly }
   DMGTYP_ENERGY: case random(8) of			{ n=4 Energy damage }
       0: inc(ship.damages[DMG_POWER],d);	{ damages[DMG_POWER] = Power subsystem }
       1: begin
@@ -691,7 +691,7 @@ var a,b,c,j,i: integer;
 begin
  b:=ship.shield-ID_SHIELDS_OFFSET;	{ weapons[b]=our shield, weapons[n]=attacker's weapon; weapons[] array is generic for some type and readonly }
  assert (b>0);
- for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
+ for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
        { QUESTION: why *5 ?!

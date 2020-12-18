@@ -68,7 +68,7 @@ die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
 my @SCR = unpack "C*", <$ppm_fd>;
-my %PALLETE = ();
+my %PALETTE = ();
 my $pal_used = 0;
 
 open my $pal_fd, '>', $pal_tmp;
@@ -80,12 +80,12 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);
   my $pal_idx = "$r:$g:$b";
-  my $val = $PALLETE{$pal_idx};
+  my $val = $PALETTE{$pal_idx};
   
   if (!defined $val) {		# add new entry to palette
      $val = $pal_used++;
      die "ERROR: palette overflow: $pal_used" if $val > $bpp;
-     $PALLETE{$pal_idx} = $val;
+     $PALETTE{$pal_idx} = $val;
      print $pal_fd chr($r).chr($g).chr($b);
   }
   
