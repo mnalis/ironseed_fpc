@@ -27,6 +27,7 @@
 //#define NO_OGL
 
 #include <assert.h>
+#include <string.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
