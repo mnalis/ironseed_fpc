@@ -27,7 +27,6 @@
 //#define NO_OGL
 
 #include <assert.h>
-#include <string.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -1011,21 +1010,13 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	int8_t *sound_raw, chan;
 	float k;
 	int16_t *sound, smp;
-	char *fn, *s1;
 
 	if (!audio_open)
 		return;
 
-	fn = malloc(256);
-	assert(fn != NULL);
-	s1 = strdup(filename);
-	assert(s1 != NULL);
-	strcpy(fn, s1);
-	f = fopen(fn, "rb");
+	f = fopen(filename, "rb");
 	if (f == NULL) {
-		printf("Can't open file %s\r\n", fn);
-		free(fn);
-		free(s1);
+		printf("Can't open file %s\r\n", filename);
 		return;
 	}
 	fseek(f, 0, SEEK_END);
@@ -1042,16 +1033,12 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
 			loaded += r;
 		else {
-			printf("Can't read %s @%ld error= %d\r\n", fn, ftell(f), errno);
+			printf("Can't read %s @%ld error= %d\r\n", filename, ftell(f), errno);
 			free(sound_raw);
-			free(fn);
-			free(s1);
 			return;
 		}
 	}
 	fclose(f);
-	free(fn);
-	free(s1);
 // resample and play    
 	k = (float) rate / (float) audio_rate;
 	uint32_t qwords = (uint32_t) ((float)length / k);	// not really exact, so we'll allocate + 1 quadword extra
