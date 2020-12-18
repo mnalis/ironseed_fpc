@@ -680,7 +680,7 @@ begin
   end;
  if ship.shield=ID_REFLECTIVEHULL then
   begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[DMG_SHIELD])? otherwise we could have shield which has level higher than damaged subsystem allows!
-     ship.shieldlevel := 100 - ship.damages[DMG_SHIELD]; { damages[DMG_SHIELD] is shield subsystem, drop shield level immedately if reflective hull }
+     ship.shieldlevel := 100 - ship.damages[DMG_SHIELD]; { damages[DMG_SHIELD] is shield subsystem, drop shield level immediately if reflective hull }
      //writeln ('      reflective hull damage sets shieldlevel to ', ship.shieldlevel);
   end;
 end;
@@ -732,7 +732,7 @@ begin
        //writeln ('    shield still holding; shield protection a=', a, 'GJ, new shield level c=', c, '%');
        if c<0 then
         begin		{ shield would be reduced below zero }
-         //writeln ('    Shield passing some damage afterall (total shield malfunction if reflective hull)');
+         //writeln ('    Shield passing some damage after all (total shield malfunction if reflective hull)');
          takedamage(DMGTYP_FAKE_SHLD,random(3)+1);	{ shield subsystem takes 1-3 damage }
          ship.shieldlevel:=0;
          if (ship.shield=ID_REFLECTIVEHULL) and (j>DMGTYP_PSIONIC) then ship.damages[DMG_SHIELD]:=100;

@@ -61,12 +61,12 @@ begin
  fillchar(screen,sizeof(screen),0);
 
 (* if flags and 1>0 then
-  begin			// has embedded pallete *)
+  begin			// has embedded palette *)
     writeln ('Loading uncompressed files ', basename, '.scr and ', basename, '.pal');
     quickloadscreen(basename, @screen, true);
 (*  end
  else
-  begin			// no pallete
+  begin			// no palette
     writeln ('Loading uncompressed file ', basename, '.scr');
     quickloadscreen(basename, @screen, false);
   end;

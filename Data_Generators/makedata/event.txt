@@ -91,7 +91,7 @@ The Guild
 20044     0  We have important information for you. We believe we have discovered a way to destroy the scourge. We will transmit the relevant data at the end of this communique.
 20025 20023  Ah... all is well. You have completed all that we have asked. It must be true. You are the one. We will join your Kendar.
 20037 20041  Rejoice! We know where the pirate lives! We have sent your Astrogator the numbers he needs.  Go quickly and take him.
-20043 20037  We have another thing that we would have you do before we join this Kendar of yours. The relevent data will be sent upon termination of this dialogue.
+20043 20037  We have another thing that we would have you do before we join this Kendar of yours. The relevant data will be sent upon termination of this dialogue.
 20049 20043  Rejoice! You have brought us the Ylinth Genome! We had thought the information lost to us. We are eternally grateful. Yet, it does not seem like a fair trade. We will not yet join your Kendar. Something else must be done. Let us think.
 20008     0  Yes, we have your records. Care to buy sell or trade? We are the Guild. We are born to barter. Discuss with us what you will.
     0     0

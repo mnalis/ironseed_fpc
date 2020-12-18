@@ -397,7 +397,7 @@ begin
    begin
       j:=1;
       while (ship.numcargo[j]<>0) and (j<251) do inc(j);
-      if j=251 then		{ this should happen extremly rarely - there are 146 items in Data_Generators/makedata/cargo.txt, so unless we gather more than 109 artifacts and never research them... }
+      if j=251 then		{ this should happen extremely rarely - there are 146 items in Data_Generators/makedata/cargo.txt, so unless we gather more than 109 artifacts and never research them... }
       begin
 	 println;
 	 tcolor:=94;

@@ -268,10 +268,10 @@ God's Eye = Yned (1.9,127.1,88.1)
  We aided the Aard in repairing their vessel. Although they appear grateful, the act did little to change their arrogant demeanor. In payement for our help they gave us a ballista. Whilst not a weak weapon it is obviously no where near as powerful as the weapons weilded on their ships.
 
 @1103 DISCOVERY OF THE CARGAN
-Using the Ermigen's data tapes for reference and our sundivers we were able find the crashed Ermigen flagship in their star Mytuk. Much to my surprise, scans through its shields show that the Cargan is unscathed by the intense heat of the star. The temporal anchor is truely a wonder of technology, however it didn't protect their ship from the suddent impact with a star and the hull shows a good deal of structural damage.
+Using the Ermigen's data tapes for reference and our sundivers we were able find the crashed Ermigen flagship in their star Mytuk. Much to my surprise, scans through its shields show that the Cargan is unscathed by the intense heat of the star. The temporal anchor is truly a wonder of technology, however it didn't protect their ship from the suddent impact with a star and the hull shows a good deal of structural damage.
 
 @1201 WE HAVE MET THE SCAVENGER ARMADA
- We have have arrived at Yned and the scavengers are about to swarm us.
+ We have arrived at Yned and the scavengers are about to swarm us.
 ##
 Scavenger Armada=Yned (1.9,127.1,88.1)
 

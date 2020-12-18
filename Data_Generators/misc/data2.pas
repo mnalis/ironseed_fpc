@@ -521,5 +521,5 @@ end;
 
 
 begin
-  //loadpal ('data/main.pal');  { default pallete if not overriden }
+  //loadpal ('data/main.pal');  { default palette if not overridden }
 end.

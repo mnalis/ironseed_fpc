@@ -49,8 +49,8 @@ begin
  palname := basename + '.pal';
  if FileExists(palname) then
   begin
-    writeln ('Loading default pallete from ', palname);
-    loadpal (palname);  { load default pallete if it exists }
+    writeln ('Loading default palette from ', palname);
+    loadpal (palname);  { load default palette if it exists }
     has_palette := true;
   end;
 

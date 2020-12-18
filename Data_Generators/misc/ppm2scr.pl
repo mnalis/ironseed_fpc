@@ -82,9 +82,9 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $pal_idx = "$r:$g:$b";
   my $val = $PALLETE{$pal_idx};
   
-  if (!defined $val) {		# add new entry to pallete
+  if (!defined $val) {		# add new entry to palette
      $val = $pal_used++;
-     die "ERROR: pallete overflow: $pal_used" if $val > $bpp;
+     die "ERROR: palette overflow: $pal_used" if $val > $bpp;
      $PALLETE{$pal_idx} = $val;
      print $pal_fd chr($r).chr($g).chr($b);
   }
@@ -104,4 +104,4 @@ rename $pal_tmp, $pal_final;
 rename $scr_tmp, $scr_final;
 
 print "Written: $scr_final and $pal_final.\n";
-print "Done, used $pal_used / $bpp colors in pallete.\n";
+print "Done, used $pal_used / $bpp colors in palette.\n";

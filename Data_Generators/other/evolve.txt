@@ -40,7 +40,7 @@ Planetary Evolution
 
  All planets have the potential to change state or mode to the next one in
 the list.  Years over a certain amount are broken down into smaller time
-frames with a random chance of occuring.  Ie. 100 M into 1000 x 100000 with
+frames with a random chance of occurring.  Ie. 100 M into 1000 x 100000 with
 a 1 in 1000 chance every 100000 yrs.  Game time is actually accelerated to
 induce more changes to the system.
  A planet changing state or mode destroys probots/minebots, cache, and info

@@ -144,7 +144,7 @@
 
 
 @-1	-1	3	100	ANOMALIES ANOMALY
-100	When performing an anomaly scan I look for things that have been artifically made. I also look for surface deposits _of useful elements and compounds that can be easily retrieved.
+100	When performing an anomaly scan I look for things that have been artificially made. I also look for surface deposits _of useful elements and compounds that can be easily retrieved.
 100	After an anomaly scan is complete you can retrieve any found anomalies by pressing the anomaly button on the _planet scan screen then select the anomaly from the list _of found anomalies then press the retrieve button.
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT

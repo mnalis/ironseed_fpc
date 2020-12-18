@@ -70,7 +70,7 @@
 7       From all i can tell, their ships aren't built for war. I don't have any hypotheses for this discrepancy. When I have more to go on I'll get back to you.
 8       I believe these creatures to have been totally straight forward. It's comforting to know that at least one race is truly benevolent.
 9       There are some very odd things going on inside the massive hulks of the moch ships. They experience periodic power fluctuations six orders of magnitude greater than the retrocapacitive values in our own power core.
-10      I find ermigen paranoia amusing. I would love to know what socioevolutionary beating they took to get this this bent out of shape over privacy and conspiracy theory.
+10      I find ermigen paranoia amusing. I would love to know what socioevolutionary beating they took to get them this bent out of shape over privacy and conspiracy theory.
 11      I haven't read the Quai Pa'loi cypher key, but i've talked to the rest of the crew to know they worship the number four... Do we know why?
 14      Laird, I regret that I haven't had a chance to review the cypher key entries on the Icon.
 15      Eloquently designed. The Titerians have used a very interesting brand of cyberdization and self-affective evolution to produce the creatures we saw. I'll be forever going over their cypher key... Some very interesting stuff there.
@@ -142,7 +142,7 @@
 @-1	-1	3	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 -1	Minebots placed on a suitable _planet will extract useful elements and compounds. The amount stuff they will cache is limited due to the practical concerns of protecting extracted material from the elements and remaining hidden from prying eyes.
 -1	To place a minebot first perform a complete scan of the _planet. Without this what the minebot will actually produce is unknown. From my face of the command cube press bot control then press the bot _icon from the bot control display.
--1	If you have them, you will be given a choice of sending down a minebot or a manufactory. If scans were completed you will see a breakdown chance of finding each substance. Once you choosen which bot to send press the bot _icon to deploy it.
+-1	If you have them, you will be given a choice of sending down a minebot or a manufactory. If scans were completed you will see a breakdown chance of finding each substance. Once you have chosen which bot to send press the bot _icon to deploy it.
 -1	To retrieve the bot press the bot _icon again.
 
 @-1	-1	3	-1	MANUFACTORY MANUFACTORIES

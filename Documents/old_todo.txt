@@ -95,7 +95,7 @@ conversation:
 	suggestions from the crew
 	investigate: Ermigen repairs: no dialog and automatically done on first meeting - see https://github.com/mnalis/ironseed_fpc/issues/53
 	x investigate: mouse not seen in yes/no dialogs
-	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same responce for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
+	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same response for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
 	investigate: When viewing information on a race you're communicating with, it sometimes says "The Guild" as the race name, when it's not. Example: I noticed this with the Quai Pa'loi and D'pahk, but it only happens sometimes, not always. 
 
 logs:
@@ -118,7 +118,7 @@ creation:
 	investigate: building multiple upgrades causes loss in parts?
 	investigate: when i build thrust enhancer, my engineer reports the increased thrust BEFORE the report of finishing creation of this module... not important but strange.
 cargo:
-	x investigate: more than 255 items causes problems with identifying unknown componets, and construction of pulse loom - it it fixed in all cases? see https://github.com/mnalis/ironseed_fpc/issues/76
+	x investigate: more than 255 items causes problems with identifying unknown components, and construction of pulse loom - is it fixed in all cases? see https://github.com/mnalis/ironseed_fpc/issues/76
 
 misc:
 	x faster fade transitions

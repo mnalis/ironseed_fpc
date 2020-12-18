@@ -19,11 +19,11 @@ v 0.2.8
 v 0.2.7
 - move debian/* packaging to https://salsa.debian.org/mnalis/ironseed
 v 0.2.6
-- Debian menu, and other debian packaging tweaks
+- Debian menu, and other Debian packaging tweaks
 - add compile flags for hardening (see https://wiki.debian.org/Hardening)
 - fix wrong diskfree calculation leading to failing to find tempdir/savedir
 v 0.2.5
-- update debian package info only, no code changes
+- update Debian package info only, no code changes
 v 0.2.2
 - open files read-only when changes not needed (so we can have root-owned system data files!)
 - create Debian package via 'make deb'
@@ -49,7 +49,7 @@ v 0.1.8
 v 0.1.7
 - fix Security / Masking so it behaves more like the manual says
 - fix memory corruption in trade()
-- code: verify bounds for move() and fillscreen() when acccessing screen[]
+- code: verify bounds for move() and fillscreen() when accessing screen[]
 - shield/weapon arming/disarming and panic button rework, also fix its status on loadgame
 - docs: more events/logs system documenting
 - code: use constants for alert mode, cleanup whitespace

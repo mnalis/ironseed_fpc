@@ -904,7 +904,7 @@ fpc_char_t readkey_nomap(void)
 	//static const uint16_t spec_codes[] = { 53 , 30 , 31 , 32 , 20 , 26 ,  8 , 21 , 23 ,  4 , 22 ,  7 ,  9 , 10 , 29 , 27 ,  6 , 25 ,  5 , 19 ,	0 };	// SDL 1.2 does not have symbolic names for keycodes, those values from SDL2 do not work: https://wiki.libsdl.org/SDL_Keycode
 	static const uint8_t  spec_unmap[] = { '`', '1', '2', '3', 'q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'p' };
 
-	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependant, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
+	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependent, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
 	*/
 
 	static const uint16_t spec_codes[] = { 0 };
@@ -990,7 +990,7 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 		xx = 319;
 	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
+	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
 
 	if (yy > 199)
 		yy = 199;

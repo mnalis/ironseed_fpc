@@ -590,7 +590,7 @@ var
 		       {if (random(10) = 0) and SkillTest(background, 2, 40, 10) then
 			  inc(extra, 256);
 		       if ((extra shr 8) > (extra and 255)) and (job<>ID_ART_SHUNT_DRIVE) then}
-		       {job ID_ART_SHUNT_DRIVE (the shunt drive) needs to be defered until the main screen is up.}
+		       {job ID_ART_SHUNT_DRIVE (the shunt drive) needs to be deferred until the main screen is up.}
 		       if (timeleft<1) and ((job<>ID_ART_SHUNT_DRIVE) or (not background)) then
 		       begin
 			  timeleft:=0;

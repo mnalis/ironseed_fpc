@@ -130,7 +130,7 @@ var screen_addr: addr_type;
 
 function _address (const someaddress: pointer): addr_type;
 begin
-  _address := {$warnings-}{$hints-}addr_type(someaddress);{$hints+}{$warnings+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" and "Warning: (4056) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We shoud be using FarAddr (fpc 3.2.0+) instead of "@"/addr() anyway
+  _address := {$warnings-}{$hints-}addr_type(someaddress);{$hints+}{$warnings+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" and "Warning: (4056) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We should be using FarAddr (fpc 3.2.0+) instead of "@"/addr() anyway
 end;
 
 { bounds checking fillchar(), when dest is screen[] }

@@ -23,21 +23,21 @@ v1.20.0005:
 		game: Medical now performs skill checks to adjust crew to new stats.
 	Combat:
 		game: Now uses the new skill system.
-	Resarch:
+	Research:
 		feature: Research is now a toggle that does not turn off when a crew member is busy.
 		game: XP gain from research is affected the Performance stat.
 		game: Not researching will help recover stress and sanity.
 	Sanity:
 		game: New stat 'stress' which affects sanity loss.
 		game: Psychometry is responsible for reducing stress.
-		game: When sanity drops to zero skill and preformance start to drop. When either of those reach zero primary stats start to drop and insanity messages start.
+		game: When sanity drops to zero skill and performance start to drop. When either of those reach zero primary stats start to drop and insanity messages start.
 	Misc:
 		feature: Disassembly will no longer produce "worthless junk"
 		game: Repairs, assembly and disassembly now use the new skill system.
 		game: Old skill system no longer used.
 		bugfix: Oban will now have one dying/dead world and one stable world. This prevents strangeness like have the starting planet a gas nebula or game stoppers like an advance civilisation with planetary shields. It also lines up better with what is seen in the intro.
 		bugfix: Manufactory produce random things that had nothing to do with what planet they were put on. It was not checking the sub part list properly.
-		other: Date and time is now formated: YYYYY/MM/DD HH:SS
+		other: Date and time is now formatted: YYYYY/MM/DD HH:SS
 v1.20.0006:
 	Planets:
 		Graphics: Planets with intelligent life now have city lights.
@@ -127,7 +127,7 @@ v1.20.0014:
 	New Game:
 		bugfix: Would occasionally create too many planets and write outside the allocated storage.
 	Combat:
-		bugfix: If you had shields at zero enemies would do full damage regarless of their weapon system damage.
+		bugfix: If you had shields at zero enemies would do full damage regardless of their weapon system damage.
 		Releasing combat drones will check the following:
 			- you have at least one weapon installed
 			- there are no aliens in the area
@@ -165,7 +165,7 @@ v1.20.0016:
 	Scanning:
 		There is a new probot the "Stardiver" this can be used to scan stars. Building this requires the thermoplast discovery.
 		Scanning of stars will not be allowed if no "Stardivers" are in stock.
-		bugfix: Stars no longer have planetary shields. This occured in the home systems of the major races.
+		bugfix: Stars no longer have planetary shields. This occurred in the home systems of the major races.
 	Mining:
 		Planets now have a depletion stat. Each time something is mined from a planet this will increase. This will gradually decrease each day nothing was mined. Travelling between stars will reset this to 0.
 		bugfix: Normal minebots are no longer allowed on stars.

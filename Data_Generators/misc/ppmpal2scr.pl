@@ -38,8 +38,8 @@ my $want_height = $ENV{HEIGHT} || 200;
 
 if (!defined $ppm_name or !defined $pal_name) {
   print "Usage: $0 <BASENAME.ppm> <main.pal> [UPDATE]\n";
-  print "Converts PPM file to Ironseed 320x200 (or other specified size via ENV)  BASENAME.scr using main.pal for existing pallete\n";
-  print "if 'UPDATE' is specified, the main.pal will be filled with extra pallete entries if needed\n";
+  print "Converts PPM file to Ironseed 320x200 (or other specified size via ENV)  BASENAME.scr using main.pal for existing palette\n";
+  print "if 'UPDATE' is specified, the main.pal will be filled with extra palette entries if needed\n";
   exit 1;
 }
 
@@ -70,7 +70,7 @@ die "ERROR: must have 255 colors" unless $bpp==255;
 undef $/; 	# slurp the rest of the file in one go
 my @SCR = unpack "C*", <$ppm_fd>;
 
-# read in pallete to %PALLETE
+# read in palette to %PALLETE
 my %PALLETE = ();
 
 open my $pal_fd, $is_update? '+<' : '<', $pal_name;
@@ -98,10 +98,10 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $pal_idx = "$r:$g:$b";
   my $val = $PALLETE{$pal_idx};
 
-  if (!defined $val) {		# entry not in pallete
+  if (!defined $val) {		# entry not in palette
      if ($is_update) {
        $val = $pal_used++;
-       die "ERROR: pallete overflow: $pal_used" if $val > $bpp;
+       die "ERROR: palette overflow: $pal_used" if $val > $bpp;
        $PALLETE{$pal_idx} = $val;
        print $pal_fd chr($r).chr($g).chr($b);
      } else {

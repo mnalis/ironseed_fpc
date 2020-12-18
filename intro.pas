@@ -37,7 +37,7 @@ uses utils_, sysutils, gmouse, modplay, version, math;
 *)
 
 const
- CPR_NONE=0;                    {   0 no compresion            }
+ CPR_NONE=0;                    {   0 no compression            }
 // CPR_NOPAL=1;                   {   1 no palette, compressed   }
 // CPR_PAL=2;                     {   2 palette, compressed      }
 // CPR_HEADERINCL=3;              {   3 header included          }

@@ -279,7 +279,7 @@ Data_Generators/makedata/shippart.cpr:	data/char.cpr Graphics_Assets/shippart.pn
 Data_Generators/makedata/planicon.cpr:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
-# if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
+# if none of the above rules for .cpr match, use this one (CPR with it's own independent palette)
 data/%.cpr:	Graphics_Assets/%.png					$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 

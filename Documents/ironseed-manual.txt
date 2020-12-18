@@ -578,7 +578,7 @@
              1. Damage Control
 
              No system is infallible.  Things wear out; they break down.  If you're
-             particularly agressive things may even get blown up.  In any case, you're going
+             particularly aggressive things may even get blown up.  In any case, you're going
              to want to repair the damage.  Dealing with damage is done through this cube
              function.
 
@@ -781,7 +781,7 @@
              "Screw diplomacy! I wanna kill something!"
 
              While this is a common saying it is a hollow statement unless you've got the
-             guns to back your agression obsession.  In order to build that awesome arsenal
+             guns to back your aggression obsession.  In order to build that awesome arsenal
              you'll have to start here, in the Component Creation screen.
 
              The best way to learn how to use this interface is to actually use it.
@@ -1129,7 +1129,7 @@
 
              All planets have the potential to change state or mode to the next one in the
              list.  Years over a certain amount are broken down into smaller time frames
-             with a random chance of occuring.  Ie. 100 M into 1000 x 100000 with a 1 in
+             with a random chance of occurring.  Ie. 100 M into 1000 x 100000 with a 1 in
              1000 chance every 100000 yrs.  Game time is actually accelerated to induce more
              changes to the system.  A planet changing state or mode destroys
              probots/minebots, cache, and info collected on the planet.

@@ -62,7 +62,7 @@ die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
 
-# read in pallete to %PALLETE
+# read in palette to %PALLETE
 my %PALLETE = ();
 
 open my $pal_fd, '<', $pal_name;
@@ -77,7 +77,7 @@ for (my $pal_used=0; $pal_used < 768; $pal_used+=3) {
   $PALLETE{$pal_idx} = int($pal_used / 3) if !defined $PALLETE{$pal_idx};
 }
 
-# map image colors to pallete, store result in @vga_image
+# map image colors to palette, store result in @vga_image
 my @image = unpack "C*", <STDIN>;
 my @vga_image=();
 
@@ -88,7 +88,7 @@ for (my $i = 0; $i < $height * $width * 3; $i+=3) {
   my $pal_idx = "$r:$g:$b";
   my $val = $PALLETE{$pal_idx};
 
-  if (!defined $val) {		# entry not in pallete
+  if (!defined $val) {		# entry not in palette
      #use Data::Dumper;
      #print Dumper(\%PALLETE);
      die "invalid RGB: $pal_idx not found in $pal_name at idx: $i";

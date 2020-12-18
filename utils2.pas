@@ -17,7 +17,7 @@ unit utils2;
 ********************************************************************)
 
 {*********************************************
-   Overlayable Utilites for IronSeed
+   Overlayable Utilities for IronSeed
 
    Copyright:
     1994 Channel 7, Destiny: Virtual
