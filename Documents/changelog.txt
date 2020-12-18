@@ -1,4 +1,7 @@
+- c_utils.c: reworked play_sound() not to use strcpy(3)
+- c_utils.c: added recommended includes
 - lots of spellcheck fixes in code and docs
+- docs: upgrade URLs from http: to https:
 v 0.3.4
 - fix for SDL initializing the soundcard even with NOSOUND=1
 v 0.3.3
