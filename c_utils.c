@@ -28,6 +28,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@
 #    define GL_GLEXT_LEGACY
 #    include "SDL_opengl.h"
 #    include <GL/gl.h>
+#    include <GL/glu.h>
 #endif
 
 
