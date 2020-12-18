@@ -13,7 +13,7 @@ unit crew2;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************

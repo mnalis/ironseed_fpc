@@ -24,7 +24,7 @@ For compiling, you need:
 - (optionally) OpenGL (`apt-get install mesa-common-dev`)
 
 For making changes to game, you may also need:
-- (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get install gdc` or http://digitalmars.com/d/2.0/)
+- (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get install gdc` or https://digitalmars.com/d/2.0/)
 - (optionally) perl, imagemagick, graphicsmagick (for screen conversion utilities, `apt-get install perl graphicsmagick imagemagick`)
 
 Debian packages and prebuilt game
