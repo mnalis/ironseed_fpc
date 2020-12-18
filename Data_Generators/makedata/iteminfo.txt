@@ -571,7 +571,7 @@ assembly system.
 3014
 Cyberplasm specially pro-
 grammed with higher level
-hueristics in order to per-
+heuristics in order to per-
 form more complex tasks.
 
 3015

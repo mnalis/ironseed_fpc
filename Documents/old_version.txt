@@ -15,7 +15,7 @@ v1.20.0005:
 		game: Skill tests are used for by the science officer when perform skill tests
 		fix: Anomalies found in a planer scan will now always be the same for that planet. Reloading and rescanning to get a better yield won't work.
 		feature: Clicking on anomalies in the anomaly list the zoom window on it.
-		bugfix: Anomalies were only put in the cache if you looked at the anamoly list in the same scan session.
+		bugfix: Anomalies were only put in the cache if you looked at the anomaly list in the same scan session.
 		bugfix: It was possible to place the zoom box just over the top edge of the planet view.
 	Psy Eval:
 		game: No longer lose stat points when moving attributes around.
@@ -58,10 +58,10 @@ v1.20.0008:
 		feature: Each day you are in a system each mine bot/manufactory has a 20% chance to produce something.
 v1.20.0009:
 	Conversation:
-		feature: Keywords in convesations are now highlighted.
+		feature: Keywords in conversations are now highlighted.
 		Crew conversations have been revised and touched up.
 v1.20.0010:
-	Converstaion:
+	Conversation:
 		Alien conversation have been touched up to better use keyword highlighting.
 		Aard: You can now repair their vessel.
 		Ermigen: Saying "bye" will now actually end talks with them.
@@ -93,7 +93,7 @@ v1.20.0011:
 v1.20.0012:
 	Misc:
 		Capitalisation fix of "White Dwarf" text in system info.
-		The Borlad Pascal runtime library that Ironseed is linked with has been patched so it should no longer crash on very fast machines.
+		The Borland Pascal runtime library that Ironseed is linked with has been patched so it should no longer crash on very fast machines.
 	Conversation:
 		Crew conversations have been converted to mixed case.
 		Expanded crew conversations so as to help give better direction.
@@ -113,7 +113,7 @@ v1.20.0013:
 
 	conversation:
 		Alien race conversations converted to mix case.
-		Titerian: Keyword "Malzatoir" now properly acts on events.
+		Titarian: Keyword "Malzatoir" now properly acts on events.
 		You can now repair the Phaedor Moch ship by giving radioactives and coolants.
 		You can now repair the Aard ship by giving a Stratamount.
 
@@ -122,7 +122,7 @@ v1.20.0013:
 		New log: "FAREWELL TO MARS" this log is given after the second buoy or immediately if the current game is beyond that.
 		New log: "REPAIR TO THE AARD SHIP"
 		New log: "REPAIR TO THE PHAEDOR MOCH SHIP"
-		Existing Phadeor Moch log renamed to "FIRST ENCOUNTER WITH THE PHAEDOR MOCH" and reference to repairs removed.
+		Existing Phaedor Moch log renamed to "FIRST ENCOUNTER WITH THE PHAEDOR MOCH" and reference to repairs removed.
 v1.20.0014:
 	New Game:
 		bugfix: Would occasionally create too many planets and write outside the allocated storage.
@@ -133,7 +133,7 @@ v1.20.0014:
 			- there are no aliens in the area
 		bugfix: Dying against combat drones is no longer game over.
 		bugfix: Damage taken while fighting combat drones is erased.
-		Enemeies with engines reduced to below 10% will now coast to a stop.
+		Enemies with engines reduced to below 10% will now coast to a stop.
 		Quitting from the game during combat is now possible.
 	Mining:
 		bugfix:	Every time a minebot or similar created material it leaked 208 bytes of memory.

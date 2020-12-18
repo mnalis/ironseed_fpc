@@ -69,19 +69,19 @@
 7       Wretched creatures. Conjure visions of demons... At least that's what I see when I see them. Vile!
 8       I have to wonder how a race could evolve as arbiters on a stellar level. They must have achieved space travel relatively early by galactic standards. It would be interesting to see what the void dwellers have to say about them.
 9       I won't begin to pretend that I understand them. It's my opinion that the cypher key that they sent us was scrambled. How else could the computer translate their message into such meaningless rambling?
-10      Despite the shielding array that they had I was able to make some sense of their hardware and ship configurations. They possess shield technology on a level i've never seen. They seem to be utilizing masking pods to generate some kind of
+10      Despite the shielding array that they had I was able to make some sense of their hardware and ship configurations. They possess shield technology on a level I've never seen. They seem to be utilizing masking pods to generate some kind of
 10      wave cascade that renders their flagships almost invulnerable to any of our weaponry. I will have to study them in depth.
 11      @3 seems to think there is some divine reason that we have encountered a race that gives the number four significance as opposed to the human trinity. The science officer seems has reason to suspect that it may have to do with
 11      the carbon links in organic chemistry. As you well know, carbon has four electron bond sights. @3 says they spoke with their science officer during our first encounter. I've read the log of their conversation. What I've read
 11      of it suggests that some ancient link, be it social or genetic, exists between the guild and the Quai Pa'loi. I may be jumping to conclusions, but it's my guess that the Guild shaped the religions of infant races to suit its own ends.
 11      of which the Quai Pa'loi was one.
 14      A very advanced race to have never developed a spoken language.
-15      As you may already know psychometry has discovered startling things about the Titerian.
+15      As you may already know psychometry has discovered startling things about the Titarians.
 16      What did you call me?
 16      Bless you.
 16      Huh?
 16      Oh, them. It must pain the guild greatly to know that they were responsible for the total destruction of a race.
-17      Their make up is a great deal like the Titerians. However, they lack the Titerian temporal shift ability. They seem to be motivated to assimilate foreign organic and synthetic matter into their collective.
+17      Their make up is a great deal like the Titarians. However, they lack the Titarian temporal shift ability. They seem to be motivated to assimilate foreign organic and synthetic matter into their collective.
 18      I would like to get my hands on the genome data from their makeup. Oh, the things i could do with that kind of information. The tech that i could design, the... Well, Laird, you get the picture. See what you can do about getting me a better scan.
 23      @3 briefed me on the topic. Intriguing. I'm doing research when I can during down time. I still don't know enough about the subject to be of help... I would appreciate it if you would tell me if we make any related discoveries.
 24      Reminiscent of the Greek gods. From what i can gather they have a cult-like following which is not exclusive to any particular race. Small sects from nearly every race we have encountered ^seem^ to have some knowledge of this peculiar group. The
@@ -143,7 +143,7 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a usful bit of equipment but I think you want to ask @2 about it.
+-1	It's a useful bit of equipment but I think you want to ask @2 about it.
 
 @12	-1	1	-1	SENGZHAC
 -1	My reading from the second buoy is that they were being chased quite doggedly by these Sengzhac.
@@ -153,7 +153,7 @@
 @12	 -1	 1	 -1	 WRECK WRECKAGE WRECKED
 -1	It was attacked, my speculation is that it was by the Sengzhac.
 @11      -1      1       92      HELP ADVICE
-92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+92	We should travel to the nearby star that we found marked in the data buoy we found from the wreckage.
 @11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
 91	It was attacked, that much is evident.
 @10	 -1	 3	 90	 WRECK WRECKAGE WRECKED

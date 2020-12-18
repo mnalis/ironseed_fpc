@@ -137,7 +137,7 @@
 
              It is the thirty-eighth century.  The fall of Earth is but a legend and
              humanity has migrated to a terraformed Mars.  The Pentateuch, a group of five
-             preists, rules the newly risen technocracy with an iron fist.
+             priests, rules the newly risen technocracy with an iron fist.
 
              In a bold attempt to eliminate the last of their political opponents, the five
              began the purgation trials.  With guerilla tactics their followers went about
@@ -652,7 +652,7 @@
              latter is often more destructive a good shield can still take the brunt of the
              attack.
 
-             (I) Inertial Damage is the result of an explosive weapon.  Missles or weapons
+             (I) Inertial Damage is the result of an explosive weapon.  Missiles or weapons
              of an explosive nature will result in Inertial Damage. Retroexplosive hull
              coatings and advanced kinetodispersive barriers render such technology
              harmless.
@@ -1052,7 +1052,7 @@
              2.1-3.0        Industrialization
              3.1-4.0        Global Networking
              4.1-5.0        Extraplanetary Imperialism
-             5.1-6.0        Intersteller Imperialism
+             5.1-6.0        Interstellar Imperialism
              6.1-7.0        Multidimensional Travel
              7.1-8.0        Psychoportation and Mass/Energy Matriculation
 
@@ -1115,7 +1115,7 @@
                c. Dead Rock                  ?                 No Life
              6 Dead
                a. Radiation               200000               No Life
-               b. Astoroid                   ?                 No Life
+               b. Asteroid                   ?                 No Life
                c. Null                       ?                 No Life
              7 Star
                a. Yellow                     X                 No Life
@@ -1515,7 +1515,7 @@
              combat.  Originally the battles from this simulation were harmless practice
              encounters.  However, damage taken before your encodes were revived has made
              drone combat potentially dangerous. While the damage taken by your ship in
-             these simulations is not physcially real the computer is unable to tell the
+             these simulations is not physically real the computer is unable to tell the
              difference.  When encode containment reaches zero during mock combat the
              computer was to exit the combat environment.  Now, the computer believes the
              damage it has taken has actually erased the crew.  In the event of an encode

@@ -66,13 +66,13 @@
 10      little or no natural defenses on a hostile homeworld. As a result they constantly suspect alien races of conspiracy.
 11      I skimmed through the cypher key and as I understand it to them the number four bears religious significance. I'll see if their is a clinical connection but for now I've no opinion of them yet to weight my evaluation.
 14      The one race with whom we need to speak has neither communication access away from the homeworld nor a spoken language. I'm worried that even if we could find them the computer may not be able to generate a cypher key.
-15      The Titerian have an interesting makeup. It seems that those with status possess fist-sized cyberimplants. I'm not sure what the purpose of these is yet. When we encounter them again I'll be sure run another analysis.
+15      The Titarian have an interesting makeup. It seems that those with status possess fist-sized cyberimplants. I'm not sure what the purpose of these is yet. When we encounter them again I'll be sure run another analysis.
 16      What puzzles me is how the guild could have completely destroyed a race. In any war there are always some survivors. How could it be that not a single viable member was left for retrocloning after the accident?
 17      They are masterpieces of genetomechanical engineering. From my perspective they are works of art... Albeit, very vicious works of art.
 18      I wasn't able to get anything from the cypher key. In the scramble to evade them most of the crucial data was lost. Besides, there is little that i could tell you which you don't already know about them. They want to eliminate us... What else
 18      do we need to know?
 23      Try asking one of the other officers about that. If I'm not mistaken @3 knows quite a bit about them.
-24      I haven't checked the references in the cyper keys concerning them. In fact, if you find anything interesting about them let me know.
+24      I haven't checked the references in the cypher keys concerning them. In fact, if you find anything interesting about them let me know.
 26      What could I have that you wish?
 27      I know I shouldn't speak of such things, but their acts are like those of our old flesh. The acts of the third world... The third planet. So much death for so many unfounded reasons. May the powers that be have mercy on their souls.
 28      I've been considering the repercussions of a supernova on the ship. The chances of it occurring are scant i know, but we may live a thousand lifetimes before we are ^flesh^ again. Probability is like a thief in the night.
@@ -118,12 +118,12 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a usful bit of equipment but I think you want to ask @2 about it.
+-1	It's a useful bit of equipment but I think you want to ask @2 about it.
 
 @12      -1      1       93      HELP ADVICE
 93	We need to explore this region of the galaxy.
 @11      -1      1       92      HELP ADVICE
-92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+92	We should travel to the nearby star that we found marked in the data buoy we found from the wreckage.
 @11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
 91	All I know is that it was attacked. You are better off talking to @2, @3 or @4 about it.
 @10	 -1	 3	 90	 WRECK WRECKAGE WRECKED

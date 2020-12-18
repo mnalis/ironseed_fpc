@@ -59,7 +59,7 @@ v 0.1.6
 - docs: document events/logs system
 - fix race condition when installing/removing shield
 - fix cargo skip of weight check for some items
-- code: use constants for delayes, shiptypes, jobtypes, wandering alien action/orders and cargo items to further improve readability
+- code: use constants for delays, shiptypes, jobtypes, wandering alien action/orders and cargo items to further improve readability
 - combat: fix alien (with reflective hull) damage calculations
 v 0.1.5
 - combat: various shield handling fixes
@@ -89,7 +89,7 @@ v 0.1.0
 - combat: fix shield (and no shield, and reflective hull) bugs
 - combat: add F1-F4, numpad, Z/X keyboard controls
 - fixes crash in combat with no shields
-- reenable biorithyms color from gray to pulsing red
+- reenable biorhythms color from gray to pulsing red
 - implement keyboard shortcuts for entering x/y/z coord in Sector map
 - fix sound controls
 v 0.0.9
@@ -120,7 +120,7 @@ v 0.0.4
 - fix cargo crash with too strong filters
 - fix cargo PgUp/PgDn
 - fix mouse movement bugs
-- fix conversation sluggishess and lost keypresses
+- fix conversation sluggishness and lost keypresses
 - fix various bugs when Encoding crew
 - fix keyboard control bugs in Device Creation Mode and Encoding crew
 - fix implementing keyboard special (non-ASCII) keys

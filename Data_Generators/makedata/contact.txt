@@ -1,6 +1,6 @@
 Name:           techmin         techmax         anger(0-100)    congeniality(0-100)     victory         defeat          war(0-1)
 Sengzhac        4 0             5 0             25              0                       10              15              0
-D'phak          4 0             5 0             40              15                      10              10              0
+D'pahk          4 0             5 0             40              15                      10              10              0
 Aard            5 0             6 0             0               5                       25              50              0
 Ermigen         4 0             5 0             5               15                      5               10              0
 Titarian        4 4             5 4             15              20                      10              25              0

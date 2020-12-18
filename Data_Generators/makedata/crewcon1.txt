@@ -70,7 +70,7 @@
 6       I have done my own analysis of these creatures, but the data were ^inconclusive^. For some reason I was unable to get an accurate ^reading^ of their esper level or disposition. They must have been ^jamming^ us with some kind of psychic ^shield^.
 7       They appear to have a hive mentality. By some quirk of evolution no single being has self awareness. Only the total of all sengzhac, the oversoul if you will, possesses an intellect.
 7       This is why the computer interpreted sociocentric references as I and me.
-87      Details of the Sengzhac from the second bouy are vague except that the wrecked ship was being harried by them.
+87      Details of the Sengzhac from the second buoy are vague except that the wrecked ship was being harried by them.
 8       This race seems to have based its entire existence around trade, and, though no form of universal currency exists, credit with the Guild is respected by the imperial races we've encountered.
 9       I find it difficult to believe that a star faring race could have evolved from such a motley crew of psychopaths. Each suffers from an acute case of multiple personality disorder.
 10      My first psychoanalysis of these creatures and their behaviors has revealed little. Their ship designs suggest an innate paranoia, but they have little or no aura which makes dispositional evaluations inaccurate at best.
@@ -135,12 +135,12 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a usful bit of equipment but I think you want to ask @2 about it.
+-1	It's a useful bit of equipment but I think you want to ask @2 about it.
 
 @12      -1      1       93      HELP ADVICE
 93	We need to explore this region of the galaxy.
 @11      -1      1       92      HELP ADVICE
-92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+92	We should travel to the nearby star that we found marked in the data buoy we found from the wreckage.
 @11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
 91	All I know is that it was attacked. You are better off talking to @2, @3 or @4 about it.
 @10	 -1	 3	 90	 WRECK WRECKAGE WRECKED

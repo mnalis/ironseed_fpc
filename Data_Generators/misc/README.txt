@@ -18,7 +18,7 @@ Quick HOWTO:
 - convert "foobar.cpr" to "foobar.png"
   cpr2scr foobar 				# creates foobar.scr and foobar.pal from foobar.cpr
   scr2ppm.pl foobar.scr foobar.pal		# creates foobar.ppm from foobar.scr and foobar.pal
-  convert -gamma 1.2 -resize 200% foobar.ppm foobar.png		# example ImageMagick6 coversion with color correction and size increase
+  convert -gamma 1.2 -resize 200% foobar.ppm foobar.png		# example ImageMagick6 conversion with color correction and size increase
 
 - convert "barbaz.png" to "barbaz.cpr"
   convert barbaz.png barbaz.ppm			# creates barbaz.ppm in P6 PPM binary format from barbaz.png

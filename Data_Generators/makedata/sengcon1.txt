@@ -6,7 +6,7 @@
 @-1      -1      1       26      SELL BUY TRADE PHAEDOR MOCH
 @-1      -1      1       26      TITARIAN SCAVENGERS AARD QUAI PA'LOI Q'OOUL
 @-1      -1      1       26      PAI ALOI TETRAD ERMIGEN THE GUILD ICON VOID
-@-1      -1      1       26      VOID DWELLERS YLINTH YLINTHLYXYMN
+@-1      -1      1       26      VOID DWELLERS YLINTH YLINTHLIXYMN
 @-1      20002   3       31      GOD'S EYE GODS EYE
 @-1      -1      1       32      IRONSEED IRON SEED
 @-1      20002   1       33      DESTROYED RETURNED
@@ -16,7 +16,7 @@
 @-1      20002   1       37      TENTACLES TENTACLE
 -500
 1       My ^limbs^ flex in anticipation of crushing you and drinking your ^fluids^. You cannot ^escape^.
-2       Yes, it is time to finish this. My limbs swell in anticipation. Preform your death rituals. It is time to die.
+2       Yes, it is time to finish this. My limbs swell in anticipation. Perform your death rituals. It is time to die.
 3       Nothing can protect you from me...I am ^Sengzhac^.
 7       That is who I am...the Guardian, the Collective, the Old One, the Keeper of Tales, the Drinker of Flesh, the Master of Harrag, the Eye Watcher, the Great U'gloit, and the Protector of the ^Peril^.
 7       I have told you who I am, That you might know your devourer. Now, my spine is florid.. I grow impatient. You must die.

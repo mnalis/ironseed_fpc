@@ -24,8 +24,8 @@ For compiling, you need:
 - (optionally) OpenGL (`apt-get install mesa-common-dev`)
 
 For making changes to game, you may also need:
-- (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get intsall gdc` or http://digitalmars.com/d/2.0/)
-- (optionally) perl, imagemagick, graphicsmagick (for screen convertsion utilities, `apt-get install perl graphicsmagick imagemagick`)
+- (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get install gdc` or http://digitalmars.com/d/2.0/)
+- (optionally) perl, imagemagick, graphicsmagick (for screen conversion utilities, `apt-get install perl graphicsmagick imagemagick`)
 
 Debian packages and prebuilt game
 =================================
@@ -34,7 +34,7 @@ Debian packages and prebuilt game
   on the latest `.dsc` file, and `debuild` (from `devscripts` package) to rebuild.
   Packaging information is being maintained on  https://salsa.debian.org/mnalis/ironseed
 
-- prebuild .deb packages for Debian Buster can also often be found at
+- prebuilt .deb packages for Debian Buster can also often be found at
   https://github.com/mnalis/ironseed_fpc/releases
 
 Compilation

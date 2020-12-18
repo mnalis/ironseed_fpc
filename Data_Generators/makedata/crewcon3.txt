@@ -72,7 +72,7 @@
 5       I can make only vague speculations as to their method _of reproduction and the culture is also a mystery. The cypher key they transmitted was structured so well that it required almost no translation. It is as if they already knew our language.
 6       According to their cypher key they are ocean dwelling bottom feeders, which share a number _of similarities to the cnidarian class _of invertebrates having a single, internal digestive cavity, protruding stinger cells and a simple nervous system.
 6       Through the course _of many generations they have made up for their simple neural structure by developing multiple nervous systems which function in parallel. This is reflected in their overall behavior... As well as their ship design.
-7       These hideous creatures are as their appearance suggests identical to our arachnid, a class _of invertebrate anthropods, having simple eye arrays, no antennae or wings, and whose diet consists _of the bodily fluids _of their prey.
+7       These hideous creatures are as their appearance suggests identical to our arachnid, a class _of invertebrate arthropods, having simple eye arrays, no antennae or wings, and whose diet consists _of the bodily fluids _of their prey.
 7       Interestingly enough a single body is no bigger than a small dog. The danger comes in their numbers.
 7       Their cypher key hints at a hive oriented ancestry. As they developed more complex and inter woven social structures the individuals lost whatever self awareness they may have possessed.
 7       As this devolutionary process took over the hive, or collective, continued to _evolve... Eventually to self awareness.
@@ -115,7 +115,7 @@
 43      Its name is the name _of iniquity, to speak it is to speak blasphemy.
 44      Hold your tongue! Such things are forbidden. That is the name _of iniquity. Do not speak it again unless you wish to incur the ^wrath^ _of the ^almighty^.
 45      Probability won't allow for the number _of strange and unexplained evolutions that we've seen the product of. Something very ancient must have coordinated their creation. I wouldn't tell you this if I wasn't sure that I was correct.
-45      You must realize that by saying this i'm putting my creditability on the line. you must believe me. I'm not sure what this means. My biggest worry is that this "ancient race" is somehow still influencing those it created.
+45      You must realize that by saying this I'm putting my creditability on the line. you must believe me. I'm not sure what this means. My biggest worry is that this "ancient race" is somehow still influencing those it created.
 46      As science officer, it is my duty to collect and analyze alien compounds and living specimens, and to use the acquired knowledge to assist you in better commanding the ship.
 47      My name is @3, science officer for the ironseed, a ^CR-70 Class Mandrix Militial Explorer^.
 48      I only know the class type... I would ask engineering for more detailed information.
@@ -154,7 +154,7 @@
 @12      -1      1       93      HELP ADVICE
 93	We need to scan and catalog as many planets as we can. It's the only way we can find a _world to make our new _home.
 @11      -1      1       92      HELP ADVICE
-92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage. Even if we don't find anything @5 should be able get an accurate bead on nearby stars with the use _of parallax.
+92	We should travel to the nearby star that we found marked in the data buoy we found from the wreckage. Even if we don't find anything @5 should be able get an accurate bead on nearby stars with the use _of parallax.
 @11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
 91	The wreck we found was mostly destroyed by the impact with the _planet but it does bare marks _of being attacked.
 @10	 -1	 3	 90	 WRECK WRECKAGE WRECKED
@@ -168,15 +168,15 @@
 
 
 @18	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
--1	Heavily plating a convential probe in thermoplast opens up possibility to send probes to the surface _of a star for detailed analysis. It's even possible to send a probe beneath the surface for a limited time.
+-1	Heavily plating a conventional probe in thermoplast opens up possibility to send probes to the surface _of a star for detailed analysis. It's even possible to send a probe beneath the surface for a limited time.
 @-1	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
 -1	Being able to probe the surface and depths _of star is interesting from a science point _of view, but it's not something feasible with the resources _of the Ironseed.
 
 @18	-1	3	-1	SUNMINER STARMINER
--1	The discovery _of thermoplast has opened up this idea. _Of course were not literally mining a star, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	The discovery _of thermoplast has opened up this idea. _Of course were not literally mining a star, as they're mostly helium and hydrogen with rapidly diminishing quantities _of more advance elements.
 -1	What a starminer would do is harness the intense pressures, heat and energy output _of a star to synthesize advance elements.
 @-1	-1	3	-1	SUNMINER STARMINER
--1	Literally mining a star is a silly notion, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	Literally mining a star is a silly notion, as they're mostly helium and hydrogen with rapidly diminishing quantities _of more advance elements.
 -1	However, there is some merit in the idea _of using the intense pressures, heat and energy output _of a star to synthesize advance elements.
 -1	Of course you need to be able to make a lab that can withstand the surface _of a star.
 

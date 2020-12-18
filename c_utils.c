@@ -876,10 +876,10 @@ fpc_char_t readkey(void)
 
 /* like readkey(), but for standard letters returns UTF8 version
  * which takes into account shift and other modifiers used.
- * we actually only need it for ASCII uppercase/lowecase, and punctuations,
+ * we actually only need it for ASCII uppercase/lowercase, and punctuations,
  * as the game does not support real UTF-8....
  *
- * Used only for typing activies, like crew/aliens chat, entering
+ * Used only for typing activities, like crew/aliens chat, entering
  * savegame name or inputting astrogation coordinates manually.
  */
 fpc_char_t readkey_utf8(void)

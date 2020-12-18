@@ -30,7 +30,7 @@ Planetary Evolution
   c. Dead Rock        ?
 6 Dead
   a. Radiation        200000
-  b. Astoroid         ?
+  b. Asteroid         ?
   c. Null             ?
 7 Star
   a. Yellow           X

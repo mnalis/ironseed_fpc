@@ -1606,7 +1606,7 @@ begin
  readydata;
  mainloop;
  loadscreen(loc_data()+'cloud',backgr);
- if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
+ if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeasteroidfield
   else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
  dispose(msgs);
  dispose(statpic);

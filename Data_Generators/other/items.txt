@@ -130,7 +130,7 @@ Worthless Junk               1
 Protic liquids               1
 Alkene                       1
 Alkyne                       1
-Volitile compounds           1
+Volatile compounds           1
 Ether                        1
 Aldehydes/Ketone             1
 Carboxylic acid              1

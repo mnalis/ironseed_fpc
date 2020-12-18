@@ -1498,7 +1498,7 @@ begin
   begin
    case tempplan^[a].system of
      93: str1:='Sengzhac            ';
-    138: str1:='D''phak             ';
+    138: str1:='D''pahk             ';
      45: if not chevent(27) then str1:='Ermigen             ';
     221: str1:='Titarian            ';
      78: str1:='Quai Pa''loi         ';
