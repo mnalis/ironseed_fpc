@@ -19,7 +19,9 @@ endif
 
 PFLAGS:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049
+fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm4049
+# enable fatal warnings/notes when developing
+#fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
 p_link:= -k-lSDL_mixer -k-lSDL -k-lm
 c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
