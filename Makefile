@@ -22,6 +22,7 @@ CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
 p_link += -k'-z relro' -k'-z now' -k-pie
+p_link += -k--build-id
 PFLAGS += -fPIC
 CFLAGS += -fpic -D_FORTIFY_SOURCE=2
 
@@ -127,6 +128,7 @@ reallyclean: distclean data_destroy
 
 mrproper: reallyclean
 	rm -rf data/savegame.dir save?
+	-dh clean
 
 tags: *.c *.pas
 	ctags $^

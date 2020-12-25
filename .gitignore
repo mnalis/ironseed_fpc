@@ -17,6 +17,7 @@ test/test_0_pas
 test/testsize
 test/test_write
 test/test_replicate
+test/params
 Data_Generators/makedata/aliemake
 Data_Generators/makedata/artimake
 Data_Generators/makedata/cargmake

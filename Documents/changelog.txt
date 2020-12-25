@@ -1,3 +1,5 @@
+- add test/params.pas
+- add --build-id for linking (to support -dbgsym Debian packages)
 - c_utils.c: reworked play_sound() not to use strcpy(3)
 - c_utils.c: added recommended includes
 - lots of spellcheck fixes in code and docs
