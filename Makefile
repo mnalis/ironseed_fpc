@@ -10,7 +10,12 @@ icondir  ?= $(prefix)/share/icons/hicolor/128x128/apps
 CC	 ?= gcc
 p_compiler:= fpc
 d_compiler = gdc -g -o $@
-#d_compiler = ldc2 -g -check-printf-calls
+
+# try to fall back to ldc if gdc is not installed
+HAVE_GDC := $(shell command -v gdc 2> /dev/null)
+ifndef HAVE_GDC
+d_compiler = ldc2 -g -check-printf-calls -of=$@
+endif
 
 PFLAGS:= -Mtp -g -gl -gv
 #-Aas -ap

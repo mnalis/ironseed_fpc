@@ -1,3 +1,4 @@
+- autodetect gdc/ldc2 D-compiler, and *.d cleanups
 - add test/params.pas
 - add --build-id for linking (to support -dbgsym Debian packages)
 - c_utils.c: reworked play_sound() not to use strcpy(3)
