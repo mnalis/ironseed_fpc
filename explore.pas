@@ -730,8 +730,8 @@ begin
    pieslice(63,114,0,360,20);
 
    printslice(0, hydrogen*0.036, 0, hydrogen / 100, 'Hydrogen');
-   printslice(hydrogen*0.036, (hydrogen + helium)*0.036, 1, helium / 100, 'Helium');
-   printslice((hydrogen + helium)*0.036, 360, 2, other / 100, 'Other');
+   printslice(hydrogen*0.036, (Int64(hydrogen) + Int64(helium))*0.036, 1, helium / 100, 'Helium');
+   printslice((Int64(hydrogen) + Int64(helium))*0.036, 360, 2, other / 100, 'Other');
    tcolor:=31;
 end;
 
