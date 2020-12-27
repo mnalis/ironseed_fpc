@@ -15,4 +15,3 @@ end;
 begin
  checkparams;
 end.
- 

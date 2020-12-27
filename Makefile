@@ -9,7 +9,7 @@ icondir  ?= $(prefix)/share/icons/hicolor/128x128/apps
 
 CC	 ?= gcc
 p_compiler:= fpc
-d_compiler = gdc -g -o $@
+d_compiler = gdc -g -funittest -fall-instantiations -o $@
 
 # try to fall back to ldc if gdc is not installed
 HAVE_GDC := $(shell command -v gdc 2> /dev/null)
@@ -23,7 +23,8 @@ fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm40
 # enable fatal warnings/notes when developing
 #fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
-p_link:= -k-lSDL_mixer -k-lSDL -k-lm
+p_link := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
+p_link += -k-lSDL_mixer -k-lSDL -k-lm
 c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
@@ -89,7 +90,7 @@ $(PROG_FILES): Makefile c_utils.o _paths_.pas *.pas
 	$(p_compiler) $(PFLAGS) $(p_link) $@.pas
 
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
-	$(CC) $(CFLAGS) -O1 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
+	$(CC) $(CFLAGS) -O1 -Werror test/test_0_c.c `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU  -o test/test_0_c
 
 test/test_0_pas: CFLAGS += -O1 -Werror
 test/test_0_pas: PFLAGS += $(fpc_debug)
@@ -132,10 +133,10 @@ distclean: clean cleanbak
 	touch TEMP/keep.c
 
 reallyclean: distclean data_destroy
+	-dh clean
 
 mrproper: reallyclean
 	rm -rf data/savegame.dir save?
-	-dh clean
 
 tags: *.c *.pas
 	ctags $^

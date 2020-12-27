@@ -26,6 +26,7 @@ Unit utils_;
 **********************************************}
 
 {$L c_utils.o}
+{$linkLib gcc_s}
 {$I-}
 
 Interface
