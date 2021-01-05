@@ -1,3 +1,5 @@
+v 0.3.6
+- autodetect hardening flags in makefile, allowing build on more architectures (like mipsel)
 v 0.3.5
 - fix compilation on many non-amd64 architectures
 - autodetect gdc/ldc2 D-compiler, and *.d cleanups
