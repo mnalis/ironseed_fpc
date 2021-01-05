@@ -23,14 +23,15 @@ fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm40
 # enable fatal warnings/notes when developing
 #fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
-p_link := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
-p_link += -k-lSDL_mixer -k-lSDL -k-lm
+libgcc_dir := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
+PFLAGS += -k-lSDL_mixer -k-lSDL -k-lm $(libgcc_dir)
+
 c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
-p_link += -k'-z relro' -k'-z now' -k-pie
-p_link += -k--build-id
+PFLAGS += -k'-z relro' -k'-z now' -k-pie
+PFLAGS += -k--build-id
 PFLAGS += -fPIC
 CFLAGS += -fpic -D_FORTIFY_SOURCE=2
 
@@ -41,7 +42,7 @@ all: clearpaths debug_sdl1
 cleanbuild: clean build cleantmp
 
 # OpenGL no-checks version
-release_ogl debug_ogl1: p_link += -k-lGL -k-lGLU
+release_ogl debug_ogl1: PFLAGS += -k-lGL -k-lGLU
 
 release_ogl: CFLAGS += -O -DNDEBUG
 release_ogl: cleanbuild
@@ -87,16 +88,15 @@ c_utils.o: Makefile c_utils.c
 	$(CC) $(CFLAGS) -c c_utils.c
 
 $(PROG_FILES): Makefile c_utils.o _paths_.pas *.pas
-	$(p_compiler) $(PFLAGS) $(p_link) $@.pas
+	$(p_compiler) $(PFLAGS) $@.pas
 
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
 	$(CC) $(CFLAGS) -O1 -Werror test/test_0_c.c `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU  -o test/test_0_c
 
 test/test_0_pas: CFLAGS += -O1 -Werror
-test/test_0_pas: PFLAGS += $(fpc_debug)
-test/test_0_pas: p_link += -k-lGL -k-lGLU
+test/test_0_pas: PFLAGS += $(fpc_debug) -k-lGL -k-lGLU
 test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
-	$(p_compiler) $(PFLAGS) $(p_link) test/test_0_pas.pas
+	$(p_compiler) $(PFLAGS) test/test_0_pas.pas
 
 # needed because fpc does not have gcc-like -dVAR=VALUE syntax :(
 _paths_.pas: Makefile
@@ -171,7 +171,7 @@ Data_Generators/misc/cpr2tga: Data_Generators/misc/cpr2tga.pas Data_Generators/m
 Data_Generators/misc/tga2cpr: Data_Generators/misc/tga2cpr.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
-	$(p_compiler) $(PFLAGS) $(p_link)  $<
+	$(p_compiler) $(PFLAGS)  $<
 
 data/log.dta  data/titles.dta: Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt
 	Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt data/titles.dta data/log.dta
