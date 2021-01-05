@@ -19,7 +19,7 @@ endif
 
 PFLAGS:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm4049
+fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm4049 -k--build-id
 # enable fatal warnings/notes when developing
 #fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
@@ -30,10 +30,20 @@ c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
-PFLAGS += -k'-z relro' -k'-z now' -k-pie
-PFLAGS += -k--build-id
 PFLAGS += -fPIC
 CFLAGS += -fpic -D_FORTIFY_SOURCE=2
+# automatically extract from: LDFLAGS=-Wl,-z,relro -Wl,-z,now
+wlz=-Wl,-z,
+ifneq (,$(findstring $(wlz)relro,$(LDFLAGS)))
+PFLAGS += -k'-z relro'
+endif
+ifneq (,$(findstring $(wlz)now,$(LDFLAGS)))
+PFLAGS += -k'-z now'
+endif
+ifneq (,$(findstring -pie,$(LDFLAGS)))
+PFLAGS += -k-pie
+endif
+
 
 rebuild: clean all cleantmp
 # default target to build, best is debug_sdl / debug_ogl (NOT "release_xxx" AKA "no-checks" versions!)
