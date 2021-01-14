@@ -12,7 +12,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************/
 
 /*********************************************
@@ -145,7 +145,7 @@ char [][]trimouterblanks(char [][]input) {
 void processlogs() {
 	char [][]output;
 	//printf ("Processing logs\n");
-	foreach(int i, Log log; loglist) {
+	foreach(size_t i, Log log; loglist) {
 		//printf("%d:%d:[%s]\n", log.id, log.title.length, log.title.toStringz);
 		log.head = wraplines(log.head, 49);
 		//printf(".\n");

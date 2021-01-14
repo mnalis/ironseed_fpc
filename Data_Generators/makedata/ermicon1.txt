@@ -17,7 +17,7 @@
 @-1     -1      1       23      TROJAN GATE GATES
 @-1     -1      1       24      MONKS MONK
 @-1      -1      1       26      SELL BUY TRADE
-@-1     -1      1       27      HALLIFAX MANUEVER
+@-1     -1      1       27      HALLIFAX MANEUVER
 @-1      -1      1       31      GOD'S EYE GODS EYE
 @-1      -1      1       32      IRONSEED IRON SEED
 -1      -1      1       34      CARGAN
@@ -42,7 +42,7 @@
 -1      -1      1       55      TEMPORAL ANCHOR
 -500
 1       Welcome. We are the ermigen. I am sure that you have heard of us. In all rudeness, I must assume that you have come here to ^grovel^ before us.
-3       Good bye, little ones. Any inconvienience we are about to cause you is unfortunate. We hope our show of strength and wisdom has abated your worries.
+3       Good bye, little ones. Any inconvenience we are about to cause you is unfortunate. We hope our show of strength and wisdom has abated your worries.
 5       From the time we crawled from the sea we knew them. They came to us when we were in caves. They spoke to our seers. They taught us the use of tools. we welcome them.
 6       We have never trusted them... The legends speak of them landing in our oceans and poisoning the water. They melted our ice caps.
 6       Out of kindness we allowed them passage into the kendar. They repay our generosity by dividing the kendar with their lies. What we worked so hard to create they destroyed without the slightest hint of remorse.
@@ -50,7 +50,7 @@
 8       We find the guild useful. There are a great _many things that they provide us. In exchange we provide them protection. With fire we protect them... Our great cargan to escort their precious cargos. We are strong.
 9       Lunatics... I am certain they are hiding something... They hide themselves in their madness, and plot. They could snuff the life from us all. Be wary and watch yourself.
 10      Don't bother asking us about ourselves... our arms, our strength is justified. That is all you need know.
-11      They have never offended us. They have never agressed. We do not know them. Surely they cannot have strength if we do not know them.
+11      They have never offended us. They have never aggressed. We do not know them. Surely they cannot have strength if we do not know them.
 14      They are worthy of trust. They were not a part of the kendar and have never offended us. Surely, they respect our strength.
 15      Minds corrupted by implantation... Surely they are insane.
 16      We do not know of them.
@@ -58,7 +58,7 @@
 23      We are not sure how the trojan gates operate or what they do. We do know that there exists a gate in operation at (1.9,127.1,88.1). You could learn more from the icon.
 24      What happened to them? They inhabited the Papesian system but vanished mysteriously.
 26      We have nothing to give you. We require all of our goods for our strength.
-27      How terrible... there are those among us who follow the papesian monks. Sensless death, I say! Since the glorious defeat of the ^Dark Kind^ the monks have led sects of all races to believe that they would return. Madness!
+27      How terrible... there are those among us who follow the papesian monks. Senseless death, I say! Since the glorious defeat of the ^Dark Kind^ the monks have led sects of all races to believe that they would return. Madness!
 31      The Sengzhac claim it is but a stone. We know that there is more to it. 
 32      We know not what you mean...
 34      It is our fist.  Without it, we would have no strength.
@@ -66,14 +66,14 @@
 37      It is not difficult to comprehend the necessity of the destruction. It is all for the best.
 38      There are _many on the ^terminal agenda^. The destruction of your particular celestial object is inconvenient to you. We realize this but that is one of the unfortunate consequences of choosing to inhabit a planet in a restricted area.
 39      It is not appropriate to ask the strong about ^fear^.
-40      The terminal agenda is the list of objects that must be removed from ^restriced areas^. We are the strong. Therefore, we are ^designated^ to ^remove^.
+40      The terminal agenda is the list of objects that must be removed from ^restricted areas^. We are the strong. Therefore, we are ^designated^ to ^remove^.
 41      As you should know, dense star clusters behave unpredictably. Suns within these clusters often go into a state of orbital instability. systems that are likely to experience this instability are tagged as restricted areas. The ^stability council^
-41      reviews such cases. They decide what should be done. Often the solution is planetary annhilation at a ^critical moment^ in order to restabalize the system. Systems with ^gates^ are often
+41      reviews such cases. They decide what should be done. Often the solution is planetary annihilation at a ^critical moment^ in order to restabilize the system. Systems with ^gates^ are often
 41      more likely to become instable than their neighboring systems.
 42      we completely comprise the ^council^. We decide who removes the object. Because we are strong choose ourselves to carry out the removal.
 43      The council meets whenever one of the restricted areas becomes unstable. We decide what should be done about the ^instability^.
 44      The destruction has to be timed properly to assure the best chance of restoring instability. If instability is not restored we destroy another object. That would be unfortunate.
-45      If the system remains unstable, planetary orbits deteriorate and change the natural climates of all the planets in the system. This would be disasterous to all of the races living in the system. It is much
+45      If the system remains unstable, planetary orbits deteriorate and change the natural climates of all the planets in the system. This would be disastrous to all of the races living in the system. It is much
 45      better to destroy one than to let them all be destroyed.
 45      Some say that the ^gates^ are responsible for these instabilities. We have no opinion regarding this. We merely correct what is wrong.
 46      I tell you, we fear ^nothing^!

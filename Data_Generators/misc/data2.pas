@@ -11,7 +11,7 @@ unit data2;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
     On Debian systems, the complete text of the GNU General Public
     License, version 3, can be found in /usr/share/common-licenses/GPL-3.
@@ -501,7 +501,7 @@ begin
  if not checkversion then errorhandler(s+' must be 256-color 8-bit index-colored 24-bit palette TARGA file',5);
 
  { read TGA palette }
- seek(f,tga_head.id_len+18);	// skip required header and (optional) variable-sized image_id
+ seek(f,Int64(tga_head.id_len)+18);	// skip required header and (optional) variable-sized image_id
  num:=tga_head.cmap_esize div 8 * tga_head.cmap_len;
  assert (num=768, 'palette size mismatch');
  blockread(f,colors,num,err);
@@ -521,5 +521,5 @@ end;
 
 
 begin
-  //loadpal ('data/main.pal');  { default pallete if not overriden }
+  //loadpal ('data/main.pal');  { default palette if not overridden }
 end.

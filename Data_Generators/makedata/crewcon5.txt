@@ -56,7 +56,7 @@
 1       Hello, ^Laird^. What is your concern?
 1       Knowledge is power. How might I empower you?
 1       My ^Leige^?
-2       I'll contact you if I learn anything of portence.
+2       I'll contact you if I learn anything of importance.
 2       Peace go with you.
 2       ...My Leige.
 2       Until we speak again.
@@ -89,7 +89,7 @@
 28      And very beautiful... From across the galaxy. The idea of being anywhere near a super nova makes me nervous.
 29      Allows instantaneous linear particle translation. Very interesting concepts. Unlike ^phase^ theory, I understand it and have done a great deal of research on the subject.
 30      The phasing theories involve some very strange psionic hypothesis. Some of them I find mathematically disturbing. Thinking about such puzzling things give me a headache... In the proverbial sense of course.
-31      To see through God's Eye - poetic, don't you think? Well, regardless of the D'pahk motive for seeing it, I have interest. If it is truly made of iron... and to be as dense as was was told in their cypher key would give it very strange properties.
+31      To see through God's Eye - poetic, don't you think? Well, regardless of the D'pahk motive for seeing it, I have interest. If it is truly made of iron... and to be as dense as it was told in their cypher key would give it very strange properties.
 32      The heart of a dying star. I know it also the name of our ship, but i like to think of the ship in that sense... To have come from Sol which, to us, had died.
 33      Fascinating material!  I could use it in a number of ways... The least of which is shielding the ship probes.
 36      That is your title, my Lord.
@@ -131,12 +131,12 @@
 
 @-1	-1	1	-1	MINEBOT MINEBOTS MINE-BOTS MINE-BOT
 @-1	-1	1	-1	MANUFACTORY MANUFACTORIES
--1	It's a usful bit of equipment but I think you want to ask @2 about it.
+-1	It's an useful bit of equipment but I think you want to ask @2 about it.
 
 @12      -1      1       93      HELP ADVICE
 93	We need to explore this region of the galaxy.
 @11      -1      1       92      HELP ADVICE
-92	We should travel to the nearby star that we found marked in the data bouy we found from the wreckage.
+92	We should travel to the nearby star that we found marked in the data buoy we found from the wreckage.
 @11	 -1	 1	 91	 WRECK WRECKAGE WRECKED
 91	All I know is that it was attacked. You are better off talking to @2, @3 or @4 about it.
 @10	 -1	 3	 90	 WRECK WRECKAGE WRECKED
@@ -150,15 +150,15 @@
 
 
 @18	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
--1	Heavily plating a convential probe in thermoplast opens up possibility to send probes to the surface _of a star for detailed analysis. It's even possible to send a probe beneath the surface for a limited time.
+-1	Heavily plating a conventional probe in thermoplast opens up possibility to send probes to the surface _of a star for detailed analysis. It's even possible to send a probe beneath the surface for a limited time.
 @-1	-1	3	-1	SUNDIVER SUNPROBE STARDIVER STARPROBE
 -1	Being able to probe the surface and depths _of star is interesting from a science point _of view, but it's not something feasible with the resources _of the Ironseed.
 
 @18	-1	3	-1	SUNMINER STARMINER
--1	The discovery _of thermoplast has opened up this idea. _Of course were not literally mining a star, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	The discovery _of thermoplast has opened up this idea. _Of course were not literally mining a star, as they're mostly helium and hydrogen with rapidly diminishing quantities _of more advance elements.
 -1	What a starminer would do is harness the intense pressures, heat and energy output _of a star to synthesize advance elements.
 @-1	-1	3	-1	SUNMINER STARMINER
--1	Literally mining a star is a silly notion, as they're mostly helium and hydrogen with rapidly diminishing quanities _of more advance elements.
+-1	Literally mining a star is a silly notion, as they're mostly helium and hydrogen with rapidly diminishing quantities _of more advance elements.
 -1	However, there is some merit in the idea _of using the intense pressures, heat and energy output _of a star to synthesize advance elements.
 -1	Of course you need to be able to make a lab that can withstand the surface _of a star.
 

@@ -13,7 +13,7 @@ program intro;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -37,7 +37,7 @@ uses utils_, sysutils, gmouse, modplay, version, math;
 *)
 
 const
- CPR_NONE=0;                    {   0 no compresion            }
+ CPR_NONE=0;                    {   0 no compression            }
 // CPR_NOPAL=1;                   {   1 no palette, compressed   }
 // CPR_PAL=2;                     {   2 palette, compressed      }
 // CPR_HEADERINCL=3;              {   3 header included          }
@@ -1683,7 +1683,7 @@ begin
    closegraph;
      for i := 1 to paramcount do
 	writeln(paramstr(i));
-   writeln('Do not run this program separately.  Please run is.');
+   writeln('Do not run this program separately.  Please run "is".');
    halt(4);
   end;
  if (paramstr(2)='/done') then

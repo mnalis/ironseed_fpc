@@ -13,7 +13,7 @@ unit version;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -35,5 +35,5 @@ implementation
 begin
    versionstring :=
    {12345678901234567890}
-   'v1.30.0001 fpc 0.2.6';
+   'v1.30.0001 fpc 0.3.6';
 end.

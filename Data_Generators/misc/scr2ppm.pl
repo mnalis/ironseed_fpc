@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # On Debian systems, the complete text of the GNU General Public
 # License, version 3, can be found in /usr/share/common-licenses/GPL-3.
@@ -43,10 +43,10 @@ if (!defined $scr) {
 
 undef $/; 	# slurp file in one go
 
-my @PALLETE=();
+my @PALETTE=();
 if (defined $pal) {
   open my $pal_fd, '<', $pal;
-  @PALLETE = unpack "C*", <$pal_fd>;
+  @PALETTE = unpack "C*", <$pal_fd>;
 }
 
 print "P3\n$want_width $want_height\n255\n"; 	# see ppm(5)
@@ -54,10 +54,10 @@ print "P3\n$want_width $want_height\n255\n"; 	# see ppm(5)
 open my $scr_fd, '<', $scr;
 my $pixels = 1;
 foreach my $b (unpack "C*", <$scr_fd>) {
-  if (@PALLETE) {
-     my $c1 = $PALLETE[$b*3] * $COLOR_FACTOR;
-     my $c2 = $PALLETE[$b*3+1] * $COLOR_FACTOR;
-     my $c3 = $PALLETE[$b*3+2] * $COLOR_FACTOR;
+  if (@PALETTE) {
+     my $c1 = $PALETTE[$b*3] * $COLOR_FACTOR;
+     my $c2 = $PALETTE[$b*3+1] * $COLOR_FACTOR;
+     my $c3 = $PALETTE[$b*3+2] * $COLOR_FACTOR;
      print "$c1 $c2 $c3\n";
   } else {			# grayscale
      print "$b $b $b\n";

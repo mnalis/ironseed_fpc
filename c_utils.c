@@ -28,6 +28,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@
 #    define GL_GLEXT_LEGACY
 #    include "SDL_opengl.h"
 #    include <GL/gl.h>
+#    include <GL/glu.h>
 #endif
 
 
@@ -58,7 +60,7 @@
 #define TIMESCALE 1.0
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
-#define TURBO_FACTOR 60
+#define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
 
 static const double ratio = 640.0 / 480;
 
@@ -89,6 +91,7 @@ static pal_color_type palette[256];
 
 static volatile uint8_t is_video_initialized = 0;
 static volatile uint8_t is_audio_initialized = 0;
+static volatile uint8_t do_sdl_audio = 0;
 static uint8_t *v_buf = NULL;
 static volatile uint8_t do_video_stop = 0;	// command video to stop
 static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
@@ -399,17 +402,23 @@ static void abort_if_abnormal_exit(void)
 static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
 	uint16_t x, y;
+	uint32_t SDL_flags = SDL_INIT_VIDEO;
 	static volatile uint8_t is_sdl_initialized = 0;
 
 	//printf ("SDL_init_video_real called, is_sdl_initialized=%d, is_audio_initialized=%d, is_video_initialized=%d\r\n", is_sdl_initialized, is_audio_initialized, is_video_initialized);
 	assert (!is_sdl_initialized);		/* do not allow double init, or terrible bugs happen down the line! */
 
-	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
+	if (do_sdl_audio)
+		SDL_flags |= SDL_INIT_AUDIO;
+
+	if (SDL_Init(SDL_flags) != 0) {
 		printf("Unable to initialize SDL: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	is_sdl_initialized = 1;
-	is_audio_initialized = 1;
+
+	if (do_sdl_audio)
+		is_audio_initialized = 1;
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	SDL_EnableUNICODE(1);
@@ -633,9 +642,10 @@ static int event_thread(void *notused)
 
 
 
-void SDL_init_video(fpc_screentype_t vga_buf)	/* called from pascal; vga_buf is 320x200 bytes */
+void SDL_init_video(fpc_screentype_t vga_buf, const fpc_boolean_t use_audio)	/* called from pascal; vga_buf is 320x200 bytes */
 {
 	v_buf = vga_buf;
+	do_sdl_audio = use_audio;
 	do_video_stop = 0;
 	is_video_finished = 0;
 	_sdl_events = SDL_CreateThread(event_thread, NULL);
@@ -752,7 +762,7 @@ void delay(const fpc_word_t ms)
 	delta_usec();
 	us = (int64_t) (ms * 1000 * TIMESCALE) - (int64_t) err;	// we're always small enough so convert to int64 is not a problem
 	if (turbo_mode)
-		us /= TURBO_FACTOR;
+		us = us >> TURBO_FACTOR;
 	while (us > 0) {
 		us -= (int64_t) delta_usec();	// delta_usec() will always be small, so 63bits are always OK
 		_nanosleep(5000);
@@ -869,10 +879,10 @@ fpc_char_t readkey(void)
 
 /* like readkey(), but for standard letters returns UTF8 version
  * which takes into account shift and other modifiers used.
- * we actually only need it for ASCII uppercase/lowecase, and punctuations,
+ * we actually only need it for ASCII uppercase/lowercase, and punctuations,
  * as the game does not support real UTF-8....
  *
- * Used only for typing activies, like crew/aliens chat, entering
+ * Used only for typing activities, like crew/aliens chat, entering
  * savegame name or inputting astrogation coordinates manually.
  */
 fpc_char_t readkey_utf8(void)
@@ -897,7 +907,7 @@ fpc_char_t readkey_nomap(void)
 	//static const uint16_t spec_codes[] = { 53 , 30 , 31 , 32 , 20 , 26 ,  8 , 21 , 23 ,  4 , 22 ,  7 ,  9 , 10 , 29 , 27 ,  6 , 25 ,  5 , 19 ,	0 };	// SDL 1.2 does not have symbolic names for keycodes, those values from SDL2 do not work: https://wiki.libsdl.org/SDL_Keycode
 	static const uint8_t  spec_unmap[] = { '`', '1', '2', '3', 'q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'p' };
 
-	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependant, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
+	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependent, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
 	*/
 
 	static const uint16_t spec_codes[] = { 0 };
@@ -983,7 +993,7 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 		xx = 319;
 	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precission loss here
+	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
 
 	if (yy > 199)
 		yy = 199;
@@ -1003,26 +1013,13 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 	int8_t *sound_raw, chan;
 	float k;
 	int16_t *sound, smp;
-	char *fn, *s, *s1;
 
 	if (!audio_open)
 		return;
 
-	fn = malloc(256);
-	assert(fn != NULL);
-	s1 = strdup(filename);
-	assert(s1 != NULL);
-	s = s1;
-	while (*s) {
-		*s = (char) toupper(*s);	// toupper(3) works with int, but only defined on char
-		s++;
-	}
-	strcpy(fn, s1);
-	f = fopen(fn, "rb");
+	f = fopen(filename, "rb");
 	if (f == NULL) {
-		printf("Can't open file %s\r\n", fn);
-		free(fn);
-		free(s1);
+		printf("Can't open file %s\r\n", filename);
 		return;
 	}
 	fseek(f, 0, SEEK_END);
@@ -1039,16 +1036,12 @@ void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
 		if (r > 0)	/* fread(3) returns 0 on error, as size_t is not signed */
 			loaded += r;
 		else {
-			printf("Can't read %s @%ld error= %d\r\n", fn, ftell(f), errno);
+			printf("Can't read %s @%ld error= %d\r\n", filename, ftell(f), errno);
 			free(sound_raw);
-			free(fn);
-			free(s1);
 			return;
 		}
 	}
 	fclose(f);
-	free(fn);
-	free(s1);
 // resample and play    
 	k = (float) rate / (float) audio_rate;
 	uint32_t qwords = (uint32_t) ((float)length / k);	// not really exact, so we'll allocate + 1 quadword extra

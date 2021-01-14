@@ -12,7 +12,7 @@ int main (int argc, char *argv[])
 	srand(123);
 
 	printf ("allocated\n");
-	SDL_init_video(pas_screen);
+	SDL_init_video(pas_screen, 0);
 	printf ("main after SDL_init_video\n");
 
 	while ((!is_video_finished) && (count++<10)) {

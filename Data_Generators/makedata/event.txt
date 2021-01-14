@@ -9,7 +9,7 @@ Sengzhac
     0     0
     0     0
     0     0
-D'phak
+D'pahk
 20046     0  Why are you here? The precious Sun is in danger! You should be finishing the scourge even as we speak. Go and do not return to the light until the dark within the dark is quelled.
 20018 20046  The light is not lost! You have brought us the path. Your device will take us into the light! The light of the sun is ours at last. We must reward you. Take the Thaumaturge... bring cleansing fire to the night, sear the darkness with Sun's light.
 20043     0  The little messenger has returned from the shadows.
@@ -21,7 +21,7 @@ D'phak
     0     0
     0     0
 Aard
-20045 20031  It is imperitive that the free worlds form a cooperative alliance against the Scavengers. You and your allies will join us in the new Kendar. <You think about explaining the situation then reconsider. Does it matter as long as they've joined?>
+20045 20031  It is imperative that the free worlds form a cooperative alliance against the Scavengers. You and your allies will join us in the new Kendar. <You think about explaining the situation then reconsider. Does it matter as long as they've joined?>
 20027     0  It will be a pity to see the free worlds crumble under the heel of the Scavenger horde. We are unable to intervene. The importance of our own affairs make it impossible for us to intervene.
 20002     0  Greetings. Our time is valuable. State your business quickly.
     0     0
@@ -91,7 +91,7 @@ The Guild
 20044     0  We have important information for you. We believe we have discovered a way to destroy the scourge. We will transmit the relevant data at the end of this communique.
 20025 20023  Ah... all is well. You have completed all that we have asked. It must be true. You are the one. We will join your Kendar.
 20037 20041  Rejoice! We know where the pirate lives! We have sent your Astrogator the numbers he needs.  Go quickly and take him.
-20043 20037  We have another thing that we would have you do before we join this Kendar of yours. The relevent data will be sent upon termination of this dialogue.
+20043 20037  We have another thing that we would have you do before we join this Kendar of yours. The relevant data will be sent upon termination of this dialogue.
 20049 20043  Rejoice! You have brought us the Ylinth Genome! We had thought the information lost to us. We are eternally grateful. Yet, it does not seem like a fair trade. We will not yet join your Kendar. Something else must be done. Let us think.
 20008     0  Yes, we have your records. Care to buy sell or trade? We are the Guild. We are born to barter. Discuss with us what you will.
     0     0
@@ -109,9 +109,9 @@ Phaedor Moch
     0     0
     0     0
 Void Dwellers
-20044     0  The solid travellers return to us. Speak to us material thing.
+20044     0  The solid travelers return to us. Speak to us material thing.
 20019 20044  God's eye, which you have shown so much interest in, has been revealed to us. You will find the coordinates you need in the data burst sent at the end of this initial message <transmitting>.
-20009     0  The solid travellers return to us. Speak to us material thing.
+20009     0  The solid travelers return to us. Speak to us material thing.
     0 30000  Enter into the iron. As a star novas so must you detonate this place to enter in.
     0 30000  The Temple of Iron awaits you.
     0 30000  To enter into the Temple of Iron you must use the Detonator.

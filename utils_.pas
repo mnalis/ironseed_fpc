@@ -13,7 +13,7 @@ Unit utils_;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -26,6 +26,7 @@ Unit utils_;
 **********************************************}
 
 {$L c_utils.o}
+{$linkLib gcc_s}
 {$I-}
 
 Interface
@@ -38,6 +39,8 @@ Interface
 	Pan_Surround=0;
 	xorput=1;
 	copyput=0;
+
+ var use_audio: boolean;
 
 procedure delay(const MS:Word); cdecl ; external;
 procedure setcolor(const Color: Word); cdecl ; external;
@@ -84,14 +87,14 @@ uses sysutils, dos, users, baseunix, _paths_;
 
 
 procedure getrgb256_(const palnum: byte; r,g,b: pointer);  cdecl ; external;// get palette
-procedure SDL_init_video(var scr:screentype); cdecl ; external;
+procedure SDL_init_video(var scr:screentype; const use_audio: boolean); cdecl ; external;
 
 procedure closegraph;   // close video
 begin
     all_done;
 //    SDL_Quit();
-
 end;
+
 procedure getrgb256(const palnum: byte; var r,g,b:byte); // get palette
 var rp,gp,bp:byte;
 begin
@@ -122,12 +125,13 @@ end;
 
 
 type addr_type = qword;		// NB: word should be enough to hold memory address ?! https://www.tutorialspoint.com/pascal/pascal_pointers.htm
+				// it is at least dword on i386 and qword on x86_64, so we go with bigger value
 const screen_size = 320*200;
 var screen_addr: addr_type;
 
 function _address (const someaddress: pointer): addr_type;
 begin
-  _address := {$hints-}addr_type(someaddress);{$hints+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We shoud be using FarAddr (fpc 3.2.0+) instaed of "@"/addr() anyway
+  _address := {$warnings-}{$hints-}addr_type(someaddress);{$hints+}{$warnings+}		// NB: get rid of "Hint: (4055) Conversion between ordinals and pointers is not portable" and "Warning: (4056) Conversion between ordinals and pointers is not portable" unless we find better way to compare memory addresses. We should be using FarAddr (fpc 3.2.0+) instead of "@"/addr() anyway
 end;
 
 { bounds checking fillchar(), when dest is screen[] }
@@ -136,8 +140,9 @@ var dest_addr: addr_type;
 begin
  dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scr_fillchar: count is negative');
  assert (dest_addr >= screen_addr, 'scr_fillchar: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scr_fillchar: screen destination beyond end');
  fillchar(dest, count, value);
 end;
 
@@ -147,8 +152,9 @@ var dest_addr: addr_type;
 begin
  dest_addr := _address(@dest);
  //writeln('dest_addr=', inttohex(dest_addr,16), ' to ', inttohex(dest_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrto_move: count is negative');
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
 end;
 
@@ -158,8 +164,9 @@ var src_addr: addr_type;
 begin
  src_addr := _address(@source);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrfrom_move: count is negative');
  assert (src_addr >= screen_addr, 'scrfrom_move: screen source below 0');
- assert (src_addr + count <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
+ assert (src_addr + addr_type(count) <= screen_addr+screen_size, 'scrfrom_move: screen source beyond end');
  move (source, dest, count);
 end;
 
@@ -170,17 +177,18 @@ begin
  src_addr := _address(@source);
  dest_addr := _address(@dest);
  //writeln('src_addr=', inttohex(src_addr,16), ' to ', inttohex(src_addr+count,16), ', screen_addr=', inttohex(screen_addr,16), ' to ', inttohex(screen_addr+screen_size,16));
+ assert (count >= 0, 'scrfromto_move: count is negative');
  assert (src_addr >= screen_addr, 'scrfromto_move: screen source below 0');
- assert (src_addr + count <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
+ assert (src_addr + addr_type(count) <= screen_addr+screen_size, 'scrfromto_move: screen source beyond end');
  assert (dest_addr >= screen_addr, 'scrto_move: screen destination below 0');
- assert (dest_addr + count <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
+ assert (dest_addr + addr_type(count) <= screen_addr+screen_size, 'scrto_move: screen destination beyond end');
  move (source, dest, count);
 end;
 
 procedure init_video(var scr:screentype);
 begin
   screen_addr := _address(@scr);
-  SDL_init_video(scr);
+  SDL_init_video(scr, use_audio);
 end;
 
 
@@ -243,7 +251,9 @@ begin
          end;
         tempdir := tempdir + '/' + subdir;
         try_tmpdir := true;
-        //writeln ('  OK, using final tempdir=', tempdir);
+{$IFDEF Trace}
+        writeln ('  OK, using final tempdir=', tempdir);
+{$ENDIF}
       end
      else
       begin
@@ -291,7 +301,9 @@ begin
            savedir := savedir + '/' + subdir;
          end;
          try_savedir := true;
-         //writeln ('  OK, using final savedir=', savedir);
+{$IFDEF Trace}
+         writeln ('  OK, using final savedir=', savedir);
+{$ENDIF}
       end
      else
       begin
@@ -348,20 +360,22 @@ procedure init_dirs;
 begin
   init_savedirs;
   init_tmpdir;
-{$IFDEF Trace}
-  writeln;
-  writeln('Using paths:');
-  writeln('P_LIB='#9, prog_libdir());
-  writeln('P_SHR='#9, prog_sharedir());
-  writeln('EXE='#9, loc_exe());
-  writeln('DATA='#9, loc_data());
-  writeln('SOUND='#9, loc_sound());
-  writeln('SAVENA='#9, loc_savenames());
-  writeln('SAVE1='#9, loc_savegame(1));
-  writeln('TMP='#9, loc_tmp());
-  writeln('PRN='#9, loc_prn());
-  writeln;
-{$ENDIF}
+  if getenv('DEBUG')='1' then
+   begin
+    writeln;
+    if not use_audio then writeln('SOUND: Disabled via environment variable NOSOUND=1');
+    writeln('Using paths:');
+    writeln('P_LIB='#9, prog_libdir());
+    writeln('P_SHR='#9, prog_sharedir());
+    writeln('EXE='#9, loc_exe());
+    writeln('DATA='#9, loc_data());
+    writeln('SOUND='#9, loc_sound());
+    writeln('SAVENA='#9, loc_savenames());
+    writeln('SAVE1='#9, loc_savegame(1));
+    writeln('TMP='#9, loc_tmp());
+    writeln('PRN='#9, loc_prn());
+    writeln;
+   end;
 end;
 
 
@@ -421,6 +435,7 @@ begin
 end;
 
 begin
-
+  use_audio := True;
+  if getenv('NOSOUND')='1' then use_audio := False;
 end.
 

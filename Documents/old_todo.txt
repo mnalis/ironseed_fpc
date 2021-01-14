@@ -22,7 +22,7 @@ x minebots should produce something every n days or months
 
 x Synthesis complete should give the name.
 
-x remove deubg message from completion times
+x remove debug message from completion times
 
 x add thrust displayed ship stats
 
@@ -82,7 +82,7 @@ sector:
 power:
 	add power generation items
 
-random enocunters:
+random encounters:
 	smarter random encounter of aliens
 	possibility of encountering aliens when sitting around or travelling
 
@@ -95,7 +95,7 @@ conversation:
 	suggestions from the crew
 	investigate: Ermigen repairs: no dialog and automatically done on first meeting - see https://github.com/mnalis/ironseed_fpc/issues/53
 	x investigate: mouse not seen in yes/no dialogs
-	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same responce for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
+	investigate: When communicating with the Ermigen, if you ask about the Scavengers, Dark Kind or Aard, they give you the same response for all three races. I don't know if this is intentional or not, but it does seem rather odd. The dialog seems to describe the Scavengers. 
 	investigate: When viewing information on a race you're communicating with, it sometimes says "The Guild" as the race name, when it's not. Example: I noticed this with the Quai Pa'loi and D'pahk, but it only happens sometimes, not always. 
 
 logs:
@@ -106,7 +106,7 @@ events:
 	icon: hallifax
 aliens:
 	Fix aliens so they don't chase between planets and systems.
-	x investigate: Are the Quai Po'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
+	x investigate: Are the Quai Pa'loi and Aard supposed to always attack you if you don't evade? The Aard, I can understand as they seem like jerks. The Quai, however seem too timid to attack all the time on sight. Even if they are friendly and peaceful with me, they still attack (Well, the Aard are always indifferent, until I start attacking them).
 
 combat:
 	x make drones so that they don't kill the player on them losing
@@ -118,7 +118,7 @@ creation:
 	investigate: building multiple upgrades causes loss in parts?
 	investigate: when i build thrust enhancer, my engineer reports the increased thrust BEFORE the report of finishing creation of this module... not important but strange.
 cargo:
-	x investigate: more than 255 items causes problems with identifying unknown componets, and construction of pulse loom - it it fixed in all cases? see https://github.com/mnalis/ironseed_fpc/issues/76
+	x investigate: more than 255 items causes problems with identifying unknown components, and construction of pulse loom - is it fixed in all cases? see https://github.com/mnalis/ironseed_fpc/issues/76
 
 misc:
 	x faster fade transitions

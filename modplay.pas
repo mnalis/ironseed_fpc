@@ -13,7 +13,7 @@ unit modplay;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -42,7 +42,7 @@ interface
 
 implementation
 
-uses strings, data, utils_;
+uses strings, data, dos, utils_;
 
 	procedure sdl_mixer_init;cdecl ; external;
 	procedure musicDone;cdecl ; external;
@@ -64,7 +64,7 @@ end;
 
 procedure initializemod;  //SDL mod
 begin
-    sdl_mixer_init;
+    if use_audio then sdl_mixer_init;
 end;
 
 procedure stopmod;       // stop music + unload

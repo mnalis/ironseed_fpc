@@ -4,24 +4,46 @@ bindir   ?= $(prefix)/games
 libdir   ?= $(prefix)/lib/games/ironseed
 sharedir ?= $(prefix)/share/games/ironseed
 docdir   ?= $(prefix)/share/doc/ironseed
+deskdir  ?= $(prefix)/share/applications
+icondir  ?= $(prefix)/share/icons/hicolor/128x128/apps
 
 CC	 ?= gcc
 p_compiler:= fpc
-d_compiler = gdc -g -o $@
-#d_compiler = ldc2 -g -check-printf-calls
+d_compiler = gdc -g -funittest -fall-instantiations -o $@
+
+# try to fall back to ldc if gdc is not installed
+HAVE_GDC := $(shell command -v gdc 2> /dev/null)
+ifndef HAVE_GDC
+d_compiler = ldc2 -g -check-printf-calls -of=$@
+endif
 
 PFLAGS:= -Mtp -g -gl -gv
 #-Aas -ap
-fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy -Sewnh -vm4049
+fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm4049 -k--build-id
+# enable fatal warnings/notes when developing
+#fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
-p_link:= -k-lSDL_mixer -k-lSDL -k-lm
+libgcc_dir := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
+PFLAGS += -k-lSDL_mixer -k-lSDL -k-lm $(libgcc_dir)
+
 c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
-p_link += -k'-z relro' -k'-z now' -k-pie
 PFLAGS += -fPIC
 CFLAGS += -fpic -D_FORTIFY_SOURCE=2
+# automatically extract from: LDFLAGS=-Wl,-z,relro -Wl,-z,now
+wlz=-Wl,-z,
+ifneq (,$(findstring $(wlz)relro,$(LDFLAGS)))
+PFLAGS += -k'-z relro'
+endif
+ifneq (,$(findstring $(wlz)now,$(LDFLAGS)))
+PFLAGS += -k'-z now'
+endif
+ifneq (,$(findstring -pie,$(LDFLAGS)))
+PFLAGS += -k-pie
+endif
+
 
 rebuild: clean all cleantmp
 # default target to build, best is debug_sdl / debug_ogl (NOT "release_xxx" AKA "no-checks" versions!)
@@ -30,7 +52,7 @@ all: clearpaths debug_sdl1
 cleanbuild: clean build cleantmp
 
 # OpenGL no-checks version
-release_ogl debug_ogl1: p_link += -k-lGL -k-lGLU
+release_ogl debug_ogl1: PFLAGS += -k-lGL -k-lGLU
 
 release_ogl: CFLAGS += -O -DNDEBUG
 release_ogl: cleanbuild
@@ -76,16 +98,15 @@ c_utils.o: Makefile c_utils.c
 	$(CC) $(CFLAGS) -c c_utils.c
 
 $(PROG_FILES): Makefile c_utils.o _paths_.pas *.pas
-	$(p_compiler) $(PFLAGS) $(p_link) $@.pas
+	$(p_compiler) $(PFLAGS) $@.pas
 
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
-	$(CC) $(CFLAGS) -O1 -Werror `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU test/test_0_c.c -o test/test_0_c
+	$(CC) $(CFLAGS) -O1 -Werror test/test_0_c.c `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU  -o test/test_0_c
 
 test/test_0_pas: CFLAGS += -O1 -Werror
-test/test_0_pas: PFLAGS += $(fpc_debug)
-test/test_0_pas: p_link += -k-lGL -k-lGLU
+test/test_0_pas: PFLAGS += $(fpc_debug) -k-lGL -k-lGLU
 test/test_0_pas: clean Makefile c_utils.o test/test_0_pas.pas
-	$(p_compiler) $(PFLAGS) $(p_link) test/test_0_pas.pas
+	$(p_compiler) $(PFLAGS) test/test_0_pas.pas
 
 # needed because fpc does not have gcc-like -dVAR=VALUE syntax :(
 _paths_.pas: Makefile
@@ -122,6 +143,7 @@ distclean: clean cleanbak
 	touch TEMP/keep.c
 
 reallyclean: distclean data_destroy
+	-dh clean
 
 mrproper: reallyclean
 	rm -rf data/savegame.dir save?
@@ -159,7 +181,7 @@ Data_Generators/misc/cpr2tga: Data_Generators/misc/cpr2tga.pas Data_Generators/m
 Data_Generators/misc/tga2cpr: Data_Generators/misc/tga2cpr.pas Data_Generators/misc/data2.pas
 
 $(DATA_TOOLS_P):
-	$(p_compiler) $(PFLAGS) $(p_link)  $<
+	$(p_compiler) $(PFLAGS)  $<
 
 data/log.dta  data/titles.dta: Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt
 	Data_Generators/makedata/logmake Data_Generators/makedata/logs.txt data/titles.dta data/log.dta
@@ -277,7 +299,7 @@ Data_Generators/makedata/shippart.cpr:	data/char.cpr Graphics_Assets/shippart.pn
 Data_Generators/makedata/planicon.cpr:	Graphics_Assets/planicon.png	$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
-# if none of the above rules for .cpr match, use this one (CPR with it's own independent pallete)
+# if none of the above rules for .cpr match, use this one (CPR with it's own independent palette)
 data/%.cpr:	Graphics_Assets/%.png					$(dep-build-cpr1-via-self)
 	$(build-cpr1-via-self)
 
@@ -293,6 +315,7 @@ install: cleanbak
 	install $(PROG_FILES) $(DESTDIR)$(libdir)
 	test -d $(DESTDIR)$(bindir) || mkdir -p $(DESTDIR)$(bindir)
 	mv -f $(DESTDIR)$(libdir)/is $(DESTDIR)$(bindir)
+	ln -s is $(DESTDIR)$(bindir)/ironseed
 	test -d $(DESTDIR)$(sharedir)/data || mkdir -p $(DESTDIR)$(sharedir)/data
 	install -m 0644 data/* $(DESTDIR)$(sharedir)/data
 	rm -f $(DESTDIR)$(sharedir)/data/savegame.dir
@@ -300,15 +323,23 @@ install: cleanbak
 	install -m 0644 sound/*.SAM sound/*.MOD $(DESTDIR)$(sharedir)/sound
 	test -d $(DESTDIR)$(docdir) || mkdir -p $(DESTDIR)$(docdir)
 	install -m 0644 README.md Documents/* $(DESTDIR)$(docdir)
+	test -d $(DESTDIR)$(deskdir) || mkdir -p $(DESTDIR)$(deskdir)
+	install -m 0644 ironseed.desktop $(DESTDIR)$(deskdir)
+	test -d $(DESTDIR)$(icondir) || mkdir -p $(DESTDIR)$(icondir)
+	install -m 0644 ironseed.png $(DESTDIR)$(icondir)
 
 uninstall:
-	cd $(DESTDIR)$(bindir) && rm -f is
+	cd $(DESTDIR)$(bindir) && rm -f is ironseed
 	cd $(DESTDIR)$(libdir) && rm -f $(PROG_FILES)
 	rmdir $(DESTDIR)$(libdir)
 	cd $(DESTDIR)$(sharedir) && rm -f README.md $(wildcard data/* sound/*)
 	rmdir $(DESTDIR)$(sharedir)/data $(DESTDIR)$(sharedir)/sound $(DESTDIR)$(sharedir)
 	cd $(DESTDIR)$(docdir) && rm -f README.md $(notdir $(wildcard Documents/*))
 	rmdir $(DESTDIR)$(docdir)
+	cd $(DESTDIR)$(deskdir) && rm -f ironseed.desktop
+	rmdir $(DESTDIR)$(deskdir)
+	cd $(DESTDIR)$(icondir) && rm -f ironseed.png
+	rmdir $(DESTDIR)$(icondir)
 
 deb:
 	debuild

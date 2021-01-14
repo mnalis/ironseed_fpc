@@ -13,7 +13,7 @@ unit gmouse;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -105,7 +105,7 @@ begin
  assign(f,loc_data()+'weapicon.dta');
  reset(f);
  if ioresult<>0 then errorhandler('weapicon.dta',1);
- seek(f,n+87);
+ seek(f,Int64(n)+87);
  if ioresult<>0 then errorhandler('weapicon.dta',5);
  read(f,tempicon^);
  if ioresult<>0 then errorhandler('weapicon.dta',5);

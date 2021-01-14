@@ -13,7 +13,7 @@ unit explore;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -730,8 +730,8 @@ begin
    pieslice(63,114,0,360,20);
 
    printslice(0, hydrogen*0.036, 0, hydrogen / 100, 'Hydrogen');
-   printslice(hydrogen*0.036, (hydrogen + helium)*0.036, 1, helium / 100, 'Helium');
-   printslice((hydrogen + helium)*0.036, 360, 2, other / 100, 'Other');
+   printslice(hydrogen*0.036, (Int64(hydrogen) + Int64(helium))*0.036, 1, helium / 100, 'Helium');
+   printslice((Int64(hydrogen) + Int64(helium))*0.036, 360, 2, other / 100, 'Other');
    tcolor:=31;
 end;
 
@@ -2061,7 +2061,7 @@ begin
  fadestopmod(-FADEFULL_STEP, FADEFULL_DELAY);
  loadscreen(loc_data()+'cloud',backgr);
  loadscreen(loc_tmp()+'current',@screen);
- if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
+ if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeasteroidfield
   else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
  anychange:=true;
  showtime;

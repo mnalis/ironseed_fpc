@@ -571,7 +571,7 @@ assembly system.
 3014
 Cyberplasm specially pro-
 grammed with higher level
-hueristics in order to per-
+heuristics in order to per-
 form more complex tasks.
 
 3015
@@ -581,7 +581,7 @@ which aid in preserving
 living tissues.
 
 3016
-A energy storage device.
+An energy storage device.
 
 
 

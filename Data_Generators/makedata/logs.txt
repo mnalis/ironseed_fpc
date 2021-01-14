@@ -70,7 +70,7 @@ Home World = None
  After decoding the information contained within the buoy, we discovered the flight logs of the Scavenger ship. Interestingly enough we were able to use their crash sight as a reference point and have since added the stars from these logs to our own sector codex.
  It would make sense to follow the trail they left us.
  While I have some trepidation about travelling into deep space again engineering has assured me that the malfunction has been fixed and additional failsafes have been added. Regardless we have little to gain by remaining in this system.
- Of real concern, however, is our low levels of fuel. We will need to scavange ^anomalies^ from planets and hope we can gather enough to make more fuel nodules. Alternatively I could talk to engineering about using ^minebots^.
+ Of real concern, however, is our low levels of fuel. We will need to scavenge ^anomalies^ from planets and hope we can gather enough to make more fuel nodules. Alternatively I could talk to engineering about using ^minebots^.
 
 @12 SECOND BUOY LOCATED
  So, it seems that our Scavenger predecessors left us a second buoy discovered at (22.0,47.0,34.0).
@@ -207,7 +207,7 @@ This log exists because we couldn't find a better way to structure the plot-log 
  Has the universe lost its mind? I can see no sense in the civil war which has erupted on the Quai Pa'loi homeworld... and in a time that requires total unity! The Quai had best come to terms with themselves. If our victory is in jeopardy because they weren't able to lend us their fleet I shall personally see to it that every last one of them is assimilated by the scourge.
 
 @39 THE MOCH HAVE THE GOOLAS
- I believe we have something that will turn the tide in the Quai war. The Guild have informed us that the Phaedor Moch possess weapons the Quai consider holy. They are called the Goolas. If we are to quell the Tetrad to have them join it is imperitive that we acquire these Goolas and give them to the Quai.
+ I believe we have something that will turn the tide in the Quai war. The Guild have informed us that the Phaedor Moch possess weapons the Quai consider holy. They are called the Goolas. If we are to quell the Tetrad to have them join it is imperative that we acquire these Goolas and give them to the Quai.
 
 @40 FIRST ENCOUNTER WITH THE PHAEDOR MOCH
  If I have ever said that this race was strange or that race was odd I take it back. Today we contacted what was by far the most outlandish organic species we have ever encountered. Each being seemed to radiate several different psychic patterns. Their mentations were so strange that a single low level scan nearly drove our psychometrist insane. We managed a cypher key, what little good that did, and opened dialogue. This race calls itself the ^Phaedor Moch^. Our dialogue was meaningless. Unless we show an expressed need we won't be speaking with them again.
@@ -215,7 +215,7 @@ This log exists because we couldn't find a better way to structure the plot-log 
 Home World = Unknown
 
 @41 GUILD TELL YOU HOW AND WHERE TO DEFEAT DERRAAK
- Since our last dialogue the Guild have located the pirate they wished us to rid them of. They have been gracious enough to transmit his coordinates along with a suggested means of capture. They cannot guarantee how long he will remain where he is so it is imperitive that we go as quickly as possible. The Guild also tell us that we will require a Homing Device to find and destroy his base.
+ Since our last dialogue the Guild have located the pirate they wished us to rid them of. They have been gracious enough to transmit his coordinates along with a suggested means of capture. They cannot guarantee how long he will remain where he is so it is imperative that we go as quickly as possible. The Guild also tell us that we will require a Homing Device to find and destroy his base.
 ##
 Pirate Base = Fabexi (153.8,99.0,196.9)
 
@@ -265,13 +265,13 @@ God's Eye = Yned (1.9,127.1,88.1)
  In a gesture of good will and diplomacy we helped Phaedor Moch. Aside from repairing their ship we accomplished nothing constructive. They remain just as mad and rambling. Although they did give us a "glyptic scythe" in thanks. Engineering has determined it can trace and weave visible patterns in the air but no actual useful purpose has been found for it. I expect we will keep it for a while in case we do find a use for it or the Moch come wanting it back.
 
 @1102 REPAIR TO THE AARD SHIP
- We aided the Aard in repairing their vessel. Although they appear grateful, the act did little to change their arrogant demeanor. In payement for our help they gave us a ballista. Whilst not a weak weapon it is obviously no where near as powerful as the weapons weilded on their ships.
+ We aided the Aard in repairing their vessel. Although they appear grateful, the act did little to change their arrogant demeanor. In payment for our help they gave us a ballista. Whilst not a weak weapon it is obviously no where near as powerful as the weapons wielded on their ships.
 
 @1103 DISCOVERY OF THE CARGAN
-Using the Ermigen's data tapes for reference and our sundivers we were able find the crashed Ermigen flagship in their star Mytuk. Much to my surprise, scans through its shields show that the Cargan is unscathed by the intense heat of the star. The temporal anchor is truely a wonder of technology, however it didn't protect their ship from the suddent impact with a star and the hull shows a good deal of structural damage.
+Using the Ermigen's data tapes for reference and our sundivers we were able find the crashed Ermigen flagship in their star Mytuk. Much to my surprise, scans through its shields show that the Cargan is unscathed by the intense heat of the star. The temporal anchor is truly a wonder of technology, however it didn't protect their ship from the sudden impact with a star and the hull shows a good deal of structural damage.
 
 @1201 WE HAVE MET THE SCAVENGER ARMADA
- We have have arrived at Yned and the scavengers are about to swarm us.
+ We have arrived at Yned and the scavengers are about to swarm us.
 ##
 Scavenger Armada=Yned (1.9,127.1,88.1)
 

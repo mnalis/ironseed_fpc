@@ -14,7 +14,7 @@ var r, s, t: real;
 
 begin
 //    SetExceptionMask([exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision]);	// https://delphi.fandom.com/wiki/SetExceptionMask_Routine
-    SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);    		// this helps agains floating point division by zero (but not integer one)
+    SetExceptionMask([exInvalidOp, exDenormalized, exPrecision]);    		// this helps against floating point division by zero (but not integer one)
     a:=0;
     b:=0;
     r:=0;

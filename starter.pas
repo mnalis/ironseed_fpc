@@ -13,7 +13,7 @@ unit starter;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -63,7 +63,7 @@ begin
  if (paramstr(1)<>'/playseed') and (paramstr(1)<>'/killseed') then
   begin
    //textmode(co80);
-   writeln('Do not run this program separately.  Please run IS.EXE.');
+   writeln('Do not run this program separately.  Please run "is".');
    halt(4);
   end;
  tslice:=10;

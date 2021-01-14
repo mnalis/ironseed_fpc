@@ -13,7 +13,7 @@ unit crewtick;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -590,7 +590,7 @@ var
 		       {if (random(10) = 0) and SkillTest(background, 2, 40, 10) then
 			  inc(extra, 256);
 		       if ((extra shr 8) > (extra and 255)) and (job<>ID_ART_SHUNT_DRIVE) then}
-		       {job ID_ART_SHUNT_DRIVE (the shunt drive) needs to be defered until the main screen is up.}
+		       {job ID_ART_SHUNT_DRIVE (the shunt drive) needs to be deferred until the main screen is up.}
 		       if (timeleft<1) and ((job<>ID_ART_SHUNT_DRIVE) or (not background)) then
 		       begin
 			  timeleft:=0;
@@ -710,7 +710,7 @@ var
 	    end else begin
 	       if (d > 0) and (random(100) < 5) then dec(d);
 	    end;
-	    tempplan^[i].bots := (tempplan^[i].bots and 7) or (d shl 3);
+	    tempplan^[i].bots := (tempplan^[i].bots and 7) or Byte(d shl 3);
 	 end;
    end;
 

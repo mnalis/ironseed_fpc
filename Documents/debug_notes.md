@@ -8,7 +8,9 @@ For example, to debug savegame #2:
 Extra
 =====
 
-add `-dTrace` to `fpc_debug` in `Makefile` to print more debug info.
+Add `-dTrace` to `fpc_debug` in `Makefile` to possibly print more debug info.
+
+Set `DEBUG=1` environment variable to display startup info.
 
 GDB bugs displaying RECORD
 ==========================
@@ -37,7 +39,7 @@ Data structures
 
         system.notes & 1 - known (visible on map)
 
-  When visiting new system, close enough neighbouring systems will become visible.
+  When visiting new system, close enough neighboring systems will become visible.
 
 - tempplan^[curplan].notes
 
@@ -51,7 +53,7 @@ Data structures
         planet.notes & 128 b7 - (unused?)
 
                            b76543210
-        planet.notes & 125 (01111101) - special- does event() depening on the system index. which means we need at least one scan completed for system event to happen.
+        planet.notes & 125 (01111101) - special- does event() depending on the system index. which means we need at least one scan completed for system event to happen.
         planet.notes & 254 (11111110) = 0  - "System: Scans". It actually shows planets NOT scanned completely!
         &2 AND &32 - Race name (so only if it has LIFE and was CONTACTED)
 
@@ -66,7 +68,7 @@ Data structures
         After adding logs, 255s at the start of array become event numbers (in order of happening?), eg: [10, 11, 255 <repeats 48 times>, 0 <repeats 15 times>]
         it seems that up to some version of the game, ship.events held both events/logs (events with ID<=50).
 
-        Nowdays, if saveX/EVENTS.DTA exists, we load directly:
+        Nowadays, if saveX/EVENTS.DTA exists, we load directly:
         - EVENTS.DTA to events[1024] bitmap. event 8 is  "n mod 8" bit in "n/8" byte set to 1. So for example event 11 is 3rd bit in 2nd byte [event[1], as it starts counting from 0])
         - LOGS.DTA to logs[256] array of integers (with -1 meaning no log)
         - PENDING.DTA to logpending[128] of record time,log:integer (created by addpending() so event will happen automatically some time in the future). Currently only used with time=0 (meaning now)
@@ -91,7 +93,7 @@ Data structures
 
 	if event is triggered by talks, it is parsed in `comm.pas` in `run20000event()` and `run21000event()`
 
-	Races 0-9 (0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers)
+	Races 0-9 (0=Sengzhac 1=D'pahk 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers)
 	automatically get event 0-9, by `comm.pas:removedata()` which gets called at the end of `continuecontact()` and does `event(n)` for `n<10`
 	Also called is `checkotherevents(n)` which consults `Data_Generators/makedata/event.txt` (with columns `want`, `give` and `message`) which checks:
 	- if events (n*10+50) to (n*10+59) has happened, skip the following two points...

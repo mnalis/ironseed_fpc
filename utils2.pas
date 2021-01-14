@@ -13,11 +13,11 @@ unit utils2;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
-   Overlayable Utilites for IronSeed
+   Overlayable Utilities for IronSeed
 
    Copyright:
     1994 Channel 7, Destiny: Virtual
@@ -40,9 +40,9 @@ procedure readystar;
 procedure removedata;
 procedure dothatartifactthing(n: integer);
 procedure reloadbackground;
-procedure makeastoroidfield;
+procedure makeasteroidfield;
 procedure makecloud;
-procedure drawastoroid;
+procedure drawasteroid;
 procedure getname(n: integer);
 procedure addgunnode;
 procedure addstuff(n, limit: integer);
@@ -435,7 +435,7 @@ begin
 	    printxy(60,(tempcreate^.index - ID_UNKNOWN_MATERIAL) * 6, s);}
 	 end;
       end;
-      {give a chance for unkowns and worthless junk}
+      {give a chance for unknowns and worthless junk}
       inc(amounts[0]);
       inc(amounts[20]);
       inc(total, 2);
@@ -644,7 +644,7 @@ begin
  assign(f,loc_data()+'sysname.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/sysname.txt',1);
- seek(f,n-1);
+ seek(f,Int64(n)-1);
  if ioresult<>0 then errorhandler('data/sysname.txt',6);
  read(f,str1);
  if ioresult<>0 then errorhandler('data/sysname.txt',6);
@@ -1031,7 +1031,7 @@ begin
    }
 end;
 
-procedure makeastoroidfield;
+procedure makeasteroidfield;
 var t3: real;
 begin
  randseed:=tempplan^[curplan].seed;
@@ -1196,7 +1196,7 @@ begin
    randomize;}
 end;
 
-procedure drawastoroid;
+procedure drawasteroid;
 var temp: pscreentype;
 begin
  new(temp);
@@ -1288,7 +1288,7 @@ begin
    fillchar(planet^,14400,0);
    backgrx:=0;
    backgry:=0;
-   makeastoroidfield;
+   makeasteroidfield;
    new(t);
    scrfrom_move(screen,t^,sizeof(screen));
    scr_fillchar(screen,sizeof(screen),0);
@@ -1308,7 +1308,7 @@ begin
    set256colors(tpal);
    scrto_move(t^,screen,sizeof(screen));
    dispose(t);
-   drawastoroid;
+   drawasteroid;
  end
  else if (tempplan^[curplan].state=0) then
   begin
@@ -1337,7 +1337,7 @@ begin
    set256colors(tpal);
    scrto_move(t^,screen,sizeof(screen));
    dispose(t);
-   drawastoroid;
+   drawasteroid;
   end
  else
   begin

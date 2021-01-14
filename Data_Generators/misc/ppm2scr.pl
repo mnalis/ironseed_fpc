@@ -11,7 +11,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # On Debian systems, the complete text of the GNU General Public
 # License, version 3, can be found in /usr/share/common-licenses/GPL-3.
@@ -68,7 +68,7 @@ die "ERROR: must have 255 colors" unless $bpp==255;
 
 undef $/; 	# slurp the rest of the file in one go
 my @SCR = unpack "C*", <$ppm_fd>;
-my %PALLETE = ();
+my %PALETTE = ();
 my $pal_used = 0;
 
 open my $pal_fd, '>', $pal_tmp;
@@ -80,12 +80,12 @@ for (my $i = 0; $i < $width * $height * 3; $i+=3) {
   my $g = int($SCR[$i+1] / $COLOR_FACTOR);
   my $b = int($SCR[$i+2] / $COLOR_FACTOR);
   my $pal_idx = "$r:$g:$b";
-  my $val = $PALLETE{$pal_idx};
+  my $val = $PALETTE{$pal_idx};
   
-  if (!defined $val) {		# add new entry to pallete
+  if (!defined $val) {		# add new entry to palette
      $val = $pal_used++;
-     die "ERROR: pallete overflow: $pal_used" if $val > $bpp;
-     $PALLETE{$pal_idx} = $val;
+     die "ERROR: palette overflow: $pal_used" if $val > $bpp;
+     $PALETTE{$pal_idx} = $val;
      print $pal_fd chr($r).chr($g).chr($b);
   }
   
@@ -104,4 +104,4 @@ rename $pal_tmp, $pal_final;
 rename $scr_tmp, $scr_final;
 
 print "Written: $scr_final and $pal_final.\n";
-print "Done, used $pal_used / $bpp colors in pallete.\n";
+print "Done, used $pal_used / $bpp colors in palette.\n";

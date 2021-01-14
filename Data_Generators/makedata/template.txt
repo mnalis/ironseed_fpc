@@ -21,7 +21,7 @@ EVENTS
 
 
 ^  toggle brightness
-#  carrage return
+#  carriage return
 @n crewname
     psychometry
     engineer
@@ -40,7 +40,7 @@ responsecodes:
 -1      -1      1       3       HELP
 -1      -1      1       4       STATUS
 -1      -1      1       5       VOID DWELLERS
--1      -1      1       6       D'PANK WORMS
+-1      -1      1       6       D'PAHK WORMS
 -1      -1      1       7       SENGZHAC BUGS BUGGERS
 -1      -1      1       8       GUILD TRADERS
 -1      -1      1       9       PHAEDOR MOCH PUPPET
@@ -49,7 +49,7 @@ responsecodes:
 -1      -1      1       12      PAI ALOI
 -1      -1      1       13      Q'OOUL
 -1      -1      1       14      ICON
--1      -1      1       15      TITERIAN
+-1      -1      1       15      TITARIAN
 -1      -1      1       16      YLINTHLIXYMN YILLER
 -1      -1      1       17      SCAVENGERS SCAVS
 -1      -1      1       18      AARD
@@ -61,7 +61,7 @@ responsecodes:
 -1      -1      1       24      MONKS MONK
 -1      -1      1       25      HOMEWORLD
 -1      -1      1       26      SELL BUY TRADE
--1      -1      1       27      HALLIFAX MANUEVER
+-1      -1      1       27      HALLIFAX MANEUVER
 -1      -1      1       28      NOVA
 -1      -1      1       29      SHUNT
 -1      -1      1       30      PHASE
@@ -69,4 +69,4 @@ responsecodes:
 -1      -1      1       32      IRONSEED
 -1      -1      1       33      THERMOPLAST
 -1      -1      1       34      CARGAN
--1      -1      1       35      MOBEUS
+-1      -1      1       35      MOBIUS

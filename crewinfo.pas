@@ -13,7 +13,7 @@ unit crewinfo;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -129,7 +129,7 @@ begin
  assign(crewfile,loc_data()+'crew.dta');
  reset(crewfile);
  if ioresult<>0 then errorhandler('crew.dta',1);
- seek(crewfile,ship.crew[crewindex].index-1);
+ seek(crewfile,Int64(ship.crew[crewindex].index)-1);
  if ioresult<>0 then errorhandler('crew.dta',5);
  read(crewfile,crewdata);
  if ioresult<>0 then errorhandler('crew.dta',5);

@@ -11,7 +11,7 @@ program cpr2tga;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
     On Debian systems, the complete text of the GNU General Public
     License, version 3, can be found in /usr/share/common-licenses/GPL-3.
@@ -49,8 +49,8 @@ begin
  palname := basename + '.pal';
  if FileExists(palname) then
   begin
-    writeln ('Loading default pallete from ', palname);
-    loadpal (palname);  { load default pallete if it exists }
+    writeln ('Loading default palette from ', palname);
+    loadpal (palname);  { load default palette if it exists }
     has_palette := true;
   end;
 

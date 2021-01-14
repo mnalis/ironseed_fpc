@@ -13,7 +13,7 @@ unit combat;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -185,7 +185,7 @@ begin
  mouseshow;
 end;
 
-{ n=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage inflicted }
+{ n=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage inflicted }
 procedure givedamage(n,d: integer);
 var j: integer;
 begin
@@ -227,15 +227,15 @@ var j,i,a,b,c,d: integer;
 begin
  c:=ship.gunnodes[n];					// c = our current weapon index
  case weapons[c].dmgtypes[DMGTYP_ENERGY] of
-   0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect(loc_sound()+'gun4.sam',7000)
-           else soundeffect(loc_sound()+'gun1.sam',7000);
-   24..34: soundeffect(loc_sound()+'laser1.sam',7000);
-   35..45: soundeffect(loc_sound()+'laser2.sam',7000);
-   46..56: soundeffect(loc_sound()+'laser3.sam',7000);
-   57..67: soundeffect(loc_sound()+'laser4.sam',7000);
-   68..78: soundeffect(loc_sound()+'laser5.sam',7000);
-   79..89: soundeffect(loc_sound()+'laser6.sam',7000);
-   90..100: soundeffect(loc_sound()+'laser7.sam',7000);
+   0..23: if weapons[c].dmgtypes[DMGTYP_PARTICLE]>weapons[c].dmgtypes[DMGTYP_INERTIAL] then soundeffect(loc_sound()+'GUN4.SAM',7000)
+           else soundeffect(loc_sound()+'GUN1.SAM',7000);
+   24..34: soundeffect(loc_sound()+'LASER1.SAM',7000);
+   35..45: soundeffect(loc_sound()+'LASER2.SAM',7000);
+   46..56: soundeffect(loc_sound()+'LASER3.SAM',7000);
+   57..67: soundeffect(loc_sound()+'LASER4.SAM',7000);
+   68..78: soundeffect(loc_sound()+'LASER5.SAM',7000);
+   79..89: soundeffect(loc_sound()+'LASER6.SAM',7000);
+   90..100: soundeffect(loc_sound()+'LASER7.SAM',7000);
  end;
  delay(tslice);
  {if (skillcheck(4)) or ((scanning) and (random(100)<20)) then}
@@ -243,7 +243,7 @@ begin
   begin
    b:=ships^[targetindex].shield-ID_SHIELDS_OFFSET;	// b = alien's shield index
    assert (b>0);					// aliens always have *some* shield, see Data_Generators/makedata/alienshp.txt
-   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then	// j = our weapon damage types: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy
+   for j:=1 to 4 do if weapons[c].dmgtypes[j]>0 then	// j = our weapon damage types: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy
     begin
      i:=round(weapons[c].dmgtypes[j]/100*weapons[c].damage*5);	// i = maximum damage our weapon can deal (for this dmgtype "j")
      //writeln ('successfully firing weapon',c,'(node',n,') with dmgtype',j,' and maxdamage i=',i,' GJ on alien',targetindex, ' with shield', ships^[targetindex].shield, ' at ', ships^[targetindex].shieldlevel ,'%');
@@ -604,19 +604,19 @@ begin
 end;
 
 
-{ n=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage received }
+{ n=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy; 5=SPECIAL damage shield subsystem only;  d=amount of damage received }
 procedure takedamage(n,d: integer);
 var j: integer;
 begin
  //writeln ('    takedamage(type=',n,', damage=', d, ')');
  if dead then exit;
- soundeffect(loc_sound()+'explode'+chr(49+random(2))+'.sam',9000);
+ soundeffect(loc_sound()+'EXPLODE'+chr(49+random(2))+'.SAM',9000);
  delay(tslice div 2);
  if d<1 then d:=1;
  case n of
   DMGTYP_PSIONIC: inc(ship.damages[DMG_LIFESUPPORT],d);		{ n=1 Psionioc inflicts damage to damages[DMG_LIFESUPPORT] = Lifesupport }
   DMGTYP_PARTICLE: dec(ship.hullintegrity,d);		{ n=2 Particle damage damages hull }
-  DMGTYP_INERTIAL: dec(ship.hullintegrity,d div 2);	{ n=3 Intertial damage damages hull more slowly }
+  DMGTYP_INERTIAL: dec(ship.hullintegrity,d div 2);	{ n=3 Inertial damage damages hull more slowly }
   DMGTYP_ENERGY: case random(8) of			{ n=4 Energy damage }
       0: inc(ship.damages[DMG_POWER],d);	{ damages[DMG_POWER] = Power subsystem }
       1: begin
@@ -680,7 +680,7 @@ begin
   end;
  if ship.shield=ID_REFLECTIVEHULL then
   begin	// FIXME: shouldn't we do that for all shields if we are losing shield (shieldlevel > ship.damages[DMG_SHIELD])? otherwise we could have shield which has level higher than damaged subsystem allows!
-     ship.shieldlevel := 100 - ship.damages[DMG_SHIELD]; { damages[DMG_SHIELD] is shield subsystem, drop shield level immedately if reflective hull }
+     ship.shieldlevel := 100 - ship.damages[DMG_SHIELD]; { damages[DMG_SHIELD] is shield subsystem, drop shield level immediately if reflective hull }
      //writeln ('      reflective hull damage sets shieldlevel to ', ship.shieldlevel);
   end;
 end;
@@ -691,7 +691,7 @@ var a,b,c,j,i: integer;
 begin
  b:=ship.shield-ID_SHIELDS_OFFSET;	{ weapons[b]=our shield, weapons[n]=attacker's weapon; weapons[] array is generic for some type and readonly }
  assert (b>0);
- for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Intertial, 4=Energy }
+ for j:=1 to 4 do if weapons[n].dmgtypes[j]>0 then	{ j=damage type: 1=Psionic, 2=Particle, 3=Inertial, 4=Energy }
   begin
    i:=round(weapons[n].dmgtypes[j]/100 * weapons[n].damage * 5); { pct. for this damagetype * total weapon damage in GJ }
        { QUESTION: why *5 ?!
@@ -732,7 +732,7 @@ begin
        //writeln ('    shield still holding; shield protection a=', a, 'GJ, new shield level c=', c, '%');
        if c<0 then
         begin		{ shield would be reduced below zero }
-         //writeln ('    Shield passing some damage afterall (total shield malfunction if reflective hull)');
+         //writeln ('    Shield passing some damage after all (total shield malfunction if reflective hull)');
          takedamage(DMGTYP_FAKE_SHLD,random(3)+1);	{ shield subsystem takes 1-3 damage }
          ship.shieldlevel:=0;
          if (ship.shield=ID_REFLECTIVEHULL) and (j>DMGTYP_PSIONIC) then ship.damages[DMG_SHIELD]:=100;
@@ -1352,7 +1352,7 @@ begin
  assign(f,loc_data()+'ships.dta');
  reset(f);
  if ioresult<>0 then errorhandler('ships.dta',1);
- seek(f,j+i*11);
+ seek(f,Int64(j)+Int64(i)*11);
  if ioresult<>0 then errorhandler('ships.dta',5);
  read(f,ships^[n]);
  if ioresult<>0 then errorhandler('ships.dta',5);
@@ -1606,7 +1606,7 @@ begin
  readydata;
  mainloop;
  loadscreen(loc_data()+'cloud',backgr);
- if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
+ if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeasteroidfield
   else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
  dispose(msgs);
  dispose(statpic);

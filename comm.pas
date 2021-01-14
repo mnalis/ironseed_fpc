@@ -13,7 +13,7 @@ unit comm;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -256,7 +256,7 @@ begin
  assign(f,loc_data()+'contact0.dta');
  reset(f);
  if ioresult<>0 then errorhandler('data/contact0.dta',1);
- seek(f,n-1);
+ seek(f,Int64(n)-1);
  if ioresult<>0 then errorhandler('data/contact0.dta',5);
  read(f,alien);
  if ioresult<>0 then errorhandler('data/contact0.dta',5);
@@ -1886,7 +1886,7 @@ begin
  loadscreen(loc_data()+'cloud',backgr);
  if showplanet then
   begin
-   if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
+   if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeasteroidfield
     else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
   end;
  mousehide;

@@ -12,7 +12,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************/
 
 /*********************************************
@@ -177,7 +177,7 @@ char []dokeyword(char []instr, char [][]keywords) {
 	char []outstr = cast(char[])"";
 	char []s = cast(char[])"";
 	int suppress = 0;
-	foreach(int i, char c; instr) {
+	foreach(size_t i, char c; instr) {
 		if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '\'') {
 			s ~= c;
 		} else {
@@ -218,7 +218,7 @@ void processconv() {
 			keywordused[to!string(w)] = 0;
 		}
 	}
-	foreach(int i, Response r; resp) {
+	foreach(size_t i, Response r; resp) {
 		//strip out old keyword highlights
 		r.response = join(std.string.split(r.response, "^"), "");
 		if(r.index in responsekeywords) {
@@ -243,7 +243,7 @@ void dumpall() {
 		printf("%d, %d, %d, %d, %s\n", c.event, c.runevent, c.rcode, c.index, c.keyword.toStringz);
 	}
 	foreach(Response r; resp) {
-		printf("%d, %s, %d\n", r.index, r.response.toStringz, r.response.length);
+		printf("%d, %s, %lu\n", r.index, r.response.toStringz, r.response.length);
 	}
 }
 

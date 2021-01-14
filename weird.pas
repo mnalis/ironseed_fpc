@@ -13,7 +13,7 @@ unit weird;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Ironseed.  If not, see <http://www.gnu.org/licenses/>.
+    along with Ironseed.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************)
 
 {*********************************************
@@ -45,7 +45,7 @@ const
   31  220 lix
  123  223 aria
  169  229 aard ship
- 205  234 titerian worshipers     <- check 265 again!
+ 205  234 titarian worshipers     <- check 265 again!
   98  235 monks
  138  241 derelict
  164      nova
@@ -254,7 +254,7 @@ begin
 
  case n of
 
-   0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'phak 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
+   0..9 : addlog(n);       { alien races: 0=Sengzhac 1=D'pahk 2=Aard 3=Ermigen 4=Titarian 5=Quai_Paloi 6=Scavengers 7=Icon 8=The_Guild 9=Void_Dwellers  }
    11	: addlog(11);      { sector codex }
    12	: begin            { second buoy  }
 	     systems[145].notes:=systems[145].notes or 1;
@@ -840,11 +840,11 @@ begin
  fading;
  mousehide;
  loadscreen(loc_data()+'intro3',@screen);
- soundeffect(loc_sound()+'explode3.sam',9500);
+ soundeffect(loc_sound()+'EXPLODE3.SAM',9500);
  fadein;
  mouseshow;
  repeat
-  if mouse.getstatus then soundeffect(loc_sound()+'explode3.sam',9500);
+  if mouse.getstatus then soundeffect(loc_sound()+'EXPLODE3.SAM',9500);
  until fastkeypressed;
  stopmod;
  fading;
@@ -1274,7 +1274,7 @@ begin
  loadscreen(loc_data()+'cloud',backgr);
  if showplanet then
   begin
-   if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeastoroidfield
+   if ((tempplan^[curplan].state=6) and (tempplan^[curplan].mode=2)) then makeasteroidfield
     else if (tempplan^[curplan].state=0) and (tempplan^[curplan].mode=1) then makecloud;
   end;
  loadscreen(loc_tmp()+'current3',@screen);

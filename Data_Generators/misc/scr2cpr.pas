@@ -11,7 +11,7 @@ program scr2cpr;
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
     On Debian systems, the complete text of the GNU General Public
     License, version 3, can be found in /usr/share/common-licenses/GPL-3.
@@ -61,12 +61,12 @@ begin
  fillchar(screen,sizeof(screen),0);
 
 (* if flags and 1>0 then
-  begin			// has embedded pallete *)
+  begin			// has embedded palette *)
     writeln ('Loading uncompressed files ', basename, '.scr and ', basename, '.pal');
     quickloadscreen(basename, @screen, true);
 (*  end
  else
-  begin			// no pallete
+  begin			// no palette
     writeln ('Loading uncompressed file ', basename, '.scr');
     quickloadscreen(basename, @screen, false);
   end;

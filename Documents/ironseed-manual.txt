@@ -137,7 +137,7 @@
 
              It is the thirty-eighth century.  The fall of Earth is but a legend and
              humanity has migrated to a terraformed Mars.  The Pentateuch, a group of five
-             preists, rules the newly risen technocracy with an iron fist.
+             priests, rules the newly risen technocracy with an iron fist.
 
              In a bold attempt to eliminate the last of their political opponents, the five
              began the purgation trials.  With guerilla tactics their followers went about
@@ -578,7 +578,7 @@
              1. Damage Control
 
              No system is infallible.  Things wear out; they break down.  If you're
-             particularly agressive things may even get blown up.  In any case, you're going
+             particularly aggressive things may even get blown up.  In any case, you're going
              to want to repair the damage.  Dealing with damage is done through this cube
              function.
 
@@ -652,7 +652,7 @@
              latter is often more destructive a good shield can still take the brunt of the
              attack.
 
-             (I) Inertial Damage is the result of an explosive weapon.  Missles or weapons
+             (I) Inertial Damage is the result of an explosive weapon.  Missiles or weapons
              of an explosive nature will result in Inertial Damage. Retroexplosive hull
              coatings and advanced kinetodispersive barriers render such technology
              harmless.
@@ -702,7 +702,7 @@
 
              Start by selecting a gun node without a weapon already installed in it. (Gun
              nodes are the locations along your ship hull at which a weapon may be placed.)
-             An empty node will appear as an black grey square on the Weapon Configuration
+             An empty node will appear as a black grey square on the Weapon Configuration
              menu.  Select one of these nodes.  A selected node will have a red border along
              its edge.
 
@@ -781,7 +781,7 @@
              "Screw diplomacy! I wanna kill something!"
 
              While this is a common saying it is a hollow statement unless you've got the
-             guns to back your agression obsession.  In order to build that awesome arsenal
+             guns to back your aggression obsession.  In order to build that awesome arsenal
              you'll have to start here, in the Component Creation screen.
 
              The best way to learn how to use this interface is to actually use it.
@@ -1052,7 +1052,7 @@
              2.1-3.0        Industrialization
              3.1-4.0        Global Networking
              4.1-5.0        Extraplanetary Imperialism
-             5.1-6.0        Intersteller Imperialism
+             5.1-6.0        Interstellar Imperialism
              6.1-7.0        Multidimensional Travel
              7.1-8.0        Psychoportation and Mass/Energy Matriculation
 
@@ -1115,7 +1115,7 @@
                c. Dead Rock                  ?                 No Life
              6 Dead
                a. Radiation               200000               No Life
-               b. Astoroid                   ?                 No Life
+               b. Asteroid                   ?                 No Life
                c. Null                       ?                 No Life
              7 Star
                a. Yellow                     X                 No Life
@@ -1129,7 +1129,7 @@
 
              All planets have the potential to change state or mode to the next one in the
              list.  Years over a certain amount are broken down into smaller time frames
-             with a random chance of occuring.  Ie. 100 M into 1000 x 100000 with a 1 in
+             with a random chance of occurring.  Ie. 100 M into 1000 x 100000 with a 1 in
              1000 chance every 100000 yrs.  Game time is actually accelerated to induce more
              changes to the system.  A planet changing state or mode destroys
              probots/minebots, cache, and info collected on the planet.
@@ -1515,7 +1515,7 @@
              combat.  Originally the battles from this simulation were harmless practice
              encounters.  However, damage taken before your encodes were revived has made
              drone combat potentially dangerous. While the damage taken by your ship in
-             these simulations is not physcially real the computer is unable to tell the
+             these simulations is not physically real the computer is unable to tell the
              difference.  When encode containment reaches zero during mock combat the
              computer was to exit the combat environment.  Now, the computer believes the
              damage it has taken has actually erased the crew.  In the event of an encode
