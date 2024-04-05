@@ -30,7 +30,7 @@ TMPTGA="$TMPBASE.tga"
 echo "Converting $PNGSRC to $FINALCPR (using embedded PAL)"
 
 rm -f "$FINALCPR"
-gm convert "$PNGSRC" "$TMPTGA" || exit 14
+convert -auto-orient "$PNGSRC" "$TMPTGA" || exit 14
 tga2cpr "$TMPBASE" > /dev/null || exit 16
 
 rm -f "$TMPTGA"
