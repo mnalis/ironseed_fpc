@@ -1,3 +1,6 @@
+v 0.3.7
+- remove dependency on graphicsmagick
+- no actual game code changes besides version bump
 v 0.3.6
 - autodetect hardening flags in makefile, allowing build on more architectures (like mipsel)
 v 0.3.5
