@@ -24,7 +24,7 @@ fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm40
 #fpc_debug += -Sewnh
 # -O- -Cr -CR -Ct   -gh  -gc -dDEBUG  -dTrace
 libgcc_dir := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
-PFLAGS += -k-lSDL_mixer -k-lSDL -k-lm $(libgcc_dir)
+PFLAGS += -k-lSDL2_mixer -k-lSDL2 -k-lm $(libgcc_dir)
 
 c_includes:=`sdl2-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)

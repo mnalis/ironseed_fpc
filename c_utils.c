@@ -570,7 +570,7 @@ void SDL_init_video(fpc_screentype_t vga_buf, const fpc_boolean_t use_audio)	/* 
 	do_sdl_audio = use_audio;
 	do_video_stop = 0;
 	is_video_finished = 0;
-	_sdl_events = SDL_CreateThread(event_thread, NULL);
+	_sdl_events = SDL_CreateThread(event_thread, NULL, NULL);
 	while (!(is_video_initialized || is_video_finished))
 		SDL_Delay(100);
 }
@@ -923,7 +923,7 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 	ry0 = (double) (wy0) / (double) (resize_y);
 	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
 
-	SDL_WarpMouse(mouse_x, mouse_y);
+	SDL_WarpMouseInWindow(sdlWindow, mouse_x & 0xffff, mouse_y & 0xffff);	// FIXME SDL2 kludges
 }
 
 void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
