@@ -182,7 +182,6 @@ static void show_cursor(void)
 {
 	uint16_t mx, my, mw, mh, mx0, my0;
 	uint8_t b;
-	pal_color_type c;
 
 	if (showmouse) {
 		mx0 = (uint16_t) mouse_get_x();		// 16 bits are always more than enough
@@ -199,11 +198,7 @@ static void show_cursor(void)
 			for (mx = 0; mx <= mw; mx++) {
 				b = mouse_icon[mx + 16 * my];
 				if (b != 255) {
-					c = palette[b];
-					DrawPixel(mx0 + mx, my0 + my, c);
-					DrawPixel(1 + mx0 + mx, my0 + my, c);
-					DrawPixel(1 + mx0 + mx, 1 + my0 + my, c);
-					DrawPixel(mx0 + mx, 1 + my0 + my, c);
+					DrawPixel(mx0 + mx, my0 + my, palette[b]);
 				}
 			}
 
@@ -323,7 +318,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 static int video_output_once(void)
 {
 	uint16_t vga_x, vga_y;
-	pal_color_type c;
 
 	if (!is_video_initialized) {
 		if (!SDL_init_video_real())
@@ -332,13 +326,8 @@ static int video_output_once(void)
 	}
 	for (vga_y = 0; vga_y < ORG_HEIGHT; vga_y++)
 		for (vga_x = 0; vga_x < ORG_WIDTH; vga_x++) {
-			c = palette[v_buf[vga_x + ORG_WIDTH * vga_y]];
-			DrawPixel(vga_x, vga_y, c);
-			DrawPixel(1 + vga_x, vga_y, c);
-			DrawPixel(vga_x, 1 + vga_y, c);
-			DrawPixel(1 + vga_x, 1 + vga_y, c);
+			DrawPixel(vga_x, vga_y, palette[v_buf[vga_x + ORG_WIDTH * vga_y]]);
 		}
-
 
 	show_cursor();
 
