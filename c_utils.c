@@ -39,9 +39,9 @@
 #include <errno.h>
 
 
-// ORG_WIDTH*ORG_HEIGHT - values used by VGA screen by original DOS game, i.e. 320x200
-#define ORG_WIDTH 320
-#define ORG_HEIGHT 200
+// VGA_WIDTH*VGA_HEIGHT - values used by VGA screen by original DOS game, i.e. 320x200
+#define VGA_WIDTH 320
+#define VGA_HEIGHT 200
 
 #define SDL_QUALITY "nearest"	// "nearest" is crisp for resolutions that are multiple of 320x200. For smoothing, try  "linear" or "best", but they will blur it
 #define SDL_WIDTH 640
@@ -158,8 +158,8 @@ fpc_dword_t mouse_get_x(void)
 	rx = (double) (mouse_x) / (double) (resize_x);
 	rx0 = (double) (wx0) / (double) (resize_x);
 	x = (uint32_t) (SDL_WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
-	if (x > ORG_WIDTH-1)
-		x = ORG_WIDTH-1;
+	if (x > VGA_WIDTH-1)
+		x = VGA_WIDTH-1;
 	return x;
 }
 
@@ -172,8 +172,8 @@ fpc_dword_t mouse_get_y(void)
 	ry = (double) (mouse_y) / (double) (resize_y);
 	ry0 = (double) (wy0) / (double) (resize_y);
 	y = (uint32_t) (SDL_HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
-	if (y > ORG_HEIGHT-1)
-		y = ORG_HEIGHT-1;
+	if (y > VGA_HEIGHT-1)
+		y = VGA_HEIGHT-1;
 	return y;
 }
 
@@ -186,12 +186,12 @@ static void show_cursor(void)
 	if (showmouse) {
 		mx0 = (uint16_t) mouse_get_x();		// 16 bits are always more than enough
 		my0 = (uint16_t) mouse_get_y();
-		assert (mx0 < ORG_WIDTH);
-		mw = (uint16_t) (ORG_WIDTH-1 - mx0);
+		assert (mx0 < VGA_WIDTH);
+		mw = (uint16_t) (VGA_WIDTH-1 - mx0);
 		if (mw > 15)
 			mw = 15;
-		assert (my0 < ORG_HEIGHT);
-		mh = (uint16_t) (ORG_HEIGHT-1 - my0);
+		assert (my0 < VGA_HEIGHT);
+		mh = (uint16_t) (VGA_HEIGHT-1 - my0);
 		if (mh > 15)
 			mh = 15;
 		for (my = 0; my <= mh; my++)
@@ -298,7 +298,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	}
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, SDL_QUALITY);	// FIXME SDL2 - change: LINEAR if windowed 640x400, BEST if fullscreen?
-	SDL_RenderSetLogicalSize(sdlRenderer, ORG_WIDTH, ORG_HEIGHT);	// original game used 320x200 !
+	SDL_RenderSetLogicalSize(sdlRenderer, VGA_WIDTH, VGA_HEIGHT);	// original game used 320x200 !
 	
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -310,7 +310,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlTexture = SDL_CreateTexture(sdlRenderer,
                      SDL_PIXELFORMAT_ARGB8888,
                      SDL_TEXTUREACCESS_STREAMING,
-                     ORG_WIDTH, ORG_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
+                     VGA_WIDTH, VGA_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
 
 	return 1;	// init OK
 }
@@ -324,9 +324,9 @@ static int video_output_once(void)
 			return 0;
 		is_video_initialized = 1;
 	}
-	for (vga_y = 0; vga_y < ORG_HEIGHT; vga_y++)
-		for (vga_x = 0; vga_x < ORG_WIDTH; vga_x++) {
-			DrawPixel(vga_x, vga_y, palette[v_buf[vga_x + ORG_WIDTH * vga_y]]);
+	for (vga_y = 0; vga_y < VGA_HEIGHT; vga_y++)
+		for (vga_x = 0; vga_x < VGA_WIDTH; vga_x++) {
+			DrawPixel(vga_x, vga_y, palette[v_buf[vga_x + VGA_WIDTH * vga_y]]);
 		}
 
 	show_cursor();
@@ -565,7 +565,7 @@ void upscroll(const fpc_screentype_t img)	// 320x200 bytes
 {
 	uint16_t y;
 	for (y = 1; y < 100; y++) {
-		memmove(v_buf + (ORG_WIDTH * (ORG_HEIGHT - y)), img, ORG_WIDTH * y);
+		memmove(v_buf + (VGA_WIDTH * (VGA_HEIGHT - y)), img, VGA_WIDTH * y);
 		delay(5);
 	}
 }
@@ -578,7 +578,7 @@ void scale_img(const fpc_word_t x0s, const fpc_word_t y0s, const fpc_word_t widt
 	ky = (double) heights / (double) heightd;
 	for (yd = 0; yd < heightd; yd++)
 		for (xd = 0; xd < widthd; xd++) {
-			d[((x0d + xd) + ORG_WIDTH * (yd + y0d))] = s[(x0s + (uint16_t) (xd * kx) + ORG_WIDTH * (y0s + (uint16_t) (yd * ky)))];
+			d[((x0d + xd) + VGA_WIDTH * (yd + y0d))] = s[(x0s + (uint16_t) (xd * kx) + VGA_WIDTH * (y0s + (uint16_t) (yd * ky)))];
 		}
 
 }
@@ -592,13 +592,13 @@ void setcolor(const fpc_word_t color)
 static void draw_pixel(int16_t x, int16_t y)
 {
 	assert (x >= 0);
-	assert (x < ORG_WIDTH);
+	assert (x < VGA_WIDTH);
 	assert (y >= 0);
-	assert (y < ORG_HEIGHT);
+	assert (y < VGA_HEIGHT);
 	if (cur_writemode)
-		v_buf[x + ORG_WIDTH * y] = v_buf[x + ORG_WIDTH * y] ^ cur_color;
+		v_buf[x + VGA_WIDTH * y] = v_buf[x + VGA_WIDTH * y] ^ cur_color;
 	else
-		v_buf[x + ORG_WIDTH * y] = cur_color;
+		v_buf[x + VGA_WIDTH * y] = cur_color;
 }
 
 void circle(const fpc_word_t x, const fpc_word_t y, const fpc_word_t r)
@@ -722,10 +722,10 @@ void rectangle(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, co
 {
 	int16_t i;
 //      printf("rect : %d %d %d %d  color %d\r\n",x1,y1,x2,y2,cur_color);
-	assert (x1 < ORG_WIDTH);
-	assert (x2 < ORG_WIDTH);
-	assert (y1 < ORG_HEIGHT);
-	assert (y2 < ORG_HEIGHT);
+	assert (x1 < VGA_WIDTH);
+	assert (x2 < VGA_WIDTH);
+	assert (y1 < VGA_HEIGHT);
+	assert (y2 < VGA_HEIGHT);
 	if (x2 > x1)
 		for (i = (int16_t) x1; i < (int16_t) x2; i++) {
 			draw_pixel(i, (int16_t) y1);
@@ -779,13 +779,13 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 	xx = x;
 	yy = y;
 
-	if (xx > ORG_WIDTH-1)
-		xx = ORG_WIDTH-1;
+	if (xx > VGA_WIDTH-1)
+		xx = VGA_WIDTH-1;
 	rx0 = (double) (wx0) / (double) (resize_x);
 	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) SDL_WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
 
-	if (yy > ORG_HEIGHT-1)
-		yy = ORG_HEIGHT-1;
+	if (yy > VGA_HEIGHT-1)
+		yy = VGA_HEIGHT-1;
 	ry0 = (double) (wy0) / (double) (resize_y);
 	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) SDL_HEIGHT + ry0) * (double) (resize_y));
 
@@ -909,10 +909,10 @@ void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fp
 		y = y2;
 		ye = y1;
 	}
-	assert (ye*ORG_WIDTH+xe < ORG_WIDTH*ORG_HEIGHT);
+	assert (ye*VGA_WIDTH+xe < VGA_WIDTH*VGA_HEIGHT);
 	for (j = y; j < ye; j++)
 		for (i = x; i < xe; i++)
-			v_buf[i + ORG_WIDTH * j] = fill_color;
+			v_buf[i + VGA_WIDTH * j] = fill_color;
 }
 
 
@@ -922,10 +922,10 @@ void bar(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fp
 void line(const fpc_word_t x1, const fpc_word_t y1, const fpc_word_t x2, const fpc_word_t y2)
 {
 //      printf("%d,%d - %d,%d\r\n",x1,y1,x2,y2);
-	assert (x1 < ORG_WIDTH);
-	assert (x2 < ORG_WIDTH);
-	assert (y1 < ORG_HEIGHT);
-	assert (y2 < ORG_HEIGHT);
+	assert (x1 < VGA_WIDTH);
+	assert (x2 < VGA_WIDTH);
+	assert (y1 < VGA_HEIGHT);
+	assert (y2 < VGA_HEIGHT);
 
 	int i, dx, dy, sdx, sdy, dxabs, dyabs, x, y, px, py;
 	dx = x2 - x1;				// the horizontal distance of the line
@@ -1002,9 +1002,9 @@ void pieslice(const fpc_word_t x, const fpc_word_t y, const fpc_word_t phi0, con
 				f += 2 * M_PI;
 			if ((f >= f0) && (f < f1)) {
 				if ((i * i + j * j) <= r * r) {
-					pos = i + x + ORG_WIDTH * (y - (int) (j * E));
+					pos = i + x + VGA_WIDTH * (y - (int) (j * E));
 					assert(pos >= 0);
-					assert(pos < ORG_WIDTH*ORG_HEIGHT);
+					assert(pos < VGA_WIDTH*VGA_HEIGHT);
 					v_buf[pos] = fill_color;
 				}
 			}
