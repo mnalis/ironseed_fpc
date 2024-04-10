@@ -177,13 +177,10 @@ static int resizeWindow(int width, int height)
 
 static void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B)
 {
-
 	Uint32 color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888 
-	// FIXME SDL2 little / big endian test - see https://afrantzis.com/pixel-format-guide/sdl2.html
-	Uint32 *bufp;
-	bufp = (Uint32 *) sdl_screen + y * WIDTH + x;
+	// FIXME SDL2 little / big endian test if needs specialcasing? - see https://afrantzis.com/pixel-format-guide/sdl2.html
+	Uint32 *bufp = sdl_screen + y * WIDTH + x;
 	*bufp = color;
-
 }
 
 fpc_char_t mouse_get_status(void)
