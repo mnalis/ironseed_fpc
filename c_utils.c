@@ -52,7 +52,8 @@
 
 static const double ratio = 640.0 / 480;
 
-static SDL_Surface *sdl_screen;
+static SDL_Window *sdlWindow;
+static SDL_Renderer *sdlRenderer;
 static SDL_Thread *_sdl_events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
@@ -385,31 +386,31 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	// FIXME SDL2 SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	// FIXME SDL2 SDL_EnableUNICODE(1);
 
-	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	sdlWindow = SDL_CreateWindow("Ironseed",
+                          SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED,
+                          WIDTH, HEIGHT,
+                          0);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ?
+//                          SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);	// FIXME SDL2 flags?
+	// FIXME before SDL2 was: SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
-	if (sdl_screen == NULL) {
+	if (sdlWindow == NULL) {
 		printf("Unable to set %dx%d video: %s\r\n", WIDTH, HEIGHT, SDL_GetError());
 		return initiate_abnormal_exit();
 	}
+	
+	sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, 0);
+	if (sdlRenderer == NULL) {
+		printf("Unable to create renderer: %s\r\n", SDL_GetError());
+		return initiate_abnormal_exit();
+	}
+	
 	SDL_ShowCursor(SDL_DISABLE);
-	Slock(sdl_screen);
-	for (y = 0; y < HEIGHT; y++)
-		for (x = 0; x < WIDTH; x++) {
-			DrawPixel(sdl_screen, x, y, 0, 0, 0);
-		}
-	Sulock(sdl_screen);
-	// FIXME SDL2 SDL_Flip(sdl_screen);
-//   ---- copy - paste ----
-	Slock(sdl_screen);
-	for (y = 0; y < HEIGHT; y++)
-		for (x = 0; x < WIDTH; x++) {
-			DrawPixel(sdl_screen, x, y, 0, 0, 0);
-		}
-	Sulock(sdl_screen);
-	// FIXME SDL2 SDL_Flip(sdl_screen);
-//   -------------------------
 
-	// FIXME SDL2 SDL_WM_SetCaption("Ironseed", NULL);
+	// clear screen
+	SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
+	SDL_RenderClear(sdlRenderer);
+	SDL_RenderPresent(sdlRenderer);
 
 	return 1;	// init OK
 }
