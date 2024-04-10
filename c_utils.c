@@ -24,7 +24,6 @@
  */
 
 
-//#define NO_OGL
 
 #include <assert.h>
 #include <string.h>
@@ -38,22 +37,11 @@
 #include <sys/time.h>
 #include <math.h>
 #include <errno.h>
-#ifndef NO_OGL
-#    define GL_GLEXT_LEGACY
-#    include "SDL_opengl.h"
-#    include <GL/gl.h>
-#    include <GL/glu.h>
-#endif
 
 
 #define WIDTH 640
-#ifdef NO_OGL
-#    define HEIGHT 480
-#    define Y0 40
-#else
-#    define HEIGHT 450
-#    define Y0 25
-#endif
+#define HEIGHT 480
+#define Y0 40
 #define X0 0
 #define XSCALE 2
 #define YSCALE 2
@@ -112,12 +100,7 @@ static uint16_t cur_x;
 static uint16_t cur_y;
 static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
-#ifdef NO_OGL
 static int is_sdl_fullscreen = 0;		// assume we're in windowed (not fullscreen) mode on startup
-#else
-static SDL_Surface *opengl_screen;
-static GLuint main_texture;
-#endif
 static uint8_t do_resize = 0;
 static volatile int resize_x = 640;
 static volatile int resize_y = 480;
@@ -161,7 +144,6 @@ static void Sulock(SDL_Surface * screen)
 
 }
 
-#ifdef NO_OGL
 static void sdl_go_back_to_windowed_mode(void)
 {
 	if (!is_sdl_fullscreen)
@@ -170,20 +152,6 @@ static void sdl_go_back_to_windowed_mode(void)
 	// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
 	is_sdl_fullscreen = 0;
 }
-#else
-static void sdl_go_back_to_windowed_mode(void)
-{
-	/* not needed, happens automatically */
-}
-static void set_perspective(void)
-{
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0.0, 1.0, 0.0, 1.0);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}
-#endif
 
 
 
@@ -208,20 +176,12 @@ static int resizeWindow(int width, int height)
 	assert(y0 >= 0);
 
 	//printf ("resizeWindow w=%d,h=%d; calc x0=%d, y0=%d, w=%d, h=%d\r\n", width, height, x0, y0, WWIDTH, WHEIGHT);
-#ifndef NO_OGL
-	opengl_screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER);
-	glViewport(x0, y0, (GLsizei) WWIDTH, (GLsizei) WHEIGHT);
-	set_perspective();
-	wx0 = x0;
-	wy0 = y0;
-#else	// plain SDL only
 	if (is_sdl_fullscreen) {
 		sdl_go_back_to_windowed_mode();
 	} else {
 		// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);
 		is_sdl_fullscreen = 1;
 	}
-#endif
 
 	return 1;
 }
@@ -425,14 +385,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	// FIXME SDL2 SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	// FIXME SDL2 SDL_EnableUNICODE(1);
 
-#ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-#else
-	if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
-		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-	} else
-		sdl_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-#endif
 
 	if (sdl_screen == NULL) {
 		printf("Unable to set %dx%d video: %s\r\n", WIDTH, HEIGHT, SDL_GetError());
@@ -456,26 +409,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	// FIXME SDL2 SDL_Flip(sdl_screen);
 //   -------------------------
 
-#ifndef NO_OGL
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-	if (NULL == (opengl_screen = SDL_SetVideoMode(resize_x, resize_y, 0, SDL_OPENGL | SDL_RESIZABLE | SDL_GL_DOUBLEBUFFER))) {
-		printf("Can't set OpenGL mode: %s\r\n", SDL_GetError());
-		return initiate_abnormal_exit();
-	}
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	glViewport(0, 0, WIDTH, HEIGHT);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-	glShadeModel(GL_SMOOTH);
-	glClearStencil(0);
-	glClearDepth(1.0f);
-	resizeWindow(resize_x, resize_y);
-
-	glGenTextures(1, &main_texture);
-#endif
-	// FIXME SDL2 try building and running both pure-SDL2 and OpenGL versions
 	// FIXME SDL2 SDL_WM_SetCaption("Ironseed", NULL);
 
 	return 1;	// init OK
@@ -512,32 +445,7 @@ static int video_output_once(void)
 
 	show_cursor();
 	Sulock(sdl_screen);
-#ifndef NO_OGL
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);	// clear buffers
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-	glBindTexture(GL_TEXTURE_2D, main_texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, sdl_screen->pixels);
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 1.0);
-	glVertex2f(0.0, 0.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex2f(1.0, 0.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex2f(1.0, 1.0);
-	glTexCoord2f(0.0, 0.0);
-	glVertex2f(0.0, 1.0);
-	glEnd();
-	glFlush();
-	SDL_GL_SwapBuffers();
-#else
 	// FIXME SDL2 SDL_Flip(sdl_screen);
-#endif
 	return 1;	// no errors
 }
 
@@ -555,10 +463,8 @@ static int handle_events_once(void)
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == 12345 /* // FIXME SDL2 SDLK_SCROLLOCK*/) {
 				turbo_mode = 1;
-#ifdef NO_OGL
 			} else if (event.key.keysym.sym == SDLK_F11) {
 				do_resize = 1;	// note: updating resize_x, resize_y only breaks the mouse movements.
-#endif
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
@@ -614,15 +520,6 @@ static int handle_events_once(void)
 				mouse_buttons = 0x01;
 			}
 		}
-#ifndef NO_OGL
-		/* this only-half works without OpenGL, so disable it and use soft "F11" for fullscreen if in SDL-only mode */
-		if (event.type == SDL_VIDEORESIZE) {
-			resize_x = event.resize.w;
-			resize_y = event.resize.h;
-			//printf("SDL_VIDEORESIZE  req %d,%d\r\n", resize_x, resize_y);
-			do_resize = 1;
-		}
-#endif
 	}
 	return 1; 	// events without error
 }
