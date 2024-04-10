@@ -46,16 +46,13 @@
 #define SDL_QUALITY "nearest"	// "nearest" is crisp for resolutions that are multiple of 320x200. For smoothing, try  "linear" or "best", but they will blur it
 #define SDL_WIDTH 640
 #define SDL_HEIGHT 480
-#define Y0 0
-#define X0 0
-#define XSCALE 1
-#define YSCALE 1
 #define TIMESCALE 1.0
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
 #define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
 
-#define PIXELFORMAT	Uint32		// for SDL_PIXELFORMAT_ARGB8888
+#define PIXELFORMAT	Uint32			// for SDL_PIXELFORMAT_ARGB8888
+
 static PIXELFORMAT sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
@@ -153,7 +150,6 @@ fpc_dword_t mouse_get_x(void)
 	rx = (double) (mouse_x) / (double) (resize_x);
 	rx0 = (double) (wx0) / (double) (resize_x);
 	x = (uint32_t) (SDL_WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
-	x = (x - X0) / XSCALE;
 	if (x > ORG_WIDTH-1)
 		x = ORG_WIDTH-1;
 	return x;
@@ -168,7 +164,6 @@ fpc_dword_t mouse_get_y(void)
 	ry = (double) (mouse_y) / (double) (resize_y);
 	ry0 = (double) (wy0) / (double) (resize_y);
 	y = (uint32_t) (SDL_HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
-	y = (y - Y0) / YSCALE;
 	if (y > ORG_HEIGHT-1)
 		y = ORG_HEIGHT-1;
 	return y;
@@ -200,10 +195,10 @@ static void show_cursor(void)
 					assert (c.r < 64);
 					assert (c.g < 64);
 					assert (c.b < 64);
-					DrawPixel(X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel((mx0 + mx), (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(1 + (mx0 + mx), (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(1 + (mx0 + mx), 1 + (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel((mx0 + mx), 1 + (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 				}
 			}
 
@@ -337,10 +332,10 @@ static int video_output_once(void)
 			if ((c.r >= 64) || (c.g >= 64) || (c.b >= 64))
 				printf ("WARNING: RGB at %d,%d color=%d will overflow: %d,%d,%d\r\n", vga_x, vga_y, v_buf[vga_x + ORG_WIDTH * vga_y], c.r, c.g, c.b);
 #endif
-			DrawPixel(X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(vga_x, vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(1 + vga_x, vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(vga_x, 1 + vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(1 + vga_x, 1 + vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 		}
 
 
@@ -796,13 +791,11 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 
 	if (xx > ORG_WIDTH-1)
 		xx = ORG_WIDTH-1;
-	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
 	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) SDL_WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
 
 	if (yy > ORG_HEIGHT-1)
 		yy = ORG_HEIGHT-1;
-	yy = (fpc_word_t) (yy * YSCALE + Y0);
 	ry0 = (double) (wy0) / (double) (resize_y);
 	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) SDL_HEIGHT + ry0) * (double) (resize_y));
 
