@@ -102,7 +102,7 @@ static volatile uint8_t normal_exit = 1;
 static uint8_t fill_color;
 static uint16_t cur_x;
 static uint16_t cur_y;
-static uint8_t cur_writemode;
+static uint8_t cur_writemode;			// 0=copy, 1=XOR
 static volatile uint8_t turbo_mode = 0;
 
 const SDL_Keycode spec_keys[] = {SDLK_KP_4, SDLK_LEFT, SDLK_KP_6, SDLK_RIGHT, SDLK_KP_8, SDLK_UP, SDLK_KP_2, SDLK_DOWN, SDLK_DELETE, SDLK_KP_7, SDLK_HOME, SDLK_END , SDLK_KP_1, SDLK_END, SDLK_KP_9, SDLK_PAGEUP, SDLK_KP_3, SDLK_PAGEDOWN, SDLK_KP_5, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	, 0};
@@ -147,10 +147,7 @@ fpc_char_t mouse_get_status(void)
 
 fpc_dword_t mouse_get_x(void)
 {
-	uint32_t x;
-	double rx;
-	rx = (double) (mouse_x) / (double) (SDL_WIDTH);
-	x = (uint32_t) (SDL_WIDTH * rx);
+	uint32_t x = (uint32_t) mouse_x;
 	if (x > VGA_WIDTH-1)
 		x = VGA_WIDTH-1;
 	return x;
@@ -158,10 +155,7 @@ fpc_dword_t mouse_get_x(void)
 
 fpc_dword_t mouse_get_y(void)
 {
-	uint32_t y;
-	double ry;
-	ry = (double) (mouse_y) / (double) (SDL_HEIGHT);
-	y = (uint32_t) (SDL_HEIGHT * ry);		// we are ok here with potential precision loss
+	uint32_t y = (uint32_t) mouse_y;		// we are ok here with potential precision loss
 	if (y > VGA_HEIGHT-1)
 		y = VGA_HEIGHT-1;
 	return y;
@@ -766,15 +760,13 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 {
 	fpc_word_t xx=x, yy=y;
 
-	if (xx > VGA_WIDTH-1)
-		xx = VGA_WIDTH-1;
-	mouse_x = (uint16_t) xx;	// we don't really care about possible precision loss here
+	if (xx > VGA_WIDTH-1) { xx = VGA_WIDTH-1; }
+	mouse_x = xx;
 
-	if (yy > VGA_HEIGHT-1)
-		yy = VGA_HEIGHT-1;
-	mouse_y = (uint16_t) yy;
+	if (yy > VGA_HEIGHT-1) { yy = VGA_HEIGHT-1; }
+	mouse_y = yy;
 
-	SDL_WarpMouseInWindow(sdlWindow, mouse_x & 0xffff, mouse_y & 0xffff);	// FIXME SDL2 kludges
+	SDL_WarpMouseInWindow(sdlWindow, mouse_x, mouse_y);
 }
 
 void play_sound(const fpc_pchar_t filename, const fpc_word_t rate)
