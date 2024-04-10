@@ -124,8 +124,16 @@ static inline void _nanosleep(long nsec)
 }
 
 
-static void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B)
+static void DrawPixel(int x, int y, pal_color_type c)
 {
+	assert (c.r < 64);
+	assert (c.g < 64);
+	assert (c.b < 64);
+
+	Uint8 R = (c.r << 2);
+	Uint8 G = (c.g << 2);
+	Uint8 B = (c.b << 2);
+
 	PIXELFORMAT color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888
 	// FIXME SDL2 little / big endian test if needs specialcasing? - see https://afrantzis.com/pixel-format-guide/sdl2.html
 	PIXELFORMAT *bufp = sdl_screen + y * SDL_WIDTH + x;
@@ -192,13 +200,10 @@ static void show_cursor(void)
 				b = mouse_icon[mx + 16 * my];
 				if (b != 255) {
 					c = palette[b];
-					assert (c.r < 64);
-					assert (c.g < 64);
-					assert (c.b < 64);
-					DrawPixel((mx0 + mx), (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(1 + (mx0 + mx), (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(1 + (mx0 + mx), 1 + (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel((mx0 + mx), 1 + (my0 + my), (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(mx0 + mx, my0 + my, c);
+					DrawPixel(1 + mx0 + mx, my0 + my, c);
+					DrawPixel(1 + mx0 + mx, 1 + my0 + my, c);
+					DrawPixel(mx0 + mx, 1 + my0 + my, c);
 				}
 			}
 
@@ -328,14 +333,10 @@ static int video_output_once(void)
 	for (vga_y = 0; vga_y < ORG_HEIGHT; vga_y++)
 		for (vga_x = 0; vga_x < ORG_WIDTH; vga_x++) {
 			c = palette[v_buf[vga_x + ORG_WIDTH * vga_y]];
-#ifndef NDEBUG
-			if ((c.r >= 64) || (c.g >= 64) || (c.b >= 64))
-				printf ("WARNING: RGB at %d,%d color=%d will overflow: %d,%d,%d\r\n", vga_x, vga_y, v_buf[vga_x + ORG_WIDTH * vga_y], c.r, c.g, c.b);
-#endif
-			DrawPixel(vga_x, vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(1 + vga_x, vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(vga_x, 1 + vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(1 + vga_x, 1 + vga_y, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(vga_x, vga_y, c);
+			DrawPixel(1 + vga_x, vga_y, c);
+			DrawPixel(vga_x, 1 + vga_y, c);
+			DrawPixel(1 + vga_x, 1 + vga_y, c);
 		}
 
 
