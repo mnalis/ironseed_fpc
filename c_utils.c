@@ -104,8 +104,6 @@ static uint16_t cur_x;
 static uint16_t cur_y;
 static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
-static volatile int resize_x = 640;
-static volatile int resize_y = 480;
 
 const SDL_Keycode spec_keys[] = {SDLK_KP_4, SDLK_LEFT, SDLK_KP_6, SDLK_RIGHT, SDLK_KP_8, SDLK_UP, SDLK_KP_2, SDLK_DOWN, SDLK_DELETE, SDLK_KP_7, SDLK_HOME, SDLK_END , SDLK_KP_1, SDLK_END, SDLK_KP_9, SDLK_PAGEUP, SDLK_KP_3, SDLK_PAGEDOWN, SDLK_KP_5, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	, 0};
 const uint16_t spec_mod[] =     {0        , 0        , 0        , 0         , 0        , 0      , 0        , 0        , 0          , 0        , 0        , KMOD_CTRL, 0        , 0       , 0        , 0          , 0        , 0            , 0        , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
@@ -151,9 +149,7 @@ fpc_dword_t mouse_get_x(void)
 {
 	uint32_t x;
 	double rx;
-	if (resize_x == 0)
-		return 0;
-	rx = (double) (mouse_x) / (double) (resize_x);
+	rx = (double) (mouse_x) / (double) (SDL_WIDTH);
 	x = (uint32_t) (SDL_WIDTH * rx);
 	if (x > VGA_WIDTH-1)
 		x = VGA_WIDTH-1;
@@ -164,9 +160,7 @@ fpc_dword_t mouse_get_y(void)
 {
 	uint32_t y;
 	double ry;
-	if (resize_y == 0)
-		return 0;
-	ry = (double) (mouse_y) / (double) (resize_y);
+	ry = (double) (mouse_y) / (double) (SDL_HEIGHT);
 	y = (uint32_t) (SDL_HEIGHT * ry);		// we are ok here with potential precision loss
 	if (y > VGA_HEIGHT-1)
 		y = VGA_HEIGHT-1;
@@ -770,17 +764,15 @@ void setmodvolumeto(const fpc_word_t vol)
 
 void move_mouse(const fpc_word_t x, const fpc_word_t y)
 {
-	fpc_word_t xx, yy;
-	xx = x;
-	yy = y;
+	fpc_word_t xx=x, yy=y;
 
 	if (xx > VGA_WIDTH-1)
 		xx = VGA_WIDTH-1;
-	mouse_x = (uint16_t) (((double) xx / (double) SDL_WIDTH) * (double) (resize_x));	// we don't really care about possible precision loss here
+	mouse_x = (uint16_t) xx;	// we don't really care about possible precision loss here
 
 	if (yy > VGA_HEIGHT-1)
 		yy = VGA_HEIGHT-1;
-	mouse_y = (uint16_t) (((double) yy / (double) SDL_HEIGHT) * (double) (resize_y));
+	mouse_y = (uint16_t) yy;
 
 	SDL_WarpMouseInWindow(sdlWindow, mouse_x & 0xffff, mouse_y & 0xffff);	// FIXME SDL2 kludges
 }
