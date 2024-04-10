@@ -52,8 +52,7 @@
 
 static const double ratio = 640.0 / 480;
 
-static SDL_Surface *sdl_screen;
-//static Uint32 sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
+static Uint32 sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
 static SDL_Texture *sdlTexture;
@@ -172,48 +171,14 @@ static int resizeWindow(int width, int height)
 
 
 
-static void DrawPixel(SDL_Surface * screen, int x, int y, Uint8 R, Uint8 G, Uint8 B)
+static void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B)
 {
 
-	Uint32 color = SDL_MapRGB(screen->format, R, G, B);
-	switch (screen->format->BytesPerPixel) {
-	case 1:					// Assuming 8-bpp 
-		{
-			Uint8 *bufp;
-			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x;
-			*bufp = (Uint8) color;		// 8 bits per color
-		}
-		break;
-	case 2:					// Probably 15-bpp or 16-bpp 
-		{
-			Uint16 *bufp;
-			bufp = (Uint16 *) screen->pixels + y * screen->pitch / 2 + x;
-			*bufp = (Uint16) color;		// 16 bits per color
-		}
-		break;
-	case 3:					// Slow 24-bpp mode, usually not used 
-		{
-			Uint8 *bufp;
-			bufp = (Uint8 *) screen->pixels + y * screen->pitch + x * 3;
-			if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
-				bufp[0] = (Uint8) color;		// always 8 bits per R/G/B value
-				bufp[1] = (Uint8) (color >> 8);
-				bufp[2] = (Uint8) (color >> 16);
-			} else {
-				bufp[2] = (Uint8) color;
-				bufp[1] = (Uint8) (color >> 8);
-				bufp[0] = (Uint8) (color >> 16);
-			}
-		}
-		break;
-	case 4:					// Probably 32-bpp 
-		{
-			Uint32 *bufp;
-			bufp = (Uint32 *) screen->pixels + y * screen->pitch / 4 + x;
-			*bufp = color;
-		}
-		break;
-	}
+	Uint32 color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888 
+	// FIXME SDL2 little / big endian test - see https://afrantzis.com/pixel-format-guide/sdl2.html
+	Uint32 *bufp;
+	bufp = (Uint32 *) sdl_screen + y * WIDTH + x;
+	*bufp = color;
 
 }
 
@@ -282,10 +247,10 @@ static void show_cursor(void)
 					assert (c.r < 64);
 					assert (c.g < 64);
 					assert (c.b < 64);
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(sdl_screen, X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-					DrawPixel(sdl_screen, X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(X0 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(X0 + 1 + (mx0 + mx) * XSCALE, Y0 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(X0 + 1 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+					DrawPixel(X0 + (mx0 + mx) * XSCALE, Y0 + 1 + (my0 + my) * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 				}
 			}
 
@@ -401,11 +366,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
                      SDL_TEXTUREACCESS_STREAMING,
                      WIDTH, HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
 
-	sdl_screen = SDL_CreateRGBSurface(0, 640, 480, 32,
-                                        0x00FF0000,
-                                        0x0000FF00,
-                                        0x000000FF,
-                                        0xFF000000);
 	return 1;	// init OK
 }
 
@@ -430,18 +390,16 @@ static int video_output_once(void)
 			if ((c.r >= 64) || (c.g >= 64) || (c.b >= 64))
 				printf ("WARNING: RGB at %d,%d color=%d will overflow: %d,%d,%d\r\n", vga_x, vga_y, v_buf[vga_x + 320 * vga_y], c.r, c.g, c.b);
 #endif
-			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(sdl_screen, X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
-			DrawPixel(sdl_screen, X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(X0 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(X0 + 1 + vga_x * XSCALE, Y0 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(X0 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
+			DrawPixel(X0 + 1 + vga_x * XSCALE, Y0 + 1 + vga_y * YSCALE, (Uint8) (c.r << 2), (Uint8) (c.g << 2), (Uint8) (c.b << 2));
 		}
 
 
 	show_cursor();
 
-	// FIXME SDL2 SDL_Flip(sdl_screen);
-	printf ("DBG: pixels=%p pitch=%d\n", sdl_screen->pixels, sdl_screen->pitch);
-	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen->pixels, sdl_screen->pitch);
+	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen, WIDTH * sizeof (Uint32));
 	SDL_RenderClear(sdlRenderer);
 	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
 	SDL_RenderPresent(sdlRenderer);
