@@ -52,8 +52,10 @@
 
 static const double ratio = 640.0 / 480;
 
+static SDL_Surface *sdl_screen;		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
+static SDL_Texture *sdlTexture;
 static SDL_Thread *_sdl_events;
 static Mix_Music *music = NULL;
 static Mix_Chunk *raw_chunks[SOUNDS_MAX_CHANNELS];
@@ -81,7 +83,7 @@ static pal_color_type palette[256];
 static volatile uint8_t is_video_initialized = 0;
 static volatile uint8_t is_audio_initialized = 0;
 static volatile uint8_t do_sdl_audio = 0;
-static uint8_t *v_buf = NULL;
+static uint8_t *v_buf = NULL;			// FreePascal video buffer of 320x200 pixel, with 1 byte index to pallete[] for each pixel
 static volatile uint8_t do_video_stop = 0;	// command video to stop
 static volatile uint8_t is_video_finished = 0;	// has video stopped? returns status
 static uint8_t cur_color = 31;
@@ -364,7 +366,6 @@ static void abort_if_abnormal_exit(void)
  */
 static int SDL_init_video_real(void)		/* called from event_thread() if it was never called before (on startup only) */
 {
-	uint16_t x, y;
 	uint32_t SDL_flags = SDL_INIT_VIDEO;
 	static volatile uint8_t is_sdl_initialized = 0;
 
@@ -389,8 +390,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlWindow = SDL_CreateWindow("Ironseed",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
-                          WIDTH, HEIGHT,
-                          0);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ?
+                          0, 0,
+                          SDL_WINDOW_FULLSCREEN_DESKTOP);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ? start windowed as default?
 //                          SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);	// FIXME SDL2 flags?
 	// FIXME before SDL2 was: SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
@@ -404,6 +405,9 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		printf("Unable to create renderer: %s\r\n", SDL_GetError());
 		return initiate_abnormal_exit();
 	}
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+	SDL_RenderSetLogicalSize(sdlRenderer, WIDTH, HEIGHT);
 	
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -412,6 +416,16 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	SDL_RenderClear(sdlRenderer);
 	SDL_RenderPresent(sdlRenderer);
 
+	sdlTexture = SDL_CreateTexture(sdlRenderer,
+                     SDL_PIXELFORMAT_ARGB8888,
+                     SDL_TEXTUREACCESS_STREAMING,
+                     WIDTH, HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
+
+	sdl_screen = SDL_CreateRGBSurface(0, 640, 480, 32,
+                                        0x00FF0000,
+                                        0x0000FF00,
+                                        0x000000FF,
+                                        0xFF000000);
 	return 1;	// init OK
 }
 
@@ -446,7 +460,13 @@ static int video_output_once(void)
 
 	show_cursor();
 	Sulock(sdl_screen);
+
 	// FIXME SDL2 SDL_Flip(sdl_screen);
+	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen->pixels, sdl_screen->pitch);
+	SDL_RenderClear(sdlRenderer);
+	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+	SDL_RenderPresent(sdlRenderer);
+
 	return 1;	// no errors
 }
 
@@ -490,7 +510,7 @@ static int handle_events_once(void)
 				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
 					keypressed_ = 1;
 					key_ = event.key.keysym.sym;
-					keyutf8_ = event.key.keysym.unicode;
+					keyutf8_ = (SDL_Keycode) (key_ & 0x7f); // FIXME SDL2 replacement? keyutf8_ = event.key.keysym.unicode;
 					keyscan_ = event.key.keysym.scancode;
 					keymod_ = event_mod;
 

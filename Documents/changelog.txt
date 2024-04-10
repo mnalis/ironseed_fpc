@@ -1,3 +1,5 @@
+v 0.4.0
+- migrate to SDL2
 v 0.3.7
 - remove dependency on graphicsmagick
 - no actual game code changes besides version bump
