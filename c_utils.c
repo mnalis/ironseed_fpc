@@ -390,8 +390,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlWindow = SDL_CreateWindow("Ironseed",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
-                          0, 0,
-                          SDL_WINDOW_FULLSCREEN_DESKTOP);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ? start windowed as default?
+                          WIDTH, HEIGHT,
+                          0);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ? start windowed as default?
 //                          SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);	// FIXME SDL2 flags?
 	// FIXME before SDL2 was: SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
@@ -406,8 +406,9 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		return initiate_abnormal_exit();
 	}
 
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
-	SDL_RenderSetLogicalSize(sdlRenderer, WIDTH, HEIGHT);
+	// FIXME SDL enable and use 320x200 and SDL native scaling!
+	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+	//SDL_RenderSetLogicalSize(sdlRenderer, 320, 200);
 	
 	SDL_ShowCursor(SDL_DISABLE);
 

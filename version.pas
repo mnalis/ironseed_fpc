@@ -22,7 +22,7 @@ unit version;
    Copyright:
     1994 Channel 7, Destiny: Virtual
     2013 y-salnikov
-    2020 Matija Nalis <mnalis-git@voyager.hr>
+    2020,2024 Matija Nalis <mnalis-git@voyager.hr>
 **********************************************}
 
 interface
@@ -35,5 +35,5 @@ implementation
 begin
    versionstring :=
    {12345678901234567890}
-   'v1.30.0001 fpc 0.3.7';
+   'v1.30.0001 fpc 0.4.0';
 end.
