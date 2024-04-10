@@ -39,12 +39,12 @@
 #include <errno.h>
 
 
-// VGA screen used by original DOS game, i.e. 320x200
+// ORG_WIDTH*ORG_HEIGHT - values used by VGA screen by original DOS game, i.e. 320x200
 #define ORG_WIDTH 320
 #define ORG_HEIGHT 200
 
-#define WIDTH 640
-#define HEIGHT 480
+#define SDL_WIDTH 640
+#define SDL_HEIGHT 480
 #define Y0 40
 #define X0 0
 #define XSCALE 2
@@ -54,7 +54,8 @@
 #define SOUNDS_MAX_CHANNELS 16
 #define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
 
-static Uint32 sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
+#define PIXELFORMAT	Uint32		// for SDL_PIXELFORMAT_ARGB8888
+static PIXELFORMAT sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
 static SDL_Texture *sdlTexture;
@@ -127,9 +128,9 @@ static inline void _nanosleep(long nsec)
 
 static void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B)
 {
-	Uint32 color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888 
+	PIXELFORMAT color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888
 	// FIXME SDL2 little / big endian test if needs specialcasing? - see https://afrantzis.com/pixel-format-guide/sdl2.html
-	Uint32 *bufp = sdl_screen + y * WIDTH + x;
+	PIXELFORMAT *bufp = sdl_screen + y * SDL_WIDTH + x;
 	*bufp = color;
 }
 
@@ -150,7 +151,7 @@ fpc_dword_t mouse_get_x(void)
 		return 0;
 	rx = (double) (mouse_x) / (double) (resize_x);
 	rx0 = (double) (wx0) / (double) (resize_x);
-	x = (uint32_t) (WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
+	x = (uint32_t) (SDL_WIDTH * ((rx - rx0) / (1 - 2 * rx0)));
 	x = (x - X0) / XSCALE;
 	if (x > ORG_WIDTH-1)
 		x = ORG_WIDTH-1;
@@ -165,7 +166,7 @@ fpc_dword_t mouse_get_y(void)
 		return 0;
 	ry = (double) (mouse_y) / (double) (resize_y);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	y = (uint32_t) (HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
+	y = (uint32_t) (SDL_HEIGHT * ((ry - ry0) / (1 - 2 * ry0)));		// we are ok here with potential precision loss
 	y = (y - Y0) / YSCALE;
 	if (y > ORG_HEIGHT-1)
 		y = ORG_HEIGHT-1;
@@ -284,13 +285,13 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlWindow = SDL_CreateWindow("Ironseed",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
-                          WIDTH, HEIGHT,
+                          SDL_WIDTH, SDL_HEIGHT,
                           0);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ? start windowed as default?
 //                          SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);	// FIXME SDL2 flags?
-	// FIXME before SDL2 was: SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	// FIXME before SDL2 was: SDL_SetVideoMode(SDL_WIDTH, SDL_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
 	if (sdlWindow == NULL) {
-		printf("Unable to set %dx%d video: %s\r\n", WIDTH, HEIGHT, SDL_GetError());
+		printf("Unable to set %dx%d video: %s\r\n", SDL_WIDTH, SDL_HEIGHT, SDL_GetError());
 		return initiate_abnormal_exit();
 	}
 	
@@ -300,9 +301,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		return initiate_abnormal_exit();
 	}
 
-	// FIXME SDL enable and use 320x200 and SDL native scaling!
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
-	SDL_RenderSetLogicalSize(sdlRenderer, 640, 480);
+	SDL_RenderSetLogicalSize(sdlRenderer, SDL_WIDTH, SDL_HEIGHT);	// original game used 320x200 !
 	
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -314,7 +314,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlTexture = SDL_CreateTexture(sdlRenderer,
                      SDL_PIXELFORMAT_ARGB8888,
                      SDL_TEXTUREACCESS_STREAMING,
-                     WIDTH, HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
+                     SDL_WIDTH, SDL_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
 
 	return 1;	// init OK
 }
@@ -345,7 +345,7 @@ static int video_output_once(void)
 
 	show_cursor();
 
-	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen, WIDTH * sizeof (Uint32));
+	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen, SDL_WIDTH * sizeof (PIXELFORMAT));
 	SDL_RenderClear(sdlRenderer);
 	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
 	SDL_RenderPresent(sdlRenderer);
@@ -795,13 +795,13 @@ void move_mouse(const fpc_word_t x, const fpc_word_t y)
 		xx = ORG_WIDTH-1;
 	xx = (fpc_word_t) (xx * XSCALE + X0);	// we should always fit into < 32767 (famous last words)
 	rx0 = (double) (wx0) / (double) (resize_x);
-	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
+	mouse_x = (uint16_t) (((double) xx * (1 - 2 * rx0) / (double) SDL_WIDTH + rx0) * (double) (resize_x));	// we don't really care about possible precision loss here
 
 	if (yy > ORG_HEIGHT-1)
 		yy = ORG_HEIGHT-1;
 	yy = (fpc_word_t) (yy * YSCALE + Y0);
 	ry0 = (double) (wy0) / (double) (resize_y);
-	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) HEIGHT + ry0) * (double) (resize_y));
+	mouse_y = (uint16_t) (((double) yy * (1 - 2 * ry0) / (double) SDL_HEIGHT + ry0) * (double) (resize_y));
 
 	SDL_WarpMouseInWindow(sdlWindow, mouse_x & 0xffff, mouse_y & 0xffff);	// FIXME SDL2 kludges
 }
