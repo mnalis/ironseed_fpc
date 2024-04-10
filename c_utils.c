@@ -52,7 +52,8 @@
 
 static const double ratio = 640.0 / 480;
 
-static SDL_Surface *sdl_screen;		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
+static SDL_Surface *sdl_screen;
+//static Uint32 sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
 static SDL_Texture *sdlTexture;
@@ -124,28 +125,6 @@ static inline void _nanosleep(long nsec)
 	nanosleep(&ts, NULL);
 }
 
-
-/* ------------------------------------------------------ */
-static void Slock(SDL_Surface * screen)
-{
-
-	if (SDL_MUSTLOCK(screen)) {
-		if (SDL_LockSurface(screen) < 0) {
-			return;
-		}
-	}
-
-}
-
-/* ------------------------------------------------------ */
-static void Sulock(SDL_Surface * screen)
-{
-
-	if (SDL_MUSTLOCK(screen)) {
-		SDL_UnlockSurface(screen);
-	}
-
-}
 
 static void sdl_go_back_to_windowed_mode(void)
 {
@@ -407,8 +386,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	}
 
 	// FIXME SDL enable and use 320x200 and SDL native scaling!
-	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
-	//SDL_RenderSetLogicalSize(sdlRenderer, 320, 200);
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+	SDL_RenderSetLogicalSize(sdlRenderer, 640, 480);
 	
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -444,7 +423,6 @@ static int video_output_once(void)
 		do_resize = 0;
 		resizeWindow(resize_x, resize_y);
 	}
-	Slock(sdl_screen);
 	for (vga_y = 0; vga_y < 200; vga_y++)
 		for (vga_x = 0; vga_x < 320; vga_x++) {
 			c = palette[v_buf[vga_x + 320 * vga_y]];
@@ -460,9 +438,9 @@ static int video_output_once(void)
 
 
 	show_cursor();
-	Sulock(sdl_screen);
 
 	// FIXME SDL2 SDL_Flip(sdl_screen);
+	printf ("DBG: pixels=%p pitch=%d\n", sdl_screen->pixels, sdl_screen->pitch);
 	SDL_UpdateTexture(sdlTexture, NULL, sdl_screen->pixels, sdl_screen->pitch);
 	SDL_RenderClear(sdlRenderer);
 	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
