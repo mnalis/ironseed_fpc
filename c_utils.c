@@ -54,8 +54,6 @@
 #define SOUNDS_MAX_CHANNELS 16
 #define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
 
-static const double ratio = 640.0 / 480;
-
 static Uint32 sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
@@ -107,8 +105,6 @@ static uint16_t cur_x;
 static uint16_t cur_y;
 static uint8_t cur_writemode;
 static volatile uint8_t turbo_mode = 0;
-static int is_sdl_fullscreen = 0;		// assume we're in windowed (not fullscreen) mode on startup
-static uint8_t do_resize = 0;
 static volatile int resize_x = 640;
 static volatile int resize_y = 480;
 static volatile int wx0 = 0;
@@ -127,52 +123,6 @@ static inline void _nanosleep(long nsec)
 	ts.tv_nsec = nsec;
 	nanosleep(&ts, NULL);
 }
-
-
-static void sdl_go_back_to_windowed_mode(void)
-{
-	if (!is_sdl_fullscreen)
-		return;
-
-	// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
-	is_sdl_fullscreen = 0;
-}
-
-
-
-
-static int resizeWindow(int width, int height)
-{
-	int x0, y0, WWIDTH, WHEIGHT;
-	WWIDTH = width;
-	WHEIGHT = height;
-	if (width / ratio > height) {
-		WWIDTH = (int) (height * ratio);	// always fits double in int
-		WHEIGHT = height;
-		x0 = (width - WWIDTH) / 2;
-		y0 = 0;
-	} else {
-		WWIDTH = width;
-		WHEIGHT = (int) (width / ratio);
-		x0 = 0;
-		y0 = (height - WHEIGHT) / 2;
-	}
-	assert(x0 >= 0);
-	assert(y0 >= 0);
-
-	//printf ("resizeWindow w=%d,h=%d; calc x0=%d, y0=%d, w=%d, h=%d\r\n", width, height, x0, y0, WWIDTH, WHEIGHT);
-	if (is_sdl_fullscreen) {
-		sdl_go_back_to_windowed_mode();
-	} else {
-		// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);
-		is_sdl_fullscreen = 1;
-	}
-
-	return 1;
-}
-
-
-
 
 
 static void DrawPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B)
@@ -290,7 +240,6 @@ static int initiate_abnormal_exit(void)
 {
 	normal_exit = 0;
 	musicDone();
-	sdl_go_back_to_windowed_mode();		/* no-op if we're not in SDL fullscreen mode */
 	do_video_stop = 1;
 	return 0;
 }
@@ -380,10 +329,6 @@ static int video_output_once(void)
 			return 0;
 		is_video_initialized = 1;
 	}
-	if (do_resize) {
-		do_resize = 0;
-		resizeWindow(resize_x, resize_y);
-	}
 	for (vga_y = 0; vga_y < ORG_HEIGHT; vga_y++)
 		for (vga_x = 0; vga_x < ORG_WIDTH; vga_x++) {
 			c = palette[v_buf[vga_x + ORG_WIDTH * vga_y]];
@@ -422,8 +367,6 @@ static int handle_events_once(void)
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == 12345 /* // FIXME SDL2 SDLK_SCROLLOCK*/) {
 				turbo_mode = 1;
-			} else if (event.key.keysym.sym == SDLK_F11) {
-				do_resize = 1;	// note: updating resize_x, resize_y only breaks the mouse movements.
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
@@ -494,7 +437,6 @@ static int event_thread(void *notused)
 
 		SDL_Delay(10);			/* give up some time to other threads */
 	}
-	sdl_go_back_to_windowed_mode();		/* no-op if we're not in SDL fullscreen mode */
 	is_video_finished = 1;
 	//_nanosleep(10000000);
 	return 0;	// and thread terminates
