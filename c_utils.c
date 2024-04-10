@@ -43,12 +43,13 @@
 #define ORG_WIDTH 320
 #define ORG_HEIGHT 200
 
+#define SDL_QUALITY "nearest"	// "nearest" is crisp for resolutions that are multiple of 320x200. For smoothing, try  "linear" or "best", but they will blur it
 #define SDL_WIDTH 640
 #define SDL_HEIGHT 480
-#define Y0 40
+#define Y0 0
 #define X0 0
-#define XSCALE 2
-#define YSCALE 2
+#define XSCALE 1
+#define YSCALE 1
 #define TIMESCALE 1.0
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
@@ -301,8 +302,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		return initiate_abnormal_exit();
 	}
 
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
-	SDL_RenderSetLogicalSize(sdlRenderer, SDL_WIDTH, SDL_HEIGHT);	// original game used 320x200 !
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, SDL_QUALITY);	// FIXME SDL2 - change: LINEAR if windowed 640x400, BEST if fullscreen?
+	SDL_RenderSetLogicalSize(sdlRenderer, ORG_WIDTH, ORG_HEIGHT);	// original game used 320x200 !
 	
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -314,7 +315,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlTexture = SDL_CreateTexture(sdlRenderer,
                      SDL_PIXELFORMAT_ARGB8888,
                      SDL_TEXTUREACCESS_STREAMING,
-                     SDL_WIDTH, SDL_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
+                     ORG_WIDTH, ORG_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
 
 	return 1;	// init OK
 }
@@ -410,8 +411,10 @@ static int handle_events_once(void)
 			int32_t ex, ey;
 			ex = event.motion.x;
 			ey = event.motion.y;
+			if (ex < 0) { ex = 0; }
 			assert (ex >= 0);
 			assert (ex < UINT16_MAX);
+			if (ey < 0) { ey = 0; }
 			assert (ey >= 0);
 			assert (ey < UINT16_MAX);
 			mouse_x = (uint16_t) ex;
