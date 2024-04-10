@@ -23,7 +23,7 @@ program intro;
     1994 Channel 7, Destiny: Virtual
     2013 y-salnikov
     2018 Nuke Bloodaxe
-    2020 Matija Nalis <mnalis-git@voyager.hr>
+    2020,2024 Matija Nalis <mnalis-git@voyager.hr>
 **********************************************}
 
 uses utils_, sysutils, gmouse, modplay, version, math;
@@ -1467,7 +1467,7 @@ begin
  printxy(5, a, #1#2'2013 y-salnikov - Converted IronSeed to FreePascal'); a:=a+10;
  printxy(15,a, ' and GNU/Linux'); a:=a+10;
  printxy(5, a, #1#2'2016 Nuke Bloodaxe'); a:=a+10;
- printxy(5, a, #1#2'2020 Matija Nalis'); a:=a+10;
+ printxy(5, a, #1#2'2020-2024 Matija Nalis'); a:=a+10;
  a:=a+10;
  printxy(5, a, 'Some rights reserved.'); a:=a+20;
 {$IFDEF DEMO}

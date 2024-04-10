@@ -20,7 +20,7 @@
  *
  *  Copyright:
  *   2013 y-salnikov
- *   2020 Matija Nalis <mnalis-git@voyager.hr>
+ *   2020,2024 Matija Nalis <mnalis-git@voyager.hr>
  */
 
 
@@ -98,8 +98,10 @@ static volatile uint8_t is_video_finished = 0;	// has video stopped? returns sta
 static uint8_t cur_color = 31;
 static const int audio_rate = 44100;
 static uint8_t audio_open = 0;
-static volatile uint8_t keypressed_, keyscan_;
-static volatile uint16_t key_, keyutf8_,keymod_;
+static volatile uint8_t keypressed_;
+static volatile SDL_Keycode key_;
+static volatile SDL_Scancode keyscan_;
+static volatile uint16_t keyutf8_,keymod_;
 static volatile uint16_t mouse_x, mouse_y;
 static volatile uint8_t mouse_buttons;
 static uint8_t showmouse;
@@ -122,10 +124,10 @@ static volatile int resize_y = 480;
 static volatile int wx0 = 0;
 static volatile int wy0 = 0;
 
-const uint16_t spec_keys[] = {SDLK_KP4, SDLK_LEFT, SDLK_KP6, SDLK_RIGHT, SDLK_KP8, SDLK_UP, SDLK_KP2, SDLK_DOWN, SDLK_DELETE, SDLK_KP7, SDLK_HOME, SDLK_END , SDLK_KP1, SDLK_END, SDLK_KP9, SDLK_PAGEUP, SDLK_KP3, SDLK_PAGEDOWN, SDLK_KP5, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	,0};
-const uint16_t spec_mod[] =  {0       , 0        , 0       , 0         , 0       , 0      , 0       , 0        , 0          , 0       , 0        , KMOD_CTRL, 0       , 0       , 0       , 0          , 0       , 0            , 0       , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
-const uint8_t  spec_null[] = {0       , 1        , 0       , 1         , 0       , 1      , 0       , 1        , 1          , 0       , 1        , 1        , 0       , 1       , 0       , 1          , 0       , 1            , 0       , 1         , 1      , 1      , 1      , 1      , 1      , 1      , 1        , 1       , 0           , 0            , 0        , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1    };
-const uint8_t  spec_map[] =  {52      , 75       , 54      , 77        , 56      , 72     , 50      , 80       , 83         , 55      , 71       , 117      , 49      , 79      , 57      , 73         , 51      , 81           , 53      , 84        , 59     , 60     , 61     , 62     , 63     , 64     , 103      , 16      , 43          , 45           , 10       , 16      , 45      , 120     , 121     , 122     , 123     , 126     , 129     , 49      , 25      , 48      , 31      , 22      , 23   };
+const SDL_Keycode spec_keys[] = {SDLK_KP_4, SDLK_LEFT, SDLK_KP_6, SDLK_RIGHT, SDLK_KP_8, SDLK_UP, SDLK_KP_2, SDLK_DOWN, SDLK_DELETE, SDLK_KP_7, SDLK_HOME, SDLK_END , SDLK_KP_1, SDLK_END, SDLK_KP_9, SDLK_PAGEUP, SDLK_KP_3, SDLK_PAGEDOWN, SDLK_KP_5, SDLK_F1   , SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_F6, SDLK_F10 , SDLK_F10, SDLK_KP_PLUS, SDLK_KP_MINUS, SDLK_j   , SDLK_q  , SDLK_x  , SDLK_1  , SDLK_2  , SDLK_3  , SDLK_4  , SDLK_7  , SDLK_0  , SDLK_n  , SDLK_p  , SDLK_b  , SDLK_s  , SDLK_u  , SDLK_i	, 0};
+const uint16_t spec_mod[] =     {0        , 0        , 0        , 0         , 0        , 0      , 0        , 0        , 0          , 0        , 0        , KMOD_CTRL, 0        , 0       , 0        , 0          , 0        , 0            , 0        , KMOD_SHIFT, 0      , 0      , 0      , 0      , 0      , 0      , KMOD_CTRL, 0       , 0           , 0            , KMOD_CTRL, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT, KMOD_ALT};
+const uint8_t  spec_null[] =    {0        , 1        , 0        , 1         , 0        , 1      , 0        , 1        , 1          , 0        , 1        , 1        , 0        , 1       , 0        , 1          , 0        , 1            , 0        , 1         , 1      , 1      , 1      , 1      , 1      , 1      , 1        , 1       , 0           , 0            , 0        , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1       , 1    };
+const uint8_t  spec_map[] =     {52       , 75       , 54       , 77        , 56       , 72     , 50       , 80       , 83         , 55       , 71       , 117      , 49       , 79      , 57       , 73         , 51       , 81           , 53       , 84        , 59     , 60     , 61     , 62     , 63     , 64     , 103      , 16      , 43          , 45           , 10       , 16      , 45      , 120     , 121     , 122     , 123     , 126     , 129     , 49      , 25      , 48      , 31      , 22      , 23   };
 
 
 static inline void _nanosleep(long nsec)
@@ -165,7 +167,7 @@ static void sdl_go_back_to_windowed_mode(void)
 	if (!is_sdl_fullscreen)
 		return;
 
-	SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
+	// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);	// never check for error condition you don't know how to handle
 	is_sdl_fullscreen = 0;
 }
 #else
@@ -216,7 +218,7 @@ static int resizeWindow(int width, int height)
 	if (is_sdl_fullscreen) {
 		sdl_go_back_to_windowed_mode();
 	} else {
-		SDL_WM_ToggleFullScreen(sdl_screen);
+		// FIXME SDL2 SDL_WM_ToggleFullScreen(sdl_screen);
 		is_sdl_fullscreen = 1;
 	}
 #endif
@@ -420,8 +422,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	if (do_sdl_audio)
 		is_audio_initialized = 1;
 
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	SDL_EnableUNICODE(1);
+	// FIXME SDL2 SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+	// FIXME SDL2 SDL_EnableUNICODE(1);
 
 #ifdef NO_OGL
 	sdl_screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
@@ -443,7 +445,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 			DrawPixel(sdl_screen, x, y, 0, 0, 0);
 		}
 	Sulock(sdl_screen);
-	SDL_Flip(sdl_screen);
+	// FIXME SDL2 SDL_Flip(sdl_screen);
 //   ---- copy - paste ----
 	Slock(sdl_screen);
 	for (y = 0; y < HEIGHT; y++)
@@ -451,7 +453,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 			DrawPixel(sdl_screen, x, y, 0, 0, 0);
 		}
 	Sulock(sdl_screen);
-	SDL_Flip(sdl_screen);
+	// FIXME SDL2 SDL_Flip(sdl_screen);
 //   -------------------------
 
 #ifndef NO_OGL
@@ -473,7 +475,8 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 
 	glGenTextures(1, &main_texture);
 #endif
-	SDL_WM_SetCaption("Ironseed", NULL);
+	// FIXME SDL2 try building and running both pure-SDL2 and OpenGL versions
+	// FIXME SDL2 SDL_WM_SetCaption("Ironseed", NULL);
 
 	return 1;	// init OK
 }
@@ -533,7 +536,7 @@ static int video_output_once(void)
 	glFlush();
 	SDL_GL_SwapBuffers();
 #else
-	SDL_Flip(sdl_screen);
+	// FIXME SDL2 SDL_Flip(sdl_screen);
 #endif
 	return 1;	// no errors
 }
@@ -550,7 +553,7 @@ static int handle_events_once(void)
 			return initiate_abnormal_exit();
 		}
 		if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+			if (event.key.keysym.sym == 12345 /* // FIXME SDL2 SDLK_SCROLLOCK*/) {
 				turbo_mode = 1;
 #ifdef NO_OGL
 			} else if (event.key.keysym.sym == SDLK_F11) {
@@ -588,11 +591,12 @@ static int handle_events_once(void)
 				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
 			}
 		}
-		if (event.type == SDL_KEYUP) {
+/* FIXME SDL2		if (event.type == SDL_KEYUP) {
 			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
 				turbo_mode = 0;
 			}
 		}
+*/
 
 		if (event.type == SDL_MOUSEMOTION) {
 			int32_t ex, ey;

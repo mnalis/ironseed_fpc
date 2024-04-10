@@ -60,7 +60,7 @@ begin
  writeln('ironseed      Copyright (C) 1994  Channel 7');
  writeln('ironseed_fpc  Copyright (C) 2013  y-salnikov');
  writeln('ironseed_fpc  Copyright (C) 2016  Nuke Bloodaxe');
- writeln('ironseed_fpc  Copyright (C) 2020  Matija Nalis');
+ writeln('ironseed_fpc  Copyright (C) 2020-2024  Matija Nalis');
 
  str1:=paramstr(1)+' '+paramstr(2)+' '+paramstr(3)+' '+paramstr(4);
  code:=5;

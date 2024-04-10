@@ -26,7 +26,7 @@ fpc_debug:= -C3 -Ci -Co -CO  -O1 -gw -godwarfsets  -gt -vewnhiq   -Sa -Sy  -vm40
 libgcc_dir := $(shell find /usr/ -name libgcc_s.so -printf "-Fl%h " 2>/dev/null)
 PFLAGS += -k-lSDL_mixer -k-lSDL -k-lm $(libgcc_dir)
 
-c_includes:=`sdl-config --cflags` -I /usr/X11R6/include
+c_includes:=`sdl2-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
@@ -101,7 +101,7 @@ $(PROG_FILES): Makefile c_utils.o _paths_.pas *.pas
 	$(p_compiler) $(PFLAGS) $@.pas
 
 test/test_0_c: clean Makefile c_utils.c test/test_0_c.c
-	$(CC) $(CFLAGS) -O1 -Werror test/test_0_c.c `sdl-config --libs` -lSDL_mixer -lm -lGL -lGLU  -o test/test_0_c
+	$(CC) $(CFLAGS) -O1 -Werror test/test_0_c.c `sdl2-config --libs` -lSDL_mixer -lm -lGL -lGLU  -o test/test_0_c
 
 test/test_0_pas: CFLAGS += -O1 -Werror
 test/test_0_pas: PFLAGS += $(fpc_debug) -k-lGL -k-lGLU
