@@ -43,7 +43,6 @@
 #define VGA_WIDTH 320
 #define VGA_HEIGHT 200
 
-#define SDL_QUALITY "nearest"	// "nearest" is crisp for resolutions that are multiple of 320x200. For smoothing, try  "linear" or "best", but they will blur it
 #define SDL_WIDTH 640
 #define SDL_HEIGHT 480
 #define TIMESCALE 1.0
@@ -53,6 +52,7 @@
 
 #define PIXELFORMAT	Uint32			// for SDL_PIXELFORMAT_ARGB8888
 
+char *SDL_quality = "nearest";	// override via env. variable SDL_QUALITY: "nearest" is crisp for resolutions that are multiple of 320x200. For smoothing, try  "linear" or "best", but they will blur it
 static PIXELFORMAT sdl_screen[640*480];
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
@@ -243,6 +243,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 {
 	uint32_t SDL_flags = SDL_INIT_VIDEO;
 	static volatile uint8_t is_sdl_initialized = 0;
+	char *env_quality = NULL;
 
 	//printf ("SDL_init_video_real called, is_sdl_initialized=%d, is_audio_initialized=%d, is_video_initialized=%d\r\n", is_sdl_initialized, is_audio_initialized, is_video_initialized);
 	assert (!is_sdl_initialized);		/* do not allow double init, or terrible bugs happen down the line! */
@@ -278,7 +279,13 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 		return initiate_abnormal_exit();
 	}
 
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, SDL_QUALITY);	// FIXME SDL2 - change: LINEAR if windowed 640x400, BEST if fullscreen?
+	env_quality = getenv ("SDL_QUALITY");
+	if (env_quality) {
+		if (0==strcmp(env_quality, "nearest") || 0==strcmp(env_quality, "linear") || 0==strcmp(env_quality, "best"))
+		    SDL_quality = env_quality;
+	}
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, SDL_quality);
 	SDL_RenderSetLogicalSize(sdlRenderer, VGA_WIDTH, VGA_HEIGHT);	// original game used 320x200 !
 	
 	SDL_ShowCursor(SDL_DISABLE);
@@ -291,7 +298,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	sdlTexture = SDL_CreateTexture(sdlRenderer,
                      SDL_PIXELFORMAT_ARGB8888,
                      SDL_TEXTUREACCESS_STREAMING,
-                     VGA_WIDTH, VGA_HEIGHT);	// FIXME SDL2 - should we hardcode 320*200 here and let SDL handle all resizing?
+                     VGA_WIDTH, VGA_HEIGHT);	// SDL2 - we hardcode 320*200 here and let SDL handle all resizing and fullscreen automagically
 
 	return 1;	// init OK
 }
