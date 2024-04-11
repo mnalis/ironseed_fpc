@@ -259,7 +259,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	if (do_sdl_audio)
 		is_audio_initialized = 1;
 
-	// FIXME SDL2 SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	// FIXME SDL2 SDL_EnableUNICODE(1);
 
 	sdlWindow = SDL_CreateWindow("Ironseed",
