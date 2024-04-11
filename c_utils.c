@@ -49,6 +49,7 @@
 #define SOUNDS_VOLUME 128
 #define SOUNDS_MAX_CHANNELS 16
 #define TURBO_FACTOR 7		// 2^7=64 - speed up by this factor if ScrollLock is pressed
+#define TURBO_SCANCODE	SDL_SCANCODE_SCROLLLOCK	// or use SDL_SCANCODE_CAPSLOCK if your keyboard does not have ScrollLock
 
 #define PIXELFORMAT	Uint32			// for SDL_PIXELFORMAT_ARGB8888
 
@@ -339,12 +340,12 @@ static int handle_events_once(void)
 			return initiate_abnormal_exit();
 		}
 		if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym == 12345 /* // FIXME SDL2 SDLK_SCROLLOCK*/) {
+			if (event.key.keysym.scancode == TURBO_SCANCODE) {
 				turbo_mode = 1;
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-				//printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16" .unicode:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod,  event.key.keysym.unicode);
+				printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16" .unicode:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod,  0 /*event.key.keysym.unicode FIXME SDL2*/);
 
 				/* traverse list of all special keys and their modifiers, and verify if we match */
 				while (spec_keys[key_index]) {
@@ -370,15 +371,14 @@ static int handle_events_once(void)
 					keymod_ = event_mod;
 
 				}
-				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
+				printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
 			}
 		}
-/* FIXME SDL2		if (event.type == SDL_KEYUP) {
-			if (event.key.keysym.sym == SDLK_SCROLLOCK) {
+		if (event.type == SDL_KEYUP) {
+			if (event.key.keysym.scancode == TURBO_SCANCODE) {
 				turbo_mode = 0;
 			}
 		}
-*/
 
 		if (event.type == SDL_MOUSEMOTION) {
 			int32_t ex, ey;
