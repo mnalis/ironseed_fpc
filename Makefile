@@ -46,29 +46,17 @@ endif
 
 
 rebuild: clean all cleantmp
-# default target to build, best is debug_sdl / debug_ogl (NOT "release_xxx" AKA "no-checks" versions!)
+# default target to build, best is debug_sdl (NOT "release_sdl" AKA "no-checks" versions!)
 all: clearpaths debug_sdl1
 
 cleanbuild: clean build cleantmp
 
-# OpenGL no-checks version
-release_ogl debug_ogl1: PFLAGS += -k-lGL -k-lGLU
-
-release_ogl: CFLAGS += -O -DNDEBUG
-release_ogl: cleanbuild
-
-# OpenGL debug version
-debug_ogl:   clean debug_ogl1 cleantmp
-debug_ogl1:  CFLAGS += -O1 -Werror
-debug_ogl1:  PFLAGS += $(fpc_debug)
-debug_ogl1:  build
-
 # SDL no-checks version
-release_sdl: CFLAGS += -O -DNDEBUG -DNO_OGL
+release_sdl: CFLAGS += -O -DNDEBUG
 release_sdl: cleanbuild
 
 # SDL debug version
-debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani Data_Generators/makedata/shp2make: CFLAGS += -O1 -DNO_OGL -Werror
+debug_sdl1 demo_sdl1 data_build Data_Generators/makedata/iconmake Data_Generators/makedata/makeani Data_Generators/makedata/shp2make: CFLAGS += -O1 -Werror
 
 debug_sdl:   clean debug_sdl1 cleantmp
 debug_sdl1:  PFLAGS += $(fpc_debug)
@@ -346,7 +334,7 @@ deb:
 	lintian --check --fail-on-warnings --info
 	dh clean
 
-.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl release_ogl debug_sdl debug_sdl1 debug_ogl debug_ogl1 demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths deb
+.PHONY: all build cleanbuild cleantmp clean reallyclean release_sdl debug_sdl debug_sdl1  demo_sdl demo_sdl1 data_destroy data_build data_rebuild cleanbak mrproper distclean rebuild install uninstall clearpaths deb
 
 # fpc does not really work nicely with parallel builds, as for example `fpc main` and `fpc intro` can try to produce 'data.ppu' etc. simultaneously
 .NOTPARALLEL:

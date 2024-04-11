@@ -20,10 +20,9 @@ Prerequisites
 For compiling, you need:
 - fpc (Free pascal compiler, `apt-get install fpc`)
 - gcc (GNU C Compiler, `apt-get install build-essential gcc`
-- SDL v1.2 (Simple DirectMedia Layer 1.2, `apt-get install libsdl1.2-dev libsdl-mixer1.2-dev`)
-- (optionally) OpenGL (`apt-get install mesa-common-dev`)
+- SDL2 (Simple DirectMedia Layer 2.x, `apt-get install libsdl2-dev libsdl2-mixer-dev`)
 
-For making changes to game, you may also need:
+For making changes to game (rebuilding datafiles), you may also need:
 - (optionally) D compiler (The D compiler is required to the conversation and log conversion tools, `apt-get install ldc` / `apt-get install gdc` or https://digitalmars.com/d/2.0/)
 - (optionally) perl & imagemagick (for screen conversion utilities, `apt-get install perl imagemagick`)
 
@@ -40,13 +39,12 @@ Debian packages and prebuilt game
 Compilation
 ===========
 Just typing `make` will compile whichever developers think is currently the best.
-You can also force the version to build, by `make debug_sdl` for SDL-only version,
-or `make debug_ogl` for SDL+OpenGL-enabled version.
+You can also force the version to build, by `make debug_sdl` for SDL-only version.
 
-There are also no-seatbelts targets `release_sdl` and `release_ogl` but they
-are not recommended at the moment as they do not have anti-data-corruption
-checks, so bugs could creep up in your savefiles! Or, just for fun, you can also
-build `demo_sdl`, which is original shareware demo restricted version.
+There is also no-seatbelts targets `release_sdl` but it is not recommended
+at the moment as it does not have anti-data-corruption checks, so bugs could
+creep up in your savefiles!  Or, just for fun, you can also build
+`demo_sdl`, which is original shareware demo restricted version.
 
 Running from build directory for test
 =====================================

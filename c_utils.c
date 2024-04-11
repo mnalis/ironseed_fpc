@@ -53,7 +53,7 @@
 
 #define PIXELFORMAT	Uint32			// for SDL_PIXELFORMAT_ARGB8888
 
-static PIXELFORMAT sdl_screen[640*480];		// FIXME SDL2 get rid of this (replace with static  memory buffer and remove Slock/Sunlock) to simplify
+static PIXELFORMAT sdl_screen[640*480];
 static SDL_Window *sdlWindow;
 static SDL_Renderer *sdlRenderer;
 static SDL_Texture *sdlTexture;
@@ -266,9 +266,7 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WIDTH, SDL_HEIGHT,
-                          0);	// FIXME SDL2 which flags?  SDL_WINDOW_FULLSCREEN_DESKTOP ? start windowed as default?
-//                          SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);	// FIXME SDL2 flags?
-	// FIXME before SDL2 was: SDL_SetVideoMode(SDL_WIDTH, SDL_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+                          0);
 
 	if (sdlWindow == NULL) {
 		printf("Unable to set %dx%d video: %s\r\n", SDL_WIDTH, SDL_HEIGHT, SDL_GetError());
