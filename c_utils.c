@@ -261,8 +261,6 @@ static int SDL_init_video_real(void)		/* called from event_thread() if it was ne
 	if (do_sdl_audio)
 		is_audio_initialized = 1;
 
-	// FIXME SDL2 SDL_EnableUNICODE(1);
-
 	sdlWindow = SDL_CreateWindow("Ironseed",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -339,13 +337,16 @@ static int handle_events_once(void)
 		if (event.type == SDL_QUIT) {
 			return initiate_abnormal_exit();
 		}
+		if (event.type == SDL_TEXTINPUT) {
+			keyutf8_ = (Uint16) (event.text.text[0]);	// SDL2 kludge: not ideal, but works, and game doesn't support full UTF8 anyway
+		}
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.scancode == TURBO_SCANCODE) {
 				turbo_mode = 1;
 			} else {
 				uint8_t key_found = 0, key_index = 0;
 				uint16_t event_mod = event.key.keysym.mod & (uint16_t) (~(KMOD_CAPS | KMOD_NUM));	/* ignore state of CapsLock / NumLock */
-				printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16" .unicode:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod,  0 /*event.key.keysym.unicode FIXME SDL2*/);
+				//printf ("SDL_KEYDOWN keysym .sym: %"PRIu16" .scancode:%"PRIu8" .mod:%"PRIu16"\t", event.key.keysym.sym, event.key.keysym.scancode, event.key.keysym.mod);
 
 				/* traverse list of all special keys and their modifiers, and verify if we match */
 				while (spec_keys[key_index]) {
@@ -366,12 +367,11 @@ static int handle_events_once(void)
 				if (key_found) {	/* only return key pressed if it is either regular ASCII key, or extended key we know about */
 					keypressed_ = 1;
 					key_ = event.key.keysym.sym;
-					keyutf8_ = (SDL_Keycode) (key_ & 0x7f); // FIXME SDL2 replacement? keyutf8_ = event.key.keysym.unicode;
 					keyscan_ = event.key.keysym.scancode;
 					keymod_ = event_mod;
 
 				}
-				printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
+				//printf(" END key_found=%"PRIu8" keypressed_=%"PRIu8" keyscan_=%"PRIu8" key_=%"PRIu16" keyutf8_=%"PRIu16" keymod_=%"PRIu16"\r\n", key_found, keypressed_, keyscan_, key_, keyutf8_, keymod_);
 			}
 		}
 		if (event.type == SDL_KEYUP) {
