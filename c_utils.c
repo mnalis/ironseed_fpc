@@ -680,16 +680,11 @@ fpc_char_t readkey_utf8(void)
 fpc_char_t readkey_nomap(void)
 {
 	uint8_t key_index = 0;
-	/*
 	static const uint16_t spec_codes[] = { SDL_SCANCODE_GRAVE, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_R, SDL_SCANCODE_T, SDL_SCANCODE_A, SDL_SCANCODE_S, SDL_SCANCODE_D,SDL_SCANCODE_F, SDL_SCANCODE_G, SDL_SCANCODE_Z, SDL_SCANCODE_X, SDL_SCANCODE_C, SDL_SCANCODE_V, SDL_SCANCODE_B, SDL_SCANCODE_P,	0 };	// SDL 2.x has names, and they should work?...
-	//static const uint16_t spec_codes[] = { 53 , 30 , 31 , 32 , 20 , 26 ,  8 , 21 , 23 ,  4 , 22 ,  7 ,  9 , 10 , 29 , 27 ,  6 , 25 ,  5 , 19 ,	0 };	// SDL 1.2 does not have symbolic names for keycodes, those values from SDL2 do not work: https://wiki.libsdl.org/SDL_Keycode
 	static const uint8_t  spec_unmap[] = { '`', '1', '2', '3', 'q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'p' };
 
-	// No-op for now. SDL1.2 says scancodes are not really supported and are is hardware dependent, and it seems to be true... https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html	
-	*/
-
-	static const uint16_t spec_codes[] = { 0 };
-	static const uint8_t  spec_unmap[] = { 0 };
+	//static const uint16_t spec_codes[] = { 0 };
+	//static const uint8_t  spec_unmap[] = { 0 };
 
 	fpc_char_t key = readkey();
 	//printf ("unmapped b4: readkey()=%d >%c<, keyutf8_=%d, keyscan=%d\r\n", key, key, keyutf8_, keyscan_);
