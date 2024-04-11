@@ -132,7 +132,8 @@ static void DrawPixel(int x, int y, pal_color_type c)
 	Uint8 B = (c.b << 2);
 
 	PIXELFORMAT color = 0xff << 24 | R << 16 | G << 8 | B;  // for SDL_PIXELFORMAT_ARGB8888
-	// FIXME SDL2 little / big endian test if needs specialcasing? - see https://afrantzis.com/pixel-format-guide/sdl2.html
+	// Note: SDL2 little / big endian probably needs specialcasing? - see https://afrantzis.com/pixel-format-guide/sdl2.html
+	// However, note that datafiles (.cpr etc) are not working on BE architectures, so it won't help anyway...
 	PIXELFORMAT *bufp = sdl_screen + y * SDL_WIDTH + x;
 	*bufp = color;
 }
