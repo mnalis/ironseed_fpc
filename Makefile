@@ -30,7 +30,7 @@ c_includes:=`sdl2-config --cflags` -I /usr/X11R6/include
 CFLAGS += -g -Wall -W -pedantic -Wno-unused-parameter -Wconversion $(c_includes)
 
 # PIE etc. hardening wanted by Debian - see https://wiki.debian.org/Hardening
-PFLAGS += -fPIC
+PFLAGS += -fPIC -Cg
 CFLAGS += -fpic -D_FORTIFY_SOURCE=2
 # automatically extract from: LDFLAGS=-Wl,-z,relro -Wl,-z,now
 wlz=-Wl,-z,
